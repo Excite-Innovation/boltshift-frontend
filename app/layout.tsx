@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { inter, merriweather, jetBrainsMono } from "./fonts"
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -28,7 +29,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={ inter.className }
+      suppressHydrationWarning
+    >
       <head />
       <body>
         <ThemeProvider
