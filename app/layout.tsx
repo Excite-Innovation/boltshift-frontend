@@ -7,6 +7,7 @@ type RootLayoutProps = Readonly<{
   children: ReactNode;
 }>;
 
+// Include project metadata
 export const metadata: Metadata = {
   title: {
     default: "Boltshift",
