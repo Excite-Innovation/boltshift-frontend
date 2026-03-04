@@ -1,43 +1,52 @@
 # Boltshift Frontend
 
-Boltshift Frontend is an ecommerce website frontend built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, and shadcn/ui components.
+![Boltshift Preview](./app/opengraph-image.png)
 
-## What This Project Is About
+Boltshift Frontend is currently in early development. Core ecommerce features are planned but not implemented yet.
 
-This repository contains the frontend application for Boltshift ecommerce. It is set up as a modern Next.js app-router project and includes UI primitives (for example, shadcn/ui) to build shopping and product experiences quickly.
+# Technologies
 
-## How To Run
+- Next.js 16: React framework used for routing and app structure
+- React 19: UI library
+- TypeScript: Static typing
+- Tailwind CSS v4: Utility-first styling
+- shadcn/ui: Reusable component setup
+- Radix UI: Accessible UI primitives
+- next-themes: Theme management
+- ESLint: Code linting
 
-### 1) Clone the repository
+# How to Run
+
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/denilany/boltshift-frontend.git
 cd boltshift-frontend
 ```
 
-### 2) Install dependencies
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 3) Start the development server
+3. Start development server:
 
 ```bash
 npm run dev
 ```
 
-The app will be available at [http://localhost:3000](http://localhost:3000).
+4. Open in browser:
 
-### Useful scripts
-
-```bash
-npm run build   # Production build
-npm run start   # Run production server
-npm run lint    # Lint the codebase
+```text
+http://localhost:3000
 ```
 
-## Contributors
+# Useful Scripts
 
-- denilany (denilanyonyi1@gmail.com)
-- paulXmbingu (paulxmbingu.gmail.com)
+```bash
+npm run dev    # Start development server
+npm run build  # Build for production
+npm run start  # Start production server
+npm run lint   # Run lint checks
+```
