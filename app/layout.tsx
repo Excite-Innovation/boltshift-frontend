@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { inter, merriweather, jetBrainsMono } from "./fonts"
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -18,18 +19,22 @@ export const metadata: Metadata = {
     "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
 
   openGraph: {
-    url: "",
+    url: "",  // Include a url to the hosted site
     title: "Boltshift",
     description:
       "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
     siteName: "Boltshift",
-    images: [{ url: '' }],
+    images: [{ url: '/opengraph-image.png' }],
   },
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={ inter.className }
+      suppressHydrationWarning
+    >
       <head />
       <body>
         <ThemeProvider
