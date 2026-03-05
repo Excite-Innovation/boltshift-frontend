@@ -33,19 +33,19 @@ npm install
 3. Start development server:
 
 ```bash
-npm run dev
+npm run dev:pwa
 ```
 
 4. Open in browser:
 
 ```text
-http://localhost:3000
+https://localhost:3000
 ```
 
 # Useful Scripts
 
 ```bash
-npm run dev    # Start development server
+npm run dev:pwa    # Start development server
 npm run build  # Build for production
 npm run start  # Start production server
 npm run lint   # Run lint checks
