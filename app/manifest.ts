@@ -67,21 +67,21 @@ export default function manifest(): MetadataRoute.Manifest {
             },
 
             // Apple icons
-            // {
-            //     src: "/icons/apple/Variant=apple-touch-icon-120x120.png",
-            //     sizes: "120x120",
-            //     type: "image/png",
-            // },
-            // {
-            //     src: "/icons/apple/Variant=apple-touch-icon-167x167.png",
-            //     sizes: "167x167",
-            //     type: "image/png",
-            // },
-            // {
-            //     src: "/icons/apple/Variant=apple-touch-icon.png",
-            //     sizes: "180x180",
-            //     type: "image/png",
-            // },
+            {
+                src: "/icons/apple/Variant=apple-touch-icon-120x120.png",
+                sizes: "120x120",
+                type: "image/png",
+            },
+            {
+                src: "/icons/apple/Variant=apple-touch-icon-167x167.png",
+                sizes: "167x167",
+                type: "image/png",
+            },
+            {
+                src: "/icons/apple/Variant=apple-touch-icon.png",
+                sizes: "180x180",
+                type: "image/png",
+            },
         ],
         screenshots: [
             {
