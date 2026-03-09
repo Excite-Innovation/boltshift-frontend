@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
 
   openGraph: {
-    url: "",  // Include a url to the hosted site
+    url: "/",
     title: "Boltshift",
     description:
       "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
