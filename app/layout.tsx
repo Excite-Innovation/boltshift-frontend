@@ -10,7 +10,7 @@ type RootLayoutProps = Readonly<{
 
 // Include project metadata
 export const metadata: Metadata = {
-  metadataBase: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
     default: "Boltshift",
     template: "%s | Boltshift",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
 
   openGraph: {
-    url: "",  // Include a url to the hosted site
+    url: "/",
     title: "Boltshift",
     description:
       "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",

@@ -1,16 +1,39 @@
-'use client'
-
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { PushNotificationManager } from "@/components/push-notification-manager"
-import  InstallPrompt  from "@/components/install-prompt"
-
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center gap-6">
-      <PushNotificationManager />
-      <InstallPrompt />
-      {/* <Button>Click me</Button> */}
+    <div id="landing-page" className="flex flex-col items-center justify center">
+      {/* Navigation section */}
+      <div>Top Nav</div>
+
+      {/* Vendors section */}
+      <div>StoriesTray</div>
+
+      <div>Hero Section</div>
+
+      {/* Popular Categories Section */}
+      <div>Popular Categories</div>
+
+      {/* Hot Deal Today Section */}
+      <div>Hot Deal Today</div>
+
+      {/* Featured Products Section */}
+      <div>Featured Products</div>
+
+      {/* Featured Store Section */}
+      <div>Featured Store</div>
+
+      {/* Special Offer Section */}
+      <div>Special Offer</div>
+
+      {/* Popular Products Section */}
+      <div>Popular Products</div>
+
+      {/* Trending Products Section */}
+      <div>Trending Products</div>
+
+      {/* Reviews Section */}
+      <div>Recent Reviews</div>
+
+      <div>Footer</div>
     </div>
   )
 }
