@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { inter, merriweather, jetBrainsMono } from "./fonts"
+import { inter, merriweather, jetBrainsMono } from "@/lib/fonts"
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -10,6 +10,7 @@ type RootLayoutProps = Readonly<{
 
 // Include project metadata
 export const metadata: Metadata = {
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   title: {
     default: "Boltshift",
     template: "%s | Boltshift",
