@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { inter, merriweather, jetBrainsMono } from "./fonts"
+import { inter, merriweather, jetBrainsMono } from "@/lib/fonts"
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
