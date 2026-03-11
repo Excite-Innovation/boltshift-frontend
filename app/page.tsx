@@ -1,8 +1,10 @@
+import { Navbar } from "@/components/navigation/navbar"
+
 export default function Home() {
   return (
-    <div id="landing-page" className="flex flex-col items-center justify center">
+    <div id="landing-page" className="">
       {/* Navigation section */}
-      <div>Top Nav</div>
+      <Navbar />
 
       {/* Vendors section */}
       <div>StoriesTray</div>
