@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
+  InputGroupButton,
 } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
 
@@ -16,6 +16,7 @@ export function NavbarSearch() {
       <InputGroup className="h-12 flex items-center justify-center bg-[#F5F5F5] border-none rounded-lg">
         <InputGroupInput
           placeholder="What are you looking for today?"
+          type="search"
           className="flex-grow"
         />
 
@@ -24,9 +25,9 @@ export function NavbarSearch() {
         </InputGroupAddon>
 
         <InputGroupAddon align="inline-end" className="  ">
-          <Button className="w-[69px] h-11 py-2 px-3 rounded-l-none rounded-r-lg -mr-[3px]">
+          <InputGroupButton variant="default" className="w-[69px] h-11 py-2 px-3 rounded-l-none rounded-r-lg -mr-[3px]">
             Search
-          </Button>
+          </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
     </Field>
