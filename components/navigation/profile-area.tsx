@@ -1,5 +1,5 @@
 import { AvatarProfile } from "../icons/avatar";
-import { Cart } from "../icons/cart";
+import { ShoppingCart } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Bell } from "lucide-react";
 import { Button } from "../ui/button";
@@ -11,7 +11,7 @@ export function Profile() {
         <Heart className="h-6 w-6" />
       </Button>
       <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
-        <Cart />
+        <ShoppingCart />
       </Button>
       <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
         <Bell className="h-6 w-6" />
