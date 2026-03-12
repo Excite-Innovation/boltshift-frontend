@@ -13,9 +13,9 @@ export function NavbarToggle(props: React.SVGProps<SVGSVGElement>) {
         <path
           d="M3 12H21M3 6H21M3 18H15"
           stroke="black"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </button>

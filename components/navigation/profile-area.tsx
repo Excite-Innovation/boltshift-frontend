@@ -14,7 +14,7 @@ export function Profile() {
         <Cart />
       </Button>
       <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full">
-        <Bell />
+        <Bell className="h-6 w-6" />
       </Button>
       <div className="w-8 h-8 rounded-full border-2 flex items-center justify-center">
         <AvatarProfile />
