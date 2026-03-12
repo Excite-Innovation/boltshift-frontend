@@ -37,7 +37,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
     >
       <head />
-      <body>
+      <body
+        className="max-w-[1440px] m-auto"
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
