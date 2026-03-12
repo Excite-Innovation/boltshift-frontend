@@ -1,10 +1,18 @@
-import { Navbar } from "@/components/navigation/navbar"
+import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 
 export default function Home() {
   return (
     <div id="landing-page" className="">
       {/* Navigation section */}
-      <Navbar />
+      <div>
+        <div className="hidden md:block">
+          <Navbar />
+        </div>
+        
+        <div className="block md:hidden">
+          <NavbarMobile />
+        </div>
+      </div>
 
       {/* Vendors section */}
       <div>StoriesTray</div>
@@ -37,5 +45,5 @@ export default function Home() {
 
       <div>Footer</div>
     </div>
-  )
+  );
 }

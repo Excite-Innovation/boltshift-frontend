@@ -1,7 +1,5 @@
 import { AvatarProfile } from "../icons/avatar";
-import { ShoppingCart } from "lucide-react";
-import { Heart } from "lucide-react";
-import { Bell } from "lucide-react";
+import { ShoppingCart, Heart, Bell } from "lucide-react";
 import { Button } from "../ui/button";
 
 export function Profile() {
