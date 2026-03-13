@@ -2,7 +2,17 @@
 
 ![Boltshift Preview](./app/opengraph-image.png)
 
-Boltshift Frontend is currently in early development. Core ecommerce features are planned but not implemented yet.
+# Features
+
+- User Authentication: Secure user accounts and authentication to manage profiles and track order history.
+- Product Catalog: A comprehensive listing of products, organized into categories for easy navigation.
+- Search and Filters: Effortlessly find products using the search functionality & apply filters to narrow down choices.
+- Shopping Cart: Add products to cart, review before purchasing, and easily adjust quantities.
+- Wishlist: Curate shopping desires! Collect and save items they love-your personalized shopping inspiration.
+- Secure Payments: Multiple payment options with enhanced security to ensure safe transactions.
+- Order Tracking: Track the status of orders from purchase to delivery.
+- Responsive Design: Enjoy a consistent experience across various devices, from smartphones to desktops.
+- Live Chat: Connect with customer service representatives in real-time to address queries and resolve issues.
 
 # Technologies
 
@@ -14,6 +24,12 @@ Boltshift Frontend is currently in early development. Core ecommerce features ar
 - Radix UI: Accessible UI primitives
 - next-themes: Theme management
 - ESLint: Code linting
+
+# Product Engineering Team
+
+- Special Contributions: Denil Anyonyi & Paul Mbingu
+- Product Design & Research: Paul Mbingu
+- Frontend Engineers: Denil Anyonyi
 
 # How to Run
 
