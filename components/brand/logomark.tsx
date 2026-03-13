@@ -3,11 +3,10 @@ import * as React from "react";
 export function Logomark(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="44"
-      height="44"
       viewBox="0 0 44 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         fillRule="evenodd"
