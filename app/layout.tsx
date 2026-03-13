@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { inter, merriweather, jetBrainsMono } from "./fonts"
+import { inter, merriweather, jetBrainsMono } from "@/lib/fonts"
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -10,6 +10,7 @@ type RootLayoutProps = Readonly<{
 
 // Include project metadata
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
     default: "Boltshift",
     template: "%s | Boltshift",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
 
   openGraph: {
-    url: "",  // Include a url to the hosted site
+    url: "/",
     title: "Boltshift",
     description:
       "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
@@ -36,7 +37,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       suppressHydrationWarning
     >
       <head />
-      <body>
+      <body
+        className="max-w-[1440px] m-auto"
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
