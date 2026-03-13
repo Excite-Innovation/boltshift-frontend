@@ -4,11 +4,10 @@ export function AvatarProfile() {
   return (
     <Avatar>
       <AvatarImage
-        src="https://github.com/shadcn.png"
-        alt="@shadcn"
-        className="grayscale"
+        src="https://github.com/denilany.png"
+        alt="Image profile"
       />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarFallback>U</AvatarFallback>
     </Avatar>
   )
 }

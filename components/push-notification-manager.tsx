@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { subscribeUser, unsubscribeUser, sendNotification } from "@/lib/actions";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 function urlBase64ToUint8Array(base64String: string) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

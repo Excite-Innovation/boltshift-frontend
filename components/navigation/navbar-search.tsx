@@ -17,7 +17,7 @@ export function NavbarSearch() {
         <InputGroupInput
           placeholder="What are you looking for today?"
           type="search"
-          className="flex-grow"
+          className="flex-grow placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
         />
 
         <InputGroupAddon>
