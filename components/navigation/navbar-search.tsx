@@ -25,7 +25,7 @@ export function NavbarSearch() {
         </InputGroupAddon>
 
         <InputGroupAddon align="inline-end" className="  ">
-          <InputGroupButton variant="default" className="w-[69px] h-11 py-2 px-3 rounded-l-none rounded-r-lg -mr-[3px]">
+          <InputGroupButton variant="default" className="w-[69px] h-12 py-2 px-3 rounded-l-none rounded-r-lg -mr-[5px]">
             Search
           </InputGroupButton>
         </InputGroupAddon>
