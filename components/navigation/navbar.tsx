@@ -24,7 +24,7 @@ export function NavbarMobile() {
     <header className="h-33 flex flex-col gap-4">
       <div className="h-10 flex flex-row justify-between">
         <div className="flex items-center gap-2">
-          <Menu />
+          <Menu className="size-6"/>
           <Logo />
         </div>
         <div>
