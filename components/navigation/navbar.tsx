@@ -1,4 +1,4 @@
-import { Logo } from "../brand/logo";
+import { Logo } from "@/components/brand/logo";
 import { NavbarSearch } from "@/components/navigation/navbar-search";
 import { Menu, ListFilter } from "lucide-react";
 import { Profile } from "@/components/navigation/profile-area";
@@ -21,7 +21,7 @@ export function Navbar() {
 // Mobile version
 export function NavbarMobile() {
   return (
-    <div className="h-33 flex flex-col gap-4">
+    <header className="h-33 flex flex-col gap-4">
       <div className="h-10 flex flex-row justify-between">
         <div className="flex items-center gap-2">
           <Menu />
@@ -33,11 +33,11 @@ export function NavbarMobile() {
       </div>
 
       <div className="flex items-center gap-2 h-11">
-        <Button>
-          <ListFilter />
+        <Button className="rounded-lg h-11 w-11 p-3 border-2 border-[#F03B68]">
+          <ListFilter className="size-5"/>
         </Button>
         <NavbarSearch />
       </div>
-    </div>
+    </header>
   )
 }
