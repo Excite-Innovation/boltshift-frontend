@@ -1,5 +1,5 @@
-import { Logomark } from "./logomark";
-import { Logotype } from "./logotype";
+import { Logomark } from "@/components/brand/logomark";
+import { Logotype } from "@/components/brand/logotype";
 
 export function Logo({ className }: { className?: string }) {
   return (
