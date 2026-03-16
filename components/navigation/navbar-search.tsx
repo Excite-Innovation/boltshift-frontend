@@ -11,13 +11,13 @@ export function NavbarSearch() {
   return (
     <Field
       orientation="horizontal"
-      className="w-full max-w-[1002px] h-12 min-w-[320px] flex"
+      className="w-full max-w-250.5 h-12 min-w-[320px] flex"
     >
       <InputGroup className="h-12 flex items-center justify-center bg-[#F5F5F5] border-none rounded-lg">
         <InputGroupInput
           placeholder="What are you looking for today?"
           type="search"
-          className="flex-grow placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
+          className="grow placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
         />
 
         <InputGroupAddon>
@@ -25,7 +25,7 @@ export function NavbarSearch() {
         </InputGroupAddon>
 
         <InputGroupAddon align="inline-end" className="  ">
-          <InputGroupButton variant="default" className="w-[69px] h-12 py-2 px-3 rounded-l-none rounded-r-lg -mr-[5px]">
+          <InputGroupButton variant="default" className="w-17.25 h-12 py-2 px-3 rounded-l-none rounded-r-lg -mr-1.25">
             Search
           </InputGroupButton>
         </InputGroupAddon>
