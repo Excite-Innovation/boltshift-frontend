@@ -1,4 +1,5 @@
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
+import { VendorScroller } from "@/components/vendor_story/vendor_stories"
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
       </div>
 
       {/* Vendors section */}
-      <div>StoriesTray</div>
+      <VendorScroller />
 
       <div>Hero Section</div>
 
