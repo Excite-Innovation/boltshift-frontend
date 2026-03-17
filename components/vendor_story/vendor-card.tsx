@@ -11,7 +11,7 @@ export function VendorCard({ vendor }: VendorCardProps) {
         <img src={vendor.icon} alt={`${vendor.name}'s icon`} />
       </div>
 
-      <span className="w-16 h-4 max-w-32 text-center text-xs overflow-clip group-hover:text-primary">
+      <span className="w-16 h-4 max-w-32 text-center text-xs group-hover:text-primary truncate">
         {vendor.name}
       </span>
     </div>
