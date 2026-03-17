@@ -4,18 +4,11 @@ import { VendorScroller } from "@/components/vendor_story/vendor_stories"
 export default function Home() {
   return (
     <div id="landing-page" className="">
-      {/* Navigation section */}
       <div>
-        <div className="hidden md:block">
-          <Navbar />
-        </div>
-        
-        <div className="block md:hidden">
-          <NavbarMobile />
-        </div>
+        <div className="hidden md:block"><Navbar /></div>
+        <div className="block md:hidden"><NavbarMobile /></div>
       </div>
 
-      {/* Vendors section */}
       <VendorScroller />
 
       <div>Hero Section</div>
