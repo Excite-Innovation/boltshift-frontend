@@ -1,5 +1,5 @@
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
-import { VendorScroller } from "@/components/vendor_story/vendor_stories"
+import { VendorScroller } from "@/components/vendor-story/vendor-stories"
 
 export default function Home() {
   return (
