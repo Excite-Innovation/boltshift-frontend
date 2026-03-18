@@ -56,7 +56,7 @@ export function HeroCarousel() {
         </CarouselContent>
       </Carousel>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full z-20">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full z-20 md:left-1/4 md:bottom-1/2 md:translate-x-0.5 md:translate-y-63">
         <PaginationDots
           count={count}
           current={current}
@@ -76,7 +76,7 @@ function PaginationDots({ count, current, onDotClick }: Interactions) {
           onClick={() => onDotClick(index)}
           className={cn(
             "h-2 rounded-full transition-all duration-500 ease-in-out",
-            index === current ? "bg-primary w-7" : "bg-muted/40 w-2",
+            index === current ? "bg-primary w-7" : "bg-muted/40 w-2 md:bg-muted",
           )}
         />
       ))}
