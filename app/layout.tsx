@@ -38,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     >
       <head />
       <body
-        className="max-w-360 m-auto px-4 pb-4"
+        className="max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0"
       >
         <ThemeProvider
           attribute="class"

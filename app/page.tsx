@@ -1,17 +1,22 @@
+import { HeroCarousel } from "@/components/hero/hero-carousel";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
-import { VendorScroller } from "@/components/vendor-story/vendor-stories"
+import { VendorScroller } from "@/components/vendor-story/vendor-stories";
 
 export default function Home() {
   return (
     <div id="landing-page" className="">
       <div>
-        <div className="hidden md:block"><Navbar /></div>
-        <div className="block md:hidden"><NavbarMobile /></div>
+        <div className="hidden md:block">
+          <Navbar />
+        </div>
+        <div className="block md:hidden">
+          <NavbarMobile />
+        </div>
       </div>
 
       <VendorScroller />
 
-      <div>Hero Section</div>
+      <HeroCarousel />
 
       {/* Popular Categories Section */}
       <div>Popular Categories</div>
