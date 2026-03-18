@@ -6,13 +6,13 @@ export function NavbarSearch() {
   return (
     <Field
       orientation="horizontal"
-      className="w-full max-w-250.5 h-12 min-w-[320px] flex"
+      className="w-full max-w-250.5 h-12 flex"
     >
       <InputGroup className="h-12 flex items-center justify-center bg-[#F5F5F5] border-none rounded-lg">
         <InputGroupInput
-          placeholder="What are you looking for today?"
           type="search"
-          className="grow placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
+          placeholder="What are you looking for today?"
+          className="flex-1 min-w-0 placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
         />
 
         <InputGroupAddon>
