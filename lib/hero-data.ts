@@ -8,7 +8,7 @@ export const HeroItems: HeroItem[] = [
       "Modern White Velvet 3-Seater Sofa Channel Tufted Upholstered Luxury Solid Wood",
     description:
       "This velvet couch is a sophisticated and trendy sofa with a sumptuous quilted finish and strong wood legs.",
-    badge: "Hot Deal",
+    badge: "Opening Sales Discount 50%",
   },
   {
     id: "nightstand",
