@@ -41,7 +41,7 @@ export function NavbarMobile() {
       <div className="flex items-center gap-2 h-11">
         <Button
           variant="outline"
-          className="rounded-lg h-11 w-11 p-3 border-2 shrink-0"
+          className="rounded-lg h-11 w-11 p-3 shrink-0"
         >
           <ListFilter className="size-5" />
         </Button>
