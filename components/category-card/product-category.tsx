@@ -9,7 +9,7 @@ export function ProductCategory() {
   const alt = "Shopping bags icon";
 
   return (
-    <div className="bg-card w-full h-290 px-4 py-12 flex flex-col justify-around gap-10">
+    <div className="bg-card w-full h-290 px-4 py-12 flex flex-col justify-around gap-10 md:h-110">
       <SectionTitle
         alt={alt}
         icon={icon}
@@ -17,7 +17,7 @@ export function ProductCategory() {
         className="justify-start"
       />
 
-      <div className="h-248 grid grid-cols-2 gap-4">
+      <div className="h-248 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 ">
         {CategoryItems.map((item, index) => (
           <div
             key={item.id}
