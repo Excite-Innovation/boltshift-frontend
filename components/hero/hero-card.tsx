@@ -17,7 +17,7 @@ type HeroCardProps = {
 
 export function HeroCard({ item }: HeroCardProps) {
   return (
-    <Card className="bg-card-foreground/10 mx-auto w-full max-w-sm pt-0 gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
+    <Card className="bg-card-foreground/10 mx-auto w-full max-w-sm py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
       {/* Image */}
       <div className="overflow-hidden relative md:flex-1">
         <Button
