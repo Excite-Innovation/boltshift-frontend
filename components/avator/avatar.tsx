@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { CircleUserRound } from 'lucide-react';
 
 export function AvatarProfile() {
   return (
@@ -7,7 +8,7 @@ export function AvatarProfile() {
         src="https://github.com/denilany.png"
         alt="Image profile"
       />
-      <AvatarFallback>U</AvatarFallback>
+      <AvatarFallback><CircleUserRound /></AvatarFallback>
     </Avatar>
   )
 }

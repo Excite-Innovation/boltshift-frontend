@@ -56,7 +56,7 @@ export function HeroCarousel() {
         </CarouselContent>
       </Carousel>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full z-20 md:left-1/4 md:bottom-1/2 md:translate-x-0.5 md:translate-y-63">
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 translate-y-[200%] z-20 md:left-1/4 md:top-[80%] md:translate-y-[300%]">
         <PaginationDots
           count={count}
           current={current}
