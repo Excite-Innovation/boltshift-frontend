@@ -1,4 +1,4 @@
-import { AvatarProfile } from "@/components/icons/avatar";
+import { AvatarProfile } from "@/components/avator/avatar";
 import { ShoppingCart, Heart, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
