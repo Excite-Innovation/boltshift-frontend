@@ -1,6 +1,7 @@
 import { HeroCarousel } from "@/components/hero/hero-carousel";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { VendorScroller } from "@/components/vendor-story/vendor-stories";
+import { ProductCategory } from "@/components/category-card/product-category"
 
 export default function Home() {
   return (
@@ -18,8 +19,7 @@ export default function Home() {
 
       <HeroCarousel />
 
-      {/* Popular Categories Section */}
-      <div>Popular Categories</div>
+      <ProductCategory />
 
       {/* Hot Deal Today Section */}
       <div>Hot Deal Today</div>
