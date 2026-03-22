@@ -14,7 +14,7 @@ export function VendorCard({ vendor }: VendorCardProps) {
     >
       {/* Icon */}
       <div className="w-16 h-16 rounded-full border border-border overflow-hidden flex items-center justify-center group-hover:ring-2 group-hover:ring-ring group-focus-visible:ring-2 group-focus-visible:ring-ring transition-all duration-100 ease-out">
-        <img src={vendor.icon} alt={`${vendor.name}'s icon`} />
+        <img src={vendor.icon} alt={vendor.alt} />
       </div>
 
       {/* Label */}

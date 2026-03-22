@@ -2,6 +2,7 @@ type Vendor = {
     id?: string;
     name: string;
     icon?: string;
+    alt: string;
 };
 
 type HeroItem = {
@@ -10,6 +11,7 @@ type HeroItem = {
     description: string;
     image: string;
     badge?: string;
+    alt: string;
 };
 
 type CategoryItem = {
@@ -18,4 +20,4 @@ type CategoryItem = {
     name: string;
 };
 
-export type { Vendor, HeroItem, CategoryItem }
+export type { Vendor, HeroItem, CategoryItem };
