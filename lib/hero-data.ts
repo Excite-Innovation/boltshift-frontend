@@ -4,6 +4,7 @@ export const HeroItems: HeroItem[] = [
   {
     id: "sofa",
     image: "https://i.pinimg.com/736x/eb/c6/9f/ebc69f2a0277643a83694ae8d50030f5.jpg",
+    alt: "White velvet three-seater sofa with tufted upholstery",
     title:
       "Modern White Velvet 3-Seater Sofa Channel Tufted Upholstered Luxury Solid Wood",
     description:
@@ -13,6 +14,7 @@ export const HeroItems: HeroItem[] = [
   {
     id: "nightstand",
     image: "https://i.pinimg.com/564x/3a/bf/06/3abf0692b4e786fcfbc87efdb229f1f9.jpg",
+    alt: "Modern off-white nightstand with drawer storage",
     title:
       "Contemporary Accent Table Nightstand Drawer Storage Bedside Cabinet",
     description:
@@ -22,6 +24,7 @@ export const HeroItems: HeroItem[] = [
   {
     id: "fragrance",
     image: "https://i.pinimg.com/736x/11/74/45/1174457022ee9f5ad9777763f25017bd.jpg",
+    alt: "Armani Beauty Prive Santal Dān Shā unisex fragrance bottle",
     title: "Armani Beauty Prive Santal Dān Shā Unisex Fragrance",
     description:
       "A refined unisex fragrance with warm sandalwood notes and a luxurious, balanced scent.",
@@ -30,6 +33,7 @@ export const HeroItems: HeroItem[] = [
   {
     id: "watch",
     image: "https://i.pinimg.com/736x/36/e9/6a/36e96a759226592840340d7df9eebfda.jpg",
+    alt: "TEVISE T845 casual style men's wrist watch",
     title: "TEVISE T845 Casual Style Men Wrist Watch",
     description:
       "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
@@ -38,6 +42,7 @@ export const HeroItems: HeroItem[] = [
   {
     id: "hoodie",
     image: "https://i.pinimg.com/736x/ab/7c/4e/ab7c4e76bddedd77600204cf58810604.jpg",
+    alt: "Navy men's jacquard pullover hoodie",
     title: "Men's Jacquard Pullover Hoodie - Navy",
     description:
       "A comfortable and stylish hoodie with a textured jacquard pattern, perfect for everyday wear.",

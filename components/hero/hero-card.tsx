@@ -27,11 +27,11 @@ export function HeroCard({ item }: HeroCardProps) {
           className="absolute right-2 top-2 z-10 rounded-full"
           aria-label={`Save ${item.title}`}
         >
-          <Heart />
+          <Heart aria-hidden="true" />
         </Button>
         <img
           src={item.image}
-          alt={item.title}
+          alt={item.alt}
           className="w-full h-full object-cover md:h-full md:w-full"
         />
       </div>
@@ -62,7 +62,7 @@ export function HeroCard({ item }: HeroCardProps) {
               className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5"
             >
               Shop Now
-              <ChevronRight className="size-5" />
+              <ChevronRight className="size-5" aria-hidden="true" />
             </Button>
           </CardFooter>
       </div>
