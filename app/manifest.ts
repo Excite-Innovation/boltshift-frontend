@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
         start_url: "/",
         display: "standalone",
         display_override: ["minimal-ui", "fullscreen"],
-        background_color: "fff",
+        background_color: "#ffffff",
         theme_color: "#EE2255",
         icons: [
             // Standard icons
@@ -57,13 +57,13 @@ export default function manifest(): MetadataRoute.Manifest {
                 src: "/icons/maskable/Variant=512-maskable.png",
                 sizes: "512x512",
                 type: "image/png",
-                purpose: "maskable",
+                purpose: "any",
             },
             {
                 src: "/icons/maskable/Variant=icon-192-maskable.png",
                 sizes: "192x192",
                 type: "image/png",
-                purpose: "maskable",
+                purpose: "any",
             },
 
             // Apple icons

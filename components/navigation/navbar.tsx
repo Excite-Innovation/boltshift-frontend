@@ -8,12 +8,18 @@ import { Button } from "@/components/ui/button";
 export function Navbar() {
   return (
     <header className="h-24 flex items-center justify-between gap-4 rounded-none">
-      <div className="h-12 w-52.5 flex items-center gap-4 shrink-0">
-        <Menu />
+      <div className="h-12  flex items-center gap-4 shrink-0">
+        <Menu aria-hidden="true" />
         <Logo />
       </div>
-      <NavbarSearch />
-      <Profile />
+
+      <div className="flex-1 min-w-0">
+        <NavbarSearch />
+      </div>
+
+      <div className="shrink-0">
+        <Profile />
+      </div>
     </header>
   );
 }
@@ -24,7 +30,7 @@ export function NavbarMobile() {
     <header className="h-33 flex flex-col gap-4">
       <div className="h-10 flex flex-row justify-between">
         <div className="flex items-center gap-2">
-          <Menu className="size-6" />
+          <Menu className="size-6" aria-hidden="true" />
           <Logo />
         </div>
         <div>
@@ -35,11 +41,15 @@ export function NavbarMobile() {
       <div className="flex items-center gap-2 h-11">
         <Button
           variant="outline"
-          className="rounded-lg h-11 w-11 p-3 border-2"
+          className="rounded-lg h-11 w-11 p-3 shrink-0"
+          aria-label="Filter button"
         >
-          <ListFilter className="size-5" />
+          <ListFilter className="size-5" aria-hidden="true" />
         </Button>
-        <NavbarSearch />
+
+        <div className="flex-1 min-w-0">
+          <NavbarSearch />
+        </div>
       </div>
     </header>
   );

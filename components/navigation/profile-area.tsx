@@ -1,4 +1,4 @@
-import { AvatarProfile } from "@/components/icons/avatar";
+import { AvatarProfile } from "@/components/avatar/avatar";
 import { ShoppingCart, Heart, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -20,8 +20,9 @@ export function Profile() {
             variant="ghost"
             size="icon"
             className="w-10 h-10 rounded-full"
+            aria-label={ActionIcon.id}
           >
-            <Icon className="size-6 stroke-[1.5]" />
+            <Icon className="size-6 stroke-[1.5]" aria-hidden="true" />
           </Button>
         );
       })}
