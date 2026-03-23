@@ -14,7 +14,7 @@ export const CategoryItems: CategoryItem[] = [
     { id: "desktop-computer", name: "Desktop", image: "/popular-categories-icons/Desktop-computer.svg" },
     { id: "headphone", name: "Headphones", image: "/popular-categories-icons/Headphone.svg" },
     { id: "ring", name: "Jewelery", image: "/popular-categories-icons/Ring.svg" },
-    { id: "shopping-bags", name: "All Categories", image: "/popular-categories-icons/Shopping-bags.svg" },
     { id: "backpack", name: "Backpack", image: "/popular-categories-icons/Backpack.svg" },
     { id: "swimsuit", name: "Swimsuit", image: "/popular-categories-icons/One-piece-swimsuit.svg" },
+    { id: "shopping-bags", name: "All Categories", image: "/popular-categories-icons/Shopping-bags.svg" },
 ];
