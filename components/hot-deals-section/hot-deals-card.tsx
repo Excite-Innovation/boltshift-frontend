@@ -1,8 +1,10 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@/lib/type";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 type hotDealsProp = {
   product: Product;
@@ -13,11 +15,14 @@ export function HotDealsCard({ product }: hotDealsProp) {
     <Card className="mx-auto h-72 w-40 p-0 border hover:ring-2 hover:ring-offset-2 hover:ring-ring hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out">
       <CardContent className="px-0 pt-0 pb-3 flex flex-col justify-between gap-4 rounded-xl overflow-hidden">
         <div className="w-40 h-40 relative">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="overflow-hidden"
-          />
+          <AspectRatio ratio={1 / 1} >
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="overflow-hidden"
+            />
+          </AspectRatio>
           <Button
             variant="outline"
             size="icon-sm"
