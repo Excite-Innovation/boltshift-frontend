@@ -24,7 +24,7 @@ export function HeroCard({ item }: HeroCardProps) {
           type="button"
           variant="outline"
           size="icon-sm"
-          className="absolute right-2 top-2 z-10 rounded-full"
+          className="bg-background/50 border-0 absolute right-2 top-2 z-10 rounded-full hover:cursor-pointer hover:bg-background/50"
           aria-label={`Save ${item.title}`}
         >
           <Heart aria-hidden="true" />
@@ -59,7 +59,7 @@ export function HeroCard({ item }: HeroCardProps) {
           <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
             <Button
               size="lg"
-              className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5"
+              className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5 hover:cursor-pointer"
             >
               Shop Now
               <ChevronRight className="size-5" aria-hidden="true" />
