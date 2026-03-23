@@ -7,12 +7,8 @@ export default function Home() {
   return (
     <div id="landing-page" className="">
       <div>
-        <div className="hidden md:block">
-          <Navbar />
-        </div>
-        <div className="block md:hidden">
-          <NavbarMobile />
-        </div>
+        <div className="hidden md:block"> <Navbar /> </div>
+        <div className="block md:hidden"> <NavbarMobile /> </div>
       </div>
 
       <VendorScroller />
