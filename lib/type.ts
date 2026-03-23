@@ -20,4 +20,13 @@ type CategoryItem = {
     name: string;
 };
 
-export type { Vendor, HeroItem, CategoryItem };
+type Product = {
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  progress: number;
+  itemsLeft: number;
+};
+
+export type { Vendor, HeroItem, CategoryItem, Product };
