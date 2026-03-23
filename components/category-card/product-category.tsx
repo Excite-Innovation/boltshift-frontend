@@ -22,8 +22,7 @@ export function ProductCategory() {
           <div
             key={item.id}
             className={cn(
-              "block",
-              index == CategoryItems.length - 1 && "ring-4 ring-muted rounded-xl",
+              index == CategoryItems.length - 1 && "ring-4 ring-muted rounded-xl"
             )}
           >
             <CategoryCard categoryItem={item} />
