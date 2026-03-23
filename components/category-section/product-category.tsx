@@ -1,6 +1,6 @@
 import { SectionTitle } from "@/components/section-title";
 import { CategoryItems } from "@/lib/products-categories";
-import { CategoryCard } from "@/components/category-card/category-card";
+import { CategoryCard } from "@/components/category-section/category-card";
 import { cn } from "@/lib/utils";
 
 export function ProductCategory() {

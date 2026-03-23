@@ -1,7 +1,7 @@
 import { HeroCarousel } from "@/components/hero/hero-carousel";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { VendorScroller } from "@/components/vendor-story/vendor-stories";
-import { ProductCategory } from "@/components/category-card/product-category"
+import { ProductCategory } from "@/components/category-section/product-category"
 
 export default function Home() {
   return (
