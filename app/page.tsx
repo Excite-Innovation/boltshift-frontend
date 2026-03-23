@@ -2,6 +2,7 @@ import { HeroCarousel } from "@/components/hero/hero-carousel";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { VendorScroller } from "@/components/vendor-story/vendor-stories";
 import { ProductCategory } from "@/components/category-section/product-category"
+import { HotDealsCollection } from "@/components/hot-deals-section/hot-deals-collection";
 
 export default function Home() {
   return (
@@ -12,13 +13,9 @@ export default function Home() {
       </div>
 
       <VendorScroller />
-
       <HeroCarousel />
-
       <ProductCategory />
-
-      {/* Hot Deal Today Section */}
-      <div>Hot Deal Today</div>
+      <HotDealsCollection />
 
       {/* Featured Products Section */}
       <div>Featured Products</div>
