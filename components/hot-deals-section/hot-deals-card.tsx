@@ -8,22 +8,24 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { EditNum } from "@/lib/utils";
 
 type hotDealsProp = {
+  ratio?: number;
   product: Product;
 };
 
-export function HotDealsCard({ product }: hotDealsProp) {
+export function HotDealsCard({ ratio = 1 / 1, product }: hotDealsProp) {
   const price: string = EditNum(product.price);
 
   return (
     <Card className="mx-auto w-full p-0 border hover:ring-2 hover:ring-offset-2 hover:ring-ring hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out">
       <CardContent className="px-0 pt-0 pb-3 flex flex-col justify-between gap-4 rounded-xl overflow-hidden">
+        {/* Image */}
         <div className="relative">
-          <AspectRatio ratio={1 / 1} >
+          <AspectRatio ratio={ratio} >
             <Image
               src={product.image}
               alt={product.name}
               fill
-              className="overflow-hidden"
+              className="object-cover w-full h-full overflow-hidden"
             />
           </AspectRatio>
           <Button
@@ -36,6 +38,7 @@ export function HotDealsCard({ product }: hotDealsProp) {
           </Button>
         </div>
 
+        {/* Content */}
         <div className="px-3 flex flex-col gap-1">
           <div>
             <p className="text-xs font-medium truncate">{product.name}</p>
