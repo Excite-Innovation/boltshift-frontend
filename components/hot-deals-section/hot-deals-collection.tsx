@@ -9,7 +9,7 @@ export function HotDealsCollection() {
   const alt = "Flamming icon";
 
   return (
-    <div className="py-12 flex flex-col gap-10">
+    <div className="w-full py-12 flex flex-col gap-10">
       <SectionTitle
         alt={alt}
         icon={icon}

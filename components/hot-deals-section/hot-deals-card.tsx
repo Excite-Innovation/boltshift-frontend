@@ -5,16 +5,19 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@/lib/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { EditNum } from "@/lib/utils";
 
 type hotDealsProp = {
   product: Product;
 };
 
 export function HotDealsCard({ product }: hotDealsProp) {
+  const price: string = EditNum(product.price);
+
   return (
-    <Card className="mx-auto h-72 w-40 p-0 border hover:ring-2 hover:ring-offset-2 hover:ring-ring hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out">
+    <Card className="mx-auto w-full p-0 border hover:ring-2 hover:ring-offset-2 hover:ring-ring hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out">
       <CardContent className="px-0 pt-0 pb-3 flex flex-col justify-between gap-4 rounded-xl overflow-hidden">
-        <div className="w-40 h-40 relative">
+        <div className="relative">
           <AspectRatio ratio={1 / 1} >
             <Image
               src={product.image}
@@ -38,7 +41,7 @@ export function HotDealsCard({ product }: hotDealsProp) {
             <p className="text-xs font-medium truncate">{product.name}</p>
             <p className="text-primary">
               <span className="text-xs font-normal">Kshs.</span>
-              <span className="text-xs font-medium">{product.price}</span>
+              <span className="text-xs font-medium">{price}</span>
             </p>
           </div>
 
@@ -60,7 +63,7 @@ export function HotDealsCard({ product }: hotDealsProp) {
 
           <Button
             variant="outline"
-            className="py-2 px-3 grid gap-1 rounded-md text-sm font-semibold"
+            className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular"
           >
             Add to Cart
           </Button>

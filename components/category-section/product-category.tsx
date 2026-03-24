@@ -9,7 +9,7 @@ export function ProductCategory() {
   const alt = "Shopping bags icon";
 
   return (
-    <div className="bg-card w-full py-12 flex flex-col gap-10">
+    <div className="w-full py-12 flex flex-col gap-10">
       <SectionTitle
         alt={alt}
         icon={icon}
