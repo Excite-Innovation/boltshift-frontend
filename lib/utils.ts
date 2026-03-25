@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { ProductVariant } from "./type"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -7,4 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 
 export function EditNum(num: number): string {
   return num.toLocaleString('en-US')
-} 
+}
+
+export function GetRatio(variant: ProductVariant) {
+  switch (variant) {
+    case "wide":
+      return 21 / 10;
+    case "horizontal":
+      return 1 / 1;
+    default:
+      return 1 / 1;
+  }
+}
