@@ -1,6 +1,6 @@
 import { Product } from "@/lib/type";
 
-export function GetHotDeals(): Product[] {
+export function GetProductItems(): Product[] {
   return [
     {
       id: 1,
