@@ -32,38 +32,14 @@ export function FeaturedProducts() {
         />
 
         <div className="col-span-4 grid grid-cols-subgrid gap-4">
-          <ProductCard
-            key={products[2].id}
-            variant="default"
-            product={products[2]}
-            className="col-start-5 col-end-6 row-start-1 row-end-2"
-          />
-          <ProductCard
-            key={products[3].id}
-            variant="default"
-            product={products[3]}
-          />
-          <ProductCard
-            key={products[4].id}
-            variant="default"
-            product={products[4]}
-          />
-          <ProductCard
-            key={products[5].id}
-            variant="default"
-            product={products[5]}
-          />
-          <div className="col-span-2 grid grid-cols-subgrid">
-            <ProductCard
-              key={products[6].id}
-              variant="wide"
-              product={products[6]}
-            />
-            <ProductCard
-              key={products[7].id}
-              variant="wide"
-              product={products[7]}
-            />
+          {products.slice(2, 6).map((p) => (
+            <ProductCard key={p.id} variant="default" product={p} />
+          ))}
+
+          <div className="col-span-2 row-span-1 grid grid-cols-subgrid">
+            {products.slice(6, 8).map((p) => (
+              <ProductCard key={p.id} variant="wide" product={p} />
+            ))}
           </div>
         </div>
       </div>
