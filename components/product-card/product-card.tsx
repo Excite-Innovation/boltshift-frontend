@@ -6,11 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Product, ProductVariant } from "@/lib/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import FlipClock from "@/components/ui/flip-clock";
-import { EditNum, GetRatio } from "@/lib/utils";
+import { EditNum, GetRatio, cn } from "@/lib/utils";
 
 type ProductCardProps = {
   variant?: ProductVariant;
   product: Product;
+  className?: string;
 };
 
 function CardImage({ product, ratio }: { product: Product; ratio: number }) {
@@ -58,7 +59,7 @@ function DefaultContent({
 
         <div className="flex items-center gap-1 shrink-0">
           <img
-            src="/hot-deals-icons/1F525_Fire_v13_Still 1.svg"
+            src="/section-title-icons/1F525_Fire_v13_Still 1.svg"
             alt="flamming icon"
             className="w-4 h-4"
             aria-hidden="true"
@@ -77,29 +78,49 @@ function DefaultContent({
   );
 }
 
-function CountdownContent({ product }: { product: Product }) {
+function CountdownContent({
+  product,
+  price,
+}: {
+  product: Product;
+  price: string;
+}) {
   return (
-    <div className="flex flex-col items-center justify-center text-center gap-2">
-      <p className="text-sm font-medium">{product.name}</p>
+    <>
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-normal truncate">{product.name}</p>
+        <p className="text-primary">
+          <span className="text-xl">Kshs.</span>
+          <span className="text-xl font-semibold">{price}</span>
+        </p>
+      </div>
 
-      <FlipClock size="sm" variant="secondary" />
+      <div className="flex flex-col gap-2">
+        <FlipClock size="sm" variant="secondary" className="p-1" />
 
-      <Button className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer">
-        Shop Now
-      </Button>
-    </div>
+        <Button className="w-full py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer">
+          Add to Cart
+        </Button>
+      </div>
+    </>
   );
 }
 
 export function ProductCard({
   variant = "default",
   product,
+  className,
 }: ProductCardProps) {
   const price = EditNum(product.price);
   const ratio = GetRatio(variant);
 
   return (
-    <Card className="mx-auto w-full p-0 hover:ring-2 hover:ring-ring hover:ring-offset-2 hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out">
+    <Card
+      className={cn(
+        "mx-auto w-full p-0 hover:ring-2 hover:ring-ring hover:ring-offset-2 hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out",
+        className,
+      )}
+    >
       <CardContent
         className={`
           px-0 pt-0 pb-3 rounded-xl overflow-hidden
@@ -118,16 +139,13 @@ export function ProductCard({
         {/* CONTENT */}
         <div
           className={`
-            px-3 flex flex-col gap-1
-            ${
-              variant === "centered" || variant === "countdown"
-                ? "items-center text-center"
-                : ""
-            }
+            px-3 flex flex-col
+            ${variant === "default" && "gap-1"}
+            ${(variant === "centered" || variant === "countdown") && "text-center gap-5"}
           `}
         >
           {variant === "countdown" ? (
-            <CountdownContent product={product} />
+            <CountdownContent product={product} price={price} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}

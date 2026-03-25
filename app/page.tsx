@@ -3,6 +3,7 @@ import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { VendorScroller } from "@/components/vendor-story/vendor-stories";
 import { ProductCategory } from "@/components/category-section/product-category"
 import { HotDealsCollection } from "@/components/hot-deals-section/hot-deals-collection";
+import { FeaturedProducts } from "@/components/featured-products-section/featured-products"
 
 export default function Home() {
   return (
@@ -16,9 +17,7 @@ export default function Home() {
       <HeroCarousel />
       <ProductCategory />
       <HotDealsCollection />
-
-      {/* Featured Products Section */}
-      <div>Featured Products</div>
+      <FeaturedProducts />
 
       {/* Featured Store Section */}
       <div>Featured Store</div>
