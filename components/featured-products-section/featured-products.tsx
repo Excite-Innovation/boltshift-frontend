@@ -6,7 +6,7 @@ export function FeaturedProducts() {
   const products = GetProductItems();
   const icon = "/section-title-icons/Clipboard.svg";
   const title = "Featured Products";
-  const alt = "Clipboard icon";
+  const alt = "Clipboard image icon";
 
   return (
     <div className="w-full py-12 flex flex-col gap-10">
