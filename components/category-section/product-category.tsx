@@ -1,6 +1,6 @@
 import { SectionTitle } from "@/components/section-title";
 import { CategoryItems } from "@/lib/products-categories";
-import { CategoryCard } from "@/components/category-card/category-card";
+import { CategoryCard } from "@/components/category-section/category-card";
 import { cn } from "@/lib/utils";
 
 export function ProductCategory() {
@@ -9,7 +9,7 @@ export function ProductCategory() {
   const alt = "Shopping bags icon";
 
   return (
-    <div className="bg-card w-full h-290 px-4 py-12 flex flex-col justify-around gap-10 md:h-110">
+    <div className="w-full py-12 flex flex-col gap-10">
       <SectionTitle
         alt={alt}
         icon={icon}
@@ -17,13 +17,12 @@ export function ProductCategory() {
         className="justify-start"
       />
 
-      <div className="h-248 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 ">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 ">
         {CategoryItems.map((item, index) => (
           <div
             key={item.id}
             className={cn(
-              "block",
-              index >= CategoryItems.length - 2 && "sm:block hidden",
+              index == CategoryItems.length - 1 && "ring-4 ring-muted rounded-xl"
             )}
           >
             <CategoryCard categoryItem={item} />

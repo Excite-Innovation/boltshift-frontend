@@ -4,6 +4,7 @@ import * as React from "react";
 import { HeroCard } from "./hero-card";
 import { HeroItems } from "@/lib/hero-data";
 import Autoplay from "embla-carousel-autoplay";
+import Fade from 'embla-carousel-fade'
 import { cn } from "@/lib/utils";
 
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
@@ -32,7 +33,7 @@ export function HeroCarousel() {
 
   const plugin = React.useRef(
     Autoplay({
-      delay: 3000,
+      delay: 8000,
       stopOnInteraction: true,
     }),
   );
@@ -41,11 +42,11 @@ export function HeroCarousel() {
     <div className="w-full relative">
       <Carousel
         setApi={setApi}
-        plugins={[plugin.current]}
+        plugins={[plugin.current, Fade()]}
         opts={{ loop: true }}
         className="pt-4 w-full"
-        onMouseEnter={api?.stop}
-        onMouseLeave={api?.play}
+        onMouseEnter={() => plugin.current.stop()}
+        onMouseLeave={() => plugin.current.play()}
       >
         <CarouselContent>
           {HeroItems.map((item) => (

@@ -20,4 +20,21 @@ type CategoryItem = {
     name: string;
 };
 
-export type { Vendor, HeroItem, CategoryItem };
+type Product = {
+    id: number;
+    image: string;
+    name: string;
+    price: number;
+    progress: number;
+    itemsLeft: number;
+};
+
+// Card variants
+type ProductVariant =
+    | "default"        // 1:1 
+    | "wide"           // 21:10
+    | "countdown"      // centered + timer
+    | "horizontal"     // image left
+    | "centered";      // centered content
+
+export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant };

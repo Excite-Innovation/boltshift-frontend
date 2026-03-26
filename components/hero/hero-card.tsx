@@ -2,14 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, ChevronRight } from "lucide-react";
 import { HeroItem } from "@/lib/type";
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 type HeroCardProps = {
   item: HeroItem;
@@ -17,14 +10,14 @@ type HeroCardProps = {
 
 export function HeroCard({ item }: HeroCardProps) {
   return (
-    <Card className="bg-card-foreground/10 mx-auto w-full max-w-sm py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
+    <Card className="bg-card-foreground/10 mx-auto w-full py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
       {/* Image */}
       <div className="overflow-hidden relative md:flex-1">
         <Button
           type="button"
           variant="outline"
           size="icon-sm"
-          className="absolute right-2 top-2 z-10 rounded-full"
+          className="bg-background/50 border-0 absolute right-2 top-2 z-10 rounded-full hover:cursor-pointer hover:bg-background/50"
           aria-label={`Save ${item.title}`}
         >
           <Heart aria-hidden="true" />
@@ -59,7 +52,7 @@ export function HeroCard({ item }: HeroCardProps) {
           <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
             <Button
               size="lg"
-              className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5"
+              className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5 hover:cursor-pointer"
             >
               Shop Now
               <ChevronRight className="size-5" aria-hidden="true" />
