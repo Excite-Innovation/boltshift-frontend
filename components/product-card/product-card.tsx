@@ -96,13 +96,15 @@ function CountdownContent({
       </div>
 
       <div className="flex flex-col gap-2">
-        <FlipClock
-          countdown={true}
-          size="sm"
-          targetDate={new Date(Date.now() + 1000 * 60 * 60 * 24 * 500)}
-          variant="secondary"
-          className="p-1"
-        />
+        <div className="scale-70">
+          <FlipClock
+            countdown={true}
+            size="sm"
+            targetDate={new Date(Date.now() + 1000 * 60 * 60 * 24 * 500)}
+            variant="secondary"
+            suppressHydrationWarning
+          />
+        </div>
 
         <Button className="w-full py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer">
           Add to Cart
@@ -147,7 +149,8 @@ export function ProductCard({
           className={cn(
             "px-3 flex flex-col",
             variant === "default" && "gap-1",
-            (variant === "centered" || variant === "countdown") && "text-center gap-5"
+            (variant === "centered" || variant === "countdown") &&
+              "text-center gap-5",
           )}
         >
           {variant === "countdown" ? (
