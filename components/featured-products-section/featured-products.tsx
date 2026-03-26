@@ -17,8 +17,8 @@ export function FeaturedProducts() {
         className="justify-start"
       />
 
-      <div className="flex flex-col gap-10">
-        <div className="grid grid-cols-1 gap-4">
+      <div className="flex flex-col gap-10 md:flex-row">
+        <div className="basis-1/2 grid grid-cols-1 gap-4 md:grid-cols-2">
           {products.slice(0, 2).map((p) => (
             <ProductCard
               key={p.id}
@@ -29,14 +29,14 @@ export function FeaturedProducts() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="basis-1/2 flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {products.slice(2, 6).map((p) => (
               <ProductCard key={p.id} variant="default" product={p} />
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {products.slice(6, 8).map((p) => (
               <ProductCard key={p.id} variant="wide" product={p} />
             ))}

@@ -10,7 +10,7 @@ type HeroCardProps = {
 
 export function HeroCard({ item }: HeroCardProps) {
   return (
-    <Card className="bg-card-foreground/10 mx-auto w-full max-w-sm py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
+    <Card className="bg-card-foreground/10 mx-auto w-full py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
       {/* Image */}
       <div className="overflow-hidden relative md:flex-1">
         <Button
@@ -25,7 +25,7 @@ export function HeroCard({ item }: HeroCardProps) {
         <img
           src={item.image}
           alt={item.alt}
-          className="w-full h-full object-cover md:h-full md:w-full"
+          className="aspect-square object-cover md:h-full md:w-full"
         />
       </div>
 
@@ -42,11 +42,11 @@ export function HeroCard({ item }: HeroCardProps) {
             </CardAction>
 
             <div className="w-full flex flex-col gap-1">
-              <CardTitle className="text-card-foreground text-3xl text-start font-semibold">
+              <CardTitle className="text-card-foreground text-3xl text-start font-semibold line-clamp-3 md:line-clamp-none">
                 {item.title}
               </CardTitle>
 
-              <CardDescription>{item.description}</CardDescription>
+              <CardDescription className="line-clamp-3">{item.description}</CardDescription>
             </div>
           </CardHeader>
           <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
