@@ -78,6 +78,34 @@ function DefaultContent({
   );
 }
 
+function HorizontalDefaultContent({
+  product,
+  price,
+}: {
+  product: Product;
+  price: string;
+}) {
+  return (
+    <>
+      <div className="flex flex-col gap-1 flex-1">
+        <p className="text-sm font-medium line-clamp-2">{product.name}</p>
+
+        <p className="text-primary">
+          <span className="text-xs">Kshs.</span>
+          <span className="text-sm font-semibold">{price}</span>
+        </p>
+      </div>
+
+      <Button
+        variant="outline"
+        className="w-full py-2 px-3 rounded-md text-sm hover:cursor-pointer"
+      >
+        Add to Cart
+      </Button>
+    </>
+  );
+}
+
 function CountdownContent({
   product,
   price,
@@ -148,6 +176,7 @@ export function ProductCard({
         <div
           className={cn(
             "px-3 flex flex-col",
+            variant === "horizontal" && "py-3 px-4 mx-auto items-center gap-3",
             variant === "default" && "gap-1",
             (variant === "centered" || variant === "countdown") &&
               "text-center gap-5",
@@ -155,6 +184,8 @@ export function ProductCard({
         >
           {variant === "countdown" ? (
             <CountdownContent product={product} price={price} />
+          ) : variant === "horizontal" ? (
+            <HorizontalDefaultContent product={product} price={price} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}
