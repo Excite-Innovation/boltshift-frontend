@@ -36,10 +36,10 @@ export function FeaturedStoreCard() {
         />
       </div>
 
-      <CardHeader className="flex flex-col items-center gap-4">
+      <CardHeader className="flex flex-col items-center gap-4 -mt-45">
         {/* Logo */}
-        <Avatar size="lg" className="border-2 ring-4 ring-muted">
-          <AvatarImage src={vendorLogo} className="h-40 aspect-square" />
+        <Avatar className="h-40 w-40 border-2 ring-4 ring-muted">
+          <AvatarImage src={vendorLogo}/>
           <AvatarFallback>
             <User />
           </AvatarFallback>
