@@ -4,7 +4,7 @@ import { Store } from "lucide-react";
 
 export function TabsLine() {
   return (
-    <Tabs defaultValue="home" className="w-full grid gap-12">
+    <Tabs defaultValue="home" className="grid gap-12">
       <TabsList variant="line" className="h-8 flex gap-3 overflow-x-scroll overflow-y-hidden scrollbar-hide">
         <TabsTrigger value="home">Home</TabsTrigger>
         <TabsTrigger value="women">Women’s Fashion</TabsTrigger>
@@ -17,7 +17,7 @@ export function TabsLine() {
         <TabsTrigger value="electronics">Electronics</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="home" className="overflow-clip">
+      <TabsContent value="home">
         <StoreContent />
       </TabsContent>
 

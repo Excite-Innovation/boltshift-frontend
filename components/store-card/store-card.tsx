@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
-import { User, Star, Plus, ChevronRight } from "lucide-react";
+import { Store, Star, Plus, ChevronRight, BadgeCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Rating, RatingItem } from "@/components/ui/rating";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { TabsLine } from "@/components/store-card/tabs";
 import { PaginationLinks } from "@/components/store-card/pagination";
+import { EditNum } from "@/lib/utils";
 
 export function FeaturedStoreCard() {
   const [rating, setRating] = useState(4);
@@ -22,7 +23,7 @@ export function FeaturedStoreCard() {
   const profileCover: string = "/images/Store Background.png";
   const vendorLogo: string = "/vendor-logos/Euphoria.svg";
   const vendorName: string = "Senjes Cuisines Store";
-  const folowers: number = 1290;
+  const followers: string = EditNum(1290);
 
   return (
     <Card className="w-full overflow-hidden pt-0 pb-4 flex flex-col gap-12 rounded-2xl">
@@ -39,15 +40,18 @@ export function FeaturedStoreCard() {
       <CardHeader className="-mt-35 flex flex-col items-center gap-4 md:-mt-45">
         {/* Logo */}
         <Avatar className="h-30 w-30 border-2 ring-4 ring-muted md:h-40 md:w-40">
-          <AvatarImage src={vendorLogo}/>
+          <AvatarImage src={vendorLogo} />
           <AvatarFallback>
-            <User />
+            <Store size={30}/>
           </AvatarFallback>
         </Avatar>
 
         {/* Store name */}
         <div className="flex flex-col items-center">
-          <CardTitle className="text-xl font-semibold">{vendorName}</CardTitle>
+          <CardTitle className="text-xl font-semibold flex gap-0.5">
+            {vendorName}
+            <BadgeCheck fill="#2E90FA" stroke="white"/>
+          </CardTitle>
           <div className="flex gap-1">
             <Rating
               value={rating}
@@ -63,7 +67,7 @@ export function FeaturedStoreCard() {
             </Rating>
 
             <div className="text-base font-medium text-muted-foreground ">
-              <p>{folowers} Followers</p>
+              <p>{followers} Followers</p>
             </div>
           </div>
         </div>
