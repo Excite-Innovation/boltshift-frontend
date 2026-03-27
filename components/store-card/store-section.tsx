@@ -7,7 +7,7 @@ export function FeaturedStoreSection() {
     const alt: string = "Store icon";
 
     return (
-        <div className=" py-12 grid gap-10">
+        <div className="w-full py-12 grid gap-10">
             <SectionTitle title={title} icon={icon} alt={alt} className="justify-start" />
             <FeaturedStoreCard />
         </div>

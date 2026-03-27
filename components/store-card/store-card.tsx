@@ -25,8 +25,8 @@ export function FeaturedStoreCard() {
   const folowers: number = 1290;
 
   return (
-    <Card className="overflow-hidden pt-0 pb-4 grid gap-12 rounded-2xl">
-      <div className="h-48 w-full overflow-hidden relative">
+    <Card className="w-full overflow-hidden pt-0 pb-4 flex flex-col gap-12 rounded-2xl">
+      <div className="h-38 overflow-hidden relative md:h-48">
         <Image
           src={profileCover}
           alt="Store card background image"
@@ -36,9 +36,9 @@ export function FeaturedStoreCard() {
         />
       </div>
 
-      <CardHeader className="flex flex-col items-center gap-4 -mt-45">
+      <CardHeader className="-mt-35 flex flex-col items-center gap-4 md:-mt-45">
         {/* Logo */}
-        <Avatar className="h-40 w-40 border-2 ring-4 ring-muted">
+        <Avatar className="h-30 w-30 border-2 ring-4 ring-muted md:h-40 md:w-40">
           <AvatarImage src={vendorLogo}/>
           <AvatarFallback>
             <User />
@@ -79,7 +79,7 @@ export function FeaturedStoreCard() {
         </div>
       </CardHeader>
 
-      <CardContent className="px-4">
+      <CardContent className="w-full px-4">
         <TabsLine />
       </CardContent>
 
