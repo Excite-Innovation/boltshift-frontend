@@ -25,7 +25,7 @@ export function HeroCard({ item }: HeroCardProps) {
         <img
           src={item.image}
           alt={item.alt}
-          className="w-full h-full object-cover md:h-full md:w-full"
+          className="aspect-square object-cover md:h-full md:w-full"
         />
       </div>
 
@@ -42,11 +42,11 @@ export function HeroCard({ item }: HeroCardProps) {
             </CardAction>
 
             <div className="w-full flex flex-col gap-1">
-              <CardTitle className="text-card-foreground text-3xl text-start font-semibold">
+              <CardTitle className="text-card-foreground text-3xl text-start font-semibold line-clamp-3 md:line-clamp-none">
                 {item.title}
               </CardTitle>
 
-              <CardDescription>{item.description}</CardDescription>
+              <CardDescription className="line-clamp-3">{item.description}</CardDescription>
             </div>
           </CardHeader>
           <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
