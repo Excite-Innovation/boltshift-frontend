@@ -14,7 +14,7 @@ type ProductCardProps = {
   className?: string;
 };
 
-function CardImage({ product, ratio }: { product: Product; ratio: number }) {
+function CardImage({ product, ratio, savePos }: { product: Product; ratio: number; savePos?: string }) {
   return (
     <div className="relative">
       <AspectRatio ratio={ratio}>
@@ -29,7 +29,7 @@ function CardImage({ product, ratio }: { product: Product; ratio: number }) {
       <Button
         variant="outline"
         size="icon-sm"
-        className="bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50"
+        className={cn("bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50", savePos)}
       >
         <Heart />
       </Button>
@@ -71,6 +71,34 @@ function DefaultContent({
       <Button
         variant="outline"
         className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer"
+      >
+        Add to Cart
+      </Button>
+    </>
+  );
+}
+
+function HorizontalDefaultContent({
+  product,
+  price,
+}: {
+  product: Product;
+  price: string;
+}) {
+  return (
+    <>
+      <div className="flex flex-col gap-1 flex-1">
+        <p className="text-xs font-medium line-clamp-2">{product.name}</p>
+
+        <p className="text-primary">
+          <span className="text-xs">Kshs.</span>
+          <span className="text-xs font-medium">{price}</span>
+        </p>
+      </div>
+
+      <Button
+        variant="outline"
+        className="w-full py-2 px-3 rounded-md text-sm font-semibold hover:cursor-pointer"
       >
         Add to Cart
       </Button>
@@ -132,13 +160,13 @@ export function ProductCard({
       <CardContent
         className={`
           px-0 pt-0 pb-3 rounded-xl overflow-hidden
-          ${variant === "horizontal" ? "flex gap-3 items-center" : "flex flex-col gap-4"}
+          ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
         `}
       >
         {/* IMAGE */}
         {variant === "horizontal" ? (
           <div className="w-32 shrink-0">
-            <CardImage product={product} ratio={ratio} />
+            <CardImage product={product} ratio={ratio} savePos="left-2" />
           </div>
         ) : (
           <CardImage product={product} ratio={ratio} />
@@ -148,6 +176,7 @@ export function ProductCard({
         <div
           className={cn(
             "px-3 flex flex-col",
+            variant === "horizontal" && "px-4 items-center gap-3",
             variant === "default" && "gap-1",
             (variant === "centered" || variant === "countdown") &&
               "text-center gap-5",
@@ -155,6 +184,8 @@ export function ProductCard({
         >
           {variant === "countdown" ? (
             <CountdownContent product={product} price={price} />
+          ) : variant === "horizontal" ? (
+            <HorizontalDefaultContent product={product} price={price} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}

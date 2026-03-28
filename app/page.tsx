@@ -4,6 +4,7 @@ import { VendorScroller } from "@/components/vendor-story/vendor-stories";
 import { ProductCategory } from "@/components/category-section/product-category"
 import { HotDealsCollection } from "@/components/hot-deals-section/hot-deals-collection";
 import { FeaturedProducts } from "@/components/featured-products-section/featured-products"
+import { FeaturedStoreSection } from "@/components/store-card/store-section";
 
 export default function Home() {
   return (
@@ -19,8 +20,7 @@ export default function Home() {
       <HotDealsCollection />
       <FeaturedProducts />
 
-      {/* Featured Store Section */}
-      <div>Featured Store</div>
+      <FeaturedStoreSection />
 
       {/* Special Offer Section */}
       <div>Special Offer</div>
