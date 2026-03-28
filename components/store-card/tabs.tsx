@@ -3,8 +3,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export function TabsLine() {
   return (
-    <Tabs defaultValue="home" className="grid gap-12">
-      <TabsList variant="line" className="h-8 flex gap-3 overflow-x-scroll overflow-y-hidden scrollbar-hide">
+    <Tabs defaultValue="home" className="gap-12">
+      <TabsList variant="line" className="h-8 gap-3 overflow-x-scroll scroll-smooth scrollbar-hide">
         <TabsTrigger value="home">Home</TabsTrigger>
         <TabsTrigger value="women">Women’s Fashion</TabsTrigger>
         <TabsTrigger value="men">Men’s Fashion</TabsTrigger>

@@ -6,7 +6,7 @@ export function StoreContent() {
     const products: Product[] = GetProductItems();
 
     return (
-        <div className="w-full grid grid-flow-col grid-rows-2 p-1 gap-4 overflow-x-scroll scrollbar-hide">
+        <div className="w-full grid grid-flow-col grid-rows-2 gap-4 p-1 overflow-x-auto scroll-smooth scrollbar-hide">
             {products.map((p) => (
                 <ProductCard key={p.id} variant="horizontal" product={p} />
             ))}
