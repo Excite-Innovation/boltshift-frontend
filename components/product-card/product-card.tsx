@@ -160,7 +160,7 @@ export function ProductCard({
       <CardContent
         className={`
           px-0 pt-0 pb-3 rounded-xl overflow-hidden
-          ${variant === "horizontal" ? "flex gap-3 pb-0 items-center" : "flex flex-col gap-4"}
+          ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
         `}
       >
         {/* IMAGE */}

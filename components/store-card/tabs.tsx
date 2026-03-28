@@ -1,6 +1,5 @@
 import { StoreContent } from "@/components/store-card/store-content";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Store } from "lucide-react";
 
 export function TabsLine() {
   return (
