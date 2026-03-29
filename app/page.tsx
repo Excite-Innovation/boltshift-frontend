@@ -20,6 +20,8 @@ export default function Home() {
       <HotDealsCollection />
       <FeaturedProducts />
 
+      {/* Featured Store Section */}
+      <div>Featured Store</div>
       <FeaturedStoreSection />
 
       {/* Special Offer Section */}
