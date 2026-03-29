@@ -129,7 +129,7 @@ function CountdownContent({
             countdown={true}
             size="sm"
             targetDate={new Date(Date.now() + 1000 * 60 * 60 * 24 * 500)}
-            variant="secondary"
+            variant="muted"
             suppressHydrationWarning
           />
         </div>
