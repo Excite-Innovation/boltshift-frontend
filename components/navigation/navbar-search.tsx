@@ -1,11 +1,6 @@
 import { useId } from "react";
 import { Field } from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  InputGroupButton,
-} from "@/components/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton,} from "@/components/ui/input-group";
 import { Search } from "lucide-react";
 
 export function NavbarSearch() {
