@@ -1,20 +1,39 @@
 import { StoreContent } from "@/components/store-card/store-content";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
+const CategoryTabs = {
+  home: "Home",
+  women: "Women’s Fashion",
+  men: "Men’s Fashion",
+  boys: "Boy’s Fashion",
+  girls: "Girls Fashion",
+  baby: "Baby",
+  "home-kitchen": "Home & Kitchen",
+  games: "Video Games",
+  electronics: "Electronics",
+};
+
 export function TabsLine() {
+  const defaultValue = Object.keys(CategoryTabs)[0];
   return (
-    <Tabs defaultValue="home" className="gap-12">
-      <TabsList variant="line" className="h-8 gap-3 overflow-x-scroll scroll-smooth scrollbar-hide">
-        <TabsTrigger value="home">Home</TabsTrigger>
-        <TabsTrigger value="women">Women’s Fashion</TabsTrigger>
-        <TabsTrigger value="men">Men’s Fashion</TabsTrigger>
-        <TabsTrigger value="boys">Boy’s Fashion</TabsTrigger>
-        <TabsTrigger value="girls">Girls Fashion</TabsTrigger>
-        <TabsTrigger value="baby">Baby</TabsTrigger>
-        <TabsTrigger value="home-kitchen">Home & Kitchen</TabsTrigger>
-        <TabsTrigger value="games">Video Games</TabsTrigger>
-        <TabsTrigger value="electronics">Electronics</TabsTrigger>
+    <Tabs defaultValue={defaultValue} className="gap-12">
+      <TabsList
+        variant="line"
+        className="h-8 gap-3 overflow-x-scroll scroll-smooth scrollbar-hide"
+      >
+        {Object.entries(CategoryTabs).map(([key, label]) => (
+          <TabsTrigger
+            key={key}
+            value={key}
+            className="data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
+          >
+            {label}
+          </TabsTrigger>
+        ))}
       </TabsList>
+
+      <Separator className="-mt-12" />
 
       <TabsContent value="home">
         <StoreContent />
@@ -51,6 +70,8 @@ export function TabsLine() {
       <TabsContent value="electronics">
         <p>Electronics</p>
       </TabsContent>
+
+      <Separator className="-mb-8"/>
     </Tabs>
   );
 }
