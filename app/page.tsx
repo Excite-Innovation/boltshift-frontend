@@ -19,9 +19,6 @@ export default function Home() {
       <ProductCategory />
       <HotDealsCollection />
       <FeaturedProducts />
-
-      {/* Featured Store Section */}
-      <div>Featured Store</div>
       <FeaturedStoreSection />
 
       {/* Special Offer Section */}
