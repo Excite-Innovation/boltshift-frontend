@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Minus, Plus, ShoppingCart, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,13 +23,39 @@ import {
 export function SpecialOfferCard() {
   const productItems = GetProductItems();
 
-  const [selectedColor, setSelectedColor] = useState("Red");
-  const [selectedStorage, setSelectedStorage] = useState("64GB");
-  const [selectedItem, setSelectedItem] = useState(productItems[0]);
+  const [selectedItem, setSelectedItem] = useState(productItems[1]);
+  const [selectedColor, setSelectedColor] = useState(
+    productItems[1].variants[0].color,
+  );
+  const [selectedSize, setSelectedSize] = useState(
+    productItems[1].variants[0].sizes[0],
+  );
   const [quantity, setQuantity] = useState(1);
+
+  const selectedVariant =
+    selectedItem.variants.find((v) => v.color === selectedColor) ||
+    selectedItem.variants[0];
+
+  const colors = selectedItem.variants.map((v) => v.color);
+
+  const isStorage = selectedVariant?.sizes.some(
+    (s) => s.toLowerCase().includes("gb") || s.toLowerCase().includes("tb"),
+  );
 
   const price = selectedItem.price;
   const totalPrice = EditNum(price * quantity);
+
+  useEffect(() => {
+    const firstVariant = selectedItem.variants[0];
+    setSelectedColor(firstVariant.color);
+    setSelectedSize(firstVariant.sizes[0]);
+  }, [selectedItem]);
+
+  useEffect(() => {
+    if (!selectedVariant?.sizes.includes(selectedSize)) {
+      setSelectedSize(selectedVariant.sizes[0]);
+    }
+  }, [selectedColor]);
 
   const Increment = () => {
     setQuantity((prev) => prev + 1);
@@ -147,19 +173,21 @@ export function SpecialOfferCard() {
               <ColorSelector
                 value={selectedColor}
                 onChange={setSelectedColor}
+                options={colors}
               />
             </div>
 
             {/* Storage */}
             <div className="grid gap-2">
               <p className="text-lg font-medium flex items-center gap-0.5">
-                <span>Storage</span>
+                <span>{isStorage ? "Storage" : "Size"}</span>
                 <span>:</span>
-                <span>{selectedStorage}</span>
+                <span>{selectedSize}</span>
               </p>
               <StorageSize
-                value={selectedStorage}
-                onChange={setSelectedStorage}
+                value={selectedSize}
+                onChange={setSelectedSize}
+                options={selectedVariant?.sizes || []}
               />
             </div>
 
@@ -169,7 +197,10 @@ export function SpecialOfferCard() {
 
             <div className="grid gap-2">
               <div className="w-full flex gap-2">
-                <ButtonGroup aria-label="Media controls" className="h-fit flex justify-evenly">
+                <ButtonGroup
+                  aria-label="Media controls"
+                  className="h-fit flex justify-evenly"
+                >
                   <Button
                     onClick={Decrement}
                     variant="outline"
@@ -211,9 +242,14 @@ export function SpecialOfferCard() {
 type SelectorProps = {
   value: string;
   onChange: (value: string) => void;
+  options: string[];
 };
 
-function ColorSelector({ value, onChange }: SelectorProps) {
+function ColorSelector({
+  value,
+  onChange,
+  options,
+}: SelectorProps) {
   return (
     <ColorSwatchSelector.Root
       value={value}
@@ -221,17 +257,19 @@ function ColorSelector({ value, onChange }: SelectorProps) {
       className="bg-background p-0"
     >
       <ColorSwatchSelector.Content>
-        <ColorSwatchSelector.Item value="Red" />
-        <ColorSwatchSelector.Item value="Orange" />
-        <ColorSwatchSelector.Item value="Green" />
-        <ColorSwatchSelector.Item value="Blue" />
-        <ColorSwatchSelector.Item value="Purple" />
+        {options.map((color) => (
+          <ColorSwatchSelector.Item key={color} value={color} />
+        ))}
       </ColorSwatchSelector.Content>
     </ColorSwatchSelector.Root>
   );
 }
 
-function StorageSize({ value, onChange }: SelectorProps) {
+function StorageSize({
+  value,
+  onChange,
+  options,
+}: SelectorProps) {
   return (
     <LabelSelector.Root
       value={value}
@@ -239,13 +277,9 @@ function StorageSize({ value, onChange }: SelectorProps) {
       className="bg-background p-0 w-93"
     >
       <LabelSelector.Content className="flex flex-wrap gap-2">
-        <LabelSelector.Item value="64GB" size="sm" />
-        <LabelSelector.Item value="128GB" size="sm" />
-        <LabelSelector.Item value="256GB" size="sm" />
-        <LabelSelector.Item value="512GB" size="sm" />
-        <LabelSelector.Item value="1TB" size="sm" />
-        <LabelSelector.Item value="2TB" size="sm" />
-        <LabelSelector.Item value="4TB" size="sm" />
+        {options.map((opt) => (
+          <LabelSelector.Item key={opt} value={opt} size="sm" />
+        ))}
       </LabelSelector.Content>
     </LabelSelector.Root>
   );
