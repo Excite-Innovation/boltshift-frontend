@@ -67,10 +67,10 @@ export function SpecialOfferCard() {
 
   return (
     <Card className="p-0 border-none shadow-none">
-      <div className="flex gap-12">
+      <div className="flex flex-col gap-4 md:flex-row md:gap-12">
         {/* Images Left */}
-        <div className="basis-1/2 flex gap-4">
-          <div className="w-148 aspect-square rounded-xl overflow-hidden relative">
+        <div className="basis-1/2 flex flex-col gap-4 md:flex-row">
+          <div className="w-full aspect-square rounded-xl overflow-hidden relative md:w-148">
             <AspectRatio ratio={1 / 1}>
               <Image
                 src={selectedItem.image}
@@ -81,13 +81,13 @@ export function SpecialOfferCard() {
             </AspectRatio>
           </div>
 
-          <div className="p-1 h-148 flex flex-col gap-4 overflow-y-scroll scroll-smooth scrollbar-hide">
+          <div className="p-1 flex gap-4 overflow-x-scroll scroll-smooth scrollbar-hide md:h-148 md:flex-col md:overflow-y-scroll">
             {productItems.map((p) => (
               <div
                 key={p.id}
                 onClick={() => setSelectedItem(p)}
                 className={cn(
-                  "h-20 w-20 rounded-xl relative cursor-pointer transition",
+                  "h-20 w-20 aspect-square rounded-xl relative cursor-pointer transition",
                   selectedItem.id === p.id
                     ? "ring-2 ring-offset-2 ring-ring"
                     : "",
