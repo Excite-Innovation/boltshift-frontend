@@ -10,6 +10,7 @@ import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
 import { GetProductItems } from "@/lib/product-items";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
@@ -41,12 +42,12 @@ export function SpecialOfferCard() {
             </AspectRatio>
           </div>
 
-          <div className="h-148 flex flex-col gap-4 overflow-y-scroll scroll-smooth scrollbar-hide">
+          <div className="p-1 h-148 flex flex-col gap-4 overflow-y-scroll scroll-smooth scrollbar-hide">
             {productItems.map((p) => (
               <div
                 key={p.id}
                 onClick={() => setSelectedItem(p)}
-                className="h-20 w-20 rounded-xl  relative cursor-pointer transition"
+                className={cn("h-20 w-20 rounded-xl relative cursor-pointer transition", selectedItem.id === p.id ? "ring-2 ring-offset-2 ring-ring" : "")}
               >
                 <AspectRatio ratio={1 / 1}>
                   <Image
@@ -87,8 +88,7 @@ export function SpecialOfferCard() {
 
             <div className="grid gap-2">
               <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
-                Contemporary Accent Table Nightstand Drawer Storage Bedside
-                Cabinet - 16"L x 16"W x 18"H Off-White 2 Piece Set Nightstands
+                {selectedItem.name}
               </CardTitle>
               <div className="flex gap-2">
                 <Rating value={4} className="text-[#F79009] gap-1">
