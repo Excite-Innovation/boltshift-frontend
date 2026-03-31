@@ -56,7 +56,6 @@ export function FeaturedStoreCard() {
             <Rating
               value={rating}
               className="text-[#F79009] gap-1"
-              step={0.5}
               onValueChange={setRating}
             >
               {Array.from({ length: 5 }, (_, i) => (
