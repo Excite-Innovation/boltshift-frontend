@@ -5,10 +5,14 @@ export function GetProductItems(): Product[] {
     {
       id: 1,
       image: "https://i.pinimg.com/736x/36/e9/6a/36e96a759226592840340d7df9eebfda.jpg",
-      name: "TEVISE T845 Casual Style Men Wrist Watch Date Display Full Steel Band Quartz Watch - NO.2",
+      name: "TEVISE T845 Casual Style Men Wrist Watch Date Display Full Steel Band Quartz Watch",
       price: 80020,
       progress: 85,
       itemsLeft: 85,
+      variants: [
+        { color: "black", sizes: ["Standard"] },
+        { color: "silver", sizes: ["Standard"] },
+      ],
     },
     {
       id: 2,
@@ -17,6 +21,11 @@ export function GetProductItems(): Product[] {
       price: 70977,
       progress: 32,
       itemsLeft: 32,
+      variants: [
+        { color: "navy", sizes: ["S", "M", "L", "XL"] },
+        { color: "black", sizes: ["M", "L", "XL"] },
+        { color: "red", sizes: ["S", "M", "L"] },
+      ],
     },
     {
       id: 3,
@@ -25,6 +34,10 @@ export function GetProductItems(): Product[] {
       price: 56536,
       progress: 56,
       itemsLeft: 56,
+      variants: [
+        { color: "red", sizes: ["36", "37", "38", "39", "40"] },
+        { color: "pink", sizes: ["37", "38", "39"] },
+      ],
     },
     {
       id: 4,
@@ -33,6 +46,10 @@ export function GetProductItems(): Product[] {
       price: 95434,
       progress: 18,
       itemsLeft: 18,
+      variants: [
+        { color: "white", sizes: ["Standard"] },
+        { color: "beige", sizes: ["Standard"] },
+      ],
     },
     {
       id: 5,
@@ -41,6 +58,9 @@ export function GetProductItems(): Product[] {
       price: 99233,
       progress: 25,
       itemsLeft: 25,
+      variants: [
+        { color: "teal", sizes: ["2-Seater", "3-Seater"] },
+      ],
     },
     {
       id: 6,
@@ -49,6 +69,9 @@ export function GetProductItems(): Product[] {
       price: 63284,
       progress: 52,
       itemsLeft: 52,
+      variants: [
+        { color: "white", sizes: ["Standard"] },
+      ],
     },
     {
       id: 7,
@@ -57,6 +80,9 @@ export function GetProductItems(): Product[] {
       price: 97376,
       progress: 31,
       itemsLeft: 31,
+      variants: [
+        { color: "white", sizes: ["5-Seater", "6-Seater"] },
+      ],
     },
     {
       id: 8,
@@ -65,6 +91,9 @@ export function GetProductItems(): Product[] {
       price: 83943,
       progress: 51,
       itemsLeft: 51,
+      variants: [
+        { color: "gray", sizes: ["Small", "Medium", "Large"] },
+      ],
     },
   ];
 }
