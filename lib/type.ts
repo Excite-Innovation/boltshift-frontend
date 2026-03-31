@@ -20,13 +20,19 @@ type CategoryItem = {
     name: string;
 };
 
+export type Variant = {
+  color: string;
+  sizes: string[];
+};
+
 type Product = {
-    id: number;
-    image: string;
-    name: string;
-    price: number;
-    progress: number;
-    itemsLeft: number;
+  id: number;
+  image: string;
+  name: string;
+  price: number;
+  progress: number;
+  itemsLeft: number;
+  variants: Variant[];
 };
 
 // Card variants
