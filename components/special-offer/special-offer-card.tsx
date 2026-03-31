@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Rating, RatingItem } from "@/components/ui/rating";
 import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
+import { GetProductItems } from "@/lib/product-items";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Card,
   CardContent,
@@ -17,8 +19,11 @@ import {
 } from "@/components/ui/card";
 
 export function SpecialOfferCard() {
+  const productItems = GetProductItems();
+
   const [selectedColor, setSelectedColor] = useState("Red");
   const [selectedStorage, setSelectedStorage] = useState("64GB");
+  const [selectedItem, setSelectedItem] = useState(productItems[0]);
 
   return (
     <Card className="p-0 border-none">
@@ -26,22 +31,33 @@ export function SpecialOfferCard() {
         {/* Images Left */}
         <div className="basis-1/2 flex gap-4">
           <div className="w-148 aspect-square rounded-xl overflow-hidden relative">
-            <Image
-              src="https://i.pinimg.com/736x/36/e9/6a/36e96a759226592840340d7df9eebfda.jpg"
-              alt="TEVISE T845 Casual Style Men Wrist Watch Date Display Full Steel Band Quartz Watch - NO.2"
-              fill
-            />
+            <AspectRatio ratio={1 / 1}>
+              <Image
+                src={selectedItem.image}
+                alt={selectedItem.name}
+                fill
+                className="object-cover"
+              />
+            </AspectRatio>
           </div>
 
           <div className="h-148 flex flex-col gap-4 overflow-y-scroll scroll-smooth scrollbar-hide">
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
-            <div className="w-20 aspect-square bg-blue-500">01</div>
+            {productItems.map((p) => (
+              <div
+                key={p.id}
+                onClick={() => setSelectedItem(p)}
+                className="h-20 w-20 rounded-xl  relative cursor-pointer transition"
+              >
+                <AspectRatio ratio={1 / 1}>
+                  <Image
+                    src={p.image}
+                    alt={p.name}
+                    fill
+                    className="object-cover rounded-xl"
+                  />
+                </AspectRatio>
+              </div>
+            ))}
           </div>
         </div>
 
