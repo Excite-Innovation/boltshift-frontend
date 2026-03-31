@@ -5,12 +5,13 @@ import { useState } from "react";
 import { Minus, Plus, ShoppingCart, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Rating, RatingItem } from "@/components/ui/rating";
 import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
 import { GetProductItems } from "@/lib/product-items";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { cn } from "@/lib/utils";
+import { cn, EditNum } from "@/lib/utils";
 import {
   Card,
   CardContent,
@@ -25,9 +26,21 @@ export function SpecialOfferCard() {
   const [selectedColor, setSelectedColor] = useState("Red");
   const [selectedStorage, setSelectedStorage] = useState("64GB");
   const [selectedItem, setSelectedItem] = useState(productItems[0]);
+  const [quantity, setQuantity] = useState(1);
+
+  const price = selectedItem.price;
+  const totalPrice = EditNum(price * quantity);
+
+  const Increment = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const Decrement = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
 
   return (
-    <Card className="p-0 border-none">
+    <Card className="p-0 border-none shadow-none">
       <div className="flex gap-12">
         {/* Images Left */}
         <div className="basis-1/2 flex gap-4">
@@ -47,7 +60,12 @@ export function SpecialOfferCard() {
               <div
                 key={p.id}
                 onClick={() => setSelectedItem(p)}
-                className={cn("h-20 w-20 rounded-xl relative cursor-pointer transition", selectedItem.id === p.id ? "ring-2 ring-offset-2 ring-ring" : "")}
+                className={cn(
+                  "h-20 w-20 rounded-xl relative cursor-pointer transition",
+                  selectedItem.id === p.id
+                    ? "ring-2 ring-offset-2 ring-ring"
+                    : "",
+                )}
               >
                 <AspectRatio ratio={1 / 1}>
                   <Image
@@ -63,7 +81,7 @@ export function SpecialOfferCard() {
         </div>
 
         {/* Content Right */}
-        <div className="grid gap-3">
+        <div className="h-148 grid gap-3">
           <CardHeader className="px-0 w-93 gap-3">
             <div className="flex gap-2">
               <Badge
@@ -146,15 +164,32 @@ export function SpecialOfferCard() {
             </div>
 
             <p className="text-xl flex gap-1">
-              Ksh.<span className="font-semibold">54,436</span>
+              Ksh.<span className="font-semibold">{totalPrice}</span>
             </p>
 
             <div className="grid gap-2">
               <div className="w-full flex gap-2">
-                <Button variant="outline" className="grow flex justify-evenly">
-                  <Minus /> <p>99999</p> <Plus />
-                </Button>
-
+                <ButtonGroup aria-label="Media controls" className="h-fit flex justify-evenly">
+                  <Button
+                    onClick={Decrement}
+                    variant="outline"
+                    size="icon"
+                    className="grow border-r-0"
+                  >
+                    <Minus />
+                  </Button>
+                  <div className="min-w-16 px-4 flex items-center justify-center text-sm font-medium border-y">
+                    {quantity}
+                  </div>
+                  <Button
+                    onClick={Increment}
+                    variant="outline"
+                    size="icon"
+                    className="grow"
+                  >
+                    <Plus />
+                  </Button>
+                </ButtonGroup>
                 <Button
                   variant="outline"
                   className="grow font-semibold text-base"
@@ -204,13 +239,13 @@ function StorageSize({ value, onChange }: SelectorProps) {
       className="bg-background p-0 w-93"
     >
       <LabelSelector.Content className="flex flex-wrap gap-2">
-        <LabelSelector.Item value="64GB" />
-        <LabelSelector.Item value="128GB" />
-        <LabelSelector.Item value="256GB" />
-        <LabelSelector.Item value="512GB" />
-        <LabelSelector.Item value="1TB" />
-        <LabelSelector.Item value="2TB" />
-        <LabelSelector.Item value="4TB" />
+        <LabelSelector.Item value="64GB" size="sm" />
+        <LabelSelector.Item value="128GB" size="sm" />
+        <LabelSelector.Item value="256GB" size="sm" />
+        <LabelSelector.Item value="512GB" size="sm" />
+        <LabelSelector.Item value="1TB" size="sm" />
+        <LabelSelector.Item value="2TB" size="sm" />
+        <LabelSelector.Item value="4TB" size="sm" />
       </LabelSelector.Content>
     </LabelSelector.Root>
   );
