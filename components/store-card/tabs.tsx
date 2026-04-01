@@ -20,13 +20,13 @@ export function TabsLine() {
     <Tabs defaultValue={defaultValue} className="gap-12">
       <TabsList
         variant="line"
-        className="h-8 gap-3 overflow-x-scroll scroll-smooth scrollbar-hide"
+        className="h-8 gap-3 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
       >
         {Object.entries(CategoryTabs).map(([key, label]) => (
           <TabsTrigger
             key={key}
             value={key}
-            className="data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
+            className="flex-none! shrink-0 data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
           >
             {label}
           </TabsTrigger>
