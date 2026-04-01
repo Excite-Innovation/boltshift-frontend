@@ -2,42 +2,39 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PopularCardContent } from "@/components/popular-products/content";
 import { Separator } from "@/components/ui/separator";
 
-const CategoryTabs = {
-  feature: "Feature Products",
-  topRated: "Top Rated Products",
-  onsale: "Onsale Products",
-};
+const CATEGORIES = [
+  { id: "feature", label: "Feature Products" },
+  { id: "topRated", label: "Top Rated Products" },
+  { id: "onsale", label: "Onsale Products" },
+] as const;
 
 export function PopularProductsCard() {
-  const defaultValue = Object.keys(CategoryTabs)[0];
+  const defaultValue = CATEGORIES[0].id;
 
   return (
     <Tabs defaultValue={defaultValue} className="gap-10">
-      <TabsList variant="line" className="h-8 gap-3 overflow-x-scroll scroll-smooth scrollbar-hide">
-        {Object.entries(CategoryTabs).map(([key, label]) => (
+      <TabsList
+        variant="line"
+        className="inline-flex h-8 max-w-full gap-3 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide pl-15 md:pl-0"
+      >
+        {CATEGORIES.map((category) => (
           <TabsTrigger
-            key={key}
-            value={key}
-            className="hover:cursor-pointer data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
+            key={category.id}
+            value={category.id}
+            className="flex-none! shrink-0 whitespace-nowrap hover:cursor-pointer data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
           >
-            {label}
+            {category.label}
           </TabsTrigger>
         ))}
       </TabsList>
 
       <Separator className="-mt-10" />
 
-      <TabsContent value="feature">
-        <PopularCardContent />
-      </TabsContent>
-
-      <TabsContent value="topRated">
-        <PopularCardContent />
-      </TabsContent>
-
-      <TabsContent value="onsale">
-        <PopularCardContent />
-      </TabsContent>
+      {CATEGORIES.map((category) => (
+        <TabsContent key={category.id} value={category.id}>
+          <PopularCardContent key={category.id} />
+        </TabsContent>
+      ))}
     </Tabs>
   );
 }
