@@ -6,6 +6,7 @@ import { HotDealsCollection } from "@/components/hot-deals-section/hot-deals-col
 import { FeaturedProducts } from "@/components/featured-products-section/featured-products"
 import { FeaturedStoreSection } from "@/components/store-card/store-section";
 import { SpecialOfferSection } from "@/components/special-offer/Special-offer-collection";
+import { PopularCardSection } from "@/components/popular-products/popular-card-section";
 
 export default function Home() {
   return (
@@ -21,11 +22,8 @@ export default function Home() {
       <HotDealsCollection />
       <FeaturedProducts />
       <FeaturedStoreSection />
-
       <SpecialOfferSection />
-
-      {/* Popular Products Section */}
-      <div>Popular Products</div>
+      <PopularCardSection />
 
       {/* Trending Products Section */}
       <div>Trending Products</div>
