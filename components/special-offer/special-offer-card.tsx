@@ -23,7 +23,7 @@ import {
 export function SpecialOfferCard() {
   const productItems = GetProductItems();
 
-  const [selectedItem, setSelectedItem] = useState(productItems[1]);
+  const [selectedItem, setSelectedItem] = useState(productItems[0]);
   const [selectedColor, setSelectedColor] = useState(
     productItems[1].variants[0].color,
   );
@@ -67,10 +67,10 @@ export function SpecialOfferCard() {
 
   return (
     <Card className="p-0 border-none shadow-none">
-      <div className="flex flex-col gap-4 md:flex-row md:gap-12">
+      <div className="flex flex-col gap-4 lg:flex-row lg:gap-12">
         {/* Images Left */}
         <div className="basis-1/2 flex flex-col gap-4 md:flex-row">
-          <div className="w-full aspect-square rounded-xl overflow-hidden relative md:w-148">
+          <div className="w-full aspect-square rounded-xl overflow-hidden border relative md:w-148">
             <AspectRatio ratio={1 / 1}>
               <Image
                 src={selectedItem.image}
@@ -107,7 +107,7 @@ export function SpecialOfferCard() {
         </div>
 
         {/* Content Right */}
-        <div className="h-148 grid gap-3">
+        <div className="h-148 max-w-93 grid gap-3">
           <CardHeader className="px-0 w-93 gap-3">
             <div className="flex gap-2">
               <Badge
