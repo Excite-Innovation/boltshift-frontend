@@ -43,4 +43,18 @@ type ProductVariant =
     | "horizontal"     // image left
     | "centered";      // centered content
 
-export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant };
+type Review = {
+  id: number;
+  name: string;
+  avatar?: string,
+  date: string;
+  rating: number;
+  reviewText: string;
+  product: {
+    name: string;
+    image: string;
+    price: number;
+  };
+};
+
+export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant, Review };
