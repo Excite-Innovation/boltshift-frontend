@@ -14,8 +14,8 @@ export function GetRatio(variant: ProductVariant) {
   switch (variant) {
     case "wide":
       return 21 / 10;
-    case "horizontal":
-      return 1 / 1;
+    case "centered":
+      return 9 / 8;
     default:
       return 1 / 1;
   }

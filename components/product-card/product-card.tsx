@@ -142,6 +142,33 @@ function CountdownContent({
   );
 }
 
+function CenteredContent({
+  product,
+  price,
+}: {
+  product: Product;
+  price: string;
+}) {
+  return (
+    <>
+      <div className="grid gap-1">
+        <p className="text-sm font-normal line-clamp-2">{product.name}</p>
+        <p className="text-primary">
+          <span className="text-xl">Kshs.</span>
+          <span className="text-xl font-semibold">{price}</span>
+        </p>
+      </div>
+
+      <Button
+        variant="outline"
+        className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer"
+      >
+        Add to Cart
+      </Button>
+    </>
+  );
+}
+
 export function ProductCard({
   variant = "default",
   product,
@@ -176,16 +203,18 @@ export function ProductCard({
         <div
           className={cn(
             "px-3 flex flex-col",
-            variant === "horizontal" && "px-4 items-center gap-3",
-            variant === "default" && "gap-1",
-            (variant === "centered" || variant === "countdown") &&
-              "text-center gap-5",
+            (variant === "horizontal") && "px-4 items-center gap-3",
+            (variant === "default") && "gap-1",
+            (variant === "centered") && "w-72 text-center gap-5",
+            (variant === "countdown") && "text-center gap-5"
           )}
         >
           {variant === "countdown" ? (
             <CountdownContent product={product} price={price} />
           ) : variant === "horizontal" ? (
             <HorizontalDefaultContent product={product} price={price} />
+          ) : variant === "centered" ? (
+            <CenteredContent product={product} price={price} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}
