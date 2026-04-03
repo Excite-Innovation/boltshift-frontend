@@ -57,13 +57,13 @@ export default function manifest(): MetadataRoute.Manifest {
                 src: "/icons/maskable/Variant=512-maskable.png",
                 sizes: "512x512",
                 type: "image/png",
-                purpose: "maskable",
+                purpose: "any",
             },
             {
                 src: "/icons/maskable/Variant=icon-192-maskable.png",
                 sizes: "192x192",
                 type: "image/png",
-                purpose: "maskable",
+                purpose: "any",
             },
 
             // Apple icons
@@ -71,11 +71,13 @@ export default function manifest(): MetadataRoute.Manifest {
                 src: "/icons/apple/Variant=apple-touch-icon-120x120.png",
                 sizes: "120x120",
                 type: "image/png",
+                purpose: "any",
             },
             {
                 src: "/icons/apple/Variant=apple-touch-icon-167x167.png",
                 sizes: "167x167",
                 type: "image/png",
+                purpose: "any",
             },
             {
                 src: "/icons/apple/Variant=apple-touch-icon.png",
