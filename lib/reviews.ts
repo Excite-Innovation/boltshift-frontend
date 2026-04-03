@@ -40,7 +40,7 @@ export function GetReviews(): Review[] {
         "Good quality and fast shipping. Will buy again. The product arrived well-packaged and in perfect condition. I was pleasantly surprised by the speed of delivery, especially considering the current shipping delays affecting many companies. The product itself is of excellent quality, with sturdy materials and a well-thought-out design. It has become an essential part of my daily routine. The user manual was clear and easy to follow, which made setup a breeze. Overall, a fantastic purchase that I would recommend to others.",
       product: {
         name: "Armani Beauty Prive Santal Dān Shā Unisex Fragrance | 1.7 Oz/50 Ml",
-        image: "https://i.pinimg.com/564x/69/1f/50/691f5051faf6896dd0f6576d10574c23.jpg",
+        image: "https://i.pinimg.com/736x/11/74/45/1174457022ee9f5ad9777763f25017bd.jpg",
         price: 30100.5,
       },
     },
