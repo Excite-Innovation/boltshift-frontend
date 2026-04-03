@@ -21,6 +21,7 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-mobile-app-button": "^1.2.19",
     "tailwind-merge": "^3.5.0",
     "web-push": "^3.6.7"
   },
