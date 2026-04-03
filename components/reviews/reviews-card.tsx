@@ -22,7 +22,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   const price = EditNum(review.product.price);
 
   return (
-    <Card className="max-w-72 p-4 bg-card border flex flex-col gap-4 shrink-0">
+    <Card className="max-w-72 p-4 bg-card border flex flex-col gap-4 shrink-0 hover:cursor-pointer">
       <CardHeader className="p-0 flex flex-col gap-3">
         <div className="flex gap-3">
           {/* Image */}
@@ -49,7 +49,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
               <p className="text-xs text-muted-foreground">
                 {review.date}
               </p>
-              <StartRating value={review.rating} />
+              <StartRating value={review.rating} readonly={true} />
             </div>
           </div>
         </div>
