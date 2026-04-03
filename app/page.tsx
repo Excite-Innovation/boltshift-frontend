@@ -9,6 +9,7 @@ import { SpecialOfferSection } from "@/components/special-offer/Special-offer-co
 import { PopularCardSection } from "@/components/popular-products/popular-card-section";
 import { TrendingProductsSection } from "@/components/trending-products/trending-products-section";
 import { ReviewSection } from "@/components/reviews/reviews-section";
+import { Footer } from "@/components/footer/footer-section";
 
 export default function Home() {
   return (
@@ -28,8 +29,7 @@ export default function Home() {
       <PopularCardSection />
       <TrendingProductsSection />
       <ReviewSection />
-
-      <div>Footer</div>
+      <Footer />
     </div>
   );
 }
