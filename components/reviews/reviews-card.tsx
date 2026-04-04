@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Review } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import { StartRating } from "@/components/rating/rating";
-import { User } from "lucide-react";
+import { User, Check } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { EditNum } from "@/lib/utils";
 
@@ -22,7 +22,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   const price = EditNum(review.product.price);
 
   return (
-    <Card className="max-w-72 p-4 bg-card border flex flex-col gap-4 shrink-0 hover:cursor-pointer">
+    <Card className="max-w-72 p-4 bg-card border flex flex-col justify-between gap-4 shrink-0 hover:cursor-pointer">
       <CardHeader className="p-0 flex flex-col gap-3">
         <div className="flex gap-3">
           {/* Image */}
@@ -41,7 +41,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
               </CardTitle>
               <CardAction>
                 <Badge variant="outline" className="py-0.5 px-2 bg-muted">
-                  Verified Buyer
+                  <Check />Verified Buyer
                 </Badge>
               </CardAction>
             </div>
