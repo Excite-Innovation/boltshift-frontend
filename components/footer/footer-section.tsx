@@ -36,7 +36,7 @@ export function Footer() {
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-8 text-muted-foreground">
           {links.map((pathname) => (
             <Link key={pathname} href="#" className="text-base font-medium">
               {pathname}
@@ -51,7 +51,7 @@ export function Footer() {
           <X />
         </div>
       </div>
-      <div className="pt-4 border-t border-border">
+      <div className="pt-4 border-t border-border text-muted-foreground">
         <p className="text-xs text-center">
           © 2010 - 2024 Paul Mbingu and/or Excite! Innovation Company. All
           rights reserved. All other trademarks, service marks, and company
