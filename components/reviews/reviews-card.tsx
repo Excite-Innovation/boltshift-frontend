@@ -22,7 +22,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   const price = EditNum(review.product.price);
 
   return (
-    <Card className="max-w-72 p-4 bg-card border flex flex-col justify-between gap-4 shrink-0 hover:cursor-pointer">
+    <Card className="max-w-72 p-4 bg-card border flex flex-col justify-between gap-4 shrink-0 hover:cursor-pointer shadow-none">
       <CardHeader className="p-0 flex flex-col gap-3">
         <div className="flex gap-3">
           {/* Image */}
