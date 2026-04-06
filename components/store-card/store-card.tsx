@@ -26,7 +26,7 @@ export function FeaturedStoreCard() {
   const followers: string = EditNum(1290);
 
   return (
-    <Card className="w-full overflow-hidden pt-0 pb-4 flex flex-col gap-12 rounded-2xl">
+    <Card className="w-full overflow-hidden pt-0 pb-4 flex flex-col gap-12 rounded-2xl shadow-none">
       <div className="h-38 overflow-hidden relative md:h-48">
         <Image
           src={profileCover}
