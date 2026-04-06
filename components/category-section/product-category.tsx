@@ -2,6 +2,7 @@ import { SectionTitle } from "@/components/section-title";
 import { CategoryItems } from "@/lib/products-categories";
 import { CategoryCard } from "@/components/category-section/category-card";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export function ProductCategory() {
   const icon = "/icon-illustration/ShoppingBags.svg";
@@ -19,14 +20,17 @@ export function ProductCategory() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 ">
         {CategoryItems.map((item, index) => (
-          <div
-            key={item.id}
-            className={cn(
-              index == CategoryItems.length - 1 && "ring-4 ring-muted rounded-xl"
-            )}
-          >
-            <CategoryCard categoryItem={item} />
-          </div>
+          <Link key={item.id} href="/catalog">
+            <div
+              className={cn(
+                "block",
+                index == CategoryItems.length - 1 &&
+                  "ring-4 ring-muted rounded-xl",
+              )}
+            >
+              <CategoryCard categoryItem={item} />
+            </div>
+          </Link>
         ))}
       </div>
     </div>
