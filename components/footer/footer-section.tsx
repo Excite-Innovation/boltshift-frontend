@@ -2,14 +2,8 @@
 
 import { Logo } from "@/components/brand/logo";
 import { useTheme } from "next-themes";
-import {
-  Dribbble,
-  Instagram,
-  GitHub,
-  YouTube,
-  X,
-} from "@/components/footer/socials";
-import { GooglePlayButton, AppStoreButton } from "react-mobile-app-button";
+import { Dribbble, Instagram, GitHub, YouTube, X, } from "@/components/footer/socials";
+import { AppStoreButton, GalaxyStoreButton, GooglePlayButton } from "@/components/app-store/app-store-buttons"
 import Link from "next/link";
 
 const links = [
@@ -82,17 +76,8 @@ export const MobileAppButtons = () => {
 
   return (
     <div className="flex flex-col gap-1">
-      <AppStoreButton
-        url={IOSUrl}
-        theme={isDark ? "light" : "dark"}
-        className="border-2 border-border"
-      />
-
-      <GooglePlayButton
-        url={APKUrl}
-        theme={isDark ? "light" : "dark"}
-        className="p-0 border-2 border-border shrink-0 whitespace-nowrap gap-1"
-      />
+      <AppStoreButton size="md" className="" />
+      <GooglePlayButton size="md" className="" />
     </div>
   );
 };
