@@ -180,7 +180,7 @@ export function ProductCard({
   return (
     <Card
       className={cn(
-        "mx-auto w-full p-0 hover:ring-2 hover:ring-ring hover:ring-offset-2 hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out",
+        "mx-auto w-full p-0 hover:ring-2 hover:ring-ring hover:ring-offset-2 hover:shadow-md hover:cursor-pointer transition-all duration-200 ease-in-out shadow-none",
         className,
       )}
     >
