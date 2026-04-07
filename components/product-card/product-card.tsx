@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product, ProductVariant } from "@/lib/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import FlipClock from "@/components/ui/flip-clock";
+import NumberTickerDemo from "@/components/shadcn-space/radix/number-ticker/number-ticker-03";
 import { EditNum, GetRatio, cn } from "@/lib/utils";
 
 type ProductCardProps = {
@@ -124,16 +124,7 @@ function CountdownContent({
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="scale-70">
-          <FlipClock
-            countdown={true}
-            size="sm"
-            targetDate={new Date(Date.now() + 1000 * 60 * 60 * 24 * 500)}
-            variant="muted"
-            suppressHydrationWarning
-          />
-        </div>
-
+        <NumberTickerDemo />
         <Button className="w-full py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer">
           Add to Cart
         </Button>
@@ -206,7 +197,7 @@ export function ProductCard({
             (variant === "horizontal") && "px-4 items-center gap-3",
             (variant === "default") && "gap-1",
             (variant === "centered") && "w-72 text-center gap-5",
-            (variant === "countdown") && "text-center gap-17"
+            (variant === "countdown") && "text-center gap-10"
           )}
         >
           {variant === "countdown" ? (
