@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: {
     default: "Boltshift",
     template: "%s | Boltshift",
+    
   },
 
   description:
@@ -27,6 +28,8 @@ export const metadata: Metadata = {
     siteName: "Boltshift",
     images: [{ url: '/opengraph-image.png' }],
   },
+
+    themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -36,7 +39,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={ inter.className }
       suppressHydrationWarning
     >
-      <head />
+      <head>
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      </head>
+      
       <body
         className="max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0"
       >
