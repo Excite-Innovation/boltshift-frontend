@@ -206,7 +206,7 @@ export function ProductCard({
             (variant === "horizontal") && "px-4 items-center gap-3",
             (variant === "default") && "gap-1",
             (variant === "centered") && "w-72 text-center gap-5",
-            (variant === "countdown") && "text-center gap-5"
+            (variant === "countdown") && "text-center gap-17"
           )}
         >
           {variant === "countdown" ? (
