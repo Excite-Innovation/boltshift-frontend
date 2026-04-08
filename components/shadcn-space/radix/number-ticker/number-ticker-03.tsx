@@ -23,17 +23,38 @@ function NumberTicker({
   const s = seconds % 60;
 
   return (
-    <div className={`${className} inline-flex items-center gap-2`}>
+    <div className={`${className} inline-flex items-start gap-2`}>
       <NumberFlowGroup>
         {showHours && (
           <>
-            <NumberFlow value={h} format={{ minimumIntegerDigits: 2 }} />
-            <span className="">:</span>
+            <div className="flex flex-col gap-1">
+              <NumberFlow
+                value={h}
+                format={{ minimumIntegerDigits: 2 }}
+                className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
+              />
+              <p className="text-sm text-chart-1">Hrs</p>
+            </div>
+            <span className="py-3 text-chart-2 text-xl">:</span>
           </>
         )}
-        <NumberFlow value={m} format={{ minimumIntegerDigits: 2 }} />
-        <span className="">:</span>
-        <NumberFlow value={s} format={{ minimumIntegerDigits: 2 }} />
+        <div className="flex flex-col gap-1">
+          <NumberFlow
+            value={m}
+            format={{ minimumIntegerDigits: 2 }}
+            className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
+          />
+          <p className="text-xs text-chart-1">Mins</p>
+        </div>
+        <span className="py-3 text-chart-2 text-xl">:</span>
+        <div className="flex flex-col gap-1">
+          <NumberFlow
+            value={s}
+            format={{ minimumIntegerDigits: 2 }}
+            className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
+          />
+          <p className="text-xs text-chart-1">Sec</p>
+        </div>
       </NumberFlowGroup>
     </div>
   );
