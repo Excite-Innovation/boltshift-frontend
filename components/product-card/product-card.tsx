@@ -6,7 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Product, ProductVariant } from "@/lib/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import NumberTickerDemo from "@/components/shadcn-space/radix/number-ticker/number-ticker-03";
-import { EditNum, GetRatio, cn } from "@/lib/utils";
+import { EditNum, GetRatio, cn, FormatNumber } from "@/lib/utils";
+import { StartRating } from "@/components/rating/rating";
 
 type ProductCardProps = {
   variant?: ProductVariant;
@@ -14,7 +15,15 @@ type ProductCardProps = {
   className?: string;
 };
 
-function CardImage({ product, ratio, savePos }: { product: Product; ratio: number; savePos?: string }) {
+function CardImage({
+  product,
+  ratio,
+  savePos,
+}: {
+  product: Product;
+  ratio: number;
+  savePos?: string;
+}) {
   return (
     <div className="relative">
       <AspectRatio ratio={ratio}>
@@ -29,7 +38,10 @@ function CardImage({ product, ratio, savePos }: { product: Product; ratio: numbe
       <Button
         variant="outline"
         size="icon-sm"
-        className={cn("bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50", savePos)}
+        className={cn(
+          "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50",
+          savePos,
+        )}
       >
         <Heart />
       </Button>
@@ -160,6 +172,37 @@ function CenteredContent({
   );
 }
 
+function CatalogContent({
+  product,
+  price,
+  ratings,
+}: {
+  product: Product;
+  price: string;
+  ratings: number;
+}) {
+  const reviews = FormatNumber(product.reviews)
+
+  return (
+    <>
+      <div>
+        <p className="text-xs font-medium line-clamp-2">{product.name}</p>
+        <p className="text-primary">
+          <span className="text-xs">Kshs.</span>
+          <span className="text-xs font-medium">{price}</span>
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <StartRating value={ratings} readonly />
+        <p className="text-xs text-muted-foreground">
+          ({reviews} reviews)
+        </p>
+      </div>
+    </>
+  );
+}
+
 export function ProductCard({
   variant = "default",
   product,
@@ -194,10 +237,11 @@ export function ProductCard({
         <div
           className={cn(
             "px-3 flex flex-col",
-            (variant === "horizontal") && "px-4 items-center gap-3",
-            (variant === "default") && "gap-1",
-            (variant === "centered") && "w-72 text-center gap-5",
-            (variant === "countdown") && "text-center gap-10"
+            variant === "horizontal" && "px-4 items-center gap-3",
+            variant === "default" && "gap-1",
+            variant === "centered" && "w-72 text-center gap-5",
+            variant === "countdown" && "text-center gap-10",
+            variant === "catalog" && "text-left gap-2"
           )}
         >
           {variant === "countdown" ? (
@@ -206,6 +250,8 @@ export function ProductCard({
             <HorizontalDefaultContent product={product} price={price} />
           ) : variant === "centered" ? (
             <CenteredContent product={product} price={price} />
+          ) : variant === "catalog" ? (
+            <CatalogContent product={product} price={price} ratings={product.ratings} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}

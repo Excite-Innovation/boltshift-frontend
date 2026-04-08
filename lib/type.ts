@@ -32,6 +32,8 @@ type Product = {
   price: number;
   progress: number;
   itemsLeft: number;
+  ratings: number;
+  reviews: number;
   variants: Variant[];
 };
 
@@ -41,7 +43,8 @@ type ProductVariant =
     | "wide"           // 21:10
     | "countdown"      // centered + timer
     | "horizontal"     // image left
-    | "centered";      // centered content
+    | "centered"      // centered content
+    | "catalog";
 
 type Review = {
   id: number;
