@@ -9,6 +9,8 @@ export function GetProductItems(): Product[] {
       price: 80020,
       progress: 85,
       itemsLeft: 85,
+      ratings: 4,
+      reviews:6400,
       variants: [
         { color: "black", sizes: ["Standard"] },
         { color: "silver", sizes: ["Standard"] },
@@ -21,6 +23,8 @@ export function GetProductItems(): Product[] {
       price: 70977,
       progress: 32,
       itemsLeft: 32,
+      ratings: 3,
+      reviews:32000,
       variants: [
         { color: "navy", sizes: ["S", "M", "L", "XL"] },
         { color: "black", sizes: ["M", "L", "XL"] },
@@ -34,6 +38,8 @@ export function GetProductItems(): Product[] {
       price: 56536,
       progress: 56,
       itemsLeft: 56,
+      ratings: 3,
+      reviews:43000,
       variants: [
         { color: "red", sizes: ["36", "37", "38", "39", "40"] },
         { color: "pink", sizes: ["37", "38", "39"] },
@@ -46,6 +52,8 @@ export function GetProductItems(): Product[] {
       price: 95434,
       progress: 18,
       itemsLeft: 18,
+      ratings: 4,
+      reviews:128400,
       variants: [
         { color: "white", sizes: ["Standard"] },
         { color: "beige", sizes: ["Standard"] },
@@ -58,6 +66,8 @@ export function GetProductItems(): Product[] {
       price: 99233,
       progress: 25,
       itemsLeft: 25,
+      ratings: 4,
+      reviews:12000,
       variants: [
         { color: "teal", sizes: ["2-Seater", "3-Seater"] },
       ],
@@ -69,6 +79,8 @@ export function GetProductItems(): Product[] {
       price: 63284,
       progress: 52,
       itemsLeft: 52,
+      ratings: 4,
+      reviews:32400,
       variants: [
         { color: "white", sizes: ["Standard"] },
       ],
@@ -80,6 +92,8 @@ export function GetProductItems(): Product[] {
       price: 97376,
       progress: 31,
       itemsLeft: 31,
+      ratings: 3,
+      reviews:45900,
       variants: [
         { color: "white", sizes: ["5-Seater", "6-Seater"] },
       ],
@@ -91,6 +105,8 @@ export function GetProductItems(): Product[] {
       price: 83943,
       progress: 51,
       itemsLeft: 51,
+      ratings: 4,
+      reviews:9800,
       variants: [
         { color: "gray", sizes: ["Small", "Medium", "Large"] },
       ],

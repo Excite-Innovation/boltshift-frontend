@@ -1,23 +1,23 @@
 type Vendor = {
-    id?: string;
-    name: string;
-    icon?: string;
-    alt: string;
+  id?: string;
+  name: string;
+  icon?: string;
+  alt: string;
 };
 
 type HeroItem = {
-    id?: string;
-    title: string;
-    description: string;
-    image: string;
-    badge?: string;
-    alt: string;
+  id?: string;
+  title: string;
+  description: string;
+  image: string;
+  badge?: string;
+  alt: string;
 };
 
 type CategoryItem = {
-    id?: string;
-    image: string;
-    name: string;
+  id?: string;
+  image: string;
+  name: string;
 };
 
 export type Variant = {
@@ -32,16 +32,19 @@ type Product = {
   price: number;
   progress: number;
   itemsLeft: number;
+  ratings: number;
+  reviews: number;
   variants: Variant[];
 };
 
 // Card variants
 type ProductVariant =
-    | "default"        // 1:1 
-    | "wide"           // 21:10
-    | "countdown"      // centered + timer
-    | "horizontal"     // image left
-    | "centered";      // centered content
+  | "default"        // 1:1 
+  | "wide"           // 21:10
+  | "countdown"      // centered + timer
+  | "horizontal"     // image left
+  | "centered"      // centered content
+  | "catalog";
 
 type Review = {
   id: number;
@@ -57,4 +60,56 @@ type Review = {
   };
 };
 
-export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant, Review };
+type FilterOption = {
+  id: string;
+  label: string;
+  value: string | number;
+};
+
+export type FilterSection =
+  | {
+    id: string;
+    type: "range";
+    title: string;
+    minPlaceholder?: string;
+    maxPlaceholder?: string;
+  }
+  | {
+    id: string;
+    type: "rating";
+    title: string;
+    options: {
+      id: string;
+      stars: number;
+    }[];
+  }
+  | {
+    id: string;
+    type: "checkbox";
+    title: string;
+    options: FilterOption[];
+  }
+  | {
+    id: string;
+    type: "tags";
+    title: string;
+    options: FilterOption[];
+  }
+  | {
+    id: string;
+    type: "toggle";
+    title: string;
+  }
+  | {
+    id: string;
+    type: "nested";
+    title: string;
+    options: {
+      id: string;
+      label: string;
+      children?: FilterOption[];
+    }[];
+  };
+
+
+export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant, Review, FilterOption };

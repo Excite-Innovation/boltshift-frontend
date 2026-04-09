@@ -6,7 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Product, ProductVariant } from "@/lib/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import NumberTickerDemo from "@/components/shadcn-space/radix/number-ticker/number-ticker-03";
-import { EditNum, GetRatio, cn } from "@/lib/utils";
+import { EditNum, GetRatio, cn, FormatNumber } from "@/lib/utils";
+import { StartRating } from "@/components/rating/rating";
 
 type ProductCardProps = {
   variant?: ProductVariant;
@@ -14,7 +15,16 @@ type ProductCardProps = {
   className?: string;
 };
 
-function CardImage({ product, ratio, savePos }: { product: Product; ratio: number; savePos?: string }) {
+// Shared image block for all card variants, with an optional save button position.
+function CardImage({
+  product,
+  ratio,
+  savePosition,
+}: {
+  product: Product;
+  ratio: number;
+  savePosition?: string;
+}) {
   return (
     <div className="relative">
       <AspectRatio ratio={ratio}>
@@ -29,7 +39,10 @@ function CardImage({ product, ratio, savePos }: { product: Product; ratio: numbe
       <Button
         variant="outline"
         size="icon-sm"
-        className={cn("bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50", savePos)}
+        className={cn(
+          "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50",
+          savePosition,
+        )}
       >
         <Heart />
       </Button>
@@ -37,6 +50,7 @@ function CardImage({ product, ratio, savePos }: { product: Product; ratio: numbe
   );
 }
 
+// Default layout used in the hot deals grid.
 function DefaultContent({
   product,
   price,
@@ -78,6 +92,7 @@ function DefaultContent({
   );
 }
 
+// Horizontal layout for compact list-style cards.
 function HorizontalDefaultContent({
   product,
   price,
@@ -106,6 +121,7 @@ function HorizontalDefaultContent({
   );
 }
 
+// Promo card layout with a live countdown/ticker element.
 function CountdownContent({
   product,
   price,
@@ -133,6 +149,7 @@ function CountdownContent({
   );
 }
 
+// Center-aligned layout for spotlight/featured cards.
 function CenteredContent({
   product,
   price,
@@ -160,11 +177,45 @@ function CenteredContent({
   );
 }
 
+// Catalog-specific content: price + rating summary + formatted review count.
+function CatalogContent({
+  product,
+  price,
+  ratings,
+}: {
+  product: Product;
+  price: string;
+  ratings: number;
+}) {
+  const reviews = FormatNumber(product.reviews)
+
+  return (
+    <>
+      <div>
+        <p className="text-xs font-medium line-clamp-2">{product.name}</p>
+        <p className="text-primary">
+          <span className="text-xs">Kshs.</span>
+          <span className="text-xs font-medium">{price}</span>
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <StartRating value={ratings} readonly />
+        <p className="text-xs text-muted-foreground">
+          ({reviews} reviews)
+        </p>
+      </div>
+    </>
+  );
+}
+
+// OVERALL CARD COMPONENT WITH THE IMAGE AND CONTENT COMBINED
 export function ProductCard({
   variant = "default",
   product,
   className,
 }: ProductCardProps) {
+  // Format display-only values once so child sections stay presentation-focused.
   const price = EditNum(product.price);
   const ratio = GetRatio(variant);
 
@@ -181,31 +232,37 @@ export function ProductCard({
           ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
         `}
       >
-        {/* IMAGE */}
+
+        {/* Switch image container sizing only for horizontal cards. */}
         {variant === "horizontal" ? (
           <div className="w-32 shrink-0">
-            <CardImage product={product} ratio={ratio} savePos="left-2" />
+            <CardImage product={product} ratio={ratio} savePosition="left-2" />
           </div>
         ) : (
           <CardImage product={product} ratio={ratio} />
         )}
 
-        {/* CONTENT */}
+        {/* SWITCH CONTENT DEPENDING ON THE CARD TYPE */}
         <div
           className={cn(
             "px-3 flex flex-col",
-            (variant === "horizontal") && "px-4 items-center gap-3",
-            (variant === "default") && "gap-1",
-            (variant === "centered") && "w-72 text-center gap-5",
-            (variant === "countdown") && "text-center gap-10"
+            variant === "horizontal" && "px-4 items-center gap-3",
+            variant === "default" && "gap-1",
+            variant === "centered" && "w-72 text-center gap-5",
+            variant === "countdown" && "text-center gap-10",
+            variant === "catalog" && "text-left gap-2"
           )}
         >
+
+          {/* Render content block based on variant to avoid duplicating card shell markup. */}
           {variant === "countdown" ? (
             <CountdownContent product={product} price={price} />
           ) : variant === "horizontal" ? (
             <HorizontalDefaultContent product={product} price={price} />
           ) : variant === "centered" ? (
             <CenteredContent product={product} price={price} />
+          ) : variant === "catalog" ? (
+            <CatalogContent product={product} price={price} ratings={product.ratings} />
           ) : (
             <DefaultContent product={product} price={price} />
           )}
