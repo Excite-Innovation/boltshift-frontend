@@ -5,12 +5,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-
 /* -------------------------------------------------------
    Tailwind Custom Variants
 ------------------------------------------------------- */
 @custom-variant dark (&:is(.dark *));
-
 
 /* -------------------------------------------------------
    Tailwind Theme Mapping
@@ -81,7 +79,6 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 }
-
 
 /* -------------------------------------------------------
    Root Theme Variables (Light Mode)
@@ -155,7 +152,6 @@
   --shadow-2xl: 0 25px 50px -12px oklch(0.55 0 89.9 / 0.15);
 }
 
-
 /* -------------------------------------------------------
    Dark Theme Overrides
 ------------------------------------------------------- */
@@ -187,8 +183,15 @@
   --border: oklch(0.29 0 89.9);
   --input: oklch(0.29 0 89.9);
   --ring: oklch(0.614 0.23 15.2);
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
-
 
 /* -------------------------------------------------------
    Base Styles

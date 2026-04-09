@@ -49,6 +49,7 @@ function CardImage({
   );
 }
 
+// CARD COMPONENT FOR HOT DEALS SECTION
 function DefaultContent({
   product,
   price,
@@ -203,6 +204,7 @@ function CatalogContent({
   );
 }
 
+// OVERALL CARD COMPONENT WITH THE IMAGE AND CONTENT COMBINED
 export function ProductCard({
   variant = "default",
   product,
