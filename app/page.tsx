@@ -13,7 +13,7 @@ import { Footer } from "@/components/footer/footer-section";
 
 export default function Home() {
   return (
-    <div id="landing-page">
+    <div id="landing-page" className="w-full">
       <div>
         <div className="hidden md:block"> <Navbar /> </div>
         <div className="block md:hidden"> <NavbarMobile /> </div>

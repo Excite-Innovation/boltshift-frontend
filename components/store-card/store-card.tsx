@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TabsLine } from "@/components/store-card/tabs";
-import { PaginationLinks } from "@/components/store-card/pagination";
+import { PaginationLinks } from "@/components/pagination/pagination";
 import { EditNum } from "@/lib/utils";
 
 export function FeaturedStoreCard() {

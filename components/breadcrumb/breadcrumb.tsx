@@ -20,7 +20,7 @@ type BreadcrumbComponentProps = {
 export function BreadcrumbComponent({ items }: BreadcrumbComponentProps) {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="p-4 sm:gap-4">
+      <BreadcrumbList className="py-4 sm:gap-4">
         <BreadcrumbItem>
           <BreadcrumbLink href="/"><Home /></BreadcrumbLink>
         </BreadcrumbItem>
