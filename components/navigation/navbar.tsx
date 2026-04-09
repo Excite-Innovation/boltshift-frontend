@@ -1,8 +1,11 @@
+"use client"
+
 import { Logo } from "@/components/brand/logo";
 import { NavbarSearch } from "@/components/navigation/navbar-search";
 import { Menu, ListFilter } from "lucide-react";
 import { Profile } from "@/components/navigation/profile-area";
 import { Button } from "@/components/ui/button";
+import  { useSidebar } from "@/components/ui/sidebar";
 import Link from "next/link";
 
 // Desktop version
@@ -27,6 +30,7 @@ export function Navbar() {
 
 // Mobile version
 export function NavbarMobile() {
+  const { toggleSidebar } = useSidebar();
   return (
     <header className="h-33 flex flex-col gap-4">
       <div className="h-10 flex flex-row justify-between">
@@ -44,6 +48,7 @@ export function NavbarMobile() {
           variant="outline"
           className="rounded-lg h-11 w-11 p-3 shrink-0"
           aria-label="Filter button"
+          onClick={toggleSidebar}
         >
           <ListFilter className="size-5" aria-hidden="true" />
         </Button>

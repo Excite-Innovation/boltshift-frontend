@@ -22,7 +22,7 @@ type ItemProps = {
   };
 };
 
-export function DropDown({ item }: ItemProps) {
+export function CollapsibleItem({ item }: ItemProps) {
   return (
     <Collapsible
       key={item.title}
@@ -32,8 +32,8 @@ export function DropDown({ item }: ItemProps) {
     >
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton tooltip={item.title}>
-            <span>{item.title}</span>
+          <SidebarMenuButton tooltip={item.title} className="p-2 flex justify-between">
+            <span className="text-xl font-semibold">{item.title}</span>
             <Plus />
           </SidebarMenuButton>
         </CollapsibleTrigger>
@@ -43,7 +43,7 @@ export function DropDown({ item }: ItemProps) {
             {item.items?.map((subItem) => (
               <SidebarMenuSubItem key={subItem.title}>
                 <SidebarMenuSubButton>
-                  <span>{subItem.title}</span>
+                  <span className="text-md font-medium">{subItem.title}</span>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             ))}
