@@ -4,7 +4,6 @@ import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
-import { SidebarProvider } from "@/components/ui/sidebar";
 
 const items = [{ label: "Catalog" }];
 
@@ -14,45 +13,43 @@ export default function Catalog() {
   const alt = "Shopping bags icon";
 
   return (
-    <SidebarProvider>
+    <div>
       <div>
-        <div>
-          <div className="hidden md:block">
-            <Navbar />
-          </div>
-          <div className="block md:hidden">
-            <NavbarMobile />
-          </div>
+        <div className="hidden md:block">
+          <Navbar />
         </div>
-
-        <BreadcrumbComponent items={items} />
-
-        {/* Title */}
-        <div className="py-4 flex flex-col gap-8 sm:flex-row">
-          <SectionTitle
-            title={title}
-            icon={icon}
-            alt={alt}
-            className="basis-1/4"
-          />
-          <p className="flex gap-2.5 items-center basis-3/4">
-            <span className="text-xs font-semibold text-muted-foreground md:text-sm lg:text-xl">
-              366 results for the search of
-            </span>
-            <span className="text-xs font-semibold text-primary md:text-sm lg:text-xl">
-              luxury contemporary watch
-            </span>
-          </p>
+        <div className="block md:hidden">
+          <NavbarMobile />
         </div>
-
-        {/* Page content */}
-        <div className="flex">
-          <FilterSidebar />
-          <CatalogCard />
-        </div>
-
-        <Footer />
       </div>
-    </SidebarProvider>
+
+      <BreadcrumbComponent items={items} />
+
+      {/* Title */}
+      <div className="py-4 flex flex-col gap-8 sm:flex-row">
+        <SectionTitle
+          title={title}
+          icon={icon}
+          alt={alt}
+          className="basis-1/4"
+        />
+        <p className="flex gap-2.5 items-center basis-3/4">
+          <span className="text-xs font-semibold text-muted-foreground md:text-sm lg:text-xl">
+            366 results for the search of
+          </span>
+          <span className="text-xs font-semibold text-primary md:text-sm lg:text-xl">
+            luxury contemporary watch
+          </span>
+        </p>
+      </div>
+
+      {/* Page content */}
+      <div className="flex">
+        <FilterSidebar />
+        <CatalogCard />
+      </div>
+
+      <Footer />
+    </div>
   );
 }

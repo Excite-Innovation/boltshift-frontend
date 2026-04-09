@@ -15,14 +15,15 @@ type ProductCardProps = {
   className?: string;
 };
 
+// Shared image block for all card variants, with an optional save button position.
 function CardImage({
   product,
   ratio,
-  savePos,
+  savePosition,
 }: {
   product: Product;
   ratio: number;
-  savePos?: string;
+  savePosition?: string;
 }) {
   return (
     <div className="relative">
@@ -40,7 +41,7 @@ function CardImage({
         size="icon-sm"
         className={cn(
           "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50",
-          savePos,
+          savePosition,
         )}
       >
         <Heart />
@@ -49,7 +50,7 @@ function CardImage({
   );
 }
 
-// CARD COMPONENT FOR HOT DEALS SECTION
+// Default layout used in the hot deals grid.
 function DefaultContent({
   product,
   price,
@@ -91,6 +92,7 @@ function DefaultContent({
   );
 }
 
+// Horizontal layout for compact list-style cards.
 function HorizontalDefaultContent({
   product,
   price,
@@ -119,6 +121,7 @@ function HorizontalDefaultContent({
   );
 }
 
+// Promo card layout with a live countdown/ticker element.
 function CountdownContent({
   product,
   price,
@@ -146,6 +149,7 @@ function CountdownContent({
   );
 }
 
+// Center-aligned layout for spotlight/featured cards.
 function CenteredContent({
   product,
   price,
@@ -173,6 +177,7 @@ function CenteredContent({
   );
 }
 
+// Catalog-specific content: price + rating summary + formatted review count.
 function CatalogContent({
   product,
   price,
@@ -210,6 +215,7 @@ export function ProductCard({
   product,
   className,
 }: ProductCardProps) {
+  // Format display-only values once so child sections stay presentation-focused.
   const price = EditNum(product.price);
   const ratio = GetRatio(variant);
 
@@ -226,16 +232,17 @@ export function ProductCard({
           ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
         `}
       >
-        {/* IMAGE */}
+
+        {/* Switch image container sizing only for horizontal cards. */}
         {variant === "horizontal" ? (
           <div className="w-32 shrink-0">
-            <CardImage product={product} ratio={ratio} savePos="left-2" />
+            <CardImage product={product} ratio={ratio} savePosition="left-2" />
           </div>
         ) : (
           <CardImage product={product} ratio={ratio} />
         )}
 
-        {/* CONTENT */}
+        {/* SWITCH CONTENT DEPENDING ON THE CARD TYPE */}
         <div
           className={cn(
             "px-3 flex flex-col",
@@ -246,6 +253,8 @@ export function ProductCard({
             variant === "catalog" && "text-left gap-2"
           )}
         >
+
+          {/* Render content block based on variant to avoid duplicating card shell markup. */}
           {variant === "countdown" ? (
             <CountdownContent product={product} price={price} />
           ) : variant === "horizontal" ? (
