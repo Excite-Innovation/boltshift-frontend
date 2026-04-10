@@ -2,8 +2,19 @@
 
 import { Logo } from "@/components/brand/logo";
 import { useTheme } from "next-themes";
-import { Dribbble, Instagram, GitHub, YouTube, X, } from "@/components/footer/socials";
-import { AppStoreButton, GalaxyStoreButton, GooglePlayButton } from "@/components/app-store/app-store-buttons"
+import {
+  FaDribbble,
+  FaInstagram,
+  FaLinkedin,
+  FaGithub,
+  FaYoutube,
+  FaXTwitter,
+} from "react-icons/fa6";
+import {
+  AppStoreButton,
+  GalaxyStoreButton,
+  GooglePlayButton,
+} from "@/components/app-store/app-store-buttons";
 import Link from "next/link";
 
 const links = [
@@ -21,9 +32,20 @@ const links = [
   "Resources",
 ];
 
+// External profiles are centralized so icon rendering stays declarative.
+const socialLinks = {
+  dribbble: "",
+  instagram: "https://www.instagram.com/excitecompany",
+  linkedin: "https://www.linkedin.com/company/exciteinnovation",
+  github: "https://github.com/Excite-Innovation",
+  youtube: "https://www.youtube.com/@ExciteInnovation",
+  twitter: "https://www.twitter.com/excitecompany",
+};
+
 export function Footer() {
   return (
     <div className="w-full pb-12 flex flex-col gap-8">
+      {/* Brand + app distribution CTA. */}
       <div className="pt-4 flex justify-between items-center">
         <Logo />
         <MobileAppButtons />
@@ -37,12 +59,32 @@ export function Footer() {
             </Link>
           ))}
         </div>
+
+        {/* Icon row intentionally uses direct links to avoid extra abstraction around simple external targets. */}
         <div className="h-6 flex gap-6 justify-center">
-          <Dribbble />
-          <Instagram />
-          <GitHub />
-          <YouTube />
-          <X />
+          <Link href={socialLinks.dribbble} target="_blank">
+            <FaDribbble className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
+
+          <Link href={socialLinks.instagram} target="_blank">
+            <FaInstagram className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
+
+          <Link href={socialLinks.linkedin} target="_blank">
+            <FaLinkedin className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
+
+          <Link href={socialLinks.github} target="_blank">
+            <FaGithub className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
+
+          <Link href={socialLinks.youtube} target="_blank">
+            <FaYoutube className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
+
+          <Link href={socialLinks.twitter} target="_blank">
+            <FaXTwitter className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
+          </Link>
         </div>
       </div>
       <div className="pt-4 border-t border-border text-muted-foreground">
