@@ -1,6 +1,6 @@
 import { ProductCard } from "@/components/product-card/product-card";
 import { GetProductItems } from "@/lib/product-items";
-import { ProductVariant } from "@/lib/type";
+import { ProductVariant } from "@/types/type";
 
 export function TrendingProductsCard() {
     const products = GetProductItems();

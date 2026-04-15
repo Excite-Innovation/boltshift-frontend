@@ -1,4 +1,4 @@
-import { CategoryItem } from "@/lib/type";
+import { CategoryItem } from "@/types/type";
 
 export const CategoryItems: CategoryItem[] = [
     { id: "tshirts", name: "Men's Clothing", image: "/popular-categories-icons/T-shirt.svg" },

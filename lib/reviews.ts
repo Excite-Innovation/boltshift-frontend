@@ -1,4 +1,4 @@
-import { Review } from "@/lib/type";
+import { Review } from "@/types/type";
 
 export function GetReviews(): Review[] {
   return [

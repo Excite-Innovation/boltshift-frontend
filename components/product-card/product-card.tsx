@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { Product, ProductVariant } from "@/lib/type";
+import { Product, ProductVariant } from "@/types/type";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import NumberTickerDemo from "@/components/shadcn-space/radix/number-ticker/number-ticker-03";
 import { EditNum, GetRatio, cn, FormatNumber } from "@/lib/utils";
