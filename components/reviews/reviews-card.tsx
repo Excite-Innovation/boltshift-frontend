@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { Review } from "@/lib/type";
+import { Review } from "@/types/type";
 import { Badge } from "@/components/ui/badge";
 import { StartRating } from "@/components/rating/rating";
 import { User, Check } from "lucide-react";

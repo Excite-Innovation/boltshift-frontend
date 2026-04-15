@@ -1,4 +1,4 @@
-import { HeroItem } from "@/lib/type";
+import { HeroItem } from "@/types/type";
 
 export const HeroItems: HeroItem[] = [
   {

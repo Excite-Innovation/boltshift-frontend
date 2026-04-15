@@ -1,4 +1,4 @@
-import { Vendor } from "@/lib/type";
+import { Vendor } from "@/types/type";
 
 export const Vendors: Record<string, Vendor> = {
   "three-portals": {
