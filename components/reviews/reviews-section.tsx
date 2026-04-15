@@ -1,7 +1,7 @@
 import { SectionTitle } from "@/components/section-title";
 import { ReviewCard } from "@/components/reviews/reviews-card";
 import { GetReviews } from "@/lib/reviews";
-import { Review } from "@/lib/type";
+import { Review } from "@/types/type";
 
 export function ReviewSection() {
   const title = "Review spotlight";

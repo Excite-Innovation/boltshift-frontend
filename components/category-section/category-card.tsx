@@ -1,4 +1,4 @@
-import { CategoryItem } from "@/lib/type";
+import { CategoryItem } from "@/types/type";
 
 type categoryItemProps = {
   categoryItem: CategoryItem;
