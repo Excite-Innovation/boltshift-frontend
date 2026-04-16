@@ -36,7 +36,7 @@
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/denilany/boltshift-frontend.git
+git clone https://github.com/Excite-Innovation/boltshift-frontend.git
 cd boltshift-frontend
 ```
 
@@ -61,8 +61,8 @@ https://localhost:3000
 # Useful Scripts
 
 ```bash
-npm run dev:pwa    # Start development server
-npm run build  # Build for production
-npm run start  # Start production server
-npm run lint   # Run lint checks
+npm run dev:pwa # Start development server
+npm run build   # Build for production
+npm run start   # Start production server
+npm run lint    # Run lint checks
 ```
