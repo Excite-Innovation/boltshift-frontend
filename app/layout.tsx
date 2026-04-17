@@ -9,31 +9,37 @@ type RootLayoutProps = Readonly<{
   children: ReactNode;
 }>;
 
-// Include project metadata
+
+/* METADATA CONFIGURATION */
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ),
+  
   title: {
     default: "Boltshift",
     template: "%s | Boltshift",
   },
 
-  description:
-    "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
+  description: "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
 
   openGraph: {
     url: "/",
     title: "Boltshift",
-    description:
-      "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
+    description: "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
     siteName: "Boltshift",
     images: [{ url: "/opengraph-image.png" }],
   },
-
-  themeColor: "#ffffff",
 };
 
+
+/* VIEWPORT CONFIGURATION */
+export const viewport = {
+  themeColor: "#ee2255",
+};
+
+
+/* ROOT LAYOUT COMPONENT */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>

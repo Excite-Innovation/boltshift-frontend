@@ -1,4 +1,4 @@
-import { Product } from "@/lib/type";
+import { Product } from "@/types/type";
 import { GetProductItems } from "@/lib/product-items";
 import { ProductCard } from "@/components/product-card/product-card";
 
