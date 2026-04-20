@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,11 +12,14 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
-import { Plus } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Plus, Minus, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 type ItemProps = {
   item: {
     title: string;
+    type?: "list" | "checkbox";
     isActive?: boolean;
     items?: {
       title: string;
@@ -23,18 +28,29 @@ type ItemProps = {
 };
 
 export function CollapsibleItem({ item }: ItemProps) {
+  const [open, setOpen] = useState(!!item.isActive);
+
   return (
     <Collapsible
       key={item.title}
+      open={open}
+      onOpenChange={setOpen}
       defaultOpen={item.isActive}
       asChild
       className="group/collapsible"
     >
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton tooltip={item.title} className="p-2 flex justify-between">
+          <SidebarMenuButton
+            tooltip={item.title}
+            className="p-2 flex justify-between"
+          >
             <span className="text-xl font-semibold">{item.title}</span>
-            <Plus />
+            {open ? (
+              <Minus className="size-4 transition-transform delay-700" />
+            ) : (
+              <Plus className="size-4 transition-transform delay-700" />
+            )}
           </SidebarMenuButton>
         </CollapsibleTrigger>
 
@@ -42,9 +58,27 @@ export function CollapsibleItem({ item }: ItemProps) {
           <SidebarMenuSub>
             {item.items?.map((subItem) => (
               <SidebarMenuSubItem key={subItem.title}>
-                <SidebarMenuSubButton>
-                  <span className="text-md font-medium">{subItem.title}</span>
-                </SidebarMenuSubButton>
+                {item.type === "checkbox" ? (
+                  // Checkbox version (Brands)
+                  <div className="flex items-center gap-1 p-2">
+                    <Checkbox id={subItem.title} />
+                    <label
+                      htmlFor={subItem.title}
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      {subItem.title}
+                    </label>
+                  </div>
+                ) : (
+                  <SidebarMenuSubButton className="flex items-center justify-between w-full">
+                    <span className="text-md font-medium">{subItem.title}</span>
+                    <ChevronDown
+                      className={`size-4 transition-transform duration-200 ${
+                        open ? "rotate-0" : "rotate-180"
+                      }`}
+                    />
+                  </SidebarMenuSubButton>
+                )}
               </SidebarMenuSubItem>
             ))}
           </SidebarMenuSub>
