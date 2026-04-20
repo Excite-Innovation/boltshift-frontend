@@ -214,3 +214,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}

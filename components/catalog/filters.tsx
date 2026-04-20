@@ -1,6 +1,5 @@
 import {
   Sidebar,
-  SidebarHeader,
   SidebarContent,
   SidebarGroup,
   SidebarMenu,
@@ -9,7 +8,7 @@ import { FilterItems } from "@/lib/filters";
 import { SelectList } from "@/components/dropdown/select";
 import { CollapsibleItem } from "@/components/dropdown/dropdown";
 
-const selectList = ["Latest", "Oldest", "Popular"];
+const sortBy = ["Latest", "Oldest", "Popular"];
 
 export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -17,7 +16,7 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent className="bg-background border-0 pt-4 px-4 pb-12 gap-4 scrollbar-hide">
         <div className="flex flex-col gap-1">
           <p>Sort By</p>
-          <SelectList list={selectList} />
+          <SelectList list={sortBy} />
         </div>
 
         <SidebarGroup>
