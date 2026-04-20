@@ -1,4 +1,4 @@
-import { Vendor } from "@/types/type";
+import { Vendor } from "@/types/vendor/vendor";
 
 type VendorCardProps = {
   vendor: Vendor;
