@@ -1,9 +1,9 @@
-type Vendor = {
+/* type Vendor = {
   id?: string;
   name: string;
   icon?: string;
   alt: string;
-};
+}; */
 
 type HeroItem = {
   id?: string;
@@ -112,4 +112,4 @@ export type FilterSection =
   };
 
 
-export type { Vendor, HeroItem, CategoryItem, Product, ProductVariant, Review, FilterOption };
+export type { /* Vendor */ HeroItem, CategoryItem, Product, ProductVariant, Review, FilterOption };
