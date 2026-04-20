@@ -19,10 +19,9 @@ export function SelectList({ list }: SelectListProps) {
 
   return (
     <Select value={item} onValueChange={setItem}>
-      <SelectTrigger className="w-full ">
+      <SelectTrigger className="w-full">
         <SelectValue placeholder="Select" />
       </SelectTrigger>
-
       <SelectContent position="popper" className="max-h-60 overflow-auto">
         <SelectGroup>
           {list.map((opt) => (

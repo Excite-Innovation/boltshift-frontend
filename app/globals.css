@@ -215,7 +215,11 @@
   scrollbar-width: none;
 }
 
-html {
-  scrollbar-gutter: stable;
-  overflow-y: scroll;
+body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+.with-scroll-bars-hidden {
+  padding-right: 0 !important;
 }
