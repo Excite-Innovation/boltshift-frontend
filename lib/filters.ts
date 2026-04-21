@@ -69,7 +69,7 @@ export const FilterItems: FilterItem[] = [
       { title: "Hoodies" },
       { title: "Watches" },
       { title: "MacBook Pro" },
-      { title: "Earrings" },
+      { title: "Ear-rings" },
       { title: "Gold Bracelets" },
       { title: "Keyboard" },
       { title: "Lampshade" },

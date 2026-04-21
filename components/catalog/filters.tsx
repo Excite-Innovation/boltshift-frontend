@@ -23,7 +23,7 @@ const sortBy = ["Latest", "Oldest", "Popular"];
 export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props} className="relative">
-      <SidebarContent className="bg-background border-0 pt-4 px-4 pb-12 gap-4 scrollbar-hide">
+      <SidebarContent className="bg-background border-none pt-4 px-4 pb-12 gap-4 scrollbar-hide">
         <div className="flex flex-col gap-1">
           <p>Sort By</p>
           <SelectList list={sortBy} />

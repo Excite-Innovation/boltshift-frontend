@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Minus, ChevronDown } from "lucide-react";
 import { clampToPositive, enforceRangeOrder } from "@/lib/utils";
 import { StartRating } from "@/components/rating/rating";
+import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 
 type ItemProps = {
@@ -34,6 +35,17 @@ export function CollapsibleItem({ item }: ItemProps) {
   const [open, setOpen] = useState(!!item.isActive);
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(
+      (prev) =>
+        prev.includes(tag)
+          ? prev.filter((t) => t !== tag) // remove
+          : [...prev, tag], // add
+    );
+  };
 
   const renderRange = () => (
     <SidebarMenuSub>
@@ -101,6 +113,27 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  const renderTags = () => (
+    <SidebarMenuSub className="p-2 flex flex-row gap-2 flex-wrap">
+      {item.items?.map((tag) => {
+        const isActive = selectedTags.includes(tag.title);
+
+        return (
+          <Badge
+            key={tag.title}
+            variant={isActive ? "default" : "outline"}
+            className={`cursor-pointer transition-colors px-3 py-1 rounded-full
+            ${isActive ? "bg-primary text-primary-foreground" : ""}
+          `}
+            onClick={() => toggleTag(tag.title)}
+          >
+            {tag.title}
+          </Badge>
+        );
+      })}
+    </SidebarMenuSub>
+  );
+
   const renderItems = () => (
     <SidebarMenuSub>
       {item.items?.map((subItem) => (
@@ -157,12 +190,14 @@ export function CollapsibleItem({ item }: ItemProps) {
           </SidebarMenuButton>
         </CollapsibleTrigger>
 
-        <CollapsibleContent asChild>
+        <CollapsibleContent asChild className="border-none">
           {item.type === "range"
             ? renderRange()
             : item.type === "rating"
               ? renderRating()
-              : renderItems()}
+              : item.type === "tag"
+                ? renderTags()
+                : renderItems()}
         </CollapsibleContent>
       </SidebarMenuItem>
     </Collapsible>
