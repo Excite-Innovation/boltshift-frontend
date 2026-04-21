@@ -43,3 +43,22 @@ export function FormatNumber(
   const result = value / 1_000_000;
   return `${parseFloat(result.toFixed(decimals))}M`;
 }
+
+export const clampToPositive = (value: string) => {
+  const num = Number(value);
+  if (isNaN(num)) return "";
+  return Math.max(0, num).toString();
+};
+
+export const enforceRangeOrder = (min: string, max: string) => {
+  const minNum = Number(min);
+  const maxNum = Number(max);
+
+  if (!min || !max) return { min, max };
+
+  if (maxNum < minNum) {
+    return { min, max: min }; // snap max to min
+  }
+
+  return { min, max };
+};

@@ -1,4 +1,4 @@
-export type FilterItemType = "list" | "checkbox";
+export type FilterItemType = "list" | "checkbox" | "range" | "rating" | "tag";
 
 export type FilterSubItem = {
   title: string;
@@ -7,7 +7,7 @@ export type FilterSubItem = {
 export type FilterItem = {
   title: string;
   type: FilterItemType;
-  items: FilterSubItem[];
+  items?: FilterSubItem[];
 };
 
 export const FilterItems: FilterItem[] = [
@@ -41,4 +41,39 @@ export const FilterItems: FilterItem[] = [
       { title: "Hershey Foods Corp." },
     ],
   },
+  {
+    title: "Price Range",
+    type: "range",
+  },
+  {
+    title: "Rating",
+    type: "rating",
+  },
+  {
+    title: "Shipping",
+    type: "checkbox",
+    items: [
+      { title: "Fast" },
+      { title: "Saving" },
+      { title: "Free" },
+    ],
+  },
+  {
+    title: "Popular Tags",
+    type: "tag",
+    items: [
+      { title: "Electronics" },
+      { title: "Phones" },
+      { title: "Tablets" },
+      { title: "T-shirts" },
+      { title: "Hoodies" },
+      { title: "Watches" },
+      { title: "MacBook Pro" },
+      { title: "Earrings" },
+      { title: "Gold Bracelets" },
+      { title: "Keyboard" },
+      { title: "Lampshade" },
+      { title: "Water Bottle" },
+    ],
+  }
 ];
