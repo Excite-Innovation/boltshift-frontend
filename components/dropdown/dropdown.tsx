@@ -43,7 +43,7 @@ export function CollapsibleItem({ item }: ItemProps) {
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
             tooltip={item.title}
-            className="p-2 flex justify-between"
+            className="p-2 flex justify-between cursor-pointer"
           >
             <span className="text-xl font-semibold">{item.title}</span>
             {open ? (
@@ -57,20 +57,20 @@ export function CollapsibleItem({ item }: ItemProps) {
         <CollapsibleContent asChild>
           <SidebarMenuSub>
             {item.items?.map((subItem) => (
-              <SidebarMenuSubItem key={subItem.title}>
+              <SidebarMenuSubItem key={subItem.title} className="cursor-pointer">
                 {item.type === "checkbox" ? (
                   // Checkbox version (Brands)
-                  <div className="flex items-center gap-1 p-2">
-                    <Checkbox id={subItem.title} />
+                  <div className="w-full flex items-center gap-1 p-2">
+                    <Checkbox id={subItem.title} className="cursor-pointer"/>
                     <label
                       htmlFor={subItem.title}
-                      className="text-sm font-medium cursor-pointer"
+                      className="grow text-sm font-medium cursor-pointer"
                     >
                       {subItem.title}
                     </label>
                   </div>
                 ) : (
-                  <SidebarMenuSubButton className="flex items-center justify-between w-full">
+                  <SidebarMenuSubButton className="flex items-center justify-between w-full cursor-pointer">
                     <span className="text-md font-medium">{subItem.title}</span>
                     <ChevronDown
                       className={`size-4 transition-transform duration-200 ${
