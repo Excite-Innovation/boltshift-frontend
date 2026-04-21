@@ -16,6 +16,7 @@ import {
   GooglePlayButton,
 } from "@/components/app-store/app-store-buttons";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 const links = [
   "Overview",
@@ -62,29 +63,41 @@ export function Footer() {
 
         {/* Icon row intentionally uses direct links to avoid extra abstraction around simple external targets. */}
         <div className="h-6 flex gap-6 justify-center">
-          <Link href={socialLinks.dribbble} target="_blank">
-            <FaDribbble className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.dribbble}
+            icon={<FaDribbble className="text-2xl" />}
+            label="Dribbble icon"
+          />
 
-          <Link href={socialLinks.instagram} target="_blank">
-            <FaInstagram className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.instagram}
+            icon={<FaInstagram className="text-2xl" />}
+            label="Instagram icon"
+          />
 
-          <Link href={socialLinks.linkedin} target="_blank">
-            <FaLinkedin className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.linkedin}
+            icon={<FaLinkedin className="text-2xl" />}
+            label="Linkedin icon"
+          />
 
-          <Link href={socialLinks.github} target="_blank">
-            <FaGithub className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.github}
+            icon={<FaGithub className="text-2xl" />}
+            label="GitHub icon"
+          />
 
-          <Link href={socialLinks.youtube} target="_blank">
-            <FaYoutube className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.youtube}
+            icon={<FaYoutube className="text-2xl" />}
+            label="YouTube icon"
+          />
 
-          <Link href={socialLinks.twitter} target="_blank">
-            <FaXTwitter className="text-2xl text-muted-foreground hover:text-foreground hover:cursor-pointer" />
-          </Link>
+          <SocialIconButton
+            href={socialLinks.twitter}
+            icon={<FaXTwitter className="text-2xl" />}
+            label="Twitter icon"
+          />
         </div>
       </div>
       <div className="pt-4 border-t border-border text-muted-foreground">
@@ -123,3 +136,33 @@ export const MobileAppButtons = () => {
     </div>
   );
 };
+
+type SocialIconButtonProps = {
+  href: string;
+  icon: React.ReactNode;
+  label?: string;
+};
+
+// Social icons reusable component
+function SocialIconButton({
+  href,
+  icon,
+  label = "social link",
+}: SocialIconButtonProps) {
+  const handleClick = () => {
+    window.open(href, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleClick}
+      aria-label={label}
+      asChild
+      className="w-6 h-6 text-muted-foreground hover:text-foreground hover:cursor-pointer"
+    >
+      {icon}
+    </Button>
+  );
+}

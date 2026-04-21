@@ -19,14 +19,13 @@ export function SelectList({ list }: SelectListProps) {
 
   return (
     <Select value={item} onValueChange={setItem}>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full cursor-pointer">
         <SelectValue placeholder="Select" />
       </SelectTrigger>
-
-      <SelectContent>
+      <SelectContent position="popper" className="max-h-60 overflow-auto">
         <SelectGroup>
           {list.map((opt) => (
-            <SelectItem key={opt} value={opt}>
+            <SelectItem key={opt} value={opt} className="cursor-pointer">
               {opt}
             </SelectItem>
           ))}
