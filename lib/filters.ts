@@ -7,6 +7,7 @@ export type FilterSubItem = {
 export type FilterItem = {
   title: string;
   type: FilterItemType;
+  isActive?: boolean;
   items?: FilterSubItem[];
 };
 
@@ -14,6 +15,7 @@ export const FilterItems: FilterItem[] = [
   {
     title: "Categories",
     type: "list",
+    isActive: true,
     items: [
       { title: "Automotive" },
       { title: "Baby" },
@@ -29,6 +31,7 @@ export const FilterItems: FilterItem[] = [
   {
     title: "Brands",
     type: "checkbox",
+    isActive: true,
     items: [
       { title: "3M Company" },
       { title: "Apple Computer, Inc." },
@@ -44,14 +47,17 @@ export const FilterItems: FilterItem[] = [
   {
     title: "Price Range",
     type: "range",
+    isActive: true,
   },
   {
     title: "Rating",
     type: "rating",
+    isActive: true,
   },
   {
     title: "Shipping",
     type: "checkbox",
+    isActive: true,
     items: [
       { title: "Fast" },
       { title: "Saving" },
@@ -61,6 +67,7 @@ export const FilterItems: FilterItem[] = [
   {
     title: "Popular Tags",
     type: "tag",
+    isActive: true,
     items: [
       { title: "Electronics" },
       { title: "Phones" },
