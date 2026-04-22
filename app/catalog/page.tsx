@@ -81,7 +81,7 @@ export default function Catalog() {
       </div>
 
       {/* Page content */}
-      <div className="flex">
+      <div className="flex items-start">
         <FilterSidebar />
         <CatalogCard />
       </div>
