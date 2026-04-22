@@ -6,10 +6,10 @@ export function CatalogCard() {
   const products = GetProductItems();
 
   return (
-    <main className="flex flex-col gap-2">
-      <div className="p-0 grid grid-cols-2 gap-4 sm:grid-cols-3 md:p-4 md:grid-cols-4 lg:grid-cols-6">
+    <main className=" w-full flex flex-col grow gap-2 md:p-4">
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] items-start">
         {products.map((p) => (
-          <ProductCard key={p.id} variant="catalog" product={p} className="shrink-0" />
+          <ProductCard key={p.id} variant="catalog" product={p} className="w-full" />
         ))}
       </div>
       <PaginationLinks />
