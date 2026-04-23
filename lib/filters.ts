@@ -22,86 +22,102 @@ export const FilterItems: FilterItem[] = [
       {
         title: "Automotive",
         slug: "automotive",
-        subcategories: [],
+        subcategories: [
+          { title: "Car Accessories", slug: "car-accessories" },
+          { title: "Car Care & Cleaning", slug: "car-care" },
+          { title: "Interior Parts", slug: "interior-parts" },
+        ],
       },
       {
         title: "Baby",
         slug: "baby",
-        subcategories: [],
+        subcategories: [
+          { title: "Diapers & Wipes", slug: "diapers-wipes" },
+          { title: "Baby Clothing", slug: "baby-clothing" },
+          { title: "Feeding Essentials", slug: "feeding-essentials" },
+        ],
       },
       {
         title: "Beauty And Personal Care",
         slug: "beauty",
-        subcategories: [],
+        subcategories: [
+          { title: "Skincare", slug: "skincare" },
+          { title: "Hair Care", slug: "hair-care" },
+          { title: "Makeup", slug: "makeup" },
+        ],
       },
-
       {
         title: "Men's Fashion",
         slug: "mens-fashion",
         subcategories: [
-          { title: "Men's Clothing", slug: "mens-clothing" },
-          { title: "Watches", slug: "watches" },
+          { title: "T-Shirts & Shirts", slug: "mens-shirts" },
+          { title: "Trousers & Jeans", slug: "mens-bottoms" },
+          { title: "Shoes & Sneakers", slug: "mens-shoes" },
         ],
       },
-
       {
         title: "Women's Fashion",
         slug: "womens-fashion",
         subcategories: [
-          { title: "Women's Clothing", slug: "womens-clothing" },
-          { title: "Swimsuit", slug: "swimsuit" },
+          { title: "Dresses", slug: "womens-dresses" },
+          { title: "Tops & Blouses", slug: "womens-tops" },
+          { title: "Shoes & Heels", slug: "womens-shoes" },
         ],
       },
-
       {
         title: "Electronics",
         slug: "electronics",
         subcategories: [
-          { title: "Mobile", slug: "mobile" },
-          { title: "Laptop", slug: "laptop" },
-          { title: "Desktop", slug: "desktop" },
-          { title: "Headphones", slug: "headphones" },
+          { title: "Smartphones", slug: "smartphones" },
+          { title: "Laptops & Computers", slug: "laptops-computers" },
+          { title: "Audio Devices", slug: "audio-devices" },
         ],
       },
-
       {
         title: "Pet Supplies",
         slug: "pet-supplies",
-        subcategories: [],
-      },
-
-      {
-        title: "Health & Household",
-        slug: "health",
         subcategories: [
-          { title: "Health", slug: "health" },
+          { title: "Dog Food", slug: "dog-food" },
+          { title: "Cat Accessories", slug: "cat-accessories" },
+          { title: "Pet Toys", slug: "pet-toys" },
         ],
       },
-
+      {
+        title: "Health",
+        slug: "health",
+        subcategories: [
+          { title: "Vitamins & Supplements", slug: "vitamins-supplements" },
+          { title: "First Aid", slug: "first-aid" },
+          { title: "Medical Devices", slug: "medical-devices" },
+        ],
+      },
       {
         title: "Home & Kitchen",
         slug: "home-living",
         subcategories: [
-          { title: "Home Appliance", slug: "home-appliance" },
-          { title: "Home & Living", slug: "home-living" },
+          { title: "Cookware", slug: "cookware" },
+          { title: "Furniture", slug: "furniture" },
+          { title: "Home Storage", slug: "home-storage" },
         ],
       },
-
       {
         title: "Luggage",
         slug: "luggage",
         subcategories: [
-          { title: "Backpack", slug: "backpack" },
+          { title: "Travel Backpacks", slug: "travel-backpacks" },
+          { title: "Suitcases", slug: "suitcases" },
+          { title: "Travel Accessories", slug: "travel-accessories" },
         ],
       },
-
       {
         title: "Accessories",
         slug: "accessories",
         subcategories: [
-          { title: "Jewelery", slug: "jewelery" },
+          { title: "Watches", slug: "watches" },
+          { title: "Jewellery", slug: "jewellery" },
+          { title: "Sunglasses", slug: "sunglasses" },
         ],
-      },
+      }
     ],
   },
   {

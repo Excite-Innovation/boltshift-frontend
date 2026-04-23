@@ -3,7 +3,7 @@ import { FilterSidebar } from "@/components/catalog/filters";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 
-const items = [{ label: "Home", href: "/" }, { label: "Catalog" }];
+const items = [{ label: "Catalog" }];
 
 export default function Catalog() {
   const title = "Catalog";

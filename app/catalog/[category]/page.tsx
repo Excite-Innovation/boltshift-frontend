@@ -16,7 +16,6 @@ export default function CategoryPage({
   const alt = "Shopping bags icon";
 
   const items = [
-    { label: "Home", href: "/" },
     { label: "Catalog", href: "/catalog" },
     { label: format(params.category) },
   ];
