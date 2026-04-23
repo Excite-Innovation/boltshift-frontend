@@ -2,6 +2,8 @@ export type FilterItemType = "list" | "checkbox" | "range" | "rating" | "tag";
 
 export type FilterSubItem = {
   title: string;
+  slug?: string;
+  subcategories?: FilterSubItem[];
 };
 
 export type FilterItem = {
@@ -17,15 +19,89 @@ export const FilterItems: FilterItem[] = [
     type: "list",
     isActive: true,
     items: [
-      { title: "Automotive" },
-      { title: "Baby" },
-      { title: "Beauty And Personal Care" },
-      { title: "Men's Fashion" },
-      { title: "Women's Fashion" },
-      { title: "Pet Supplies" },
-      { title: "Health & Household" },
-      { title: "Home & Kitchen" },
-      { title: "Luggage" },
+      {
+        title: "Automotive",
+        slug: "automotive",
+        subcategories: [],
+      },
+      {
+        title: "Baby",
+        slug: "baby",
+        subcategories: [],
+      },
+      {
+        title: "Beauty And Personal Care",
+        slug: "beauty",
+        subcategories: [],
+      },
+
+      {
+        title: "Men's Fashion",
+        slug: "mens-fashion",
+        subcategories: [
+          { title: "Men's Clothing", slug: "mens-clothing" },
+          { title: "Watches", slug: "watches" },
+        ],
+      },
+
+      {
+        title: "Women's Fashion",
+        slug: "womens-fashion",
+        subcategories: [
+          { title: "Women's Clothing", slug: "womens-clothing" },
+          { title: "Swimsuit", slug: "swimsuit" },
+        ],
+      },
+
+      {
+        title: "Electronics",
+        slug: "electronics",
+        subcategories: [
+          { title: "Mobile", slug: "mobile" },
+          { title: "Laptop", slug: "laptop" },
+          { title: "Desktop", slug: "desktop" },
+          { title: "Headphones", slug: "headphones" },
+        ],
+      },
+
+      {
+        title: "Pet Supplies",
+        slug: "pet-supplies",
+        subcategories: [],
+      },
+
+      {
+        title: "Health & Household",
+        slug: "health",
+        subcategories: [
+          { title: "Health", slug: "health" },
+        ],
+      },
+
+      {
+        title: "Home & Kitchen",
+        slug: "home-living",
+        subcategories: [
+          { title: "Home Appliance", slug: "home-appliance" },
+          { title: "Home & Living", slug: "home-living" },
+        ],
+      },
+
+      {
+        title: "Luggage",
+        slug: "luggage",
+        subcategories: [
+          { title: "Backpack", slug: "backpack" },
+        ],
+      },
+
+      {
+        title: "Accessories",
+        slug: "accessories",
+        subcategories: [
+          { title: "Jewelery", slug: "jewelery" },
+        ],
+      },
     ],
   },
   {

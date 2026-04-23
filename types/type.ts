@@ -18,6 +18,8 @@ type CategoryItem = {
   id?: string;
   image: string;
   name: string;
+  slug: string;
+  category: string;
 };
 
 export type Variant = {

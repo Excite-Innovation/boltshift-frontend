@@ -21,12 +21,11 @@ export function ProductCategory() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {CategoryItems.map((item, index) => {
           const isLast = index === CategoryItems.length - 1;
-          const slug = item.name.toLowerCase().replace(/\s+/g, "-");
 
           return (
             <Link
               key={item.id}
-              href={isLast ? "/catalog" : `/catalog/${slug}`}
+              href={isLast ? "/catalog" : `/catalog/${item.category}/${item.slug}`}
             >
               <div
                 className={cn(
