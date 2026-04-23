@@ -190,7 +190,7 @@ export function CollapsibleItem({ item }: ItemProps) {
           </SidebarMenuButton>
         </CollapsibleTrigger>
 
-        <CollapsibleContent asChild className="border-none">
+        <CollapsibleContent asChild className="m-0 border-none">
           {item.type === "range"
             ? renderRange()
             : item.type === "rating"
