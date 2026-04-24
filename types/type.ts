@@ -1,9 +1,4 @@
-/* type Vendor = {
-  id?: string;
-  name: string;
-  icon?: string;
-  alt: string;
-}; */
+import { Category, Subcategory } from "@/types/category/category";
 
 type HeroItem = {
   id?: string;
@@ -37,6 +32,10 @@ type Product = {
   itemsLeft: number;
   ratings: number;
   reviews: number;
+
+  category: Category;
+  subcategory: Subcategory;
+
   variants: Variant[];
 };
 
