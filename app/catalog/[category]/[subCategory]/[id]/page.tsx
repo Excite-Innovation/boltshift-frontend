@@ -2,6 +2,10 @@ import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 import { SpecialOfferCard } from "@/components/special-offer/special-offer-card";
 import { PopularCardContent } from "@/components/popular-products/content";
 import { FeaturedStoreCard } from "@/components/store-card/store-card";
+import { StartRating } from "@/components/rating/rating";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { PenLine, Star } from "lucide-react";
 
 export default async function ProductDetails({
   params,
@@ -27,8 +31,11 @@ export default async function ProductDetails({
   return (
     <>
       <BreadcrumbComponent items={items} />
-      <SpecialOfferCard />
+      <div className="pt-4 pb-12">
+        <SpecialOfferCard />
+      </div>
 
+      {/* Product description */}
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
         <p className="text-2xl font-semibold">Description</p>
         <div className="max-w-lg text-sm text-muted-foreground">
@@ -77,6 +84,7 @@ export default async function ProductDetails({
         </div>
       </div>
 
+      {/* Product specification */}
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
         <p className="text-2xl font-semibold">Specifications</p>
         <div className="text-sm text-muted-foreground">
@@ -110,6 +118,99 @@ export default async function ProductDetails({
               #226,443 in Clothing, Shoes & Jewelry
             </li>
           </ul>
+        </div>
+      </div>
+
+      {/* Product Reviews */}
+      <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
+        <p className="text-2xl font-semibold">Reviews</p>
+
+        <div className="w-full flex gap-4">
+          {/* Rating and Review */}
+          <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
+            {/* Average rating */}
+            <div className="flex gap-2">
+              <p className="text-6xl font-bold text-primary">4.1</p>
+              <div className="flex flex-col gap-2 justify-around">
+                <StartRating value={4} />
+                <p className="text-sm font-semibold">123.46k reviews</p>
+              </div>
+            </div>
+
+            {/* Review Button */}
+            <Button className="px-4 py-2.5 flex gap-1.5 text-base">
+              <PenLine />
+              Share a Review
+            </Button>
+          </div>
+
+          {/* Rating by population */}
+          <div className="py-4 pr-8 flex flex-col gap-2">
+            <div className="flex gap-2">
+              <div className="pr-4 flex">
+                <p className="min-w-6 px-1 grid gap-2">5</p>
+                <div className="text-[#F79009]">
+                  <Star size={20} />
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Progress className="flex-1 h-1" value={95} />
+                <p className="text-primary px-1 grid gap-2.5">5.21k</p>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="pr-4 flex">
+                <p className="min-w-6 px-1 grid gap-2">4</p>
+                <div className="text-[#F79009]">
+                  <Star size={20} />
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Progress className="flex-1 h-1" value={80} />
+                <p className="text-primary px-1 grid gap-2.5">2.44k</p>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="pr-4 flex">
+                <p className="min-w-6 px-1 grid gap-2">3</p>
+                <div className="text-[#F79009]">
+                  <Star size={20} />
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Progress className="flex-1 h-1" value={50} />
+                <p className="text-primary px-1 grid gap-2.5">523</p>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="pr-4 flex">
+                <p className="min-w-6 px-1 grid gap-2">2</p>
+                <div className="text-[#F79009]">
+                  <Star size={20} />
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Progress className="flex-1 h-1" value={20} />
+                <p className="text-primary px-1 grid gap-2.5">319</p>
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <div className="pr-4 flex">
+                <p className="min-w-6 px-1 grid gap-2">1</p>
+                <div className="text-[#F79009]">
+                  <Star size={20} />
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Progress className="flex-1 h-1" value={5} />
+                <p className="text-primary px-1 grid gap-2.5">72</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
