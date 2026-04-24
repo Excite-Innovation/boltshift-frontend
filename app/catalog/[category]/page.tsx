@@ -3,21 +3,23 @@ import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 
-export default function CategoryPage({
+export default async function CategoryPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
   const format = (text: string) =>
     text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  const title = format(params.category);
+  const { category } = await params;
+
+  const title = format(category);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
   const items = [
     { label: "Catalog", href: "/catalog" },
-    { label: format(params.category) },
+    { label: format(category) },
   ];
 
   return (
