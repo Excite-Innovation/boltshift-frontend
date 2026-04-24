@@ -173,7 +173,7 @@ export function CollapsibleItem({ item }: ItemProps) {
                 {subItem.subcategories.map((sub) => (
                   <Link
                     key={sub.slug}
-                    href={`/catalog/${subItem.title}/${sub.slug}`}
+                    href={`/catalog/${subItem.slug}/${sub.slug}`}
                     className="text-sm text-muted-foreground hover:text-foreground transition"
                   >
                     {sub.title}

@@ -10,6 +10,8 @@ export type Category =
   | "health"
   | "home-living"
   | "luggage"
+  | "books"
+  | "sports"
   | "accessories";
 
 export type Subcategory =
@@ -52,6 +54,14 @@ export type Subcategory =
   | "travel-backpacks"      // Luggage
   | "suitcases"
   | "travel-accessories"
+
+  | "novels"                // Books
+  | "lifestyle"
+  | "cookbooks"
+
+  | "balls"                 // Sports
+  | "rackets"
+  | "sports-wear"
 
   | "watches"               // Accessories
   | "jewellery"

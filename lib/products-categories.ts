@@ -13,7 +13,7 @@ export const CategoryItems: CategoryItem[] = [
         id: "watch",
         name: "Watches",
         slug: "watches",
-        category: "mens-fashion",
+        category: "accessories",
         image: "/popular-categories-icons/Watch.svg",
     },
 

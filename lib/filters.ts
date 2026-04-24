@@ -110,6 +110,24 @@ export const FilterItems: FilterItem[] = [
         ],
       },
       {
+        title: "Books",
+        slug: "books",
+        subcategories: [
+          { title: "Novels", slug: "novels" },
+          { title: "Lifestyle", slug: "lifestyle" },
+          { title: "Cookbooks", slug: "cookbooks" },
+        ],
+      },
+      {
+        title: "Sports",
+        slug: "sports",
+        subcategories: [
+          { title: "Balls", slug: "balls" },
+          { title: "Rackets", slug: "rackets" },
+          { title: "Sports Wear", slug: "sports-wear" },
+        ],
+      },
+      {
         title: "Accessories",
         slug: "accessories",
         subcategories: [
