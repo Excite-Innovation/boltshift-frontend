@@ -44,7 +44,7 @@ export default function CatalogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="overflow-hidden">
       {/* Navbar */}
       <div>
         <div className="hidden md:block">
