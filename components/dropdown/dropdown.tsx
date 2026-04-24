@@ -132,60 +132,60 @@ export function CollapsibleItem({ item }: ItemProps) {
   );
 
   const renderItems = () => (
-  <SidebarMenuSub>
-    {item.items?.map((subItem) => {
-      const isOpen = openCategory === subItem.slug;
+    <SidebarMenuSub>
+      {item.items?.map((subItem) => {
+        const isOpen = openCategory === subItem.slug;
 
-      return (
-        <div key={subItem.title}>
-          <SidebarMenuSubItem className="cursor-pointer border-l-0">
-            {item.type === "checkbox" ? (
-              <div className="w-full flex items-center gap-1 p-2">
-                <Checkbox id={subItem.title} className="cursor-pointer" />
-                <label
-                  htmlFor={subItem.title}
-                  className="grow text-sm font-medium cursor-pointer"
+        return (
+          <div key={subItem.title}>
+            <SidebarMenuSubItem className="cursor-pointer border-l-0">
+              {item.type === "checkbox" ? (
+                <div className="w-full flex items-center gap-1 p-2">
+                  <Checkbox id={subItem.title} className="cursor-pointer" />
+                  <label
+                    htmlFor={subItem.title}
+                    className="grow text-sm font-medium cursor-pointer"
+                  >
+                    {subItem.title}
+                  </label>
+                </div>
+              ) : (
+                <SidebarMenuSubButton
+                  onClick={() => {
+                    const slug = subItem.slug ?? null;
+                    setOpenCategory(isOpen ? null : slug);
+                  }}
+                  className="flex items-center justify-between w-full cursor-pointer"
                 >
-                  {subItem.title}
-                </label>
+                  <span className="text-md font-medium">{subItem.title}</span>
+
+                  <ChevronDown
+                    className={`size-4 transition-transform duration-200 ${
+                      isOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
+                </SidebarMenuSubButton>
+              )}
+            </SidebarMenuSubItem>
+
+            {isOpen && subItem.subcategories?.length ? (
+              <div className="pl-6 py-1 flex flex-col gap-1">
+                {subItem.subcategories.map((sub) => (
+                  <Link
+                    key={sub.slug}
+                    href={`/catalog/${subItem.title}/${sub.slug}`}
+                    className="text-sm text-muted-foreground hover:text-foreground transition"
+                  >
+                    {sub.title}
+                  </Link>
+                ))}
               </div>
-            ) : (
-              <SidebarMenuSubButton
-                onClick={() => {
-                  const slug = subItem.slug ?? null;
-                  setOpenCategory(isOpen ? null : slug);
-                }}
-                className="flex items-center justify-between w-full cursor-pointer"
-              >
-                <span className="text-md font-medium">{subItem.title}</span>
-
-                <ChevronDown
-                  className={`size-4 transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : "rotate-0"
-                  }`}
-                />
-              </SidebarMenuSubButton>
-            )}
-          </SidebarMenuSubItem>
-
-          {isOpen && subItem.subcategories?.length ? (
-            <div className="pl-6 py-1 flex flex-col gap-1">
-              {subItem.subcategories.map((sub) => (
-                <Link
-                  key={sub.slug}
-                  href={`/catalog/${subItem.title}/${sub.slug}`}
-                  className="text-sm text-muted-foreground hover:text-foreground transition"
-                >
-                  {sub.title}
-                </Link>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      );
-    })}
-  </SidebarMenuSub>
-);
+            ) : null}
+          </div>
+        );
+      })}
+    </SidebarMenuSub>
+  );
 
   return (
     <Collapsible
