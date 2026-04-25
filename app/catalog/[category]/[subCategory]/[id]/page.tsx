@@ -148,7 +148,7 @@ export default async function ProductDetails({
           <div className="py-4 pr-8 flex flex-col gap-2">
             <div className="flex gap-2">
               <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2">5</p>
+                <p className="min-w-6 px-1 grid gap-2 text-center">5</p>
                 <div className="text-[#F79009]">
                   <Star size={20} />
                 </div>
@@ -161,7 +161,7 @@ export default async function ProductDetails({
 
             <div className="flex gap-2">
               <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2">4</p>
+                <p className="min-w-6 px-1 grid gap-2 text-center">4</p>
                 <div className="text-[#F79009]">
                   <Star size={20} />
                 </div>
@@ -174,7 +174,7 @@ export default async function ProductDetails({
 
             <div className="flex gap-2">
               <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2">3</p>
+                <p className="min-w-6 px-1 grid gap-2 text-center">3</p>
                 <div className="text-[#F79009]">
                   <Star size={20} />
                 </div>
@@ -187,7 +187,7 @@ export default async function ProductDetails({
 
             <div className="flex gap-2">
               <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2">2</p>
+                <p className="min-w-6 px-1 grid gap-2 text-center">2</p>
                 <div className="text-[#F79009]">
                   <Star size={20} />
                 </div>
@@ -200,7 +200,7 @@ export default async function ProductDetails({
 
             <div className="flex gap-2">
               <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2">1</p>
+                <p className="min-w-6 px-1 grid gap-2 text-center">1</p>
                 <div className="text-[#F79009]">
                   <Star size={20} />
                 </div>
