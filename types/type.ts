@@ -1,9 +1,4 @@
-/* type Vendor = {
-  id?: string;
-  name: string;
-  icon?: string;
-  alt: string;
-}; */
+import { Category, Subcategory } from "@/types/category/category";
 
 type HeroItem = {
   id?: string;
@@ -18,6 +13,8 @@ type CategoryItem = {
   id?: string;
   image: string;
   name: string;
+  slug: string;
+  category: string;
 };
 
 export type Variant = {
@@ -35,6 +32,10 @@ type Product = {
   itemsLeft: number;
   ratings: number;
   reviews: number;
+
+  category: Category;
+  subcategory: Subcategory;
+
   variants: Variant[];
 };
 
