@@ -1,14 +1,26 @@
 import { SectionTitle } from "@/components/section-title";
-import { FilterSidebar } from "@/components/catalog/filters";
 import { CatalogCard } from "@/components/catalog/catalog";
+import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 
-const items = [{ label: "Catalog" }];
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
+  const format = (text: string) =>
+    text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-export default function Catalog() {
-  const title = "Catalog";
+  const { category } = await params;
+
+  const title = format(category);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
+
+  const items = [
+    { label: "Catalog", href: "/catalog" },
+    { label: format(category) },
+  ];
 
   return (
     <>

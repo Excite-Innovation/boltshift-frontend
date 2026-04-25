@@ -2,6 +2,8 @@ export type FilterItemType = "list" | "checkbox" | "range" | "rating" | "tag";
 
 export type FilterSubItem = {
   title: string;
+  slug?: string;
+  subcategories?: FilterSubItem[];
 };
 
 export type FilterItem = {
@@ -17,15 +19,123 @@ export const FilterItems: FilterItem[] = [
     type: "list",
     isActive: true,
     items: [
-      { title: "Automotive" },
-      { title: "Baby" },
-      { title: "Beauty And Personal Care" },
-      { title: "Men's Fashion" },
-      { title: "Women's Fashion" },
-      { title: "Pet Supplies" },
-      { title: "Health & Household" },
-      { title: "Home & Kitchen" },
-      { title: "Luggage" },
+      {
+        title: "Automotive",
+        slug: "automotive",
+        subcategories: [
+          { title: "Car Accessories", slug: "car-accessories" },
+          { title: "Car Care & Cleaning", slug: "car-care" },
+          { title: "Interior Parts", slug: "interior-parts" },
+        ],
+      },
+      {
+        title: "Baby",
+        slug: "baby",
+        subcategories: [
+          { title: "Diapers & Wipes", slug: "diapers-wipes" },
+          { title: "Baby Clothing", slug: "baby-clothing" },
+          { title: "Feeding Essentials", slug: "feeding-essentials" },
+        ],
+      },
+      {
+        title: "Beauty And Personal Care",
+        slug: "beauty",
+        subcategories: [
+          { title: "Skincare", slug: "skincare" },
+          { title: "Hair Care", slug: "hair-care" },
+          { title: "Makeup", slug: "makeup" },
+        ],
+      },
+      {
+        title: "Men's Fashion",
+        slug: "mens-fashion",
+        subcategories: [
+          { title: "T-Shirts & Shirts", slug: "mens-shirts" },
+          { title: "Trousers & Jeans", slug: "mens-bottoms" },
+          { title: "Shoes & Sneakers", slug: "mens-shoes" },
+        ],
+      },
+      {
+        title: "Women's Fashion",
+        slug: "womens-fashion",
+        subcategories: [
+          { title: "Dresses", slug: "womens-dresses" },
+          { title: "Tops & Blouses", slug: "womens-tops" },
+          { title: "Shoes & Heels", slug: "womens-shoes" },
+        ],
+      },
+      {
+        title: "Electronics",
+        slug: "electronics",
+        subcategories: [
+          { title: "Smartphones", slug: "smartphones" },
+          { title: "Laptops & Computers", slug: "laptops-computers" },
+          { title: "Audio Devices", slug: "audio-devices" },
+        ],
+      },
+      {
+        title: "Pet Supplies",
+        slug: "pet-supplies",
+        subcategories: [
+          { title: "Dog Food", slug: "dog-food" },
+          { title: "Cat Accessories", slug: "cat-accessories" },
+          { title: "Pet Toys", slug: "pet-toys" },
+        ],
+      },
+      {
+        title: "Health",
+        slug: "health",
+        subcategories: [
+          { title: "Vitamins & Supplements", slug: "vitamins-supplements" },
+          { title: "First Aid", slug: "first-aid" },
+          { title: "Medical Devices", slug: "medical-devices" },
+        ],
+      },
+      {
+        title: "Home & Kitchen",
+        slug: "home-living",
+        subcategories: [
+          { title: "Cookware", slug: "cookware" },
+          { title: "Furniture", slug: "furniture" },
+          { title: "Home Storage", slug: "home-storage" },
+        ],
+      },
+      {
+        title: "Luggage",
+        slug: "luggage",
+        subcategories: [
+          { title: "Travel Backpacks", slug: "travel-backpacks" },
+          { title: "Suitcases", slug: "suitcases" },
+          { title: "Travel Accessories", slug: "travel-accessories" },
+        ],
+      },
+      {
+        title: "Books",
+        slug: "books",
+        subcategories: [
+          { title: "Novels", slug: "novels" },
+          { title: "Lifestyle", slug: "lifestyle" },
+          { title: "Cookbooks", slug: "cookbooks" },
+        ],
+      },
+      {
+        title: "Sports",
+        slug: "sports",
+        subcategories: [
+          { title: "Balls", slug: "balls" },
+          { title: "Rackets", slug: "rackets" },
+          { title: "Sports Wear", slug: "sports-wear" },
+        ],
+      },
+      {
+        title: "Accessories",
+        slug: "accessories",
+        subcategories: [
+          { title: "Watches", slug: "watches" },
+          { title: "Jewellery", slug: "jewellery" },
+          { title: "Sunglasses", slug: "sunglasses" },
+        ],
+      }
     ],
   },
   {
