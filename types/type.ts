@@ -56,9 +56,12 @@ type Review = {
   rating: number;
   reviewText: string;
   product: {
+    id: number;
     name: string;
     image: string;
     price: number;
+    category: string;
+    subcategory: string;
   };
 };
 

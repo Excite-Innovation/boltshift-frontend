@@ -13,7 +13,7 @@ export function CatalogCard() {
             key={p.id}
             variant="catalog"
             product={p}
-            className="w-full h-full"
+            className="h-full"
           />
         ))}
       </div>

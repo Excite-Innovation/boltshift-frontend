@@ -161,7 +161,7 @@ function CenteredContent({
   return (
     <>
       <div className="grid gap-1">
-        <p className="text-sm font-normal line-clamp-2">{product.name}</p>
+        <p className="text-sm font-normal line-clamp-2 min-h-10">{product.name}</p>
         <p className="text-primary">
           <span className="text-xl">Kshs.</span>
           <span className="text-xl font-semibold">{price}</span>
@@ -193,7 +193,7 @@ function CatalogContent({
   return (
     <>
       <div>
-        <p className="text-xs font-medium line-clamp-2">{product.name}</p>
+        <p className="text-xs font-medium line-clamp-2 min-h-8">{product.name}</p>
         <p className="text-primary">
           <span className="text-xs">Kshs.</span>
           <span className="text-xs font-medium">{price}</span>
@@ -230,8 +230,8 @@ export function ProductCard({
       >
         <CardContent
           className={`
-          px-0 pt-0 pb-3 rounded-xl overflow-hidden
-          ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
+          px-0 pt-0 pb-3 rounded-xl overflow-hidden flex grow
+          ${variant === "horizontal" ? "pb-0 items-center" : "flex-col gap-4"}
         `}
         >
           {/* Switch image container sizing only for horizontal cards. */}

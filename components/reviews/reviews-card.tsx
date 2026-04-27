@@ -13,6 +13,7 @@ import { StartRating } from "@/components/rating/rating";
 import { User, Check } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { EditNum } from "@/lib/utils";
+import Link from "next/link";
 
 type ReviewCardProps = {
   review: Review;
@@ -22,7 +23,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   const price = EditNum(review.product.price);
 
   return (
-    <Card className="max-w-72 p-4 bg-card border flex flex-col justify-between gap-4 shrink-0 hover:cursor-pointer shadow-none">
+    <Card className="max-w-72 p-4 bg-muted border flex flex-col justify-between gap-4 shrink-0 shadow-none">
       <CardHeader className="p-0 flex flex-col gap-3">
         <div className="flex gap-3">
           {/* Image */}
@@ -41,14 +42,13 @@ export function ReviewCard({ review }: ReviewCardProps) {
               </CardTitle>
               <CardAction>
                 <Badge variant="outline" className="py-0.5 px-2 bg-muted">
-                  <Check />Verified Buyer
+                  <Check />
+                  Verified Buyer
                 </Badge>
               </CardAction>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">
-                {review.date}
-              </p>
+              <p className="text-xs text-muted-foreground">{review.date}</p>
               <StartRating value={review.rating} readonly={true} />
             </div>
           </div>
@@ -62,27 +62,29 @@ export function ReviewCard({ review }: ReviewCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="p-0 flex gap-2">
-        <div className="w-20 h-20 rounded-xl overflow-hidden relative shrink-0">
-          <Image
-            src={review.product.image}
-            alt={review.product.name}
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="line-clamp-3 text-xs font-semibold">
-            {review.product.name}
-          </p>
-          <p className="text-primary">
-            <span className="text-xs">Kshs.</span>
-            <span className="text-xs font-medium">
-              {price}
-            </span>
-          </p>
-        </div>
-      </CardContent>
+      <Link
+        href={`/catalog/${review.product.category}/${review.product.subcategory}/${review.product.id}`}
+      >
+        <CardContent className="p-0 flex gap-2  hover:cursor-pointer">
+          <div className="w-20 h-20 rounded-xl overflow-hidden relative shrink-0">
+            <Image
+              src={review.product.image}
+              alt={review.product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="line-clamp-3 text-xs font-semibold">
+              {review.product.name}
+            </p>
+            <p className="text-primary">
+              <span className="text-xs">Kshs.</span>
+              <span className="text-xs font-medium">{price}</span>
+            </p>
+          </div>
+        </CardContent>
+      </Link>
     </Card>
   );
 }
