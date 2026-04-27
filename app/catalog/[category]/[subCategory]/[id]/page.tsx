@@ -2,10 +2,10 @@ import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 import { SpecialOfferCard } from "@/components/special-offer/special-offer-card";
 import { PopularCardContent } from "@/components/popular-products/content";
 import { FeaturedStoreCard } from "@/components/store-card/store-card";
+import { RatingBreakdown } from "@/components/reviews/product-review";
 import { StartRating } from "@/components/rating/rating";
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { PenLine, Star } from "lucide-react";
+import { PenLine } from "lucide-react";
 
 export default async function ProductDetails({
   params,
@@ -125,7 +125,7 @@ export default async function ProductDetails({
       <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
         <p className="text-2xl font-semibold">Reviews</p>
 
-        <div className="w-full flex gap-4">
+        <div className="w-full flex flex-col gap-4 md:flex-row">
           {/* Rating and Review */}
           <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
             {/* Average rating */}
@@ -145,72 +145,7 @@ export default async function ProductDetails({
           </div>
 
           {/* Rating by population */}
-          <div className="py-4 pr-8 flex flex-col gap-2">
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">5</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={95} />
-                <p className="text-primary px-1 grid gap-2.5">5.21k</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">4</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={80} />
-                <p className="text-primary px-1 grid gap-2.5">2.44k</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">3</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={50} />
-                <p className="text-primary px-1 grid gap-2.5">523</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">2</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={20} />
-                <p className="text-primary px-1 grid gap-2.5">319</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">1</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={5} />
-                <p className="text-primary px-1 grid gap-2.5">72</p>
-              </div>
-            </div>
-          </div>
+          <RatingBreakdown />
         </div>
       </div>
 
