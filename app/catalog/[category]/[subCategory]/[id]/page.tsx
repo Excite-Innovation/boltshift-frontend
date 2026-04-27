@@ -49,7 +49,7 @@ export default async function ProductDetails({
 
           <br />
 
-          <ul className="list-disc list-outside">
+          <ul className="list-disc list-outside ml-5">
             <li>
               <span className="font-semibold">Contemporary Chic:</span> Sleek
               ceramic and sparkling crystals define this modern must have
@@ -88,7 +88,7 @@ export default async function ProductDetails({
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
         <p className="text-2xl font-semibold">Specifications</p>
         <div className="text-sm text-muted-foreground">
-          <ul className="list-disc list-outside">
+          <ul className="list-disc list-outside ml-5">
             <li>
               <span className="font-semibold">Package Dimensions :</span> 6.46 x
               5.47 x 4.06 inches; 11.36 Ounces
@@ -107,7 +107,7 @@ export default async function ProductDetails({
               <span className="font-semibold">Manufacturer :</span> Movado
             </li>
             <li>
-              <span className="font-semibold">ASIN :</span> B0B7CCJFC1
+              <span className="font-semibold">SKU :</span> B0B7CCJFC1
             </li>
             <li>
               <span className="font-semibold">Country of Origin :</span>{" "}
