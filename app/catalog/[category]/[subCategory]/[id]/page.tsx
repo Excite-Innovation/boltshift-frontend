@@ -6,7 +6,7 @@ import { RatingBreakdown } from "@/components/reviews/product-review";
 import { BuyerReviewCard } from "@/components/reviews/buyer-review";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
-import { ProductReviews } from "@/lib/reviews"
+import { ProductReviews } from "@/lib/reviews";
 import { PenLine } from "lucide-react";
 
 const reviews = ProductReviews();
@@ -126,36 +126,40 @@ export default async function ProductDetails({
       </div>
 
       {/* Product Reviews */}
-      <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
-        <p className="text-2xl font-semibold">Reviews</p>
+      <div className="py-12 flex flex-col gap-10">
+        <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
+          <p className="text-2xl font-semibold">Reviews</p>
 
-        <div className="w-full flex flex-col gap-4 md:flex-row">
-          {/* Rating and Review */}
-          <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
-            {/* Average rating */}
-            <div className="flex gap-2">
-              <p className="text-6xl font-bold text-primary">4.1</p>
-              <div className="flex flex-col gap-2 justify-around">
-                <StartRating value={4} />
-                <p className="text-sm font-semibold">123.46k reviews</p>
+          <div className="w-full flex flex-col gap-4 md:flex-row">
+            {/* Rating and Review */}
+            <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
+              {/* Average rating */}
+              <div className="flex gap-2">
+                <p className="text-6xl font-bold text-primary">4.1</p>
+                <div className="flex flex-col gap-2 justify-around">
+                  <StartRating value={4} />
+                  <p className="text-sm font-semibold">123.46k reviews</p>
+                </div>
               </div>
+
+              {/* Review Button */}
+              <Button className="px-4 py-2.5 flex gap-1.5 text-base">
+                <PenLine />
+                Share a Review
+              </Button>
             </div>
 
-            {/* Review Button */}
-            <Button className="px-4 py-2.5 flex gap-1.5 text-base">
-              <PenLine />
-              Share a Review
-            </Button>
+            {/* Rating by population */}
+            <RatingBreakdown />
           </div>
-
-          {/* Rating by population */}
-          <RatingBreakdown />
         </div>
-      </div>
 
-      {/* Buyers reviews */}
-      <div className="w-full flex flex-col gap-10">
-        <BuyerReviewCard reviews={reviews} />
+        {/* Buyers reviews */}
+        <div className="w-full flex flex-col gap-10">
+          {reviews.map((review) => (
+            <BuyerReviewCard key={review.id} review={review} />
+          ))}
+        </div>
       </div>
 
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
