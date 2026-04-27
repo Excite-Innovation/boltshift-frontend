@@ -54,7 +54,14 @@ type Review = {
   avatar?: string,
   date: string;
   rating: number;
+  reviewHeading: string;
   reviewText: string;
+  isEdited?: boolean;
+  productUploads?: string[];
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
   product: {
     id: number;
     name: string;

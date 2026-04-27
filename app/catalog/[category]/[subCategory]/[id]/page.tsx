@@ -3,9 +3,13 @@ import { SpecialOfferCard } from "@/components/special-offer/special-offer-card"
 import { PopularCardContent } from "@/components/popular-products/content";
 import { FeaturedStoreCard } from "@/components/store-card/store-card";
 import { RatingBreakdown } from "@/components/reviews/product-review";
+import { BuyerReviewCard } from "@/components/reviews/buyer-review";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
+import { ProductReviews } from "@/lib/reviews"
 import { PenLine } from "lucide-react";
+
+const reviews = ProductReviews();
 
 export default async function ProductDetails({
   params,
@@ -147,6 +151,11 @@ export default async function ProductDetails({
           {/* Rating by population */}
           <RatingBreakdown />
         </div>
+      </div>
+
+      {/* Buyers reviews */}
+      <div className="w-full flex flex-col gap-10">
+        <BuyerReviewCard reviews={reviews} />
       </div>
 
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
