@@ -68,7 +68,48 @@ export function SpecialOfferCard() {
   return (
     <Card className="p-0 border-none shadow-none">
       <div className="flex flex-col gap-4 lg:flex-row lg:gap-12">
-        {/* Images Left */}
+        {/* Mobile screen display */}
+        <div className="grid gap-4 lg:hidden">
+          <div className="flex gap-2 flex-wrap">
+            <Badge variant="outline" className="text-primary border-primary/25">
+              50% Discount
+            </Badge>
+            <Badge variant="outline" className="text-primary border-primary/25">
+              New Arrival
+            </Badge>
+            <Badge variant="outline" className="text-primary border-primary/25">
+              Trending
+            </Badge>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="grid gap-1">
+              <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
+                {selectedItem.name}
+              </CardTitle>
+
+              <div className="flex gap-2">
+                <Rating value={4} className="text-[#F79009] gap-1">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <RatingItem key={i}>
+                      <Star size={20} />
+                    </RatingItem>
+                  ))}
+                </Rating>
+
+                <p className="text-sm font-normal text-muted-foreground">
+                  (123.46k reviews)
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xl flex gap-1">
+              Ksh.<span className="font-semibold">{totalPrice}</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Left Images */}
         <div className="basis-1/2 flex flex-col gap-4 md:flex-row">
           <div className="w-full aspect-square rounded-xl overflow-hidden border relative md:w-148">
             <AspectRatio ratio={1 / 1}>
@@ -107,9 +148,10 @@ export function SpecialOfferCard() {
         </div>
 
         {/* Content Right */}
-        <div className="h-148 max-w-93 grid gap-3">
+        <div className="h-148 grid gap-3">
           <CardHeader className="px-0 w-93 gap-3">
-            <div className="flex gap-2">
+            {/* Hide on mobile, show on desktop */}
+            <div className="hidden lg:flex gap-2">
               <Badge
                 variant="outline"
                 className="text-primary border-primary/25"
@@ -129,12 +171,13 @@ export function SpecialOfferCard() {
                 Trending
               </Badge>
             </div>
-
             <div className="grid gap-2">
-              <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
+              {/* Hide on mobile, show on desktop */}
+              <CardTitle className="hidden lg:block text-2xl font-semibold p-0 line-clamp-3">
                 {selectedItem.name}
               </CardTitle>
-              <div className="flex gap-2">
+              {/* Hide on mobile, show on desktop */}
+              <div className="hidden lg:flex gap-2">
                 <Rating value={4} className="text-[#F79009] gap-1">
                   {Array.from({ length: 5 }, (_, i) => (
                     <RatingItem key={i}>
@@ -146,7 +189,6 @@ export function SpecialOfferCard() {
                   (123.46k reviews)
                 </p>
               </div>
-
               <CardDescription className="text-sm line-clamp-3">
                 Discover the essence of African craftsmanship with our elegant
                 dress, meticulously designed in Voi town, Kenya. Embracing
@@ -191,43 +233,48 @@ export function SpecialOfferCard() {
               />
             </div>
 
-            <p className="text-xl flex gap-1">
+            <p className="hidden lg:flex text-xl gap-1">
               Ksh.<span className="font-semibold">{totalPrice}</span>
             </p>
 
-            <div className="grid gap-2">
+            <div className="w-full grid gap-2">
               <div className="w-full flex gap-2">
                 <ButtonGroup
                   aria-label="Media controls"
-                  className="h-fit flex justify-evenly"
+                  className="flex-1 h-fit flex justify-evenly"
                 >
                   <Button
                     onClick={Decrement}
                     variant="outline"
                     size="icon"
-                    className="grow border-r-0"
+                    className="flex-1 border-r-0"
                   >
                     <Minus />
                   </Button>
+
                   <div className="min-w-16 px-4 flex items-center justify-center text-sm font-medium border-y">
                     {quantity}
                   </div>
+
                   <Button
                     onClick={Increment}
                     variant="outline"
                     size="icon"
-                    className="grow"
+                    className="flex-1"
                   >
                     <Plus />
                   </Button>
                 </ButtonGroup>
+
                 <Button
                   variant="outline"
-                  className="grow font-semibold text-base"
+                  className="flex-1 font-semibold text-base"
                 >
-                  <ShoppingCart className="text-muted-foreground" /> Add to Cart
+                  <ShoppingCart className="text-muted-foreground" />
+                  Add to Cart
                 </Button>
               </div>
+
               <Button className="w-full font-semibold text-base py-3">
                 Buy Now
               </Button>
@@ -245,11 +292,7 @@ type SelectorProps = {
   options: string[];
 };
 
-function ColorSelector({
-  value,
-  onChange,
-  options,
-}: SelectorProps) {
+function ColorSelector({ value, onChange, options }: SelectorProps) {
   return (
     <ColorSwatchSelector.Root
       value={value}
@@ -265,11 +308,7 @@ function ColorSelector({
   );
 }
 
-function StorageSize({
-  value,
-  onChange,
-  options,
-}: SelectorProps) {
+function StorageSize({ value, onChange, options }: SelectorProps) {
   return (
     <LabelSelector.Root
       value={value}
