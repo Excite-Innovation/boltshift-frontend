@@ -33,12 +33,15 @@
 
 # How to Run
 
+
 1. Clone the repository:
 
 ```bash
 git clone https://github.com/Excite-Innovation/boltshift-frontend.git
 cd boltshift-frontend
 ```
+
+## Run Locally
 
 2. Install dependencies:
 
@@ -58,9 +61,16 @@ npm run dev:pwa
 https://localhost:3000
 ```
 
+## Run with Docker
+
+```bash
+npm run docker
+```
+
 # Useful Scripts
 
 ```bash
+npm run docker # Build and run the application
 npm run dev:pwa # Start development server
 npm run build   # Build for production
 npm run start   # Start production server

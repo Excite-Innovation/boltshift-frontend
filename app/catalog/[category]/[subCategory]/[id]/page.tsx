@@ -2,10 +2,14 @@ import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 import { SpecialOfferCard } from "@/components/special-offer/special-offer-card";
 import { PopularCardContent } from "@/components/popular-products/content";
 import { FeaturedStoreCard } from "@/components/store-card/store-card";
+import { RatingBreakdown } from "@/components/reviews/product-review";
+import { BuyerReviewCard } from "@/components/reviews/buyer-review";
 import { StartRating } from "@/components/rating/rating";
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { PenLine, Star } from "lucide-react";
+import { ProductReviews } from "@/lib/reviews";
+import { PenLine } from "lucide-react";
+
+const reviews = ProductReviews();
 
 export default async function ProductDetails({
   params,
@@ -49,7 +53,7 @@ export default async function ProductDetails({
 
           <br />
 
-          <ul className="list-disc list-outside">
+          <ul className="list-disc list-outside ml-5">
             <li>
               <span className="font-semibold">Contemporary Chic:</span> Sleek
               ceramic and sparkling crystals define this modern must have
@@ -88,7 +92,7 @@ export default async function ProductDetails({
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
         <p className="text-2xl font-semibold">Specifications</p>
         <div className="text-sm text-muted-foreground">
-          <ul className="list-disc list-outside">
+          <ul className="list-disc list-outside ml-5">
             <li>
               <span className="font-semibold">Package Dimensions :</span> 6.46 x
               5.47 x 4.06 inches; 11.36 Ounces
@@ -107,7 +111,7 @@ export default async function ProductDetails({
               <span className="font-semibold">Manufacturer :</span> Movado
             </li>
             <li>
-              <span className="font-semibold">ASIN :</span> B0B7CCJFC1
+              <span className="font-semibold">SKU :</span> B0B7CCJFC1
             </li>
             <li>
               <span className="font-semibold">Country of Origin :</span>{" "}
@@ -122,95 +126,39 @@ export default async function ProductDetails({
       </div>
 
       {/* Product Reviews */}
-      <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
-        <p className="text-2xl font-semibold">Reviews</p>
+      <div className="py-12 flex flex-col gap-10">
+        <div className="max-w-full p-12 flex flex-col gap-5 justify-around bg-muted rounded-2xl border">
+          <p className="text-2xl font-semibold">Reviews</p>
 
-        <div className="w-full flex gap-4">
-          {/* Rating and Review */}
-          <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
-            {/* Average rating */}
-            <div className="flex gap-2">
-              <p className="text-6xl font-bold text-primary">4.1</p>
-              <div className="flex flex-col gap-2 justify-around">
-                <StartRating value={4} />
-                <p className="text-sm font-semibold">123.46k reviews</p>
+          <div className="w-full flex flex-col gap-4 md:flex-row">
+            {/* Rating and Review */}
+            <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
+              {/* Average rating */}
+              <div className="flex gap-2">
+                <p className="text-6xl font-bold text-primary">4.1</p>
+                <div className="flex flex-col gap-2 justify-around">
+                  <StartRating value={4} />
+                  <p className="text-sm font-semibold">123.46k reviews</p>
+                </div>
               </div>
+
+              {/* Review Button */}
+              <Button className="px-4 py-2.5 flex gap-1.5 text-base">
+                <PenLine />
+                Share a Review
+              </Button>
             </div>
 
-            {/* Review Button */}
-            <Button className="px-4 py-2.5 flex gap-1.5 text-base">
-              <PenLine />
-              Share a Review
-            </Button>
+            {/* Rating by population */}
+            <RatingBreakdown />
           </div>
+        </div>
 
-          {/* Rating by population */}
-          <div className="py-4 pr-8 flex flex-col gap-2">
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">5</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={95} />
-                <p className="text-primary px-1 grid gap-2.5">5.21k</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">4</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={80} />
-                <p className="text-primary px-1 grid gap-2.5">2.44k</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">3</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={50} />
-                <p className="text-primary px-1 grid gap-2.5">523</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">2</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={20} />
-                <p className="text-primary px-1 grid gap-2.5">319</p>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="pr-4 flex">
-                <p className="min-w-6 px-1 grid gap-2 text-center">1</p>
-                <div className="text-[#F79009]">
-                  <Star size={20} />
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Progress className="flex-1 h-1" value={5} />
-                <p className="text-primary px-1 grid gap-2.5">72</p>
-              </div>
-            </div>
-          </div>
+        {/* Buyers reviews */}
+        <div className="w-full flex flex-col gap-10">
+          {reviews.map((review) => (
+            <BuyerReviewCard key={review.id} review={review} />
+          ))}
         </div>
       </div>
 

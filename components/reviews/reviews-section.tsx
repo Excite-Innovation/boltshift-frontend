@@ -1,6 +1,6 @@
 import { SectionTitle } from "@/components/section-title";
 import { ReviewCard } from "@/components/reviews/reviews-card";
-import { GetReviews } from "@/lib/reviews";
+import { ProductReviews } from "@/lib/reviews";
 import { Review } from "@/types/type";
 
 export function ReviewSection() {
@@ -8,7 +8,7 @@ export function ReviewSection() {
   const icon = "/section-title-icons/Thumbs_up.svg";
   const alt = "Thumb's up emoji icon";
 
-  const reviews: Review[] = GetReviews();
+  const reviews: Review[] = ProductReviews();
 
   return (
     <div className="py-12 flex flex-col gap-10">
