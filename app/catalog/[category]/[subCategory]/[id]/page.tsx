@@ -3,6 +3,7 @@ import { SpecialOfferCard } from "@/components/special-offer/special-offer-card"
 import { PopularCardContent } from "@/components/popular-products/content";
 import { FeaturedStoreCard } from "@/components/store-card/store-card";
 import { RatingBreakdown } from "@/components/reviews/product-review";
+import { PaginationLinks } from "@/components/pagination/pagination";
 import { BuyerReviewCard } from "@/components/reviews/buyer-review";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
@@ -137,7 +138,7 @@ export default async function ProductDetails({
               <div className="flex gap-2">
                 <p className="text-6xl font-bold text-primary">4.1</p>
                 <div className="flex flex-col gap-2 justify-around">
-                  <StartRating value={4} />
+                  <StartRating value={4} readonly />
                   <p className="text-sm font-semibold">123.46k reviews</p>
                 </div>
               </div>
@@ -160,6 +161,8 @@ export default async function ProductDetails({
             <BuyerReviewCard key={review.id} review={review} />
           ))}
         </div>
+
+        <PaginationLinks />
       </div>
 
       <div className="max-w-full py-12 flex flex-col gap-10 justify-around">
