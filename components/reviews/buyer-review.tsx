@@ -12,7 +12,7 @@ import {
 import { Review } from "@/types/type";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User, Check, Dot, ThumbsUp, ThumbsDown } from "lucide-react";
+import { User, Check, Dot, ThumbsUp, ThumbsDown, ChevronDown } from "lucide-react";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
 import { FormatNumber } from "@/lib/utils";
@@ -30,6 +30,8 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
 
   const likes = FormatNumber(review.reactions.likes);
   const dislikes = FormatNumber(review.reactions.dislikes);
+
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <Card className="w-full py-8 border-none flex flex-col gap-5 bg-card">
@@ -80,9 +82,26 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
         <CardTitle className="font-semibold text-base">
           {review.reviewHeading}
         </CardTitle>
-        <CardDescription className="text-sm line-clamp-3">
+        <CardDescription
+          className={`text-sm transition-all duration-300 ${expanded ? "line-clamp-none" : "line-clamp-3"
+            }`}
+        >
           {review.reviewText}
         </CardDescription>
+
+        {/* Show more button */}
+        <Button
+          variant="ghost"
+          onClick={() => setExpanded(!expanded)}
+          className="w-fit px-0 text-muted-foreground hover:text-secondary-foreground"
+        >
+          {expanded ? "Show less" : "Show more"}
+
+          <ChevronDown
+            className={`w-4 h-4 ml-1 transition-transform duration-300 ${expanded ? "rotate-180" : "rotate-0"
+              }`} 
+          />
+        </Button>
       </CardHeader>
 
       <CardContent className="w-full px-0 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide">
