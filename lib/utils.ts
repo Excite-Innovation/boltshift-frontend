@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// Adds commas to a long number
 export function EditNum(num: number): string {
   return num.toLocaleString('en-US')
 }
@@ -25,6 +26,7 @@ type FormatOptions = {
   decimals?: number;
 };
 
+// Formats a long number into a human readable format
 export function FormatNumber(
   value: number,
   options: FormatOptions = {}

@@ -34,6 +34,7 @@ export type Subcategory =
   | "womens-dresses"        // Women's Fashion
   | "womens-tops"
   | "womens-shoes"
+  | "perfumes"
 
   | "smartphones"           // Electronics
   | "laptops-computers"

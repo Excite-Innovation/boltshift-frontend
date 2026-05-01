@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
@@ -26,6 +29,8 @@ function CardImage({
   ratio: number;
   savePosition?: string;
 }) {
+  const [saved, setSaved] = useState(false);
+
   return (
     <div className="relative">
       <AspectRatio ratio={ratio}>
@@ -40,12 +45,14 @@ function CardImage({
       <Button
         variant="outline"
         size="icon-sm"
+        onClick={() => setSaved(!saved)}
         className={cn(
           "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50",
           savePosition,
+          saved ? "text-red-500" : "",
         )}
       >
-        <Heart />
+        <Heart aria-hidden="true" className={saved ? "fill-current" : ""} />
       </Button>
     </div>
   );
@@ -161,7 +168,9 @@ function CenteredContent({
   return (
     <>
       <div className="grid gap-1">
-        <p className="text-sm font-normal line-clamp-2">{product.name}</p>
+        <p className="text-sm font-normal line-clamp-2 min-h-10">
+          {product.name}
+        </p>
         <p className="text-primary">
           <span className="text-xl">Kshs.</span>
           <span className="text-xl font-semibold">{price}</span>
@@ -193,7 +202,9 @@ function CatalogContent({
   return (
     <>
       <div>
-        <p className="text-xs font-medium line-clamp-2">{product.name}</p>
+        <p className="text-xs font-medium line-clamp-2 min-h-8">
+          {product.name}
+        </p>
         <p className="text-primary">
           <span className="text-xs">Kshs.</span>
           <span className="text-xs font-medium">{price}</span>
@@ -230,8 +241,8 @@ export function ProductCard({
       >
         <CardContent
           className={`
-          px-0 pt-0 pb-3 rounded-xl overflow-hidden
-          ${variant === "horizontal" ? "flex pb-0 items-center" : "flex flex-col gap-4"}
+          px-0 pt-0 pb-3 rounded-xl overflow-hidden flex grow
+          ${variant === "horizontal" ? "pb-0 items-center" : "flex-col gap-4"}
         `}
         >
           {/* Switch image container sizing only for horizontal cards. */}

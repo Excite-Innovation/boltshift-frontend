@@ -17,6 +17,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
+  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
 
@@ -66,28 +67,74 @@ export function SpecialOfferCard() {
   };
 
   return (
-    <Card className="p-0 border-none shadow-none">
-      <div className="flex flex-col gap-4 lg:flex-row lg:gap-12">
-        {/* Images Left */}
-        <div className="basis-1/2 flex flex-col gap-4 md:flex-row">
-          <div className="w-full aspect-square rounded-xl overflow-hidden border relative md:w-148">
+    <Card className="w-full p-0 border-none shadow-none">
+      <div className="w-full flex flex-col gap-4 min-[1160px]:flex-row min-[1160px]:gap-12">
+        {/* Mobile screen display */}
+        <div className="grid gap-4 min-[1160px]:hidden">
+          <div className="flex gap-2 flex-wrap">
+            <Badge variant="outline" className="text-primary border-primary/25">
+              50% Discount
+            </Badge>
+            <Badge variant="outline" className="text-primary border-primary/25">
+              New Arrival
+            </Badge>
+            <Badge variant="outline" className="text-primary border-primary/25">
+              Trending
+            </Badge>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="grid gap-1">
+              <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
+                {selectedItem.name}
+              </CardTitle>
+
+              <div className="flex gap-2">
+                <Rating value={4} className="text-[#F79009] gap-1">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <RatingItem key={i}>
+                      <Star size={20} />
+                    </RatingItem>
+                  ))}
+                </Rating>
+
+                <p className="text-sm font-normal text-muted-foreground">
+                  (123.46k reviews)
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xl flex gap-1">
+              Ksh.<span className="font-semibold">{totalPrice}</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Left Images */}
+        <div className="w-full h-full flex flex-col gap-4 md:flex-row md:items-stretch">
+          <div className="w-full h-full flex-1 rounded-xl overflow-hidden border relative">
             <AspectRatio ratio={1 / 1}>
               <Image
                 src={selectedItem.image}
                 alt={selectedItem.name}
                 fill
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
             </AspectRatio>
           </div>
 
-          <div className="p-1 flex gap-4 overflow-x-scroll scroll-smooth scrollbar-hide md:h-148 md:flex-col md:overflow-y-scroll">
+          <div
+            className="p-1 flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide 
+                 md:max-h-157.5 md:flex-col md:overflow-y-auto
+                 lg:max-h-221.5 xl:max-h-143.5
+              "
+          >
             {productItems.map((p) => (
               <div
                 key={p.id}
                 onClick={() => setSelectedItem(p)}
                 className={cn(
-                  "h-20 w-20 aspect-square rounded-xl relative cursor-pointer transition",
+                  "h-20 w-20 min-w-20 aspect-square rounded-xl relative cursor-pointer transition",
                   selectedItem.id === p.id
                     ? "ring-2 ring-offset-2 ring-ring"
                     : "",
@@ -107,132 +154,140 @@ export function SpecialOfferCard() {
         </div>
 
         {/* Content Right */}
-        <div className="h-148 max-w-93 grid gap-3">
-          <CardHeader className="px-0 w-93 gap-3">
-            <div className="flex gap-2">
-              <Badge
-                variant="outline"
-                className="text-primary border-primary/25"
-              >
-                50% Discount
-              </Badge>
-              <Badge
-                variant="outline"
-                className="text-primary border-primary/25"
-              >
-                New Arrival
-              </Badge>
-              <Badge
-                variant="outline"
-                className="text-primary border-primary/25"
-              >
-                Trending
-              </Badge>
-            </div>
-
-            <div className="grid gap-2">
-              <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
-                {selectedItem.name}
-              </CardTitle>
-              <div className="flex gap-2">
-                <Rating value={4} className="text-[#F79009] gap-1">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <RatingItem key={i}>
-                      <Star size={20} />
-                    </RatingItem>
-                  ))}
-                </Rating>
-                <p className="text-sm font-normal text-muted-foreground">
-                  (123.46k reviews)
-                </p>
-              </div>
-
-              <CardDescription className="text-sm line-clamp-3">
-                Discover the essence of African craftsmanship with our elegant
-                dress, meticulously designed in Voi town, Kenya. Embracing
-                vibrant local culture and artistry, each dress is crafted with
-                care, blending traditional motifs with contemporary flair.
-                Perfect for any occasion, this dress embodies the rich heritage
-                and craftsmanship of Kenya, offering both style and cultural
-                significance. Dress up with a piece that celebrates authenticity
-                and beauty from Voi town to the world.
-              </CardDescription>
-            </div>
-          </CardHeader>
-
-          <CardContent className="px-0 grid gap-3">
-            <p className="text-sm font-semibold">SKU:IPH-RED-256-001</p>
-
-            {/* Color selector */}
-            <div className="grid gap-2">
-              <p className="text-lg font-medium flex items-center gap-0.5">
-                <span>Color</span>
-                <span>:</span>
-                <span className="font-mono">{selectedColor}</span>
-              </p>
-              <ColorSelector
-                value={selectedColor}
-                onChange={setSelectedColor}
-                options={colors}
-              />
-            </div>
-
-            {/* Storage */}
-            <div className="grid gap-2">
-              <p className="text-lg font-medium flex items-center gap-0.5">
-                <span>{isStorage ? "Storage" : "Size"}</span>
-                <span>:</span>
-                <span>{selectedSize}</span>
-              </p>
-              <StorageSize
-                value={selectedSize}
-                onChange={setSelectedSize}
-                options={selectedVariant?.sizes || []}
-              />
-            </div>
-
-            <p className="text-xl flex gap-1">
-              Ksh.<span className="font-semibold">{totalPrice}</span>
-            </p>
-
-            <div className="grid gap-2">
-              <div className="w-full flex gap-2">
-                <ButtonGroup
-                  aria-label="Media controls"
-                  className="h-fit flex justify-evenly"
-                >
-                  <Button
-                    onClick={Decrement}
-                    variant="outline"
-                    size="icon"
-                    className="grow border-r-0"
-                  >
-                    <Minus />
-                  </Button>
-                  <div className="min-w-16 px-4 flex items-center justify-center text-sm font-medium border-y">
-                    {quantity}
-                  </div>
-                  <Button
-                    onClick={Increment}
-                    variant="outline"
-                    size="icon"
-                    className="grow"
-                  >
-                    <Plus />
-                  </Button>
-                </ButtonGroup>
-                <Button
+        <div className="w-full">
+          <div className="max-w-93 grid gap-3 overflow-hidden">
+            <CardHeader className="w-full min-w-0 px-0 gap-3">
+              {/* Hide on mobile, show on min-[1160px] */}
+              <div className="hidden min-[1160px]:flex gap-2">
+                <Badge
                   variant="outline"
-                  className="grow font-semibold text-base"
+                  className="text-primary border-primary/25"
                 >
-                  <ShoppingCart className="text-muted-foreground" /> Add to Cart
-                </Button>
+                  50% Discount
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className="text-primary border-primary/25"
+                >
+                  New Arrival
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className="text-primary border-primary/25"
+                >
+                  Trending
+                </Badge>
               </div>
-              <Button className="w-full font-semibold text-base py-3">
+              <div className="grid gap-2">
+                {/* Hide on mobile, show on min-[1160px] */}
+                <div className="hidden min-[1160px]:block">
+                  <CardTitle className="text-2xl font-semibold p-0 line-clamp-3">
+                    {selectedItem.name}
+                  </CardTitle>
+                </div>
+                {/* Hide on mobile, show on min-[1160px] */}
+                <div className="hidden min-[1160px]:flex gap-2">
+                  <Rating value={4} className="text-[#F79009] gap-1">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <RatingItem key={i}>
+                        <Star size={20} />
+                      </RatingItem>
+                    ))}
+                  </Rating>
+                  <p className="text-sm font-normal text-muted-foreground">
+                    (123.46k reviews)
+                  </p>
+                </div>
+                <CardDescription className="text-sm line-clamp-3">
+                  Discover the essence of African craftsmanship with our elegant
+                  dress, meticulously designed in Voi town, Kenya. Embracing
+                  vibrant local culture and artistry, each dress is crafted with
+                  care, blending traditional motifs with contemporary flair.
+                  Perfect for any occasion, this dress embodies the rich
+                  heritage and craftsmanship of Kenya, offering both style and
+                  cultural significance. Dress up with a piece that celebrates
+                  authenticity and beauty from Voi town to the world.
+                </CardDescription>
+              </div>
+            </CardHeader>
+
+            <CardContent className="min-w-0 px-0 grid gap-3">
+              <p className="text-sm font-semibold">SKU:IPH-RED-256-001</p>
+
+              {/* Color selector */}
+              <div className="grid gap-2">
+                <p className="text-lg font-medium flex items-center gap-0.5">
+                  <span>Color</span>
+                  <span>:</span>
+                  <span className="font-mono">{selectedColor}</span>
+                </p>
+                <ColorSelector
+                  value={selectedColor}
+                  onChange={setSelectedColor}
+                  options={colors}
+                />
+              </div>
+
+              {/* Storage */}
+              <div className="grid gap-2">
+                <p className="text-lg font-medium flex items-center gap-0.5">
+                  <span>{isStorage ? "Storage" : "Size"}</span>
+                  <span>:</span>
+                  <span>{selectedSize}</span>
+                </p>
+                <StorageSize
+                  value={selectedSize}
+                  onChange={setSelectedSize}
+                  options={selectedVariant?.sizes || []}
+                />
+              </div>
+
+              <p className="hidden min-[1160px]:flex text-xl gap-1">
+                Ksh.<span className="font-semibold">{totalPrice}</span>
+              </p>
+            </CardContent>
+
+            <CardFooter className="w-full px-0 grid grid-cols-2 gap-4 sm:max-w-96 min-w-0">
+              <ButtonGroup
+                aria-label="Media controls"
+                className="w-full min-w-0 flex justify-evenly"
+              >
+                <Button
+                  onClick={Decrement}
+                  variant="outline"
+                  size="icon"
+                  className="flex-1 border-r-0"
+                >
+                  <Minus />
+                </Button>
+
+                <div className="flex items-center justify-center text-sm font-medium border-y">
+                  {quantity}
+                </div>
+
+                <Button
+                  onClick={Increment}
+                  variant="outline"
+                  size="icon"
+                  className="flex-1"
+                >
+                  <Plus />
+                </Button>
+              </ButtonGroup>
+
+              <Button
+                variant="outline"
+                className="w-full font-semibold text-base"
+              >
+                <ShoppingCart className="text-muted-foreground" />
+                Add to Cart
+              </Button>
+
+              <Button className="w-full col-span-2 font-semibold text-base py-3">
                 Buy Now
               </Button>
-            </div>
-          </CardContent>
+            </CardFooter>
+          </div>
         </div>
       </div>
     </Card>
@@ -245,11 +300,7 @@ type SelectorProps = {
   options: string[];
 };
 
-function ColorSelector({
-  value,
-  onChange,
-  options,
-}: SelectorProps) {
+function ColorSelector({ value, onChange, options }: SelectorProps) {
   return (
     <ColorSwatchSelector.Root
       value={value}
@@ -265,11 +316,7 @@ function ColorSelector({
   );
 }
 
-function StorageSize({
-  value,
-  onChange,
-  options,
-}: SelectorProps) {
+function StorageSize({ value, onChange, options }: SelectorProps) {
   return (
     <LabelSelector.Root
       value={value}
