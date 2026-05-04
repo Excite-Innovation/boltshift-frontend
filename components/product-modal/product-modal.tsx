@@ -46,13 +46,13 @@ export function ModalItem({
                             <Star className="h-5 w-5 fill-orange-500 text-orange-500" />
                         </div>
 
-                        <div className="flex flex-col">
+                        <div className="flex flex-col items-center">
                             <DialogTitle className="text-lg font-semibold line-clamp-1">
                                 {productTitle}
                             </DialogTitle>
 
-                            <div className="flex gap-1">
-                                <DialogDescription className="text-xs font-medium">
+                            <div className="flex gap-1 justify-center items-center">
+                                <DialogDescription className="text-xs font-medium text-center">
                                     {vendorName}
                                 </DialogDescription>
 
@@ -68,7 +68,7 @@ export function ModalItem({
                 <div className="px-4 pb-4 flex flex-col gap-4">
                     {/* Main Focused Image */}
                     <div className="relative border-spacing-0.5 rounded-xl overflow-hidden border">
-                        <div className="relative w-full h-[420px]">
+                        <div className="relative w-full h-[414px]">
                             <Image
                                 src={selectedImage}
                                 alt={productTitle}
@@ -80,17 +80,17 @@ export function ModalItem({
                     </div>
 
                     {/* Thumbnail Slider */}
-                    <div className="flex gap-4 overflow-x-auto">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide">
                         {productItems.map((item, index) => {
                             const active = selectedImage === item;
 
                             return (
                                 <button
-                                    key={productTitle + "-" + index}
+                                    key={`${productTitle}-${index}`}
                                     onClick={() => setSelectedImage(item)}
-                                    className={`relative min-w-[90px] h-[90px] rounded-xl overflow-hidden border transition-all ${active
-                                            ? "ring-2 ring-primary border-primary"
-                                            : "border-muted"
+                                    className={`relative w-24 h-24 p-2 rounded-xl overflow-hidden border transition-all ${active
+                                        ? "ring-2 ring-primary border-primary"
+                                        : "border-muted"
                                         }`}
                                 >
                                     <Image

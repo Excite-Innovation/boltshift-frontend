@@ -19,6 +19,7 @@ import { FormatNumber } from "@/lib/utils";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ModalWrapper } from "@/components/product-modal/modal-wraper";
 
 type ReviewCardProps = {
   review: Review;
@@ -99,24 +100,30 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
 
           <ChevronDown
             className={`w-4 h-4 ml-1 transition-transform duration-300 ${expanded ? "rotate-180" : "rotate-0"
-              }`} 
+              }`}
           />
         </Button>
       </CardHeader>
-
       <CardContent className="w-full px-0 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide">
-        {review.productUploads?.map((image) => (
-          <div key={review.id} className="w-24 h-24 rounded-xl overflow-hidden relative shrink-0">
-            <Image
-              src={image}
-              alt="product review image"
-              fill
-              className="rounded-(--radius) object-cover border"
-            />
-          </div>
+        {review.productUploads?.map((image, index) => (
+          <ModalWrapper
+            key={`${review.id}-${index}`}
+            productTitle={review.reviewHeading}
+            vendorName={review.product.vendor}
+            rating={review.rating}
+            productItems={review.productUploads || []}
+          >
+            <div className="w-24 h-24 rounded-xl overflow-hidden relative shrink-0 cursor-pointer">
+              <Image
+                src={image}
+                alt="product review image"
+                fill
+                className="rounded-(--radius) object-cover border"
+              />
+            </div>
+          </ModalWrapper>
         ))}
       </CardContent>
-
       <CardFooter className="px-0 flex gap-6">
         <p className="font-semibold text-sm">Was this review helpful?</p>
 

@@ -69,6 +69,7 @@ type Review = {
     price: number;
     category: string;
     subcategory: string;
+    vendor: string;
   };
 };
 

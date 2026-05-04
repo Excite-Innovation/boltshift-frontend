@@ -30,6 +30,7 @@ export function ProductReviews(): Review[] {
         price: 92372.97,
         category: "home-living",
         subcategory: "furniture",
+        vendor: "Luxury Living Co.",
       },
     },
     {
@@ -59,6 +60,7 @@ export function ProductReviews(): Review[] {
         price: 45200.0,
         category: "home-living",
         subcategory: "furniture",
+        vendor: "Urban Edge Designs",
       },
     },
     {
@@ -88,6 +90,7 @@ export function ProductReviews(): Review[] {
         price: 30100.5,
         category: "womens-fashion",
         subcategory: "perfumes",
+        vendor: "Aroma Essence",
       },
     },
     {
@@ -117,6 +120,7 @@ export function ProductReviews(): Review[] {
         price: 28750.0,
         category: "accessories",
         subcategory: "watches",
+        vendor: "Chronos Watches",
       },
     },
     {
@@ -146,6 +150,7 @@ export function ProductReviews(): Review[] {
         price: 18999.99,
         category: "home-living",
         subcategory: "home-storage",
+        vendor: "Artisan Decor Studio",
       },
     },
   ];
