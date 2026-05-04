@@ -38,7 +38,7 @@ export function ModalItem({
                 {trigger}
             </DialogTrigger>
 
-            <DialogContent className="max-w-3xl min-w-[336px] p-0 overflow-hidden">
+            <DialogContent className="w-fit! max-w-none! p-0 overflow-hidden rounded-2xl">
                 <DialogHeader className="p-4 border-b flex justify-between">
                     <div className="flex gap-4">
                         {/* Start Item */}
@@ -88,7 +88,7 @@ export function ModalItem({
                                 <button
                                     key={`${productTitle}-${index}`}
                                     onClick={() => setSelectedImage(item)}
-                                    className={`relative w-24 h-24 p-2 rounded-xl overflow-hidden border transition-all ${active
+                                    className={`relative w-24 h-24 p-4 rounded-xl overflow-hidden border transition-all ${active
                                         ? "ring-2 ring-primary border-primary"
                                         : "border-muted"
                                         }`}
