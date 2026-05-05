@@ -1,6 +1,6 @@
 import { Rating, RatingItem } from "@/components/ui/rating";
 import { Progress } from "@/components/ui/progress";
-import { PenLine, Star } from "lucide-react";
+import { MdOutlineStar } from "react-icons/md";
 
 const ratingData = [
   { stars: 5, value: 95, count: "5.21k" },
@@ -23,7 +23,7 @@ function RatingProgressItem({ stars, value, count }: RatingProgressProp) {
         <p className="min-w-6 px-1 grid gap-2 text-center">{stars}</p>
         <Rating value={1} readOnly className="text-[#F79009]">
           <RatingItem>
-            <Star size={20} />
+            <MdOutlineStar size={20} />
           </RatingItem>
         </Rating>
       </div>

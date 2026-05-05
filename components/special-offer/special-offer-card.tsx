@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Minus, Plus, ShoppingCart, Star } from "lucide-react";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -11,6 +11,7 @@ import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
 import { GetProductItems } from "@/lib/product-items";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { StartRating } from "@/components/rating/rating";
 import { cn, EditNum } from "@/lib/utils";
 import {
   Card,
@@ -90,13 +91,7 @@ export function SpecialOfferCard() {
               </CardTitle>
 
               <div className="flex gap-2">
-                <Rating value={4} className="text-[#F79009] gap-1">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <RatingItem key={i}>
-                      <Star size={20} />
-                    </RatingItem>
-                  ))}
-                </Rating>
+                <StartRating value={selectedItem.ratings} />
 
                 <p className="text-sm font-normal text-muted-foreground">
                   (123.46k reviews)
@@ -187,13 +182,7 @@ export function SpecialOfferCard() {
                 </div>
                 {/* Hide on mobile, show on min-[1160px] */}
                 <div className="hidden min-[1160px]:flex gap-2">
-                  <Rating value={4} className="text-[#F79009] gap-1">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <RatingItem key={i}>
-                        <Star size={20} />
-                      </RatingItem>
-                    ))}
-                  </Rating>
+                  <StartRating value={selectedItem.ratings} />
                   <p className="text-sm font-normal text-muted-foreground">
                     (123.46k reviews)
                   </p>

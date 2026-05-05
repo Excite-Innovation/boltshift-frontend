@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { inter, merriweather, jetBrainsMono } from "@/lib/fonts";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import Script from "next/script";
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -43,6 +44,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <head>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-L40XS5KNBN"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-L40XS5KNBN');
+          `}
+        </Script>
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
 
