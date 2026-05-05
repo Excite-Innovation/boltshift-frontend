@@ -35,7 +35,7 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Card className="w-full py-8 border-none flex flex-col gap-5 bg-card">
+    <Card className="w-full py-8 shadow-none border-0 flex flex-col gap-5 bg-card">
       <div className="w-full flex flex-col gap-2 justify-between sm:flex-row items-start">
         {/* Buyer information and star rating */}
         <div className="flex gap-3 pl-1">
