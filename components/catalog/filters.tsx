@@ -45,7 +45,12 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <Field orientation="horizontal" className="p-0">
             <FieldLabel
               htmlFor="switch-share"
-              className="p-2 border-none cursor-pointer"
+              className="
+                p-2 border-none cursor-pointer
+                has-data-[state=checked]:border-none
+                has-data-[state=checked]:bg-transparent
+                dark:has-data-[state=checked]:bg-transparent
+              "
             >
               <FieldContent>
                 <FieldTitle className="text-xl font-semibold">

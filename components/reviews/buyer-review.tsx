@@ -12,13 +12,14 @@ import {
 import { Review } from "@/types/type";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User, Check, Dot, ThumbsUp, ThumbsDown } from "lucide-react";
+import { User, Check, Dot, ThumbsUp, ThumbsDown, ChevronDown } from "lucide-react";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
 import { FormatNumber } from "@/lib/utils";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ModalWrapper } from "@/components/product-modal/modal-wraper";
 
 type ReviewCardProps = {
   review: Review;
@@ -31,8 +32,10 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
   const likes = FormatNumber(review.reactions.likes);
   const dislikes = FormatNumber(review.reactions.dislikes);
 
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <Card className="w-full py-8 border-none flex flex-col gap-5 bg-card">
+    <Card className="w-full py-8 shadow-none border-0 flex flex-col gap-5 bg-card">
       <div className="w-full flex flex-col gap-2 justify-between sm:flex-row items-start">
         {/* Buyer information and star rating */}
         <div className="flex gap-3 pl-1">
@@ -80,24 +83,47 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
         <CardTitle className="font-semibold text-base">
           {review.reviewHeading}
         </CardTitle>
-        <CardDescription className="text-sm line-clamp-3">
+        <CardDescription
+          className={`text-sm transition-all duration-300 ${expanded ? "line-clamp-none" : "line-clamp-3"
+            }`}
+        >
           {review.reviewText}
         </CardDescription>
-      </CardHeader>
 
+        {/* Show more button */}
+        <Button
+          variant="ghost"
+          onClick={() => setExpanded(!expanded)}
+          className="w-fit px-0 text-muted-foreground hover:text-secondary-foreground"
+        >
+          {expanded ? "Show less" : "Show more"}
+
+          <ChevronDown
+            className={`w-4 h-4 ml-1 transition-transform duration-300 ${expanded ? "rotate-180" : "rotate-0"
+              }`}
+          />
+        </Button>
+      </CardHeader>
       <CardContent className="w-full px-0 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide">
-        {review.productUploads?.map((image) => (
-          <div key={review.id} className="w-24 h-24 rounded-xl overflow-hidden relative shrink-0">
-            <Image
-              src={image}
-              alt="product review image"
-              fill
-              className="rounded-(--radius) object-cover border"
-            />
-          </div>
+        {review.productUploads?.map((image, index) => (
+          <ModalWrapper
+            key={`${review.id}-${index}`}
+            productTitle={review.reviewHeading}
+            vendorName={review.product.vendor}
+            rating={review.rating}
+            productItems={review.productUploads || []}
+          >
+            <div className="w-24 h-24 rounded-xl overflow-hidden relative shrink-0 cursor-pointer">
+              <Image
+                src={image}
+                alt="product review image"
+                fill
+                className="rounded-(--radius) object-cover border"
+              />
+            </div>
+          </ModalWrapper>
         ))}
       </CardContent>
-
       <CardFooter className="px-0 flex gap-6">
         <p className="font-semibold text-sm">Was this review helpful?</p>
 

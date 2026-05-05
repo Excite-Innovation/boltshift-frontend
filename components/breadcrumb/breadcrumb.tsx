@@ -34,7 +34,7 @@ export function BreadcrumbComponent({ items }: BreadcrumbComponentProps) {
 
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className="text-sm font-medium">
+                  <BreadcrumbPage className="text-sm font-medium text-primary">
                     {item.label}
                   </BreadcrumbPage>
                 ) : (

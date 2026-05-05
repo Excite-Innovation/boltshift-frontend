@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Store, Star, Plus, ChevronRight, BadgeCheck } from "lucide-react";
+import { Store, Plus, ChevronRight, BadgeCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Rating, RatingItem } from "@/components/ui/rating";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { TabsLine } from "@/components/store-card/tabs";
 import { PaginationLinks } from "@/components/pagination/pagination";
+import { StartRating } from "@/components/rating/rating";
 import { EditNum } from "@/lib/utils";
 
 export function FeaturedStoreCard() {
@@ -53,17 +54,7 @@ export function FeaturedStoreCard() {
             <BadgeCheck fill="#2E90FA" stroke="white"/>
           </CardTitle>
           <div className="flex gap-1">
-            <Rating
-              value={rating}
-              className="text-[#F79009] gap-1"
-              onValueChange={setRating}
-            >
-              {Array.from({ length: 5 }, (_, i) => (
-                <RatingItem key={i}>
-                  <Star />
-                </RatingItem>
-              ))}
-            </Rating>
+            <StartRating value={rating} />
 
             <div className="text-base font-medium text-muted-foreground ">
               <p>{followers} Followers</p>
