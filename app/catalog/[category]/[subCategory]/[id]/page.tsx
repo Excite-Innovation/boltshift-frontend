@@ -134,7 +134,7 @@ export default async function ProductDetails({
 
           <div className="w-full flex flex-col gap-4 md:flex-row">
             {/* Rating and Review */}
-            <div className="py-4 pr-8 flex flex-col gap-4 justify-around">
+            <div className="py-4 pr-8 flex flex-col gap-4 justify-end">
               {/* Average rating */}
               <div className="flex gap-2">
                 <p className="text-6xl font-bold text-primary">4.1</p>
