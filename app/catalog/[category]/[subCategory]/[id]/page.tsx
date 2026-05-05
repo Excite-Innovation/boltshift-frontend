@@ -8,6 +8,7 @@ import { BuyerReviewCard } from "@/components/reviews/buyer-review";
 import { StartRating } from "@/components/rating/rating";
 import { Button } from "@/components/ui/button";
 import { ProductReviews } from "@/lib/reviews";
+import { SubmitReview } from "@/components/reviews/review-modal";
 import { PenLine } from "lucide-react";
 
 const reviews = ProductReviews();
@@ -144,10 +145,15 @@ export default async function ProductDetails({
               </div>
 
               {/* Review Button */}
-              <Button className="px-4 py-2.5 flex gap-1.5 text-base">
-                <PenLine />
-                Share a Review
-              </Button>
+              <SubmitReview
+                trigger={
+                  <Button className="w-64 h-11 px-4 py-2.5 flex gap-1.5 text-base">
+                    <PenLine />
+                    Share a Review
+                  </Button>
+                }
+
+              />
             </div>
 
             {/* Rating by population */}
