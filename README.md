@@ -82,7 +82,7 @@ git pull origin <branch-name>
 2. Start the dev server in detached mode (runs in the background):
 
 ```bash
-docker compose -f docker-compose.dev.yml up -d
+docker compose -f docker-compose.yml up -d
 ```
 
 3. Open in browser:
@@ -94,13 +94,13 @@ http://localhost:3000
 4. To see logs from the running container:
 
 ```bash
-docker compose -f docker-compose.dev.yml logs -f
+docker compose -f docker-compose.yml logs -f
 ```
 
 5. To stop the dev server:
 
 ```bash
-docker compose -f docker-compose.dev.yml down
+docker compose -f docker-compose.yml down
 ```
 
 > **Note:** The first run will take a moment as it installs dependencies inside the container. Subsequent starts are fast.
@@ -108,7 +108,7 @@ docker compose -f docker-compose.dev.yml down
 > Once the container is running, `git pull` changes are reflected automatically via hot-reload; no restart needed. The only exception is when a pull includes new packages (`package.json` changed), in which case restart the container so dependencies are installed:
 >
 > ```bash
-> docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up -d
+> docker compose -f docker-compose.yml down && docker compose -f docker-compose.yml up -d
 > ```
 
 # Useful Scripts
