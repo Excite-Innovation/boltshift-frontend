@@ -44,6 +44,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <head>
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      </head>
+
+      <body>
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-L40XS5KNBN"
@@ -58,10 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             gtag('config', 'G-L40XS5KNBN');
           `}
         </Script>
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      </head>
 
-      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
