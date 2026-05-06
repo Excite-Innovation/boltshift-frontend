@@ -1,22 +1,14 @@
 import { ProductCard } from "@/components/product-card/product-card";
 import { PaginationLinks } from "@/components/pagination/pagination";
 import { GetProductItems } from "@/lib/product-items";
+import { filterProducts } from "@/lib/catalog";
 
 interface CatalogCardProps {
   query?: string;
 }
 
 export function CatalogCard({ query }: CatalogCardProps) {
-  const allProducts = GetProductItems();
-
-  const products = query
-    ? allProducts.filter(
-        (p) =>
-          p.name.toLowerCase().includes(query.toLowerCase()) ||
-          p.category.toLowerCase().includes(query.toLowerCase()) ||
-          p.subcategory?.toLowerCase().includes(query.toLowerCase()),
-      )
-    : allProducts;
+  const products = filterProducts(GetProductItems(), query);
 
   return (
     <main className="w-full flex flex-col gap-2 md:p-4">
