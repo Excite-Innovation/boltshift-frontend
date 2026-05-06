@@ -26,6 +26,11 @@ type ItemProps = {
   item: FilterItem;
 };
 
+/**
+ * A collapsible sidebar filter component that renders different filter UIs
+ * (range inputs, star ratings, selectable tags, or nested category lists)
+ * based on the `item.type` property. Expands/collapses with a +/- toggle.
+ */
 export function CollapsibleItem({ item }: ItemProps) {
   const [open, setOpen] = useState(!!item.isActive);
   const [min, setMin] = useState("");
@@ -35,6 +40,7 @@ export function CollapsibleItem({ item }: ItemProps) {
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  /** Toggles a tag in/out of the `selectedTags` array. */
   const toggleTag = (tag: string) => {
     setSelectedTags(
       (prev) =>
@@ -44,6 +50,11 @@ export function CollapsibleItem({ item }: ItemProps) {
     );
   };
 
+  /**
+   * Renders a min/max price range input pair.
+   * Values are clamped to positive numbers and automatically
+   * re-ordered so that min never exceeds max.
+   */
   const renderRange = () => (
     <SidebarMenuSub>
       <SidebarMenuSubItem className="cursor-pointer border-l-0">
@@ -88,6 +99,10 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders a list of star-rating checkboxes (5 → 1 stars)
+   * allowing the user to filter products by review score.
+   */
   const renderRating = () => (
     <SidebarMenuSub>
       {[5, 4, 3, 2, 1].map((rating) => (
@@ -110,6 +125,10 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders the filter's sub-items as a horizontally-wrapping set of
+   * badge/tag pills. Clicking a tag toggles its selected state.
+   */
   const renderTags = () => (
     <SidebarMenuSub className="p-2 flex flex-row gap-2 flex-wrap">
       {item.items?.map((tag) => {
@@ -131,6 +150,11 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders nested category items. Displays checkboxes when
+   * `item.type` is "checkbox"; otherwise shows expandable sub-category
+   * links with a rotating chevron indicator.
+   */
   const renderItems = () => (
     <SidebarMenuSub>
       {item.items?.map((subItem) => {
