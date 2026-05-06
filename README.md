@@ -61,11 +61,55 @@ npm run dev:pwa
 https://localhost:3000
 ```
 
-## Run with Docker
+## Run with Docker (Production)
 
 ```bash
 npm run docker
 ```
+
+## Run with Docker (Development — Hot Reload)
+
+This setup is recommended for designers and developers who want to see changes reflected instantly without rebuilding the container. It mounts your local source code into the container so Next.js hot-reload works on every file save.
+
+**Prerequisites:** Docker and Docker Compose installed.
+
+1. Pull the latest changes from the remote branch:
+
+```bash
+git pull origin <branch-name>
+```
+
+2. Start the dev server in detached mode (runs in the background):
+
+```bash
+docker compose -f docker-compose.dev.yml up -d
+```
+
+3. Open in browser:
+
+```text
+http://localhost:3000
+```
+
+4. To see logs from the running container:
+
+```bash
+docker compose -f docker-compose.dev.yml logs -f
+```
+
+5. To stop the dev server:
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
+> **Note:** The first run will take a moment as it installs dependencies inside the container. Subsequent starts are fast.
+>
+> Once the container is running, `git pull` changes are reflected automatically via hot-reload; no restart needed. The only exception is when a pull includes new packages (`package.json` changed), in which case restart the container so dependencies are installed:
+>
+> ```bash
+> docker compose -f docker-compose.dev.yml down && docker compose -f docker-compose.dev.yml up -d
+> ```
 
 # Useful Scripts
 
