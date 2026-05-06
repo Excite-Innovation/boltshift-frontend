@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -17,10 +19,16 @@ import { SelectList } from "@/components/dropdown/select";
 import { CollapsibleItem } from "@/components/dropdown/dropdown";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { useState } from "react";
 
 const sortBy = ["Latest", "Oldest", "Popular"];
 
 export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  /** Incrementing this key forces all filter components to remount with fresh state. */
+  const [resetKey, setResetKey] = useState(0);
+
+  const clearAllFilters = () => setResetKey((prev) => prev + 1);
+
   return (
     <Sidebar
       collapsible="offcanvas"
@@ -33,7 +41,7 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SelectList list={sortBy} />
         </div>
 
-        <SidebarGroup className="p-0">
+        <SidebarGroup className="p-0" key={resetKey}>
           <SidebarMenu className="grid gap-4">
             {FilterItems.map((item) => (
               <CollapsibleItem key={item.title} item={item} />
@@ -41,7 +49,7 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarGroup>
 
-        <FieldGroup>
+        <FieldGroup key={`stock-${resetKey}`}>
           <Field orientation="horizontal" className="p-0">
             <FieldLabel
               htmlFor="switch-share"
@@ -64,7 +72,8 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
         <Button
           variant="destructive"
-          className="w-full py-2.5 px-4.5 text-base font-semibold"
+          className="w-full py-2.5 px-4.5 text-base font-semibold cursor-pointer"
+          onClick={clearAllFilters}
         >
           <X />
           Clear All Filters

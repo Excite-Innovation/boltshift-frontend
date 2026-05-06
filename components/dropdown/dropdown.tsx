@@ -195,11 +195,11 @@ export function CollapsibleItem({ item }: ItemProps) {
             {isOpen && subItem.subcategories?.length ? (
               <div className="pl-6 py-1 flex flex-col gap-1">
                 {subItem.subcategories.map((sub) => (
-                  <div key={sub.slug} className="flex items-center gap-2 py-1">
+                  <div key={sub.slug} className="w-full flex items-center gap-2 py-1">
                     <Checkbox id={`${subItem.slug}-${sub.slug}`} className="cursor-pointer" />
                     <label
                       htmlFor={`${subItem.slug}-${sub.slug}`}
-                      className="text-sm font-medium cursor-pointer"
+                      className="grow text-sm font-medium cursor-pointer"
                     >
                       {sub.title}
                     </label>
