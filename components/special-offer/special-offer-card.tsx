@@ -140,6 +140,7 @@ export function SpecialOfferCard() {
                     src={p.image}
                     alt={p.name}
                     fill
+                    sizes="80px"
                     className="object-cover rounded-xl"
                   />
                 </AspectRatio>
