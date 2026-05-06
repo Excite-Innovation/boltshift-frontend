@@ -3,12 +3,16 @@ import { PaginationLinks } from "@/components/pagination/pagination";
 import { GetProductItems } from "@/lib/product-items";
 import { filterProducts } from "@/lib/catalog";
 
+import type { Product } from "@/types/type";
+
 interface CatalogCardProps {
   query?: string;
+  /** Optional pre-filtered product list. Falls back to all products when omitted. */
+  products?: Product[];
 }
 
-export function CatalogCard({ query }: CatalogCardProps) {
-  const products = filterProducts(GetProductItems(), query);
+export function CatalogCard({ query, products: productsProp }: CatalogCardProps) {
+  const products = filterProducts(productsProp ?? GetProductItems(), query);
 
   return (
     <main className="w-full flex flex-col gap-2 md:p-4">

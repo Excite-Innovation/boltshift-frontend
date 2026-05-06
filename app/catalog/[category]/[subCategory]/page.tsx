@@ -2,18 +2,25 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
+import { filterProducts } from "@/lib/catalog";
+import { GetProductItems } from "@/lib/product-items";
+import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
 export default async function SubCategoryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ category: string; subCategory: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
   const format = (text: string) =>
     text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  const { category, subCategory} = await params;
+  const { category, subCategory } = await params;
+  const { q } = await searchParams;
+  const query = q?.trim() ?? "";
 
-  const title = format(category);
+  const title = format(subCategory);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
@@ -22,6 +29,12 @@ export default async function SubCategoryPage({
     { label: format(category), href: `/catalog/${category}` },
     { label: format(subCategory) },
   ];
+
+  // Filter by category + subcategory first, then by search query within that scope
+  const scopedProducts = GetProductItems().filter(
+    (p) => p.category === category && p.subcategory === subCategory,
+  );
+  const filteredCount = filterProducts(scopedProducts, query).length;
 
   return (
     <>
@@ -35,20 +48,13 @@ export default async function SubCategoryPage({
           alt={alt}
           className="basis-1/4"
         />
-        <p className="flex gap-2.5 items-center basis-3/4">
-          <span className="text-xs font-semibold text-muted-foreground md:text-sm lg:text-xl">
-            366 results for the search of
-          </span>
-          <span className="text-xs font-semibold text-primary md:text-sm lg:text-xl">
-            luxury contemporary watch
-          </span>
-        </p>
+        <SearchResultsHeader count={filteredCount} query={query} />
       </div>
 
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard />
+        <CatalogCard query={query} products={scopedProducts} />
       </div>
     </>
   );
