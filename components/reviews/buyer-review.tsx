@@ -118,6 +118,7 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
                 src={image}
                 alt="product review image"
                 fill
+                sizes="96px"
                 className="rounded-(--radius) object-cover border"
               />
             </div>

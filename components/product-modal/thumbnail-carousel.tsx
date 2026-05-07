@@ -46,6 +46,7 @@ export function ProductImageCarousel({
           src={selectedImage}
           alt={productTitle}
           fill
+          sizes="(min-width: 768px) 768px, calc(100vw - 4rem)"
           className="object-cover transition-opacity duration-300"
           priority
         />
@@ -70,6 +71,7 @@ export function ProductImageCarousel({
                     src={img}
                     alt={`${productTitle}-${index}`}
                     fill
+                    sizes="(min-width: 640px) 96px, 80px"
                     className="object-cover"
                   />
                 </button>

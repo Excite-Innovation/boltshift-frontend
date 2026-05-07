@@ -113,6 +113,7 @@ export function SpecialOfferCard() {
                 src={selectedItem.image}
                 alt={selectedItem.name}
                 fill
+                sizes="(min-width: 768px) 50vw, calc(100vw - 2rem)"
                 className="w-full h-full object-cover"
               />
             </AspectRatio>
