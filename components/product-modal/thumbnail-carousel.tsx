@@ -39,13 +39,14 @@ export function ProductImageCarousel({
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pb-4">
+    <div className="flex max-h-[calc(100dvh-7rem)] flex-col gap-4 overflow-y-auto px-4 pb-4">
       {/* MAIN IMAGE */}
-      <div className="relative w-full h-[414px] border rounded-xl overflow-hidden">
+      <div className="relative aspect-4/3 w-full max-h-[min(60dvh,414px)] min-h-48 border rounded-xl overflow-hidden">
         <Image
           src={selectedImage}
           alt={productTitle}
           fill
+          sizes="(min-width: 768px) 768px, calc(100vw - 4rem)"
           className="object-cover transition-opacity duration-300"
           priority
         />
@@ -58,11 +59,11 @@ export function ProductImageCarousel({
             const active = index === selectedIndex;
 
             return (
-              <CarouselItem key={index} className="basis-auto">
+              <CarouselItem key={index} className="basis-auto pt-1">
                 <button
                   onClick={() => handleThumbnailClick(index)}
-                  className={`relative w-24 h-24 rounded-xl overflow-hidden border transition-colors ${active
-                      ? "border-primary"
+                  className={`relative h-20 w-20 rounded-xl overflow-hidden border transition-colors sm:h-24 sm:w-24 ${active
+                      ? "ring-2 ring-offset-1 ring-ring"
                       : "border-muted opacity-70 hover:opacity-100"
                     }`}
                 >
@@ -70,6 +71,7 @@ export function ProductImageCarousel({
                     src={img}
                     alt={`${productTitle}-${index}`}
                     fill
+                    sizes="(min-width: 640px) 96px, 80px"
                     className="object-cover"
                   />
                 </button>

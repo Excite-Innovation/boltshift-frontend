@@ -26,9 +26,9 @@ type ReviewProp = {
 export function SubmitReview({ trigger }: ReviewProp) {
     return (
         <Dialog>
-            <DialogTrigger className="py-0 justify-end">{trigger}</DialogTrigger>
+            <DialogTrigger className="py-0 justify-center" asChild>{trigger}</DialogTrigger>
             <form>
-                <DialogContent className="max-w-140 max-h-201 px-8 py-0 overflow-hidden rounded-2xl gap-0">
+                <DialogContent className="w-[calc(100%-2rem)] max-w-140 max-h-201 px-8 py-0 overflow-hidden rounded-2xl gap-0">
                     <DialogHeader className="py-6 flex flex-row gap-4">
                         <div className="w-10 h10 flex justify-center items-center">
                             < PenLine width={20} height={20} />

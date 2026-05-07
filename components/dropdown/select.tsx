@@ -8,17 +8,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
 
 type SelectListProps = {
   list: string[];
+  value?: string;
+  onValueChange?: (value: string) => void;
 };
 
-export function SelectList({ list }: SelectListProps) {
-  const [item, setItem] = useState<string>(list.length ? list[0] : "");
+export function SelectList({ list, value, onValueChange }: SelectListProps) {
+  const selectedItem = value ?? (list.length ? list[0] : "");
 
   return (
-    <Select value={item} onValueChange={setItem}>
+    <Select value={selectedItem} onValueChange={onValueChange}>
       <SelectTrigger className="w-full cursor-pointer">
         <SelectValue placeholder="Select" />
       </SelectTrigger>

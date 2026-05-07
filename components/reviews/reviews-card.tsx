@@ -71,6 +71,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
               src={review.product.image}
               alt={review.product.name}
               fill
+              sizes="80px"
               className="object-cover"
             />
           </div>
