@@ -59,11 +59,11 @@ export function ProductImageCarousel({
             const active = index === selectedIndex;
 
             return (
-              <CarouselItem key={index} className="basis-auto">
+              <CarouselItem key={index} className="basis-auto pt-1">
                 <button
                   onClick={() => handleThumbnailClick(index)}
                   className={`relative h-20 w-20 rounded-xl overflow-hidden border transition-colors sm:h-24 sm:w-24 ${active
-                      ? "border-primary"
+                      ? "ring-2 ring-offset-1 ring-ring"
                       : "border-muted opacity-70 hover:opacity-100"
                     }`}
                 >
