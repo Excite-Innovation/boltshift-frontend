@@ -35,7 +35,7 @@ function CardImage({
 
   return (
     <div className="relative">
-      <AspectRatio ratio={ratio}>
+      <AspectRatio ratio={ratio} className="relative">
         <Image
           src={product.image}
           alt={product.name}

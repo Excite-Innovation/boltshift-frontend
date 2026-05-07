@@ -104,7 +104,7 @@ export function SpecialOfferCard() {
         {/* Left Images */}
         <div className="w-full h-full flex flex-col gap-4 md:flex-row md:items-stretch">
           <div className="w-full h-full flex-1 rounded-xl overflow-hidden border relative">
-            <AspectRatio ratio={1 / 1}>
+            <AspectRatio ratio={1 / 1} className="relative">
               <Image
                 src={selectedItem.image}
                 alt={selectedItem.name}
@@ -133,7 +133,7 @@ export function SpecialOfferCard() {
                     : "",
                 )}
               >
-                <AspectRatio ratio={1 / 1}>
+                <AspectRatio ratio={1 / 1} className="relative">
                   <Image
                     src={p.image}
                     alt={p.name}
