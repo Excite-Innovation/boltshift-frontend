@@ -110,6 +110,7 @@ export function SpecialOfferCard() {
                 alt={selectedItem.name}
                 fill
                 sizes="(min-width: 768px) 50vw, calc(100vw - 2rem)"
+                loading="eager"
                 className="w-full h-full object-cover"
               />
             </AspectRatio>
