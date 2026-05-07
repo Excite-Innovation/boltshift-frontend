@@ -45,7 +45,7 @@ export default async function CategoryPage({
           title={title}
           icon={icon}
           alt={alt}
-          className="basis-1/4"
+          className="basis-1/4 hidden sm:flex"
         />
         <SearchResultsHeader count={filteredCount} query={query} />
       </div>
