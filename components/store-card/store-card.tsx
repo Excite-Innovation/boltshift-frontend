@@ -33,6 +33,7 @@ export function FeaturedStoreCard() {
           src={profileCover}
           alt="Store card background image"
           fill
+          sizes="(min-width: 1024px) 1024px, 100vw"
           className="object-cover"
           priority
         />

@@ -113,12 +113,13 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
             rating={review.rating}
             productItems={review.productUploads || []}
           >
-            <div className="w-24 h-24 rounded-xl overflow-hidden relative shrink-0 cursor-pointer">
+            <div className="h-24 w-24 shrink-0 cursor-pointer overflow-hidden rounded-xl border">
               <Image
                 src={image}
                 alt="product review image"
-                fill
-                className="rounded-(--radius) object-cover border"
+                width={96}
+                height={96}
+                className="h-full w-full object-cover"
               />
             </div>
           </ModalWrapper>

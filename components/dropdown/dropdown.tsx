@@ -20,30 +20,49 @@ import { StartRating } from "@/components/rating/rating";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import type { FilterItem } from "@/lib/filters";
-import Link from "next/link";
 
 type ItemProps = {
   item: FilterItem;
+  selectedValues: {
+    ratings: string[];
+    categories: string[];
+    subcategories: string[];
+    brands: string[];
+    shipping: string[];
+    tags: string[];
+  };
+  minPrice: string;
+  maxPrice: string;
+  onRangeChange: (min: string, max: string) => void;
+  onToggleValue: (
+    key: keyof ItemProps["selectedValues"],
+    value: string,
+  ) => void;
 };
 
-export function CollapsibleItem({ item }: ItemProps) {
+/**
+ * A collapsible sidebar filter component that renders different filter UIs
+ * (range inputs, star ratings, selectable tags, or nested category lists)
+ * based on the `item.type` property. Expands/collapses with a +/- toggle.
+ */
+export function CollapsibleItem({
+  item,
+  selectedValues,
+  minPrice,
+  maxPrice,
+  onRangeChange,
+  onToggleValue,
+}: ItemProps) {
   const [open, setOpen] = useState(!!item.isActive);
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
-
   const [openCategory, setOpenCategory] = useState<string | null>(null);
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const checkboxKey = item.title === "Shipping" ? "shipping" : "brands";
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags(
-      (prev) =>
-        prev.includes(tag)
-          ? prev.filter((t) => t !== tag) // remove
-          : [...prev, tag], // add
-    );
-  };
-
+  /**
+   * Renders a min/max price range input pair.
+   * Values are clamped to positive numbers and automatically
+   * re-ordered so that min never exceeds max.
+   */
   const renderRange = () => (
     <SidebarMenuSub>
       <SidebarMenuSubItem className="cursor-pointer border-l-0">
@@ -54,13 +73,12 @@ export function CollapsibleItem({ item }: ItemProps) {
             </span>
             <Input
               placeholder="Kshs."
-              value={min}
+              value={minPrice}
               type="number"
               onChange={(e) => {
                 const value = clampToPositive(e.target.value);
-                const updated = enforceRangeOrder(value, max);
-                setMin(updated.min);
-                setMax(updated.max);
+                const updated = enforceRangeOrder(value, maxPrice);
+                onRangeChange(updated.min, updated.max);
               }}
             />
           </div>
@@ -73,13 +91,12 @@ export function CollapsibleItem({ item }: ItemProps) {
             </span>
             <Input
               placeholder="Kshs."
-              value={max}
+              value={maxPrice}
               type="number"
               onChange={(e) => {
                 const value = clampToPositive(e.target.value);
-                const updated = enforceRangeOrder(min, value);
-                setMin(updated.min);
-                setMax(updated.max);
+                const updated = enforceRangeOrder(minPrice, value);
+                onRangeChange(updated.min, updated.max);
               }}
             />
           </div>
@@ -88,12 +105,21 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders a list of star-rating checkboxes (5 → 1 stars)
+   * allowing the user to filter products by review score.
+   */
   const renderRating = () => (
     <SidebarMenuSub>
       {[5, 4, 3, 2, 1].map((rating) => (
         <SidebarMenuSubItem key={rating} className="cursor-pointer border-l-0">
           <div className="w-full flex gap-2 py-1 px-2">
-            <Checkbox id={`rating-${rating}`} className="cursor-pointer" />
+            <Checkbox
+              id={`rating-${rating}`}
+              checked={selectedValues.ratings.includes(String(rating))}
+              className="cursor-pointer"
+              onCheckedChange={() => onToggleValue("ratings", String(rating))}
+            />
 
             <label
               htmlFor={`rating-${rating}`}
@@ -110,27 +136,39 @@ export function CollapsibleItem({ item }: ItemProps) {
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders the filter's sub-items as a horizontally-wrapping set of
+   * badge/tag pills. Clicking a tag toggles its selected state.
+   */
   const renderTags = () => (
     <SidebarMenuSub className="p-2 flex flex-row gap-2 flex-wrap">
       {item.items?.map((tag) => {
-        const isActive = selectedTags.includes(tag.title);
+        const isActive = selectedValues.tags.includes(tag.title);
 
         return (
-          <Badge
+          <button
             key={tag.title}
-            variant={isActive ? "default" : "outline"}
-            className={`cursor-pointer transition-colors px-3 py-1 rounded-full
-            ${isActive ? "bg-primary text-primary-foreground" : ""}
-          `}
-            onClick={() => toggleTag(tag.title)}
+            type="button"
+            className="rounded-full border-0 bg-transparent p-0"
+            onClick={() => onToggleValue("tags", tag.title)}
           >
-            {tag.title}
-          </Badge>
+            <Badge
+              variant={isActive ? "default" : "outline"}
+              className="cursor-pointer rounded-full px-3 py-1 transition-colors"
+            >
+              {tag.title}
+            </Badge>
+          </button>
         );
       })}
     </SidebarMenuSub>
   );
 
+  /**
+   * Renders nested category items. Displays checkboxes when
+   * `item.type` is "checkbox"; otherwise shows expandable sub-category
+   * links with a rotating chevron indicator.
+   */
   const renderItems = () => (
     <SidebarMenuSub>
       {item.items?.map((subItem) => {
@@ -141,7 +179,16 @@ export function CollapsibleItem({ item }: ItemProps) {
             <SidebarMenuSubItem className="cursor-pointer border-l-0">
               {item.type === "checkbox" ? (
                 <div className="w-full flex items-center gap-1 p-2">
-                  <Checkbox id={subItem.title} className="cursor-pointer" />
+                  <Checkbox
+                    id={subItem.title}
+                    checked={selectedValues[checkboxKey].includes(
+                      subItem.title,
+                    )}
+                    className="cursor-pointer"
+                    onCheckedChange={() =>
+                      onToggleValue(checkboxKey, subItem.title)
+                    }
+                  />
                   <label
                     htmlFor={subItem.title}
                     className="grow text-sm font-medium cursor-pointer"
@@ -151,19 +198,42 @@ export function CollapsibleItem({ item }: ItemProps) {
                 </div>
               ) : (
                 <SidebarMenuSubButton
+                  asChild
                   onClick={() => {
                     const slug = subItem.slug ?? null;
                     setOpenCategory(isOpen ? null : slug);
                   }}
-                  className="flex items-center justify-between w-full cursor-pointer"
+                  className="flex items-center justify-between gap-2 w-full cursor-pointer"
                 >
-                  <span className="text-md font-medium">{subItem.title}</span>
+                  <div>
+                    <span
+                      onClick={(event) => event.stopPropagation()}
+                      className="flex items-center gap-2"
+                    >
+                      <Checkbox
+                        id={`category-${subItem.slug}`}
+                        checked={selectedValues.categories.includes(
+                          subItem.slug ?? subItem.title,
+                        )}
+                        className="cursor-pointer"
+                        onCheckedChange={() =>
+                          onToggleValue(
+                            "categories",
+                            subItem.slug ?? subItem.title,
+                          )
+                        }
+                      />
+                      <span className="text-md font-medium">
+                        {subItem.title}
+                      </span>
+                    </span>
 
-                  <ChevronDown
-                    className={`size-4 transition-transform duration-200 ${
-                      isOpen ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
+                    <ChevronDown
+                      className={`size-4 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                    />
+                  </div>
                 </SidebarMenuSubButton>
               )}
             </SidebarMenuSubItem>
@@ -171,13 +241,24 @@ export function CollapsibleItem({ item }: ItemProps) {
             {isOpen && subItem.subcategories?.length ? (
               <div className="pl-6 py-1 flex flex-col gap-1">
                 {subItem.subcategories.map((sub) => (
-                  <Link
-                    key={sub.slug}
-                    href={`/catalog/${subItem.slug}/${sub.slug}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition"
-                  >
-                    {sub.title}
-                  </Link>
+                  <div key={sub.slug} className="w-full flex items-center gap-2 py-1">
+                    <Checkbox
+                      id={`${subItem.slug}-${sub.slug}`}
+                      checked={selectedValues.subcategories.includes(
+                        sub.slug ?? sub.title,
+                      )}
+                      className="cursor-pointer"
+                      onCheckedChange={() =>
+                        onToggleValue("subcategories", sub.slug ?? sub.title)
+                      }
+                    />
+                    <label
+                      htmlFor={`${subItem.slug}-${sub.slug}`}
+                      className="grow text-sm font-medium cursor-pointer"
+                    >
+                      {sub.title}
+                    </label>
+                  </div>
                 ))}
               </div>
             ) : null}

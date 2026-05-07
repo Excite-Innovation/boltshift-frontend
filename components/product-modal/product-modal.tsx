@@ -1,7 +1,3 @@
-"use client"
-
-import { useState } from "react";
-import Image from "next/image";
 import {
     Dialog,
     DialogContent,
@@ -12,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { StartRating } from "@/components/rating/rating";
 import { ProductImageCarousel } from "@/components/product-modal/thumbnail-carousel";
-import { Star, Play } from "lucide-react";
+import { Star } from "lucide-react";
 
 type ModalProp = {
     productTitle: string;
@@ -29,29 +25,27 @@ export function ModalItem({
     productItems,
     trigger
 }: ModalProp) {
-    const [selectedImage, setSelectedImage] = useState(productItems[0]);
-
     return (
         <Dialog>
             <DialogTrigger asChild>
                 {trigger}
             </DialogTrigger>
 
-            <DialogContent className="w-fit! max-w-none! p-0 overflow-hidden rounded-2xl">
+            <DialogContent className="w-[calc(100vw-2rem)] max-w-3xl max-h-[calc(100dvh-2rem)] p-0 overflow-hidden rounded-2xl sm:max-w-3xl">
                 <DialogHeader className="p-4 border-b flex justify-between">
-                    <div className="flex gap-4">
+                    <div className="min-w-0 flex gap-4">
                         {/* Start Item */}
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border bg-muted">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border bg-muted">
                             <Star className="h-5 w-5 fill-orange-500 text-orange-500" />
                         </div>
 
-                        <div className="flex flex-col items-start">
-                            <DialogTitle className="text-lg font-semibold line-clamp-1">
+                        <div className="min-w-0 flex flex-col items-start">
+                            <DialogTitle className="text-lg text-start font-semibold line-clamp-1">
                                 {productTitle}
                             </DialogTitle>
 
-                            <div className="flex gap-1 justify-center items-center">
-                                <DialogDescription className="text-xs font-medium text-center">
+                            <div className="min-w-0 flex gap-1 justify-center items-center">
+                                <DialogDescription className="truncate text-xs font-medium text-center">
                                     {vendorName}
                                 </DialogDescription>
 

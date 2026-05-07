@@ -24,20 +24,23 @@ function CardImage({
   product,
   ratio,
   savePosition,
+  sizes = "(min-width: 768px) 288px, 50vw",
 }: {
   product: Product;
   ratio: number;
   savePosition?: string;
+  sizes?: string;
 }) {
   const [saved, setSaved] = useState(false);
 
   return (
     <div className="relative">
-      <AspectRatio ratio={ratio}>
+      <AspectRatio ratio={ratio} className="relative">
         <Image
           src={product.image}
           alt={product.name}
           fill
+          sizes={sizes}
           className="object-cover w-full h-full overflow-hidden"
         />
       </AspectRatio>
@@ -252,6 +255,7 @@ export function ProductCard({
                 product={product}
                 ratio={ratio}
                 savePosition="left-2"
+                sizes="128px"
               />
             </div>
           ) : (

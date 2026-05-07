@@ -98,21 +98,19 @@ export function SpecialOfferCard() {
                 </p>
               </div>
             </div>
-
-            <p className="text-xl flex gap-1">
-              Ksh.<span className="font-semibold">{totalPrice}</span>
-            </p>
           </div>
         </div>
 
         {/* Left Images */}
         <div className="w-full h-full flex flex-col gap-4 md:flex-row md:items-stretch">
           <div className="w-full h-full flex-1 rounded-xl overflow-hidden border relative">
-            <AspectRatio ratio={1 / 1}>
+            <AspectRatio ratio={1 / 1} className="relative">
               <Image
                 src={selectedItem.image}
                 alt={selectedItem.name}
                 fill
+                sizes="(min-width: 768px) 50vw, calc(100vw - 2rem)"
+                loading="eager"
                 className="w-full h-full object-cover"
               />
             </AspectRatio>
@@ -135,11 +133,12 @@ export function SpecialOfferCard() {
                     : "",
                 )}
               >
-                <AspectRatio ratio={1 / 1}>
+                <AspectRatio ratio={1 / 1} className="relative">
                   <Image
                     src={p.image}
                     alt={p.name}
                     fill
+                    sizes="80px"
                     className="object-cover rounded-xl"
                   />
                 </AspectRatio>
@@ -231,7 +230,7 @@ export function SpecialOfferCard() {
                 />
               </div>
 
-              <p className="hidden min-[1160px]:flex text-xl gap-1">
+              <p className="text-xl flex gap-1">
                 Ksh.<span className="font-semibold">{totalPrice}</span>
               </p>
             </CardContent>

@@ -2,13 +2,29 @@ import { SectionTitle } from "@/components/section-title";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
+import { GetProductItems } from "@/lib/product-items";
+import {
+  filterCatalogProducts,
+  type CatalogFilterParams,
+} from "@/lib/catalog";
+import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
 const items = [{ label: "Catalog" }];
 
-export default function Catalog() {
+interface CatalogPageProps {
+  searchParams: Promise<CatalogFilterParams>;
+}
+
+export default async function Catalog({ searchParams }: CatalogPageProps) {
+  const filters = await searchParams;
+  const query = filters.q?.trim() ?? "";
+
   const title = "Catalog";
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
+
+  // Count matching products for the header
+  const filteredCount = filterCatalogProducts(GetProductItems(), filters).length;
 
   return (
     <>
@@ -20,22 +36,15 @@ export default function Catalog() {
           title={title}
           icon={icon}
           alt={alt}
-          className="basis-1/4"
+          className="basis-1/4 hidden sm:flex"
         />
-        <p className="flex gap-2.5 items-center basis-3/4">
-          <span className="text-xs font-semibold text-muted-foreground md:text-sm lg:text-xl">
-            366 results for the search of
-          </span>
-          <span className="text-xs font-semibold text-primary md:text-sm lg:text-xl">
-            luxury contemporary watch
-          </span>
-        </p>
+        <SearchResultsHeader count={filteredCount} query={query} />
       </div>
 
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard />
+        <CatalogCard filters={filters} />
       </div>
     </>
   );
