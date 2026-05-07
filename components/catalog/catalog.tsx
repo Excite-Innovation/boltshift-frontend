@@ -24,13 +24,13 @@ export function CatalogCard({ query, products: productsProp }: CatalogCardProps)
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] items-start">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] items-start justify-items-start">
           {products.map((p) => (
             <ProductCard
               key={p.id}
               variant="catalog"
               product={p}
-              className="h-full"
+              className="h-full max-w-48"
             />
           ))}
         </div>
