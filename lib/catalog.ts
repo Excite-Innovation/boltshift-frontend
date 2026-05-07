@@ -18,3 +18,10 @@ export function filterProducts(products: Product[], query?: string): Product[] {
       p.subcategory?.toLowerCase().includes(q),
   );
 }
+
+/**
+ * Formats a URL slug (e.g. "air-compressors") into a human-readable title ("Air Compressors")
+ */
+export function formatCategoryName(text: string): string {
+  return text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}

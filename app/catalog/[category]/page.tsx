@@ -2,7 +2,7 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
-import { filterProducts } from "@/lib/catalog";
+import { filterProducts, formatCategoryName } from "@/lib/catalog";
 import { GetProductItems } from "@/lib/product-items";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
@@ -13,20 +13,17 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
   searchParams: Promise<{ q?: string }>;
 }) {
-  const format = (text: string) =>
-    text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   const { category } = await params;
   const { q } = await searchParams;
   const query = q?.trim() ?? "";
 
-  const title = format(category);
+  const title = formatCategoryName(category);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
   const items = [
     { label: "Catalog", href: "/catalog" },
-    { label: format(category) },
+    { label: formatCategoryName(category) },
   ];
 
   // Filter by category first, then by search query within that category

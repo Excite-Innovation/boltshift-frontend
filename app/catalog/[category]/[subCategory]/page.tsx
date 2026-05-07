@@ -2,7 +2,7 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
-import { filterProducts } from "@/lib/catalog";
+import { filterProducts, formatCategoryName } from "@/lib/catalog";
 import { GetProductItems } from "@/lib/product-items";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
@@ -13,21 +13,18 @@ export default async function SubCategoryPage({
   params: Promise<{ category: string; subCategory: string }>;
   searchParams: Promise<{ q?: string }>;
 }) {
-  const format = (text: string) =>
-    text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   const { category, subCategory } = await params;
   const { q } = await searchParams;
   const query = q?.trim() ?? "";
 
-  const title = format(subCategory);
+  const title = formatCategoryName(subCategory);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
   const items = [
     { label: "Catalog", href: "/catalog" },
-    { label: format(category), href: `/catalog/${category}` },
-    { label: format(subCategory) },
+    { label: formatCategoryName(category), href: `/catalog/${category}` },
+    { label: formatCategoryName(subCategory) },
   ];
 
   // Filter by category + subcategory first, then by search query within that scope

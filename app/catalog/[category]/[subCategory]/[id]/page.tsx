@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ProductReviews } from "@/lib/reviews";
 import { SubmitReview } from "@/components/reviews/review-modal";
 import { PenLine } from "lucide-react";
+import { formatCategoryName } from "@/lib/catalog";
 
 const reviews = ProductReviews();
 
@@ -18,19 +19,16 @@ export default async function ProductDetails({
 }: {
   params: Promise<{ category: string; subCategory: string; id: string }>;
 }) {
-  const format = (text: string) =>
-    text.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   const { category, subCategory, id } = await params;
 
-  const title = format(category);
+  const title = formatCategoryName(category);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
   const items = [
     { label: "Catalog", href: "/catalog" },
-    { label: format(category), href: `/catalog/${category}` },
-    { label: format(subCategory), href: `/catalog/${category}/${subCategory}` },
+    { label: formatCategoryName(category), href: `/catalog/${category}` },
+    { label: formatCategoryName(subCategory), href: `/catalog/${category}/${subCategory}` },
     { label: id },
   ];
 
