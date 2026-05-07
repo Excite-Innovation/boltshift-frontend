@@ -98,10 +98,6 @@ export function SpecialOfferCard() {
                 </p>
               </div>
             </div>
-
-            <p className="text-xl flex gap-1">
-              Ksh.<span className="font-semibold">{totalPrice}</span>
-            </p>
           </div>
         </div>
 
@@ -233,7 +229,7 @@ export function SpecialOfferCard() {
                 />
               </div>
 
-              <p className="hidden min-[1160px]:flex text-xl gap-1">
+              <p className="text-xl flex gap-1">
                 Ksh.<span className="font-semibold">{totalPrice}</span>
               </p>
             </CardContent>
