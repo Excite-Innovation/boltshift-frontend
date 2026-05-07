@@ -39,9 +39,9 @@ export function ProductImageCarousel({
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pb-4">
+    <div className="flex max-h-[calc(100dvh-7rem)] flex-col gap-4 overflow-y-auto px-4 pb-4">
       {/* MAIN IMAGE */}
-      <div className="relative w-full h-[414px] border rounded-xl overflow-hidden">
+      <div className="relative aspect-4/3 w-full max-h-[min(60dvh,414px)] min-h-48 border rounded-xl overflow-hidden">
         <Image
           src={selectedImage}
           alt={productTitle}
@@ -61,7 +61,7 @@ export function ProductImageCarousel({
               <CarouselItem key={index} className="basis-auto">
                 <button
                   onClick={() => handleThumbnailClick(index)}
-                  className={`relative w-24 h-24 rounded-xl overflow-hidden border transition-colors ${active
+                  className={`relative h-20 w-20 rounded-xl overflow-hidden border transition-colors sm:h-24 sm:w-24 ${active
                       ? "border-primary"
                       : "border-muted opacity-70 hover:opacity-100"
                     }`}
