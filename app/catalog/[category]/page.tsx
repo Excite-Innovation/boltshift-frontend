@@ -2,7 +2,11 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
-import { filterProducts, formatCategoryName } from "@/lib/catalog";
+import {
+  filterCatalogProducts,
+  formatCategoryName,
+  type CatalogFilterParams,
+} from "@/lib/catalog";
 import { GetProductItems } from "@/lib/product-items";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
@@ -11,11 +15,11 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: Promise<{ category: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<CatalogFilterParams>;
 }) {
   const { category } = await params;
-  const { q } = await searchParams;
-  const query = q?.trim() ?? "";
+  const filters = await searchParams;
+  const query = filters.q?.trim() ?? "";
 
   const title = formatCategoryName(category);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
@@ -30,7 +34,7 @@ export default async function CategoryPage({
   const categoryProducts = GetProductItems().filter(
     (p) => p.category === category,
   );
-  const filteredCount = filterProducts(categoryProducts, query).length;
+  const filteredCount = filterCatalogProducts(categoryProducts, filters).length;
 
   return (
     <>
@@ -50,7 +54,7 @@ export default async function CategoryPage({
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard query={query} products={categoryProducts} />
+        <CatalogCard filters={filters} products={categoryProducts} />
       </div>
     </>
   );

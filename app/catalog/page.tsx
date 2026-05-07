@@ -3,25 +3,28 @@ import { FilterSidebar } from "@/components/catalog/filters";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
 import { GetProductItems } from "@/lib/product-items";
-import { filterProducts } from "@/lib/catalog";
+import {
+  filterCatalogProducts,
+  type CatalogFilterParams,
+} from "@/lib/catalog";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
 const items = [{ label: "Catalog" }];
 
 interface CatalogPageProps {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<CatalogFilterParams>;
 }
 
 export default async function Catalog({ searchParams }: CatalogPageProps) {
-  const { q } = await searchParams;
-  const query = q?.trim() ?? "";
+  const filters = await searchParams;
+  const query = filters.q?.trim() ?? "";
 
   const title = "Catalog";
   const icon = "/popular-categories-icons/Shopping-bags.svg";
   const alt = "Shopping bags icon";
 
   // Count matching products for the header
-  const filteredCount = filterProducts(GetProductItems(), query).length;
+  const filteredCount = filterCatalogProducts(GetProductItems(), filters).length;
 
   return (
     <>
@@ -41,7 +44,7 @@ export default async function Catalog({ searchParams }: CatalogPageProps) {
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard query={query} />
+        <CatalogCard filters={filters} />
       </div>
     </>
   );

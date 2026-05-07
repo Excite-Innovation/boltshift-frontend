@@ -1,18 +1,21 @@
 import { ProductCard } from "@/components/product-card/product-card";
 import { PaginationLinks } from "@/components/pagination/pagination";
 import { GetProductItems } from "@/lib/product-items";
-import { filterProducts } from "@/lib/catalog";
+import { filterCatalogProducts, type CatalogFilterParams } from "@/lib/catalog";
 
 import type { Product } from "@/types/type";
 
 interface CatalogCardProps {
-  query?: string;
+  filters?: CatalogFilterParams;
   /** Optional pre-filtered product list. Falls back to all products when omitted. */
   products?: Product[];
 }
 
-export function CatalogCard({ query, products: productsProp }: CatalogCardProps) {
-  const products = filterProducts(productsProp ?? GetProductItems(), query);
+export function CatalogCard({
+  filters = {},
+  products: productsProp,
+}: CatalogCardProps) {
+  const products = filterCatalogProducts(productsProp ?? GetProductItems(), filters);
 
   return (
     <main className="w-full flex flex-col gap-2 md:p-4">

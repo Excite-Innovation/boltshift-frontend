@@ -2,7 +2,11 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
-import { filterProducts, formatCategoryName } from "@/lib/catalog";
+import {
+  filterCatalogProducts,
+  formatCategoryName,
+  type CatalogFilterParams,
+} from "@/lib/catalog";
 import { GetProductItems } from "@/lib/product-items";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
 
@@ -11,11 +15,11 @@ export default async function SubCategoryPage({
   searchParams,
 }: {
   params: Promise<{ category: string; subCategory: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<CatalogFilterParams>;
 }) {
   const { category, subCategory } = await params;
-  const { q } = await searchParams;
-  const query = q?.trim() ?? "";
+  const filters = await searchParams;
+  const query = filters.q?.trim() ?? "";
 
   const title = formatCategoryName(subCategory);
   const icon = "/popular-categories-icons/Shopping-bags.svg";
@@ -31,7 +35,7 @@ export default async function SubCategoryPage({
   const scopedProducts = GetProductItems().filter(
     (p) => p.category === category && p.subcategory === subCategory,
   );
-  const filteredCount = filterProducts(scopedProducts, query).length;
+  const filteredCount = filterCatalogProducts(scopedProducts, filters).length;
 
   return (
     <>
@@ -51,7 +55,7 @@ export default async function SubCategoryPage({
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard query={query} products={scopedProducts} />
+        <CatalogCard filters={filters} products={scopedProducts} />
       </div>
     </>
   );
