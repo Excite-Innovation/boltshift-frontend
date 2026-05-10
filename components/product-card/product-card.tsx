@@ -175,7 +175,7 @@ export function HorizontalProfile({
             {product.name}
           </p>
 
-          <div className="flex flex-wrap items-start gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Badge
               variant="outline"
               className="rounded-md px-2 py-0.75 text-xs font-medium text-muted-foreground"

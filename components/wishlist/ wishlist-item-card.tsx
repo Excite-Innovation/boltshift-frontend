@@ -36,11 +36,11 @@ export function EmptyWishlist() {
       </CardHeader>
 
       <CardFooter className="w-full flex gap-3 justify-around">
-        <Button className="text-base font-semibold">
+        <Button size="icon" className="text-base font-semibold">
           <ArrowLeft /> Browse Our Catalog
         </Button>
 
-        <Button className="text-base font-semibold">
+        <Button size="icon" className="text-base font-semibold">
           <ShoppingCart /> Go To Your Cart
         </Button>
       </CardFooter>
