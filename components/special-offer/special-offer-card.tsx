@@ -6,7 +6,6 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Rating, RatingItem } from "@/components/ui/rating";
 import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
 import { GetProductItems } from "@/lib/product-items";
