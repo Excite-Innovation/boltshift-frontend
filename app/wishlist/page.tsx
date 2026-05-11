@@ -33,6 +33,11 @@ export default function WishlistPage() {
     dispatchWishlist({ type: "clear" });
   };
 
+  const addItemToCart = (productId: number, quantity: number) => {
+    setCart((current) => addWishlistToCart(current, [{ productId, quantity }]));
+    dispatchWishlist({ type: "remove", productId });
+  };
+
   return (
     <div className="overflow-x-hidden overflow-y-auto">
       <div>
@@ -93,13 +98,14 @@ export default function WishlistPage() {
                         productId: product.id,
                       })
                     }
+                    onAddToCart={() => addItemToCart(product.id, quantity)}
                   />
                 ))}
               </div>
 
               <div className="w-full py-4 grid justify-items-stretch">
                 <Button
-                  className="w-full max-w-88 justify-self-end px-4.5 py-3"
+                  className="w-full justify-self-end px-4.5 py-3 sm:max-w-88"
                   onClick={addAllToCart}
                 >
                   <ShoppingCart className="size-4" />

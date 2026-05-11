@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ type WishlistItemProps = {
   onRemove: () => void;
   onDecrement: () => void;
   onIncrement: () => void;
+  onAddToCart: () => void;
 };
 
 export function WishlistItem({
@@ -21,6 +22,7 @@ export function WishlistItem({
   onRemove,
   onDecrement,
   onIncrement,
+  onAddToCart,
 }: WishlistItemProps) {
   const label = "Designer Edition";
   const colorName = "Sunset Golden Yellow";
@@ -113,6 +115,16 @@ export function WishlistItem({
             <Plus className="size-4" />
           </Button>
         </ButtonGroup>
+
+        <Button
+          type="button"
+          size="icon"
+          aria-label={`Add ${product.name} to cart`}
+          onClick={onAddToCart}
+          className="rounded-md hover:cursor-pointer"
+        >
+          <ShoppingCart className="size-4" aria-hidden="true" />
+        </Button>
       </div>
     </div>
   );
