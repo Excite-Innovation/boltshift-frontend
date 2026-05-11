@@ -16,7 +16,7 @@ export function EmptyWishlist() {
     "An elegant 3D illustration featuring a circular display podium centered between two large, interlocking heart outlines. The scene is decorated with gift boxes and shopping bags in shades of deep pink and purple, with small pink hearts floating in the background.";
 
   return (
-    <Card className="w-full items-center py-20 flex flex-col gap-10 text-center shadow-none">
+    <Card className="w-full items-center py-20 flex flex-col gap-10 text-center border-0 shadow-none">
       <div className="flex justify-center">
         <Image
           src={emptyWishlist}
@@ -26,11 +26,11 @@ export function EmptyWishlist() {
         />
       </div>
 
-      <CardHeader className="w-full flex flex-col gap-2">
+      <CardHeader className="flex w-full flex-col items-center gap-2 text-center">
         <CardTitle className="text-3xl font-semibold text-primary">
           Your Wishlist Awaits
         </CardTitle>
-        <CardDescription className="text-sm">
+        <CardDescription className="max-w-md text-sm">
           Add items to your wishlist as you browse and they will magically
           appear here.
         </CardDescription>
