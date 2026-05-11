@@ -4,6 +4,7 @@ import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Product } from "@/types/type";
 import { EditNum } from "@/lib/utils";
 
@@ -27,10 +28,14 @@ export function WishlistItem({
   const label = "Designer Edition";
   const colorName = "Sunset Golden Yellow";
 
+  const title = "Remove Item from Wishlist";
+  const description = "Are you sure you want to delete this item from wishlist? This action cannot be undone.";
+  const actionLabel = "Remove Item";
+
   return (
     <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
       <div className="flex max-w-140 items-center gap-3">
-        <div className="relative size-24 shrink-0 overflow-hidden rounded-md border border-border bg-secondary md:size-24">
+        <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-border bg-secondary md:size-24">
           <Image
             src={product.image}
             alt={product.name}
@@ -66,16 +71,23 @@ export function WishlistItem({
 
       {/* Items price and quantity */}
       <div className="w-full flex items-center gap-4 md:max-w-93.75">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          aria-label="Remove item"
-          onClick={onRemove}
-          className="justify-self-start text-muted-foreground hover:text-destructive md:justify-self-center"
-        >
-          <Trash2 className="size-4" />
-        </Button>
+        <DeleteModal
+          title={title}
+          description={description}
+          actionLabel={actionLabel}
+          onConfirm={onRemove}
+          trigger={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label="Remove item"
+              className="justify-self-start text-muted-foreground hover:text-destructive md:justify-self-center"
+            >
+              <Trash2 className="size-4" />
+            </Button>
+          }
+        />
 
         <div className="flex items-center gap-1 text-sm md:justify-self-start">
           <span className="text-muted-foreground">Kshs.</span>
