@@ -11,47 +11,33 @@ import { EmptyWishlist } from "@/components/wishlist/ wishlist-item-card";
 import { WishlistItem } from "@/components/wishlist/wishlist-item-list";
 import { GetProductItems } from "@/lib/product-items";
 import { BackButton } from "@/components/back/back";
-
-type WishlistEntry = {
-  productId: number;
-  quantity: number;
-};
-
-const initialWishlist: WishlistEntry[] = [
-  { productId: 5, quantity: 1 },
-  { productId: 6, quantity: 1 },
-  { productId: 7, quantity: 1 },
-  { productId: 8, quantity: 1 },
-];
+import {
+  addWishlistToCart,
+  getWishlistItems,
+  initialWishlist,
+  removeWishlistItem,
+  updateWishlistQuantity,
+} from "@/lib/wishlist";
 
 export default function WishlistPage() {
   const products = useMemo(() => GetProductItems(), []);
   const [wishlist, setWishlist] = useState(initialWishlist);
+  const [, setCart] = useState<typeof initialWishlist>([]);
 
-  const wishlistItems = wishlist
-    .map((entry) => ({
-      ...entry,
-      product: products.find((product) => product.id === entry.productId),
-    }))
-    .filter((entry) => entry.product);
+  const wishlistItems = getWishlistItems(wishlist, products);
 
   const updateQuantity = (productId: number, change: number) => {
     setWishlist((current) =>
-      current.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item,
-      ),
+      updateWishlistQuantity(current, productId, change),
     );
   };
 
   const removeItem = (productId: number) => {
-    setWishlist((current) =>
-      current.filter((item) => item.productId !== productId),
-    );
+    setWishlist((current) => removeWishlistItem(current, productId));
   };
 
-  const clearWishlist = () => {
+  const addAllToCart = () => {
+    setCart((current) => addWishlistToCart(current, wishlist));
     setWishlist([]);
   };
 
@@ -85,7 +71,7 @@ export default function WishlistPage() {
                 <span>Item</span>
 
                 <div className="min-w-93.75 flex gap-4 items-center">
-                  <span aria-hidden="true"  className="w-10 h-10"/>
+                  <span aria-hidden="true" className="w-10 h-10" />
                   <span className="w-24">Subtotal</span>
                   <span className="w-32">Quantity</span>
                 </div>
@@ -94,12 +80,12 @@ export default function WishlistPage() {
               <div>
                 {wishlistItems.map(({ product, quantity }) => (
                   <WishlistItem
-                    key={product!.id}
-                    product={product!}
+                    key={product.id}
+                    product={product}
                     quantity={quantity}
-                    onRemove={() => removeItem(product!.id)}
-                    onDecrement={() => updateQuantity(product!.id, -1)}
-                    onIncrement={() => updateQuantity(product!.id, 1)}
+                    onRemove={() => removeItem(product.id)}
+                    onDecrement={() => updateQuantity(product.id, -1)}
+                    onIncrement={() => updateQuantity(product.id, 1)}
                   />
                 ))}
               </div>
@@ -107,7 +93,7 @@ export default function WishlistPage() {
               <div className="w-full py-4 grid justify-items-stretch">
                 <Button
                   className="w-full max-w-88 justify-self-end px-4.5 py-3"
-                  onClick={clearWishlist}
+                  onClick={addAllToCart}
                 >
                   <ShoppingCart className="size-4" />
                   Add All To Cart

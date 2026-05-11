@@ -10,9 +10,9 @@ import { EditNum } from "@/lib/utils";
 type WishlistItemProps = {
   product: Product;
   quantity: number;
-  onRemove?: () => void;
-  onDecrement?: () => void;
-  onIncrement?: () => void;
+  onRemove: () => void;
+  onDecrement: () => void;
+  onIncrement: () => void;
 };
 
 export function WishlistItem({
@@ -92,6 +92,7 @@ export function WishlistItem({
             size="icon"
             aria-label="Decrease quantity"
             onClick={onDecrement}
+            disabled={quantity <= 1}
             className="h-full flex-1 rounded-none text-muted-foreground"
           >
             <Minus className="size-4" />
