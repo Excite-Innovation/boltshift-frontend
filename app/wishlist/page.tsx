@@ -81,13 +81,13 @@ export default function WishlistPage() {
         <div className="flex flex-col gap-10 pb-12">
           {wishlistItems.length > 0 ? (
             <div className="grid gap-2">
-              <div className="hidden border-b py-1 text-lg font-bold md:flex md:justify-between">
+              <div className="hidden border-b py-1 text-lg font-bold md:flex md:justify-between md:items-center">
                 <span>Item</span>
 
-                <div className="min-w-93.75 flex gap-4">
+                <div className="min-w-93.75 flex gap-4 items-center">
                   <span aria-hidden="true"  className="w-10 h-10"/>
-                  <span>Subtotal</span>
-                  <span>Quantity</span>
+                  <span className="w-24">Subtotal</span>
+                  <span className="w-32">Quantity</span>
                 </div>
               </div>
 
