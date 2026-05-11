@@ -36,7 +36,7 @@ export function WishlistItem({
             sizes="96px"
             className="object-cover"
           />
-        </div>
+        </div>  
 
         <div className="min-w-0 space-y-2">
           <p className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">

@@ -1,9 +1,10 @@
 import { AvatarProfile } from "@/components/avatar/avatar";
 import { ShoppingCart, Heart, Bell } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const actions = [
-  { id: "wishlist", icon: Heart },
+  { id: "wishlist", icon: Heart, href: "/wishlist" },
   { id: "cart", icon: ShoppingCart },
   { id: "notifications", icon: Bell },
 ];
@@ -14,7 +15,22 @@ export function Profile() {
       {actions.map((ActionIcon) => {
         const Icon = ActionIcon.icon;
 
-        return (
+        const content = (
+          <Icon className="size-6 stroke-[1.5]" aria-hidden="true" />
+        );
+
+        return ActionIcon.href ? (
+          <Button
+            key={ActionIcon.id}
+            variant="ghost"
+            size="icon"
+            className="w-10 h-10 rounded-full"
+            aria-label={ActionIcon.id}
+            asChild
+          >
+            <Link href={ActionIcon.href}>{content}</Link>
+          </Button>
+        ) : (
           <Button
             key={ActionIcon.id}
             variant="ghost"
@@ -22,7 +38,7 @@ export function Profile() {
             className="w-10 h-10 rounded-full"
             aria-label={ActionIcon.id}
           >
-            <Icon className="size-6 stroke-[1.5]" aria-hidden="true" />
+            {content}
           </Button>
         );
       })}

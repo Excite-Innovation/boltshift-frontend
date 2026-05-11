@@ -103,7 +103,7 @@ export default function WishlistPage() {
                 ))}
               </div>
 
-              <div className="w-full py-4">
+              <div className="w-full py-4 grid justify-items-stretch">
                 <Button
                   className="justify-self-end px-4.5 py-3 md:w-80"
                   onClick={clearWishlist}
