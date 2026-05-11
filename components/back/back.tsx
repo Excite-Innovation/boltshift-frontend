@@ -8,10 +8,10 @@ export function BackButton() {
     <Button
       variant="ghost"
       size="sm"
-      className="h-auto px-0 text-xs font-normal text-muted-foreground hover:bg-transparent hover:text-foreground"
       asChild
+      className="h-auto px-0 text-xs font-normal text-muted-foreground hover:bg-transparent hover:text-foreground has-[>svg]:px-0"
     >
-      <Link href="/catalog">
+      <Link href="/catalog" className="justify-start">
         <ArrowLeft className="size-4" />
         Continue Shopping
       </Link>

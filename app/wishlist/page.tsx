@@ -56,7 +56,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-x-hidden overflow-y-auto">
       <div>
         <div className="hidden md:block">
           <Navbar />
@@ -67,7 +67,7 @@ export default function WishlistPage() {
       </div>
 
       <main className="mx-auto w-full">
-        <div className="p-4">
+        <div className="py-4">
           <BackButton />
         </div>
 
@@ -75,16 +75,17 @@ export default function WishlistPage() {
           title="Wishlist"
           icon="/section-title-icons/HeartWithRibbon.svg"
           alt="Heart with ribbon icon"
+          className="py-4"
         />
 
         <div className="flex flex-col gap-10 pb-12">
           {wishlistItems.length > 0 ? (
             <div className="grid gap-2">
-              <div className="hidden border-b py-1 text-lg font-bold md:flex md:justify-between]">
+              <div className="hidden border-b py-1 text-lg font-bold md:flex md:justify-between">
                 <span>Item</span>
 
-                <div className="flex gap-4">
-                  <span aria-hidden="true" className="w-10 h-10" />
+                <div className="min-w-93.75 flex gap-4">
+                  <span aria-hidden="true"  className="w-10 h-10"/>
                   <span>Subtotal</span>
                   <span>Quantity</span>
                 </div>
