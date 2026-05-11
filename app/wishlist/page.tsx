@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useReducer, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 
 import { Footer } from "@/components/footer/footer-section";
@@ -15,30 +15,22 @@ import {
   addWishlistToCart,
   getWishlistItems,
   initialWishlist,
-  removeWishlistItem,
-  updateWishlistQuantity,
+  wishlistReducer,
 } from "@/lib/wishlist";
 
 export default function WishlistPage() {
   const products = useMemo(() => GetProductItems(), []);
-  const [wishlist, setWishlist] = useState(initialWishlist);
+  const [wishlist, dispatchWishlist] = useReducer(
+    wishlistReducer,
+    initialWishlist,
+  );
   const [, setCart] = useState<typeof initialWishlist>([]);
 
   const wishlistItems = getWishlistItems(wishlist, products);
 
-  const updateQuantity = (productId: number, change: number) => {
-    setWishlist((current) =>
-      updateWishlistQuantity(current, productId, change),
-    );
-  };
-
-  const removeItem = (productId: number) => {
-    setWishlist((current) => removeWishlistItem(current, productId));
-  };
-
   const addAllToCart = () => {
     setCart((current) => addWishlistToCart(current, wishlist));
-    setWishlist([]);
+    dispatchWishlist({ type: "clear" });
   };
 
   return (
@@ -83,9 +75,24 @@ export default function WishlistPage() {
                     key={product.id}
                     product={product}
                     quantity={quantity}
-                    onRemove={() => removeItem(product.id)}
-                    onDecrement={() => updateQuantity(product.id, -1)}
-                    onIncrement={() => updateQuantity(product.id, 1)}
+                    onRemove={() =>
+                      dispatchWishlist({
+                        type: "remove",
+                        productId: product.id,
+                      })
+                    }
+                    onDecrement={() =>
+                      dispatchWishlist({
+                        type: "decrement",
+                        productId: product.id,
+                      })
+                    }
+                    onIncrement={() =>
+                      dispatchWishlist({
+                        type: "increment",
+                        productId: product.id,
+                      })
+                    }
                   />
                 ))}
               </div>

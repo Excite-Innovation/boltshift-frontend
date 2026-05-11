@@ -7,11 +7,24 @@ export type WishlistEntry = {
 
 export type CartEntry = WishlistEntry;
 
+export type WishlistAction =
+  | {
+      type: "increment";
+      productId: number;
+    }
+  | {
+      type: "decrement";
+      productId: number;
+    }
+  | {
+      type: "remove";
+      productId: number;
+    }
+  | {
+      type: "clear";
+    };
+
 export const initialWishlist: WishlistEntry[] = [
-  { productId: 5, quantity: 1 },
-  { productId: 6, quantity: 1 },
-  { productId: 7, quantity: 1 },
-  { productId: 8, quantity: 1 },
 ];
 
 export function getWishlistItems(
@@ -42,6 +55,24 @@ export function removeWishlistItem(
   productId: number,
 ) {
   return wishlist.filter((item) => item.productId !== productId);
+}
+
+export function wishlistReducer(
+  wishlist: WishlistEntry[],
+  action: WishlistAction,
+) {
+  switch (action.type) {
+    case "increment":
+      return updateWishlistQuantity(wishlist, action.productId, 1);
+    case "decrement":
+      return updateWishlistQuantity(wishlist, action.productId, -1);
+    case "remove":
+      return removeWishlistItem(wishlist, action.productId);
+    case "clear":
+      return [];
+    default:
+      return wishlist;
+  }
 }
 
 export function addWishlistToCart(
