@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Trash2 } from "lucide-react";
+import Image from "next/image";
 
 import {
   Dialog,
@@ -36,12 +37,24 @@ export function DeleteModal({
 
       <DialogContent className="w-[calc(100vw-1rem)] max-w-136 flex flex-col overflow-hidden rounded-xl border-0 p-0 gap-0">
         {/* Top section */}
-        <div className="flex pt-6 px-6 gap-4">
-          <div className="flex size-12 items-center justify-center rounded-full bg-primary/20 text-primary shrink-0">
-            <Trash2 className="size-6" aria-hidden="true" />
+        <div className="relative not-only:flex pt-6 px-6 gap-4">
+          <Image
+            src="/alert/rings.png"
+            alt="svg rings displaying a ripple effect around the trash icon"
+            width={336}
+            height={336}
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 z-0 h-auto w-55 max-w-none select-none"
+            priority
+          />
+
+          <div className="flex size-12 shrink-0 items-center justify-center">
+            <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-primary/20 text-primary shrink-0">
+              <Trash2 className="size-6" aria-hidden="true" />
+            </div>
           </div>
 
-          <DialogHeader className="gap-1 text-left">
+          <DialogHeader className="gap-1 text-left z-10">
             <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
             <DialogDescription className="max-w-108 text-sm">
               {description}
@@ -55,7 +68,7 @@ export function DeleteModal({
             <Button
               type="button"
               variant="destructive"
-              className="h-12 rounded-lg py-2.5 px-4 border-2 text-base font-semibold cursor-pointer"
+              className="h-12 rounded-lg py-2.5 px-4 border-2 text-base font-semibold cursor-pointer z-10"
               onClick={onConfirm}
             >
               {actionLabel}
@@ -65,10 +78,4 @@ export function DeleteModal({
       </DialogContent>
     </Dialog>
   );
-}
-
-{
-  /* <div className="pointer-events-none absolute -left-16 -top-20 size-56 rounded-full border border-border/80" />
-        <div className="pointer-events-none absolute -left-10 -top-14 size-44 rounded-full border border-border/70" />
-        <div className="pointer-events-none absolute left-0 top-0 size-28 rounded-full border border-border/70" /> */
 }
