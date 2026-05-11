@@ -26,7 +26,7 @@ export function WishlistItem({
   const colorName = "Sunset Golden Yellow";
 
   return (
-    <div className="flex flex-col w-full gap-4 border-b py-4 justify-between md:flex-row">
+    <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
       <div className="flex max-w-140 items-center gap-3">
         <div className="relative size-24 shrink-0 overflow-hidden rounded-md border border-border bg-secondary md:size-24">
           <Image
@@ -63,7 +63,7 @@ export function WishlistItem({
       </div>
 
       {/* Items price and quantity */}
-      <div className="w-full flex items-center gap-4 md:min-w-93.75">
+      <div className="w-full flex items-center gap-4 md:max-w-93.75">
         <Button
           type="button"
           variant="ghost"
