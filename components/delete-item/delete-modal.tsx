@@ -49,7 +49,7 @@ export function DeleteModal({
           />
 
           <div className="flex size-12 shrink-0 items-center justify-center">
-            <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-primary/20 text-primary shrink-0">
+            <div className="relative z-10 flex size-12 items-center justify-center border-2 rounded-full bg-primary/10 text-primary shrink-0">
               <Trash2 className="size-6" aria-hidden="true" />
             </div>
           </div>
