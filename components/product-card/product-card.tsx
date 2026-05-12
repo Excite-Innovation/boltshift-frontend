@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -129,6 +130,71 @@ function HorizontalDefaultContent({
         Add to Cart
       </Button>
     </>
+  );
+}
+
+type HorizontalProfileProps = {
+  product: Pick<Product, "image" | "name">;
+  label?: string;
+  colorName?: string;
+  colorValue?: string;
+  className?: string;
+  imageSizes?: string;
+};
+
+// Cards used in the wishlist and cart pages
+export function HorizontalProfile({
+  product,
+  label = "",
+  colorName = "",
+  colorValue = "",
+  className,
+  imageSizes = "96px",
+}: HorizontalProfileProps) {
+  return (
+    <Card
+      className={cn(
+        "w-full max-w-140 border p-0 shadow-none",
+        className,
+      )}
+    >
+      <CardContent className="flex items-center gap-3">
+        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-secondary">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes={imageSizes}
+            className="object-cover"
+          />
+        </div>
+
+        {/* Right content */}
+        <div className="grid flex-1 gap-2">
+          <p className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">
+            {product.name}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge
+              variant="outline"
+              className="rounded-md px-2 py-0.75 text-xs font-medium text-muted-foreground"
+            >
+              {label}
+            </Badge>
+
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <span
+                aria-hidden="true"
+                className="size-5 shrink-0 rounded-full border border-border"
+                style={{ backgroundColor: colorValue }}
+              />
+              <span className="truncate">{colorName}</span>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
