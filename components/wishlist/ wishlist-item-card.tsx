@@ -37,7 +37,7 @@ export function EmptyWishlist() {
       </CardHeader>
 
       <CardFooter className="w-full flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <Button className="text-base font-semibold" asChild>
+        <Button variant="outline" className="text-base font-semibold" asChild>
           <Link href="/catalog">
             <ArrowLeft /> Browse Our Catalog
           </Link>

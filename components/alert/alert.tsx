@@ -123,7 +123,7 @@ function AlertToast({
   return (
     <div
       className={cn(
-        "flex w-[calc(100vw-2rem)] max-w-100 items-center gap-3 rounded-xl border bg-background px-4 py-3 shadow-sm",
+        "relative flex w-[calc(100vw-2rem)] max-w-100 items-start gap-3 rounded-xl border bg-background pl-4 py-3 shadow-sm",
         config.borderClassName,
         className,
       )}
@@ -133,10 +133,10 @@ function AlertToast({
         iconSrc={iconSrc}
         iconAlt={iconAlt}
         variant={variant}
-        className={iconClassName}
+        className={cn("absolute top-2 left-2 z-0", iconClassName)}
       />
 
-      <div className="min-w-0 flex-1">
+      <div className="relative z-10 min-w-0 flex-1 pl-14">
         <p className="text-lg font-bold leading-6 text-foreground">
           {title ?? config.defaultTitle}
         </p>
@@ -149,7 +149,7 @@ function AlertToast({
         type="button"
         aria-label="Dismiss notification"
         onClick={() => toast.dismiss(id)}
-        className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="relative z-10 flex size-9 pr-2 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <X className="size-6" aria-hidden="true" />
       </button>
