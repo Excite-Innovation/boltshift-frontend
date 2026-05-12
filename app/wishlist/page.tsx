@@ -17,6 +17,10 @@ import {
   initialWishlist,
   wishlistReducer,
 } from "@/lib/wishlist";
+import {
+  showSonnerMessage,
+  type SonnerMessageProps,
+} from "@/components/alert/alert";
 
 export default function WishlistPage() {
   const products = useMemo(() => GetProductItems(), []);
@@ -36,6 +40,22 @@ export default function WishlistPage() {
   const addItemToCart = (productId: number, quantity: number) => {
     setCart((current) => addWishlistToCart(current, [{ productId, quantity }]));
     dispatchWishlist({ type: "remove", productId });
+  };
+
+  // Sonnar message when all wishlist items are added to cart
+  const notification: SonnerMessageProps = {
+    variant: "success",
+    title: "All Items Added Successfully",
+    description: "Checkout the cart and proceed to complete your order.",
+    iconSrc: "/sonnar/Green-Featured-outline.svg",
+  };
+
+  const handleConfirm = () => {
+    addAllToCart();
+
+    if (notification) {
+      showSonnerMessage(notification);
+    }
   };
 
   return (
@@ -106,7 +126,7 @@ export default function WishlistPage() {
               <div className="w-full py-4 grid justify-items-stretch">
                 <Button
                   className="w-full justify-self-end px-4.5 py-3 sm:max-w-88"
-                  onClick={addAllToCart}
+                  onClick={handleConfirm}
                 >
                   <ShoppingCart className="size-4" />
                   Add All To Cart

@@ -7,6 +7,10 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Product } from "@/types/type";
 import { EditNum } from "@/lib/utils";
+import {
+  showSonnerMessage,
+  type SonnerMessageProps,
+} from "@/components/alert/alert";
 
 type WishlistItemProps = {
   product: Product;
@@ -29,8 +33,25 @@ export function WishlistItem({
   const colorName = "Sunset Golden Yellow";
 
   const title = "Remove Item from Wishlist";
-  const description = "Are you sure you want to delete this item from wishlist? This action cannot be undone.";
+  const description =
+    "Are you sure you want to delete this item from wishlist? This action cannot be undone.";
   const actionLabel = "Remove Item";
+
+  // Sonnar message
+  const notification: SonnerMessageProps = {
+    variant: "success",
+    title: "Item Added to Cart",
+    description: "Checkout the cart and proceed to complete your order.",
+    iconSrc: "/sonnar/Green-Featured-outline.svg",
+  };
+
+  const handleConfirm = () => {
+    onAddToCart();
+
+    if (notification) {
+      showSonnerMessage(notification);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
@@ -132,7 +153,7 @@ export function WishlistItem({
           type="button"
           size="icon"
           aria-label={`Add ${product.name} to cart`}
-          onClick={onAddToCart}
+          onClick={handleConfirm}
           className="rounded-md hover:cursor-pointer"
         >
           <ShoppingCart className="size-4" aria-hidden="true" />
