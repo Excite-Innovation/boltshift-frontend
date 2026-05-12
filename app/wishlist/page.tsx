@@ -123,7 +123,7 @@ export default function WishlistPage() {
                 ))}
               </div>
 
-              <div className="w-full py-4 grid justify-items-stretch">
+              <div className="w-full grid justify-items-stretch sm:py-4">
                 <Button
                   className="w-full justify-self-end px-4.5 py-3 sm:max-w-88"
                   onClick={handleConfirm}

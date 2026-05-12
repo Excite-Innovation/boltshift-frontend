@@ -91,7 +91,7 @@ export function WishlistItem({
       </div>
 
       {/* Items price and quantity */}
-      <div className="w-full flex items-center gap-4 md:max-w-93.75">
+      <div className="flex w-full items-center justify-between md:gap-4 md:max-w-93.75 md:justify-start">
         <DeleteModal
           title={title}
           description={description}
