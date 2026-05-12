@@ -27,13 +27,13 @@ export function CatalogCard({
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(160px,1fr))] items-start justify-items-start">
+        <div className="grid grid-cols-2 justify-start gap-4 sm:grid-cols-[repeat(auto-fit,minmax(min(100%,12rem),12rem))] items-start">
           {products.map((p) => (
             <ProductCard
               key={p.id}
               variant="catalog"
               product={p}
-              className="h-full max-w-48"
+              className="h-full w-full"
             />
           ))}
         </div>
