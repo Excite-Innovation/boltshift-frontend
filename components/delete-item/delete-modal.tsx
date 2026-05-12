@@ -15,6 +15,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  showSonnerMessage,
+  type SonnerMessageProps,
+} from "@/components/alert/alert";
 
 type DeleteModalProps = {
   trigger: ReactNode;
@@ -22,6 +26,7 @@ type DeleteModalProps = {
   title?: string;
   description?: string;
   actionLabel?: string;
+  notification?: SonnerMessageProps | false;
 };
 
 export function DeleteModal({
@@ -30,7 +35,21 @@ export function DeleteModal({
   title = "Remove Item",
   description = "Are you sure you want to delete this item? This action cannot be undone.",
   actionLabel = "Remove Item",
+  notification = {
+    variant: "delete",
+    title: "Item Removed Successfully",
+    description: "The item has been removed from wishlist.",
+    iconSrc: "/sonnar/Red-Featured-outline.svg",
+  },
 }: DeleteModalProps) {
+  const handleConfirm = () => {
+    onConfirm();
+
+    if (notification) {
+      showSonnerMessage(notification);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -39,7 +58,7 @@ export function DeleteModal({
         {/* Top section */}
         <div className="relative not-only:flex pt-6 px-6 gap-4">
           <Image
-            src="/alert/rings.png"
+            src="/sonnar/rings.svg"
             alt="svg rings displaying a ripple effect around the trash icon"
             width={336}
             height={336}
@@ -69,7 +88,7 @@ export function DeleteModal({
               type="button"
               variant="destructive"
               className="h-12 rounded-lg py-2.5 px-4 border-2 text-base font-semibold cursor-pointer z-10"
-              onClick={onConfirm}
+              onClick={handleConfirm}
             >
               {actionLabel}
             </Button>
