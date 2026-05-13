@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 
 import { Footer } from "@/components/footer/footer-section";
@@ -14,7 +14,8 @@ import { BackButton } from "@/components/back/back";
 import {
   addWishlistToCart,
   getWishlistItems,
-  initialWishlist,
+  readStoredWishlist,
+  writeStoredWishlist,
   wishlistReducer,
 } from "@/lib/wishlist";
 import {
@@ -26,9 +27,14 @@ export default function WishlistPage() {
   const products = useMemo(() => GetProductItems(), []);
   const [wishlist, dispatchWishlist] = useReducer(
     wishlistReducer,
-    initialWishlist,
+    undefined,
+    () => readStoredWishlist(),
   );
-  const [, setCart] = useState<typeof initialWishlist>([]);
+  const [, setCart] = useState<typeof wishlist>([]);
+
+  useEffect(() => {
+    writeStoredWishlist(wishlist);
+  }, [wishlist]);
 
   const wishlistItems = getWishlistItems(wishlist, products);
 
