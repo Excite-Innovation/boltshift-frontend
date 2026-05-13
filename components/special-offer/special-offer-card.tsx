@@ -117,7 +117,7 @@ export function SpecialOfferCard() {
           </div>
 
           <div
-            className="p-1 flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide 
+            className="p-1 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide 
                  md:max-h-157.5 md:flex-col md:overflow-y-auto
                  lg:max-h-221.5 xl:max-h-143.5
               "

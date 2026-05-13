@@ -76,7 +76,7 @@ export function ProductImageCarousel({
                       alt={`${productTitle}-${index}`}
                       fill
                       sizes="(min-width: 640px) 96px, 80px"
-                      className="object-cover"
+                      className="object-cover object-left"
                     />
                   </button>
                 </CarouselItem>
