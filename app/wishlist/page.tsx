@@ -65,7 +65,7 @@ export default function WishlistPage() {
           <Navbar />
         </div>
         <div className="block md:hidden">
-          <NavbarMobile />
+          <NavbarMobile showFilterButton={false} />
         </div>
       </div>
 
