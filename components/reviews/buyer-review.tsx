@@ -72,7 +72,7 @@ export function BuyerReviewCard({ review }: ReviewCardProps) {
 
         {/* Edited review badge */}
         {review.isEdited && (
-          <Badge variant="outline" className="py-1 px-2.5 rounded-(--radius)">
+          <Badge variant="outline" className="py-1 px-2.5 rounded-lg">
             <Dot data-icon="inline-start" className="text-primary w-6 h-6" />
             (Edited) Review
           </Badge>

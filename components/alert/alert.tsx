@@ -137,10 +137,10 @@ function AlertToast({
       />
 
       <div className="relative z-10 min-w-0 flex-1 pl-14">
-        <p className="text-lg font-bold leading-6 text-foreground">
+        <p className="text-sm font-bold leading-6 text-foreground">
           {title ?? config.defaultTitle}
         </p>
-        <p className="mt-1 text-base leading-6 text-muted-foreground">
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
           {description ?? config.defaultDescription}
         </p>
       </div>
