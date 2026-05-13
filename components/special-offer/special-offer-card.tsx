@@ -265,13 +265,12 @@ export function SpecialOfferCard() {
 
               <Button
                 variant="outline"
-                className="w-full font-semibold text-base"
               >
                 <ShoppingCart className="text-muted-foreground" />
                 Add to Cart
               </Button>
 
-              <Button className="w-full col-span-2 font-semibold text-base py-3">
+              <Button className="w-full col-span-2">
                 Buy Now
               </Button>
             </CardFooter>
