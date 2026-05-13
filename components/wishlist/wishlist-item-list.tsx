@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
+import { ModalWrapper } from "@/components/product-modal/modal-wraper";
 import { Product } from "@/types/type";
 import { EditNum } from "@/lib/utils";
 import {
@@ -57,13 +58,20 @@ export function WishlistItem({
     <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
       <div className="flex max-w-140 items-center gap-3">
         <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-border bg-secondary md:size-24">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="96px"
-            className="object-cover"
-          />
+          <ModalWrapper
+            productTitle={product.name}
+            vendorName={product.vendor}
+            rating={product.ratings}
+            productItems={[]}
+          >
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="96px"
+              className="object-cover"
+            />
+          </ModalWrapper>
         </div>
 
         <div className="min-w-0 space-y-2">

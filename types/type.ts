@@ -36,6 +36,8 @@ type Product = {
   category: Category;
   subcategory: Subcategory;
 
+  vendor: string;
+
   variants: Variant[];
 };
 

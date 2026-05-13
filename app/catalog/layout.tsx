@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
 
-  title: "Boltshift Product Catalog",
+  title: "Product Catalog",
 
   description:
     "Browse our catalog of products on Boltshift. Discover electronics, fashion, accessories, and more at great prices.",

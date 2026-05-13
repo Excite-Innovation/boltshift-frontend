@@ -14,6 +14,7 @@ export function GetProductItems(): Product[] {
       reviews: 6400,
       category: "accessories",
       subcategory: "watches",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "black", sizes: ["Standard"] },
         { color: "silver", sizes: ["Standard"] },
@@ -31,6 +32,7 @@ export function GetProductItems(): Product[] {
       reviews: 32000,
       category: "mens-fashion",
       subcategory: "mens-shirts",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "navy", sizes: ["S", "M", "L", "XL"] },
         { color: "black", sizes: ["M", "L", "XL"] },
@@ -49,6 +51,7 @@ export function GetProductItems(): Product[] {
       reviews: 43000,
       category: "womens-fashion",
       subcategory: "womens-shoes",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "red", sizes: ["36", "37", "38", "39", "40"] },
         { color: "pink", sizes: ["37", "38", "39"] },
@@ -66,6 +69,7 @@ export function GetProductItems(): Product[] {
       reviews: 128400,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["Standard"] },
         { color: "beige", sizes: ["Standard"] },
@@ -83,6 +87,7 @@ export function GetProductItems(): Product[] {
       reviews: 12000,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "teal", sizes: ["2-Seater", "3-Seater"] },
       ],
@@ -99,6 +104,7 @@ export function GetProductItems(): Product[] {
       reviews: 32400,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["Standard"] },
       ],
@@ -115,6 +121,7 @@ export function GetProductItems(): Product[] {
       reviews: 45900,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["5-Seater", "6-Seater"] },
       ],
@@ -131,6 +138,7 @@ export function GetProductItems(): Product[] {
       reviews: 9800,
       category: "home-living",
       subcategory: "home-storage",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "gray", sizes: ["Small", "Medium", "Large"] },
       ],
