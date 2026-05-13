@@ -32,6 +32,7 @@ export function WishlistItem({
 }: WishlistItemProps) {
   const label = "Designer Edition";
   const colorName = "Sunset Golden Yellow";
+  const productImage = product.images[0];
 
   const title = "Remove Item from Wishlist";
   const description =
@@ -62,14 +63,14 @@ export function WishlistItem({
             productTitle={product.name}
             vendorName={product.vendor}
             rating={product.ratings}
-            productItems={[]}
+            productItems={product.images}
           >
             <Image
-              src={product.image}
+              src={productImage}
               alt={product.name}
               fill
               sizes="96px"
-              className="object-cover"
+              className="object-cover hover:cursor-pointer"
             />
           </ModalWrapper>
         </div>

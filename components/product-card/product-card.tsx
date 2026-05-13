@@ -33,12 +33,13 @@ function CardImage({
   sizes?: string;
 }) {
   const [saved, setSaved] = useState(false);
+  const productImage = product.images[0];
 
   return (
     <div className="relative">
       <AspectRatio ratio={ratio} className="relative">
         <Image
-          src={product.image}
+          src={productImage}
           alt={product.name}
           fill
           sizes={sizes}
@@ -134,7 +135,7 @@ function HorizontalDefaultContent({
 }
 
 type HorizontalProfileProps = {
-  product: Pick<Product, "image" | "name">;
+  product: Pick<Product, "images" | "name">;
   label?: string;
   colorName?: string;
   colorValue?: string;
@@ -151,6 +152,8 @@ export function HorizontalProfile({
   className,
   imageSizes = "96px",
 }: HorizontalProfileProps) {
+  const productImage = product.images[0];
+
   return (
     <Card
       className={cn(
@@ -161,7 +164,7 @@ export function HorizontalProfile({
       <CardContent className="flex items-center gap-3">
         <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-secondary">
           <Image
-            src={product.image}
+            src={productImage}
             alt={product.name}
             fill
             sizes={imageSizes}

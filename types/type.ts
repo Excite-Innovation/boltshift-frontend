@@ -24,7 +24,7 @@ export type Variant = {
 
 type Product = {
   id: number;
-  image: string;
+  images: string[];
   name: string;
   description: string;
   price: number;
