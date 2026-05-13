@@ -105,13 +105,17 @@ export function isProductInStoredWishlist(productId: number) {
   return readStoredWishlist([]).some((item) => item.productId === productId);
 }
 
-export function saveProductToStoredWishlist(productId: number) {
-  // Wishlist saves are idempotent, so repeat heart clicks do not duplicate rows.
-  const nextWishlist = addWishlistItem(readStoredWishlist([]), productId);
+// Return the next saved state so the button can stay synced with storage.
+export function toggleProductInStoredWishlist(productId: number) {
+  const wishlist = readStoredWishlist([]);
+  const isSaved = wishlist.some((item) => item.productId === productId);
+  const nextWishlist = isSaved
+    ? removeWishlistItem(wishlist, productId)
+    : addWishlistItem(wishlist, productId);
 
   writeStoredWishlist(nextWishlist);
 
-  return nextWishlist;
+  return !isSaved;
 }
 
 export function getWishlistItems(

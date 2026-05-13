@@ -16,7 +16,7 @@ import { StartRating } from "@/components/rating/rating";
 import Link from "next/link";
 import {
   isProductInStoredWishlist,
-  saveProductToStoredWishlist,
+  toggleProductInStoredWishlist,
 } from "@/lib/wishlist";
 
 type ProductCardProps = {
@@ -58,8 +58,7 @@ function CardImage({
     }
 
     lastSaveClickRef.current = now;
-    saveProductToStoredWishlist(product.id);
-    setSaved(true);
+    setSaved(toggleProductInStoredWishlist(product.id));
   };
 
   return (
@@ -84,7 +83,9 @@ function CardImage({
           savePosition,
           saved ? "text-primary" : "",
         )}
-        aria-label={`Save ${product.name} to wishlist`}
+        aria-label={`${saved ? "Remove" : "Save"} ${product.name} ${
+          saved ? "from" : "to"
+        } wishlist`}
         aria-pressed={saved}
       >
         <Heart aria-hidden="true" className={saved ? "fill-current" : ""} />
