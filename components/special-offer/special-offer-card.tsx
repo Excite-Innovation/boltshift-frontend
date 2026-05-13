@@ -313,7 +313,7 @@ function StorageSize({ value, onChange, options }: SelectorProps) {
     >
       <LabelSelector.Content className="flex flex-wrap gap-2">
         {options.map((opt) => (
-          <LabelSelector.Item key={opt} value={opt} size="sm" />
+          <LabelSelector.Item key={opt} value={opt} size="sm" rounded="full" />
         ))}
       </LabelSelector.Content>
     </LabelSelector.Root>
