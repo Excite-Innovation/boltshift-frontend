@@ -4,7 +4,7 @@ export function GetProductItems(): Product[] {
   return [
     {
       id: 1,
-      image: "https://i.pinimg.com/736x/36/e9/6a/36e96a759226592840340d7df9eebfda.jpg",
+      images: ["https://i.pinimg.com/736x/36/e9/6a/36e96a759226592840340d7df9eebfda.jpg"],
       name: "TEVISE T845 Casual Style Men Wrist Watch Date Display Full Steel Band Quartz Watch",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 80020,
@@ -14,6 +14,7 @@ export function GetProductItems(): Product[] {
       reviews: 6400,
       category: "accessories",
       subcategory: "watches",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "black", sizes: ["Standard"] },
         { color: "silver", sizes: ["Standard"] },
@@ -21,7 +22,7 @@ export function GetProductItems(): Product[] {
     },
     {
       id: 2,
-      image: "https://i.pinimg.com/736x/ab/7c/4e/ab7c4e76bddedd77600204cf58810604.jpg",
+      images: ["https://i.pinimg.com/736x/ab/7c/4e/ab7c4e76bddedd77600204cf58810604.jpg"],
       name: "Men's Jacquard Pullover Hoodie - Navy / L",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 70977,
@@ -31,6 +32,7 @@ export function GetProductItems(): Product[] {
       reviews: 32000,
       category: "mens-fashion",
       subcategory: "mens-shirts",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "navy", sizes: ["S", "M", "L", "XL"] },
         { color: "black", sizes: ["M", "L", "XL"] },
@@ -39,7 +41,7 @@ export function GetProductItems(): Product[] {
     },
     {
       id: 3,
-      image: "https://i.pinimg.com/564x/8c/90/e2/8c90e2c348da08b9c9cb38d2b5049e8d.jpg",
+      images: ["https://i.pinimg.com/564x/8c/90/e2/8c90e2c348da08b9c9cb38d2b5049e8d.jpg"],
       name: "Candy Color Pointed Toe Low Cut Stiletto High Heels Prom Shoes",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 56536,
@@ -49,6 +51,7 @@ export function GetProductItems(): Product[] {
       reviews: 43000,
       category: "womens-fashion",
       subcategory: "womens-shoes",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "red", sizes: ["36", "37", "38", "39", "40"] },
         { color: "pink", sizes: ["37", "38", "39"] },
@@ -56,7 +59,7 @@ export function GetProductItems(): Product[] {
     },
     {
       id: 4,
-      image: "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
+      images: ["https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg"],
       name: "Modern Chic Round Nesting Coffee Table with Storage White Stone Coffee Table Set of 2",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 95434,
@@ -66,6 +69,7 @@ export function GetProductItems(): Product[] {
       reviews: 128400,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["Standard"] },
         { color: "beige", sizes: ["Standard"] },
@@ -73,7 +77,7 @@ export function GetProductItems(): Product[] {
     },
     {
       id: 5,
-      image: "https://i.pinimg.com/564x/7a/45/25/7a4525fed23ce54148599b480b2e18ae.jpg",
+      images: ["https://i.pinimg.com/564x/7a/45/25/7a4525fed23ce54148599b480b2e18ae.jpg"],
       name: "Mercer41 Annemargaret 90.5\" Round Arm Sofa Polyester Blend in Blue",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 99233,
@@ -83,13 +87,14 @@ export function GetProductItems(): Product[] {
       reviews: 12000,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "teal", sizes: ["2-Seater", "3-Seater"] },
       ],
     },
     {
       id: 6,
-      image: "https://ak1.ostkcdn.com/img/mxc/02222021-gnp-lighting-PopCat_7.jpg?imwidth=400",
+      images: ["https://ak1.ostkcdn.com/img/mxc/02222021-gnp-lighting-PopCat_7.jpg?imwidth=400"],
       name: "Turin Modern Coffee Table",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 63284,
@@ -99,13 +104,14 @@ export function GetProductItems(): Product[] {
       reviews: 32400,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["Standard"] },
       ],
     },
     {
       id: 7,
-      image: "https://i.pinimg.com/736x/86/cf/ae/86cfaec5ae9d1b7bcdc2da53f803014e.jpg",
+      images: ["https://i.pinimg.com/736x/86/cf/ae/86cfaec5ae9d1b7bcdc2da53f803014e.jpg"],
       name: "Dodiy Modern L-Shaped White Corner Sectional Sofa 5-Seater",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 97376,
@@ -115,13 +121,14 @@ export function GetProductItems(): Product[] {
       reviews: 45900,
       category: "home-living",
       subcategory: "furniture",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "white", sizes: ["5-Seater", "6-Seater"] },
       ],
     },
     {
       id: 8,
-      image: "https://i.pinimg.com/736x/98/3b/ae/983bae0b2b4d16b215bf1570306d86e3.jpg",
+      images: ["https://i.pinimg.com/736x/98/3b/ae/983bae0b2b4d16b215bf1570306d86e3.jpg"],
       name: "Snuggle Circular Hollow Ceramic Vase - Nordic Flower Pot",
       description: "A sleek stainless-steel watch with precise quartz movement and a modern, versatile design.",
       price: 83943,
@@ -131,6 +138,7 @@ export function GetProductItems(): Product[] {
       reviews: 9800,
       category: "home-living",
       subcategory: "home-storage",
+      vendor: "Luxury Living Co.",
       variants: [
         { color: "gray", sizes: ["Small", "Medium", "Large"] },
       ],

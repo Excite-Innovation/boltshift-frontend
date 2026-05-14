@@ -9,6 +9,10 @@ export type CartEntry = WishlistEntry;
 
 export type WishlistAction =
   | {
+      type: "add";
+      productId: number;
+    }
+  | {
       type: "increment";
       productId: number;
     }
@@ -30,6 +34,89 @@ export const initialWishlist: WishlistEntry[] = [
   { productId: 7, quantity: 1 },
   { productId: 8, quantity: 1 },
 ];
+
+const WISHLIST_STORAGE_KEY = "boltshift:wishlist";
+
+// TODO: Replace these storage helpers with the shared wishlist state manager once it exists.
+
+// Keep localStorage data narrow before trusting it as app state.
+function isWishlistEntry(entry: unknown): entry is WishlistEntry {
+  return (
+    typeof entry === "object" &&
+    entry !== null &&
+    "productId" in entry &&
+    "quantity" in entry &&
+    typeof entry.productId === "number" &&
+    typeof entry.quantity === "number"
+  );
+}
+
+export function addWishlistItem(
+  wishlist: WishlistEntry[],
+  productId: number,
+  quantity = 1,
+) {
+  const existingItem = wishlist.find((item) => item.productId === productId);
+
+  if (existingItem) {
+    return wishlist;
+  }
+
+  return [...wishlist, { productId, quantity: Math.max(1, quantity) }];
+}
+
+export function readStoredWishlist(fallback = initialWishlist) {
+  if (typeof window === "undefined") {
+    return fallback;
+  }
+
+  try {
+    // Use the seeded wishlist until the shopper has saved their own items.
+    const storedWishlist = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
+
+    if (!storedWishlist) {
+      return fallback;
+    }
+
+    const parsedWishlist: unknown = JSON.parse(storedWishlist);
+
+    if (!Array.isArray(parsedWishlist)) {
+      return fallback;
+    }
+
+    return parsedWishlist.filter(isWishlistEntry).map((item) => ({
+      productId: item.productId,
+      quantity: Math.max(1, item.quantity),
+    }));
+  } catch {
+    return fallback;
+  }
+}
+
+export function writeStoredWishlist(wishlist: WishlistEntry[]) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+}
+
+export function isProductInStoredWishlist(productId: number) {
+  return readStoredWishlist([]).some((item) => item.productId === productId);
+}
+
+// Return the next saved state so the button can stay synced with storage.
+export function toggleProductInStoredWishlist(productId: number) {
+  const wishlist = readStoredWishlist([]);
+  const isSaved = wishlist.some((item) => item.productId === productId);
+  const nextWishlist = isSaved
+    ? removeWishlistItem(wishlist, productId)
+    : addWishlistItem(wishlist, productId);
+
+  writeStoredWishlist(nextWishlist);
+
+  return !isSaved;
+}
 
 export function getWishlistItems(
   wishlist: WishlistEntry[],
@@ -66,6 +153,8 @@ export function wishlistReducer(
   action: WishlistAction,
 ) {
   switch (action.type) {
+    case "add":
+      return addWishlistItem(wishlist, action.productId);
     case "increment":
       return updateWishlistQuantity(wishlist, action.productId, 1);
     case "decrement":

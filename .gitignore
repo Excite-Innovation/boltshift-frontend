@@ -42,3 +42,5 @@ next-env.d.ts
 
 certificates
 .codex
+*storybook.log
+storybook-static

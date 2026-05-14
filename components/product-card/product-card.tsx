@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,10 @@ import NumberTickerDemo from "@/components/shadcn-space/radix/number-ticker/numb
 import { EditNum, GetRatio, cn, FormatNumber } from "@/lib/utils";
 import { StartRating } from "@/components/rating/rating";
 import Link from "next/link";
+import {
+  isProductInStoredWishlist,
+  toggleProductInStoredWishlist,
+} from "@/lib/wishlist";
 
 type ProductCardProps = {
   variant?: ProductVariant;
@@ -33,12 +38,34 @@ function CardImage({
   sizes?: string;
 }) {
   const [saved, setSaved] = useState(false);
+  const lastSaveClickRef = useRef(0);
+  const productImage = product.images[0];
+
+  useEffect(() => {
+    setSaved(isProductInStoredWishlist(product.id));
+  }, [product.id]);
+
+  const handleSaveClick = (event: MouseEvent<HTMLButtonElement>) => {
+    // The save button lives inside the product link, so keep this click local.
+    event.preventDefault();
+    event.stopPropagation();
+
+    const now = Date.now();
+
+    // Throttle rapid taps/clicks to avoid repeated storage writes.
+    if (now - lastSaveClickRef.current < 800) {
+      return;
+    }
+
+    lastSaveClickRef.current = now;
+    setSaved(toggleProductInStoredWishlist(product.id));
+  };
 
   return (
     <div className="relative">
       <AspectRatio ratio={ratio} className="relative">
         <Image
-          src={product.image}
+          src={productImage}
           alt={product.name}
           fill
           sizes={sizes}
@@ -47,14 +74,19 @@ function CardImage({
       </AspectRatio>
 
       <Button
+        type="button"
         variant="outline"
         size="icon-sm"
-        onClick={() => setSaved(!saved)}
+        onClick={handleSaveClick}
         className={cn(
-          "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50",
+          "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50 hover:text-primary",
           savePosition,
-          saved ? "text-red-500" : "",
+          saved ? "text-primary" : "",
         )}
+        aria-label={`${saved ? "Remove" : "Save"} ${product.name} ${
+          saved ? "from" : "to"
+        } wishlist`}
+        aria-pressed={saved}
       >
         <Heart aria-hidden="true" className={saved ? "fill-current" : ""} />
       </Button>
@@ -134,7 +166,7 @@ function HorizontalDefaultContent({
 }
 
 type HorizontalProfileProps = {
-  product: Pick<Product, "image" | "name">;
+  product: Pick<Product, "images" | "name">;
   label?: string;
   colorName?: string;
   colorValue?: string;
@@ -151,6 +183,8 @@ export function HorizontalProfile({
   className,
   imageSizes = "96px",
 }: HorizontalProfileProps) {
+  const productImage = product.images[0];
+
   return (
     <Card
       className={cn(
@@ -161,7 +195,7 @@ export function HorizontalProfile({
       <CardContent className="flex items-center gap-3">
         <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-secondary">
           <Image
-            src={product.image}
+            src={productImage}
             alt={product.name}
             fill
             sizes={imageSizes}
