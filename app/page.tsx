@@ -16,7 +16,7 @@ export default function Home() {
     <div id="landing-page" className="w-full">
       <div>
         <div className="hidden md:block"> <Navbar /> </div>
-        <div className="block md:hidden"> <NavbarMobile /> </div>
+        <div className="block md:hidden"> <NavbarMobile showFilterButton={false} /> </div>
       </div>
 
       <VendorScroller />

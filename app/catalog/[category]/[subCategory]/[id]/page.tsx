@@ -148,7 +148,7 @@ export default async function ProductDetails({
               {/* Review Button */}
               <SubmitReview
                 trigger={
-                  <Button className="w-64 h-11 px-4 py-2.5 flex gap-1.5 text-base">
+                  <Button className="w-64 h-11 px-4 py-2.5 flex gap-1.5 text-base hover:cursor-pointer">
                     <PenLine />
                     Share a Review
                   </Button>

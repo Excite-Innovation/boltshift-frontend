@@ -45,6 +45,7 @@ export function SpecialOfferCard() {
 
   const price = selectedItem.price;
   const totalPrice = EditNum(price * quantity);
+  const selectedImage = selectedItem.images[0];
 
   useEffect(() => {
     const firstVariant = selectedItem.variants[0];
@@ -105,7 +106,7 @@ export function SpecialOfferCard() {
           <div className="w-full h-full flex-1 rounded-xl overflow-hidden border relative">
             <AspectRatio ratio={1 / 1} className="relative">
               <Image
-                src={selectedItem.image}
+                src={selectedImage}
                 alt={selectedItem.name}
                 fill
                 sizes="(min-width: 768px) 50vw, calc(100vw - 2rem)"
@@ -116,7 +117,7 @@ export function SpecialOfferCard() {
           </div>
 
           <div
-            className="p-1 flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide 
+            className="p-1 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide 
                  md:max-h-157.5 md:flex-col md:overflow-y-auto
                  lg:max-h-221.5 xl:max-h-143.5
               "
@@ -134,7 +135,7 @@ export function SpecialOfferCard() {
               >
                 <AspectRatio ratio={1 / 1} className="relative">
                   <Image
-                    src={p.image}
+                    src={p.images[0]}
                     alt={p.name}
                     fill
                     sizes="80px"
@@ -264,13 +265,12 @@ export function SpecialOfferCard() {
 
               <Button
                 variant="outline"
-                className="w-full font-semibold text-base"
               >
                 <ShoppingCart className="text-muted-foreground" />
                 Add to Cart
               </Button>
 
-              <Button className="w-full col-span-2 font-semibold text-base py-3">
+              <Button className="w-full col-span-2">
                 Buy Now
               </Button>
             </CardFooter>
@@ -312,7 +312,7 @@ function StorageSize({ value, onChange, options }: SelectorProps) {
     >
       <LabelSelector.Content className="flex flex-wrap gap-2">
         {options.map((opt) => (
-          <LabelSelector.Item key={opt} value={opt} size="sm" />
+          <LabelSelector.Item key={opt} value={opt} size="sm" rounded="full" />
         ))}
       </LabelSelector.Content>
     </LabelSelector.Root>
