@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function EmptyWishlist() {
-  const emptyWishlist = "/empty-profile/empty-wishlist.svg";
+  const emptyWishlist = "/empty-profile/wishlist.png";
   const altDescription =
     "An elegant 3D illustration featuring a circular display podium centered between two large, interlocking heart outlines. The scene is decorated with gift boxes and shopping bags in shades of deep pink and purple, with small pink hearts floating in the background.";
 
@@ -37,13 +37,13 @@ export function EmptyWishlist() {
       </CardHeader>
 
       <CardFooter className="w-full flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <Button variant="outline" className="text-base font-semibold" asChild>
+        <Button variant="outline" asChild>
           <Link href="/catalog">
             <ArrowLeft /> Browse Our Catalog
           </Link>
         </Button>
 
-        <Button className="text-base font-semibold" asChild>
+        <Button asChild>
           <Link href="/">
             <ShoppingCart /> Go To Your Cart
           </Link>
