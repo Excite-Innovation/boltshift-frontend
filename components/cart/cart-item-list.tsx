@@ -23,21 +23,23 @@ export function CartItem({
   const colorName = product.variants[0]?.color ?? "Default";
 
   return (
-    <div className="flex w-full flex-col gap-4 border-b py-4 md:flex-row md:justify-between">
-      <ProductItemSummary
-        product={product}
-        label={label}
-        colorName={colorName}
-      />
+    <div className="pb-12 flex w-full flex-col gap-10 sm:flex-row">
+      <div className="flex w-full flex-col gap-4 border-b py-4 md:flex-row md:justify-between">
+        <ProductItemSummary
+          product={product}
+          label={label}
+          colorName={colorName}
+        />
 
-      <CartQuantityGroup
-        price={product.price * quantity}
-        quantity={quantity}
-        onDecrement={onDecrement}
-        onIncrement={onIncrement}
-        onRemove={onRemove}
-        decrementDisabled={quantity <= 1}
-      />
+        <CartQuantityGroup
+          price={product.price * quantity}
+          quantity={quantity}
+          onDecrement={onDecrement}
+          onIncrement={onIncrement}
+          onRemove={onRemove}
+          decrementDisabled={quantity <= 1}
+        />
+      </div>
     </div>
   );
 }
