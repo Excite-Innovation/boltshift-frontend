@@ -2,6 +2,7 @@
 
 import { Minus, Plus, Trash2 } from "lucide-react";
 
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { cn, EditNum } from "@/lib/utils";
@@ -17,16 +18,21 @@ type CartQuantityGroupProps = {
   onDecrement?: () => void;
   /** Increases the current item quantity. */
   onIncrement?: () => void;
+  /** Prevents decreasing below the minimum allowed quantity. */
+  decrementDisabled?: boolean;
   className?: string;
   /** Short currency label shown before the formatted price. */
   currencyLabel?: string;
   removeLabel?: string;
   decrementLabel?: string;
   incrementLabel?: string;
+  removeTitle?: string;
+  removeDescription?: string;
+  removeActionLabel?: string;
 };
 
 /**
- * Compact price and quantity control used inside cart-like item rows.
+ * Price and quantity controls used inside cart-like item rows.
  */
 export function CartQuantityGroup({
   price,
@@ -34,45 +40,50 @@ export function CartQuantityGroup({
   onRemove,
   onDecrement,
   onIncrement,
+  decrementDisabled = false,
   className,
   currencyLabel = "Kshs.",
   removeLabel = "Remove item",
   decrementLabel = "Decrease quantity",
   incrementLabel = "Increase quantity",
+  removeTitle = "Remove Item from Cart",
+  removeDescription = "Are you sure you want to delete this item from cart? This action cannot be undone.",
+  removeActionLabel = "Remove Item",
 }: CartQuantityGroupProps) {
   return (
     <div
       className={cn(
-        "flex h-10 w-full items-center overflow-hidden bg-background text-foreground",
+        "flex w-full items-center justify-between md:max-w-93.75 md:justify-start md:gap-4",
         className,
       )}
     >
-      {/* Remove action for the current item. */}
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        aria-label={removeLabel}
-        onClick={onRemove}
-        className="h-full w-10 rounded-none text-muted-foreground hover:text-destructive"
-      >
-        <Trash2 className="size-4" />
-      </Button>
+      <DeleteModal
+        title={removeTitle}
+        description={removeDescription}
+        actionLabel={removeActionLabel}
+        onConfirm={() => onRemove?.()}
+        trigger={
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label={removeLabel}
+            disabled={!onRemove}
+            className="justify-self-start text-muted-foreground hover:text-destructive md:justify-self-center"
+          >
+            <Trash2 className="size-4" />
+          </Button>
+        }
+      />
 
-      {/* Price display expands to fill the space between actions and controls. */}
-      <div className="flex flex-1 items-center gap-2">
-        <span className="text-sm font-medium text-muted-foreground">
-          {currencyLabel}
-        </span>
-        <span className="truncate text-sm font-medium">
-          {EditNum(price)}
-        </span>
+      <div className="flex items-center gap-1 text-sm md:justify-self-start">
+        <span className="text-muted-foreground">{currencyLabel}</span>
+        <span className="font-medium">{EditNum(price)}</span>
       </div>
 
-      {/* Quantity stepper keeps decrement, value, and increment controls grouped. */}
       <ButtonGroup
         aria-label="Quantity controls"
-        className="h-full min-w-32 shrink-0 overflow-hidden rounded-lg border-l border-input bg-background"
+        className="h-10 w-32 overflow-hidden rounded-lg border bg-background md:justify-self-start"
       >
         <Button
           type="button"
@@ -80,12 +91,13 @@ export function CartQuantityGroup({
           size="icon"
           aria-label={decrementLabel}
           onClick={onDecrement}
-          className="h-full flex-1 rounded-none text-muted-foreground hover:bg-accent"
+          disabled={decrementDisabled}
+          className="h-full flex-1 rounded-none text-muted-foreground"
         >
           <Minus className="size-4" />
         </Button>
 
-        <div className="flex h-full flex-1 items-center justify-center text-2xl font-semibold">
+        <div className="flex h-full flex-1 items-center justify-center text-sm font-semibold">
           {quantity}
         </div>
 
@@ -95,7 +107,7 @@ export function CartQuantityGroup({
           size="icon"
           aria-label={incrementLabel}
           onClick={onIncrement}
-          className="h-full flex-1 rounded-none text-muted-foreground hover:bg-accent"
+          className="h-full flex-1 rounded-none text-muted-foreground"
         >
           <Plus className="size-4" />
         </Button>
