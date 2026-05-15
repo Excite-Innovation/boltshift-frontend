@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
@@ -15,8 +16,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Label } from "@/components/ui/label";
+import { vouchers } from "@/lib/voucher";
 
 export function OrderSummary() {
+  const [voucherCode, setVoucherCode] = useState("");
+  const [selectedVoucherId, setSelectedVoucherId] = useState("");
+
   return (
     <Card className="w-84 p-6 border rounded-xl flex flex-col gap-8">
       <CardHeader className="py-2 px-0">
@@ -70,10 +75,25 @@ export function OrderSummary() {
             <Input
               id="voucher-code"
               placeholder="Add a voucher"
+              value={voucherCode}
+              onChange={(event) => {
+                const code = event.target.value;
+
+                setVoucherCode(code);
+                setSelectedVoucherId(
+                  vouchers.find((voucher) => voucher.code === code)?.id ?? "",
+                );
+              }}
               className="h-full rounded-lg"
             />
 
-            <VoucherDropdownMenu />
+            <VoucherDropdownMenu
+              selectedVoucherId={selectedVoucherId}
+              onSelectVoucher={(voucher) => {
+                setSelectedVoucherId(voucher.id);
+                setVoucherCode(voucher.code);
+              }}
+            />
           </ButtonGroup>
         </div>
 

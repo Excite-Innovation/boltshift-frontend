@@ -16,8 +16,30 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function VoucherDropdownMenu() {
-  const [selectedVoucher, setSelectedVoucher] = React.useState("voucher-1");
+type Voucher = (typeof vouchers)[number];
+
+type VoucherDropdownMenuProps = {
+  selectedVoucherId?: string;
+  onSelectVoucher?: (voucher: Voucher) => void;
+};
+
+export function VoucherDropdownMenu({
+  selectedVoucherId,
+  onSelectVoucher,
+}: VoucherDropdownMenuProps = {}) {
+  const [internalSelectedVoucherId, setInternalSelectedVoucherId] =
+    React.useState("");
+  const selectedVoucher = selectedVoucherId ?? internalSelectedVoucherId;
+
+  const handleVoucherChange = (voucherId: string) => {
+    setInternalSelectedVoucherId(voucherId);
+
+    const voucher = vouchers.find(({ id }) => id === voucherId);
+
+    if (voucher) {
+      onSelectVoucher?.(voucher);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -31,7 +53,7 @@ export function VoucherDropdownMenu() {
       <DropdownMenuContent align="end" className="w-72 max-h-110 rounded-xl border p-3 scrollbar-hide">
         <DropdownMenuRadioGroup
           value={selectedVoucher}
-          onValueChange={setSelectedVoucher}
+          onValueChange={handleVoucherChange}
           className="grid gap-2"
         >
           {vouchers.map((voucher) => (
