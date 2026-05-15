@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
+
 import {
   Card,
   CardContent,
@@ -10,18 +12,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Label } from "@/components/ui/label";
 
 export function OrderSummary() {
   return (
-    <Card className="w-84 p-6 border rounded-xl flex flex-col gap-8 md:flex-row">
-      <CardHeader className="py-2 px-4">
+    <Card className="w-84 p-6 border rounded-xl flex flex-col gap-8">
+      <CardHeader className="py-2 px-0">
         <CardTitle className="flex items-center gap-1 text-2xl font-semibold">
           <img
             src="/section-title-icons/Clipboard.svg"
@@ -32,57 +29,67 @@ export function OrderSummary() {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="w-72 flex flex-col gap-4">
+      <CardContent className="w-72 p-0 flex flex-col gap-4">
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Subtotal</span>
-          <span>Kshs. 92,372</span>
+          <span>
+            Kshs. <span className="font-semibold text-sm text-foreground">92,372</span>
+          </span>
         </div>
 
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Shipping</span>
-          <span>Kshs. 54,436</span>
+          <span>
+            Kshs. <span className="font-semibold text-sm text-foreground">54,436</span>
+          </span>
         </div>
 
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Tax</span>
-          <span>Kshs. 63,073 (14%)</span>
+          <span>
+            Kshs. <span className="font-semibold text-sm text-foreground">63,073 (14%)</span>
+          </span>
         </div>
 
         {/* Voucher */}
         <div className="space-y-2">
-          <div className="flex gap-2">
-            <Input placeholder="CO-4321-8765" />
+          <Label htmlFor="voucher-code" className="text-muted-foreground">
+            Voucher Code
+          </Label>
+          <ButtonGroup className="h-11 w-full overflow-hidden rounded-lg border">
+            <Input
+              id="voucher-code"
+              placeholder="Add a voucher"
+              className="h-full rounded-lg"
+            />
 
-            <Select>
-              <SelectTrigger className="w-27.5">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="voucher1">Voucher 1</SelectItem>
-                <SelectItem value="voucher2">Voucher 2</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <Button type="button" className="h-full rounded-none px-5">
+              Select
+              <ChevronDown className="size-5" />
+            </Button>
+          </ButtonGroup>
         </div>
 
         {/* Discount */}
         <div className="flex justify-between text-sm text-muted-foreground">
           <span>Discount</span>
-          <span>Kshs. 80,020 (7%)</span>
+          <span>
+            Kshs. <span className="font-semibold text-sm text-foreground">80,020 (7%)</span>
+          </span>
         </div>
       </CardContent>
 
       <Separator />
 
-      <CardFooter>
+      <CardFooter className="w-full p-0 flex flex-col gap-8">
         {/* Total */}
-        <div className="flex justify-between text-base font-semibold">
+        <div className="w-full py-1 flex justify-between text-lg font-bold">
           <span>Total</span>
           <span>Kshs. 70,977</span>
         </div>
 
         {/* Checkout */}
-        <Button>Check Out →</Button>
+        <Button size="lg" className="w-full">Check Out →</Button>
       </CardFooter>
     </Card>
   );
