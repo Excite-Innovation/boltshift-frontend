@@ -20,7 +20,7 @@ export function ProductItemSummary({
   const productImage = product.images[0];
 
   return (
-    <div className="flex max-w-140 items-center gap-3">
+    <div className="flex max-w-140 min-w-84 items-center gap-3">
       <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-border bg-secondary md:size-24">
         <ModalWrapper
           productTitle={product.name}

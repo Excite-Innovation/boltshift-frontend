@@ -120,7 +120,7 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
   }, [items, selectedVoucher]);
 
   return (
-    <Card className="w-84 p-6 border rounded-xl flex flex-col gap-8">
+    <Card className="max-w-84 p-6 border rounded-xl flex flex-col gap-8">
       <CardHeader className="py-2 px-0">
         <CardTitle className="flex items-center gap-1 text-2xl font-semibold">
           <img
@@ -169,7 +169,7 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
           <Label htmlFor="voucher-code" className="text-muted-foreground">
             Voucher Code
           </Label>
-          <ButtonGroup className="h-11 w-full overflow-hidden rounded-lg border hover:ring hover:ring-ring">
+          <ButtonGroup className="h-11 w-full overflow-hidden rounded-lg border hover:ring-1 hover:ring-ring hover:ring-offset-2">
             <Input
               id="voucher-code"
               placeholder="Add a voucher"

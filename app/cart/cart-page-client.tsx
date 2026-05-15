@@ -54,8 +54,8 @@ export function CartPageClient() {
 
         <div className="flex flex-col gap-10 pb-12">
           {cartItems.length > 0 ? (
-            <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-start lg:justify-between">
-              <div className="grid flex-1 gap-2">
+            <div className="flex w-full flex-wrap items-start justify-center gap-10">
+              <div className="grid w-full min-w-0 flex-[1_1_42rem] gap-2">
                 <div className="hidden border-b border-border/50 py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                   <span>Item</span>
 
@@ -96,7 +96,9 @@ export function CartPageClient() {
               </div>
 
               {/* Order summary */}
-              <OrderSummary items={cartItems} />
+              <div className="flex flex-[0_1_21rem] justify-center">
+                <OrderSummary items={cartItems} />
+              </div>
             </div>
           ) : (
             <EmptyCart />
