@@ -213,6 +213,17 @@ export function writeStoredCart(cart: CartEntry[]) {
   window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 }
 
+export function addProductToStoredCart(productId: number, quantity = 1) {
+  const cart = readStoredCart([]);
+  const nextCart = addWishlistToCart(cart, [
+    { productId, quantity: Math.max(1, quantity) },
+  ]);
+
+  writeStoredCart(nextCart);
+
+  return nextCart;
+}
+
 export function cartReducer(cart: CartEntry[], action: WishlistAction) {
   switch (action.type) {
     case "add":
