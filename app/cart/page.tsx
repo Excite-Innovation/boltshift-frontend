@@ -56,7 +56,7 @@ export default function CartPage() {
           {cartItems.length > 0 ? (
             <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
               <div className="grid flex-1 gap-2">
-                <div className="hidden border-b py-1 text-lg font-bold md:flex md:items-center md:justify-between">
+                <div className="hidden border-b border-border/50 py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                   <span>Item</span>
 
                   <div className="flex min-w-93.75 items-center gap-4">
