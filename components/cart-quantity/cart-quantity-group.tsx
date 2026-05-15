@@ -7,18 +7,27 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { cn, EditNum } from "@/lib/utils";
 
 type CartQuantityGroupProps = {
+  /** Unit/subtotal price displayed next to the currency label. */
   price: number;
+  /** Current item quantity shown between the decrement and increment controls. */
   quantity: number;
+  /** Removes the current cart or wishlist item. */
   onRemove?: () => void;
+  /** Decreases the current item quantity. */
   onDecrement?: () => void;
+  /** Increases the current item quantity. */
   onIncrement?: () => void;
   className?: string;
+  /** Short currency label shown before the formatted price. */
   currencyLabel?: string;
   removeLabel?: string;
   decrementLabel?: string;
   incrementLabel?: string;
 };
 
+/**
+ * Compact price and quantity control used inside cart-like item rows.
+ */
 export function CartQuantityGroup({
   price,
   quantity,
@@ -38,6 +47,7 @@ export function CartQuantityGroup({
         className,
       )}
     >
+      {/* Remove action for the current item. */}
       <Button
         type="button"
         variant="ghost"
@@ -49,6 +59,7 @@ export function CartQuantityGroup({
         <Trash2 className="size-4" />
       </Button>
 
+      {/* Price display expands to fill the space between actions and controls. */}
       <div className="flex flex-1 items-center gap-2">
         <span className="text-sm font-medium text-muted-foreground">
           {currencyLabel}
@@ -58,6 +69,7 @@ export function CartQuantityGroup({
         </span>
       </div>
 
+      {/* Quantity stepper keeps decrement, value, and increment controls grouped. */}
       <ButtonGroup
         aria-label="Quantity controls"
         className="h-full min-w-32 shrink-0 overflow-hidden rounded-lg border-l border-input bg-background"
