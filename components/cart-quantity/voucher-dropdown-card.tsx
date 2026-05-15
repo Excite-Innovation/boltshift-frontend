@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronDown } from "lucide-react"
+import * as React from "react";
+import { ChevronDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { vouchers } from "@/lib/voucher";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
@@ -13,43 +14,21 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-const vouchers = [
-  {
-    id: "voucher-1",
-    title: "40% off Shopping",
-    code: "CO-4321-8765",
-    expiry: "Exp:15th Aug,2023",
-  },
-  {
-    id: "voucher-2",
-    title: "25% off Electronics",
-    code: "EL-9876-1234",
-    expiry: "Exp:20th Sep,2023",
-  },
-]
+} from "@/components/ui/dropdown-menu";
 
 export function VoucherDropdownMenu() {
-  const [selectedVoucher, setSelectedVoucher] =
-    React.useState("voucher-1")
+  const [selectedVoucher, setSelectedVoucher] = React.useState("voucher-1");
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          className="h-full rounded-none px-5"
-        >
+        <Button type="button" className="h-full rounded-none px-5">
           Select
           <ChevronDown className="size-5" />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="w-72 rounded-xl border p-3"
-      >
+      <DropdownMenuContent align="end" className="w-72 max-h-110 rounded-xl border p-3 scrollbar-hide">
         <DropdownMenuRadioGroup
           value={selectedVoucher}
           onValueChange={setSelectedVoucher}
@@ -60,20 +39,27 @@ export function VoucherDropdownMenu() {
               key={voucher.id}
               value={voucher.id}
               className={cn(
-                "rounded-lg p-4 transition-colors flex gap-2",
+                "group rounded-lg py-4 pr-4 pl-12 transition-colors",
                 "focus:bg-muted",
                 "data-[state=checked]:bg-primary/5",
-                "data-[state=checked]:text-primary"
+                "data-[state=checked]:text-primary",
+                "[&>span:first-child]:left-4",
+                "[&>span:first-child]:size-5",
+                "[&>span:first-child]:rounded-full",
+                "[&>span:first-child]:border",
+                "[&>span:first-child]:border-border",
+                "[&>span:first-child]:text-transparent",
+                "[&>span:first-child_svg]:size-2.5",
+                "data-[state=checked]:[&>span:first-child]:border-primary",
+                "data-[state=checked]:[&>span:first-child]:bg-primary",
+                "data-[state=checked]:[&>span:first-child]:text-primary-foreground",
               )}
             >
-                
               <div className="flex flex-col">
-                <span className="text-sm font-semibold">
-                  {voucher.title}
-                </span>
+                <span className="text-sm font-semibold">{voucher.title}</span>
 
-                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground data-[state=checked]:text-primary">
-                  <span className="text-foreground">{voucher.code}</span>
+                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground group-data-[state=checked]:text-primary">
+                  <span className="text-current">{voucher.code}</span>
                   <span>{voucher.expiry}</span>
                 </div>
               </div>
@@ -82,5 +68,5 @@ export function VoucherDropdownMenu() {
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
