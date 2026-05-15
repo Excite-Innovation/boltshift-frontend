@@ -96,7 +96,7 @@ export function CartPageClient() {
               </div>
 
               {/* Order summary */}
-              <OrderSummary />
+              <OrderSummary items={cartItems} />
             </div>
           ) : (
             <EmptyCart />

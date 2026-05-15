@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
@@ -17,10 +17,107 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Label } from "@/components/ui/label";
 import { vouchers } from "@/lib/voucher";
+import { Product } from "@/types/type";
 
-export function OrderSummary() {
+const TAX_RATE = 0.14;
+const SHIPPING_FEE = 500;
+
+type OrderSummaryItem = {
+  product: Product;
+  quantity: number;
+};
+
+type OrderSummaryProps = {
+  items?: OrderSummaryItem[];
+};
+
+const currencyFormatter = new Intl.NumberFormat("en-KE", {
+  maximumFractionDigits: 0,
+});
+
+function formatCurrency(amount: number) {
+  return currencyFormatter.format(Math.max(0, Math.round(amount)));
+}
+
+function formatPercentage(rate: number) {
+  return `${Math.round(rate)}%`;
+}
+
+function getVoucherDiscountRate(title: string) {
+  const discountMatch = title.match(/(\d+)%/);
+
+  return discountMatch ? Number(discountMatch[1]) / 100 : 0;
+}
+
+function getVoucherDiscount(
+  voucher: (typeof vouchers)[number] | undefined,
+  subtotal: number,
+  shipping: number,
+) {
+  if (!voucher) {
+    return {
+      productDiscount: 0,
+      shippingDiscount: 0,
+      label: "0%",
+    };
+  }
+
+  if (voucher.title.toLowerCase().includes("free shipping")) {
+    return {
+      productDiscount: 0,
+      shippingDiscount: shipping,
+      label: "Free shipping",
+    };
+  }
+
+  const voucherRate = getVoucherDiscountRate(voucher.title);
+
+  return {
+    productDiscount: subtotal * voucherRate,
+    shippingDiscount: 0,
+    label: formatPercentage(voucherRate * 100),
+  };
+}
+
+export function OrderSummary({ items = [] }: OrderSummaryProps) {
   const [voucherCode, setVoucherCode] = useState("");
   const [selectedVoucherId, setSelectedVoucherId] = useState("");
+  const selectedVoucher = vouchers.find(
+    (voucher) => voucher.id === selectedVoucherId,
+  );
+  const orderTotals = useMemo(() => {
+    const subtotal = items.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0,
+    );
+    const shipping = subtotal > 0 ? SHIPPING_FEE : 0;
+    const voucherDiscount = getVoucherDiscount(
+      selectedVoucher,
+      subtotal,
+      shipping,
+    );
+    const discountedSubtotal = Math.max(
+      0,
+      subtotal - voucherDiscount.productDiscount,
+    );
+    const discountedShipping = Math.max(
+      0,
+      shipping - voucherDiscount.shippingDiscount,
+    );
+    const tax = discountedSubtotal * TAX_RATE;
+    const total = discountedSubtotal + discountedShipping + tax;
+
+    return {
+      subtotal,
+      shipping,
+      tax,
+      taxRate: TAX_RATE * 100,
+      voucherDiscount:
+        voucherDiscount.productDiscount + voucherDiscount.shippingDiscount,
+      voucherDiscountLabel: voucherDiscount.label,
+      total,
+    };
+  }, [items, selectedVoucher]);
 
   return (
     <Card className="w-84 p-6 border rounded-xl flex flex-col gap-8">
@@ -41,7 +138,7 @@ export function OrderSummary() {
           <span>
             Kshs.{" "}
             <span className="font-semibold text-sm text-foreground">
-              92,372
+              {formatCurrency(orderTotals.subtotal)}
             </span>
           </span>
         </div>
@@ -51,7 +148,7 @@ export function OrderSummary() {
           <span>
             Kshs.{" "}
             <span className="font-semibold text-sm text-foreground">
-              54,436
+              {formatCurrency(orderTotals.shipping)}
             </span>
           </span>
         </div>
@@ -61,7 +158,8 @@ export function OrderSummary() {
           <span>
             Kshs.{" "}
             <span className="font-semibold text-sm text-foreground">
-              63,073 (14%)
+              {formatCurrency(orderTotals.tax)} (
+              {formatPercentage(orderTotals.taxRate)})
             </span>
           </span>
         </div>
@@ -81,7 +179,10 @@ export function OrderSummary() {
 
                 setVoucherCode(code);
                 setSelectedVoucherId(
-                  vouchers.find((voucher) => voucher.code === code)?.id ?? "",
+                  vouchers.find(
+                    (voucher) =>
+                      voucher.code.toLowerCase() === code.trim().toLowerCase(),
+                  )?.id ?? "",
                 );
               }}
               className="h-full rounded-lg"
@@ -103,7 +204,8 @@ export function OrderSummary() {
           <span>
             Kshs.{" "}
             <span className="font-semibold text-sm text-foreground">
-              80,020 (7%)
+              {formatCurrency(orderTotals.voucherDiscount)} (
+              {orderTotals.voucherDiscountLabel})
             </span>
           </span>
         </div>
@@ -115,11 +217,11 @@ export function OrderSummary() {
         {/* Total */}
         <div className="w-full py-1 flex justify-between text-lg font-bold">
           <span>Total</span>
-          <span>Kshs. 70,977</span>
+          <span>Kshs. {formatCurrency(orderTotals.total)}</span>
         </div>
 
         {/* Checkout */}
-        <Button size="lg" className="w-full">
+        <Button size="lg" className="w-full" disabled={items.length === 0}>
           Check Out
           <ArrowRight size="5" />
         </Button>

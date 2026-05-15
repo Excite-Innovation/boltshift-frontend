@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
+import { GetProductItems } from "@/lib/product-items";
 
 const meta = {
   title: "Components/CartQuantity/OrderSummary",
@@ -14,7 +15,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+const products = GetProductItems();
+const sampleItems = [
+  { product: products[0], quantity: 1 },
+  { product: products[1], quantity: 2 },
+].filter(({ product }) => product);
+
+export const Default: Story = {
+  args: {
+    items: sampleItems,
+  },
+};
 
 export const CheckoutPanel: Story = {
   parameters: {
@@ -22,7 +33,7 @@ export const CheckoutPanel: Story = {
   },
   render: () => (
     <div className="flex min-h-screen w-full items-start justify-center bg-muted/30 p-8">
-      <OrderSummary />
+      <OrderSummary items={sampleItems} />
     </div>
   ),
 };
