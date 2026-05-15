@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export function EmptyCart() {
-  const emptyCart = "/empty-profile/empty-cart.svg";
+  const emptyCart = "/empty-profile/cart.png";
   const altDescription = "A shopping trolly.";
 
   return (
