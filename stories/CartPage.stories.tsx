@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { useEffect, useState } from "react";
 
 import CartPage from "@/app/cart/page";
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -18,12 +19,21 @@ function CartPageCanvas({
 }: {
   cartItems: Array<{ productId: number; quantity: number }>;
 }) {
-  seedCart(cartItems);
+  const [isSeeded, setIsSeeded] = useState(false);
+
+  useEffect(() => {
+    seedCart(cartItems);
+    setIsSeeded(true);
+  }, [cartItems]);
+
+  if (!isSeeded) {
+    return null;
+  }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider key={JSON.stringify(cartItems)}>
       <div className="w-full px-6">
-        <CartPage />
+        <CartPage key={JSON.stringify(cartItems)} />
       </div>
     </SidebarProvider>
   );
@@ -34,6 +44,12 @@ const meta = {
   component: CartPage,
   parameters: {
     layout: "fullscreen",
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: "/cart",
+      },
+    },
   },
   tags: ["autodocs"],
 } satisfies Meta<typeof CartPage>;

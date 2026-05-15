@@ -15,6 +15,7 @@ import {
   writeStoredCart,
 } from "@/lib/wishlist";
 import { GetProductItems } from "@/lib/product-items";
+import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
 
 export default function CartPage() {
   const products = useMemo(() => GetProductItems(), []);
@@ -53,44 +54,49 @@ export default function CartPage() {
 
         <div className="flex flex-col gap-10 pb-12">
           {cartItems.length > 0 ? (
-            <div className="grid gap-2">
-              <div className="hidden border-b py-1 text-lg font-bold md:flex md:items-center md:justify-between">
-                <span>Item</span>
+            <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+              <div className="grid flex-1 gap-2">
+                <div className="hidden border-b py-1 text-lg font-bold md:flex md:items-center md:justify-between">
+                  <span>Item</span>
 
-                <div className="flex min-w-93.75 items-center gap-4">
-                  <span aria-hidden="true" className="h-10 w-10" />
-                  <span className="w-24">Subtotal</span>
-                  <span className="w-32">Quantity</span>
+                  <div className="flex min-w-93.75 items-center gap-4">
+                    <span aria-hidden="true" className="h-10 w-10" />
+                    <span className="w-24">Subtotal</span>
+                    <span className="w-32">Quantity</span>
+                  </div>
+                </div>
+
+                <div>
+                  {cartItems.map(({ product, quantity }) => (
+                    <CartItem
+                      key={product.id}
+                      product={product}
+                      quantity={quantity}
+                      onRemove={() =>
+                        dispatchCart({
+                          type: "remove",
+                          productId: product.id,
+                        })
+                      }
+                      onDecrement={() =>
+                        dispatchCart({
+                          type: "decrement",
+                          productId: product.id,
+                        })
+                      }
+                      onIncrement={() =>
+                        dispatchCart({
+                          type: "increment",
+                          productId: product.id,
+                        })
+                      }
+                    />
+                  ))}
                 </div>
               </div>
 
-              <div>
-                {cartItems.map(({ product, quantity }) => (
-                  <CartItem
-                    key={product.id}
-                    product={product}
-                    quantity={quantity}
-                    onRemove={() =>
-                      dispatchCart({
-                        type: "remove",
-                        productId: product.id,
-                      })
-                    }
-                    onDecrement={() =>
-                      dispatchCart({
-                        type: "decrement",
-                        productId: product.id,
-                      })
-                    }
-                    onIncrement={() =>
-                      dispatchCart({
-                        type: "increment",
-                        productId: product.id,
-                      })
-                    }
-                  />
-                ))}
-              </div>
+              {/* Order summary */}
+              <OrderSummary />
             </div>
           ) : (
             <EmptyCart />
