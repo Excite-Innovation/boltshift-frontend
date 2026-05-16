@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import type { ComponentProps, MouseEvent } from "react";
 import Image from "next/image";
+import { showSonnerMessage } from "@/components/alert/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
@@ -15,6 +16,7 @@ import { EditNum, GetRatio, cn, FormatNumber } from "@/lib/utils";
 import { StartRating } from "@/components/rating/rating";
 import Link from "next/link";
 import {
+  addProductToStoredCart,
   isProductInStoredWishlist,
   toggleProductInStoredWishlist,
 } from "@/lib/wishlist";
@@ -24,6 +26,41 @@ type ProductCardProps = {
   product: Product;
   className?: string;
 };
+
+function AddToCartButton({
+  product,
+  className,
+  variant,
+}: {
+  product: Product;
+  className?: string;
+  variant?: ComponentProps<typeof Button>["variant"];
+}) {
+  const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    addProductToStoredCart(product.id);
+    showSonnerMessage({
+      variant: "success",
+      title: "Item Added to Cart",
+      description: "Checkout the cart and proceed to complete your order.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
+  };
+
+  return (
+    <Button
+      type="button"
+      variant={variant}
+      onClick={handleAddToCart}
+      aria-label={`Add ${product.name} to cart`}
+      className={className}
+    >
+      Add to Cart
+    </Button>
+  );
+}
 
 // Shared image block for all card variants, with an optional save button position.
 function CardImage({
@@ -126,12 +163,11 @@ function DefaultContent({
         </div>
       </div>
 
-      <Button
+      <AddToCartButton
+        product={product}
         variant="outline"
         className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer"
-      >
-        Add to Cart
-      </Button>
+      />
     </>
   );
 }
@@ -155,12 +191,11 @@ function HorizontalDefaultContent({
         </p>
       </div>
 
-      <Button
+      <AddToCartButton
+        product={product}
         variant="outline"
         className="w-full py-2 px-3 rounded-md text-sm font-semibold hover:cursor-pointer"
-      >
-        Add to Cart
-      </Button>
+      />
     </>
   );
 }
@@ -252,9 +287,10 @@ function CountdownContent({
 
       <div className="flex flex-col gap-2">
         <NumberTickerDemo />
-        <Button className="w-full py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer">
-          Add to Cart
-        </Button>
+        <AddToCartButton
+          product={product}
+          className="w-full py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer"
+        />
       </div>
     </>
   );
@@ -280,12 +316,11 @@ function CenteredContent({
         </p>
       </div>
 
-      <Button
+      <AddToCartButton
+        product={product}
         variant="outline"
         className="py-2 px-3 grid gap-1 rounded-md text-sm font-regular hover:cursor-pointer"
-      >
-        Add to Cart
-      </Button>
+      />
     </>
   );
 }

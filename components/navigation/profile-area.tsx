@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const actions = [
   { id: "wishlist", icon: Heart, href: "/wishlist" },
-  { id: "cart", icon: ShoppingCart },
+  { id: "cart", icon: ShoppingCart, href: "/cart" },
   { id: "notifications", icon: Bell },
 ];
 

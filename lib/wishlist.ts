@@ -35,7 +35,13 @@ export const initialWishlist: WishlistEntry[] = [
   { productId: 8, quantity: 1 },
 ];
 
+export const initialCart: CartEntry[] = [
+  { productId: 1, quantity: 1 },
+  { productId: 2, quantity: 1 },
+];
+
 const WISHLIST_STORAGE_KEY = "boltshift:wishlist";
+const CART_STORAGE_KEY = "boltshift:cart";
 
 // TODO: Replace these storage helpers with the shared wishlist state manager once it exists.
 
@@ -129,6 +135,10 @@ export function getWishlistItems(
   });
 }
 
+export function getCartItems(cart: CartEntry[], products: Product[]) {
+  return getWishlistItems(cart, products);
+}
+
 export function updateWishlistQuantity(
   wishlist: WishlistEntry[],
   productId: number,
@@ -165,6 +175,71 @@ export function wishlistReducer(
       return [];
     default:
       return wishlist;
+  }
+}
+
+export function readStoredCart(fallback = initialCart) {
+  if (typeof window === "undefined") {
+    return fallback;
+  }
+
+  try {
+    const storedCart = window.localStorage.getItem(CART_STORAGE_KEY);
+
+    if (!storedCart) {
+      return fallback;
+    }
+
+    const parsedCart: unknown = JSON.parse(storedCart);
+
+    if (!Array.isArray(parsedCart)) {
+      return fallback;
+    }
+
+    return parsedCart.filter(isWishlistEntry).map((item) => ({
+      productId: item.productId,
+      quantity: Math.max(1, item.quantity),
+    }));
+  } catch {
+    return fallback;
+  }
+}
+
+export function writeStoredCart(cart: CartEntry[]) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+}
+
+export function addProductToStoredCart(productId: number, quantity = 1) {
+  const cart = readStoredCart([]);
+  const nextCart = addWishlistToCart(cart, [
+    { productId, quantity: Math.max(1, quantity) },
+  ]);
+
+  writeStoredCart(nextCart);
+
+  return nextCart;
+}
+
+export function cartReducer(cart: CartEntry[], action: WishlistAction) {
+  switch (action.type) {
+    case "add":
+      return addWishlistToCart(cart, [
+        { productId: action.productId, quantity: 1 },
+      ]);
+    case "increment":
+      return updateWishlistQuantity(cart, action.productId, 1);
+    case "decrement":
+      return updateWishlistQuantity(cart, action.productId, -1);
+    case "remove":
+      return removeWishlistItem(cart, action.productId);
+    case "clear":
+      return [];
+    default:
+      return cart;
   }
 }
 

@@ -86,8 +86,7 @@ export function DeleteModal({
           <DialogClose asChild>
             <Button
               type="button"
-              variant="destructive"
-              className="h-12 rounded-lg py-2.5 px-4 border-2 text-base font-semibold cursor-pointer z-10"
+              className="z-10"
               onClick={handleConfirm}
             >
               {actionLabel}
