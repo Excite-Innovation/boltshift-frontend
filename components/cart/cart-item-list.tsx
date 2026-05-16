@@ -23,7 +23,7 @@ export function CartItem({
   const colorName = product.variants[0]?.color ?? "Default";
 
   return (
-    <div className="pb-12 flex w-full flex-col gap-10 sm:flex-row">
+    <div className="flex w-full flex-col gap-10 sm:flex-row">
       <div className="flex w-full flex-col gap-4 border-b border-border/50 py-4 md:flex-row md:justify-between">
         <ProductItemSummary
           product={product}
