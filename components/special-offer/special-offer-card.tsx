@@ -3,11 +3,13 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { showSonnerMessage } from "@/components/alert/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { ColorSwatchSelector } from "@/components/ui/color-swatch-selector";
 import { LabelSelector } from "@/components/ui/label-selector";
+import { addProductToStoredCart } from "@/lib/wishlist";
 import { GetProductItems } from "@/lib/product-items";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { StartRating } from "@/components/rating/rating";
@@ -65,6 +67,16 @@ export function SpecialOfferCard() {
 
   const Decrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const handleAddToCart = () => {
+    addProductToStoredCart(selectedItem.id, quantity);
+    showSonnerMessage({
+      variant: "success",
+      title: "Item Added to Cart",
+      description: "Checkout the cart and proceed to complete your order.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
   };
 
   return (
@@ -264,7 +276,10 @@ export function SpecialOfferCard() {
               </ButtonGroup>
 
               <Button
+                type="button"
                 variant="outline"
+                onClick={handleAddToCart}
+                aria-label={`Add ${selectedItem.name} to cart`}
               >
                 <ShoppingCart className="text-muted-foreground" />
                 Add to Cart

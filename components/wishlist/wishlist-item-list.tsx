@@ -1,11 +1,9 @@
-import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
-import { ModalWrapper } from "@/components/product-modal/modal-wraper";
+import { ProductItemSummary } from "@/components/product-item-summary/product-item-summary";
 import { Product } from "@/types/type";
 import { EditNum } from "@/lib/utils";
 import {
@@ -32,7 +30,6 @@ export function WishlistItem({
 }: WishlistItemProps) {
   const label = "Designer Edition";
   const colorName = "Sunset Golden Yellow";
-  const productImage = product.images[0];
 
   const title = "Remove Item from Wishlist";
   const description =
@@ -57,47 +54,11 @@ export function WishlistItem({
 
   return (
     <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
-      <div className="flex max-w-140 items-center gap-3">
-        <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-border bg-secondary md:size-24">
-          <ModalWrapper
-            productTitle={product.name}
-            vendorName={product.vendor}
-            rating={product.ratings}
-            productItems={product.images}
-          >
-            <Image
-              src={productImage}
-              alt={product.name}
-              fill
-              sizes="96px"
-              className="object-cover hover:cursor-pointer"
-            />
-          </ModalWrapper>
-        </div>
-
-        <div className="min-w-0 space-y-2">
-          <p className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">
-            {product.name}
-          </p>
-
-          <div className="flex flex-col flex-wrap justify-start gap-2 md:flex-row">
-            <Badge
-              variant="outline"
-              className="rounded-md px-2 py-1 text-xs font-normal text-muted-foreground"
-            >
-              {label}
-            </Badge>
-
-            <div className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
-              <span
-                aria-hidden="true"
-                className="size-5 shrink-0 rounded-full bg-amber-500"
-              />
-              <span className="truncate capitalize">{colorName}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProductItemSummary
+        product={product}
+        label={label}
+        colorName={colorName}
+      />
 
       {/* Items price and quantity */}
       <div className="flex w-full items-center justify-between md:gap-4 md:max-w-93.75 md:justify-start">

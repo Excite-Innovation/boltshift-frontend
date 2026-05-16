@@ -17,21 +17,23 @@ const CategoryTabs = {
 export function TabsLine() {
   const defaultValue = Object.keys(CategoryTabs)[0];
   return (
-    <Tabs defaultValue={defaultValue} className="gap-12">
-      <TabsList
-        variant="line"
-        className="h-8 gap-3 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
-      >
-        {Object.entries(CategoryTabs).map(([key, label]) => (
-          <TabsTrigger
-            key={key}
-            value={key}
-            className="flex-none! shrink-0 data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
-          >
-            {label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <Tabs defaultValue={defaultValue} className="min-w-0 gap-12">
+      <div className="w-full overflow-x-auto scroll-smooth scrollbar-hide">
+        <TabsList
+          variant="line"
+          className="h-8 gap-3 whitespace-nowrap"
+        >
+          {Object.entries(CategoryTabs).map(([key, label]) => (
+            <TabsTrigger
+              key={key}
+              value={key}
+              className="flex-none! shrink-0 data-[state=active]:primary data-[state=active]:text-primary dark:data-[state=active]:text-primary hover:text-primary dark:hover:text-primary after:bg-primary"
+            >
+              {label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       <Separator className="-mt-12" />
 
