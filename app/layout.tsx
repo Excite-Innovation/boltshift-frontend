@@ -31,7 +31,23 @@ export const metadata: Metadata = {
     description:
       "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
     siteName: "Boltshift",
-    images: [{ url: "/opengraph-image.png" }],
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 7680,
+        height: 4320,
+        alt: "Boltshift",
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Boltshift",
+    description:
+      "Modern e-commerce platform designed to help stores showcase, manage, and sell their products seamlessly.",
+    images: ["/opengraph-image.png"],
   },
 };
 

@@ -21,8 +21,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
+        width: 7680,
+        height: 4320,
         alt: "Boltshift Catalog",
       },
     ],
