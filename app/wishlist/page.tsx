@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Boltshift Catalog",
+        width: 7680,
+        height: 4320,
+        alt: "Boltshift Wishlist",
       },
     ],
     type: "website",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Product Catalog | Boltshift",
+    title: "Wishlist | Boltshift",
     description:
-      "Browse products across categories on Boltshift and find what you need.",
+      "Save products you love to your wishlist and revisit them anytime on Boltshift.",
     images: ["/opengraph-image.png"],
   },
 };
