@@ -13,6 +13,8 @@ type DeliveryMethodCardProps = Omit<
   title?: string;
   description?: string;
   icon?: React.ReactNode;
+  iconSrc?: string;
+  iconAlt?: string;
   forceHover?: boolean;
 };
 
@@ -20,6 +22,8 @@ export function DeliveryMethodCard({
   title = "Free Delivery Kshs 0",
   description = "5 - 7 Days Delivery",
   icon,
+  iconSrc = "/delivery-method/Bicycle.svg",
+  iconAlt = "",
   forceHover = false,
   className,
   id,
@@ -46,11 +50,11 @@ export function DeliveryMethodCard({
         <span className="flex size-8 shrink-0 items-center justify-center">
           {icon ?? (
             <Image
-              src="/delivery-method/Bicycle.svg"
-              alt="Bicycle icon"
+              src={iconSrc}
+              alt={iconAlt}
               width={32}
               height={32}
-              aria-hidden="true"
+              aria-hidden={iconAlt ? undefined : "true"}
             />
           )}
         </span>
