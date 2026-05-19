@@ -16,7 +16,7 @@ export function ShippingDetailsCard() {
       </CardHeader>
 
       <CardContent className="px-0">
-        <form className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <form className="flex flex-wrap justify-start gap-8">
           {/* Office/Apartment Details */}
           <FormInputField
             id="home-address"

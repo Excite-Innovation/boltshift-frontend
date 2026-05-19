@@ -22,7 +22,7 @@ export function FormInputField({
   return (
     <div
       className={cn(
-        "w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium",
+        "w-full max-w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium",
         className,
       )}
     >
