@@ -36,6 +36,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CheckoutPage() {
-  return <CheckoutPageClient />;
+type CheckoutPageProps = {
+  searchParams?: Promise<{
+    items?: string | string[];
+  }>;
+};
+
+export default async function CheckoutPage({
+  searchParams,
+}: CheckoutPageProps) {
+  const params = await searchParams;
+  const itemsParam = Array.isArray(params?.items)
+    ? params.items[0]
+    : params?.items;
+
+  return <CheckoutPageClient itemsParam={itemsParam} />;
 }

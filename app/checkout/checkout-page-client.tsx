@@ -1,9 +1,48 @@
+"use client";
+
+import { useMemo } from "react";
+
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer/footer-section";
 import { SectionTitle } from "@/components/section-title";
 import { BackButton } from "@/components/back/back";
+import { CheckoutProductCard } from "@/components/checkout/checkout-product-spec";
+import { GetProductItems } from "@/lib/product-items";
+import { getCartItems } from "@/lib/wishlist";
+import { PersonalDetailsCard } from "@/components/checkout/personal-details";
+import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
+import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
+import { Separator } from "@/components/ui/separator";
 
-export function CheckoutPageClient() {
+type CheckoutPageClientProps = {
+  itemsParam?: string | null;
+};
+
+function parseCheckoutItems(itemsParam: string | null | undefined) {
+  if (!itemsParam) {
+    return [];
+  }
+
+  return itemsParam
+    .split(",")
+    .map((item) => {
+      const [productId, quantity] = item.split(":").map(Number);
+
+      return {
+        productId,
+        quantity: Math.max(1, quantity || 1),
+      };
+    })
+    .filter(({ productId }) => Number.isFinite(productId));
+}
+
+export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
+  const products = useMemo(() => GetProductItems(), []);
+  const checkoutItems = useMemo(
+    () => getCartItems(parseCheckoutItems(itemsParam), products),
+    [itemsParam, products],
+  );
+
   return (
     <div className="w-full">
       <div>
@@ -25,6 +64,14 @@ export function CheckoutPageClient() {
           alt="Delivery Truck icon"
           className="py-4"
         />
+
+        <div className="flex flex-wrap gap-10 pb-12">
+          <PersonalDetailsCard />
+          <Separator />
+          <ShippingDetailsCard />
+          <Separator />
+          <ShippingMethodCard />
+        </div>
       </main>
 
       <Footer />

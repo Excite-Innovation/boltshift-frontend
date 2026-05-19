@@ -44,7 +44,7 @@ export function EmptyWishlist() {
         </Button>
 
         <Button asChild>
-          <Link href="/">
+          <Link href="/cart">
             <ShoppingCart /> Go To Your Cart
           </Link>
         </Button>

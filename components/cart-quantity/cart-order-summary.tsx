@@ -44,6 +44,16 @@ function formatPercentage(rate: number) {
   return `${Math.round(rate)}%`;
 }
 
+function getCheckoutHref(items: OrderSummaryItem[]) {
+  const checkoutItems = items
+    .map(({ product, quantity }) => `${product.id}:${quantity}`)
+    .join(",");
+
+  return checkoutItems
+    ? `/checkout?items=${encodeURIComponent(checkoutItems)}`
+    : "/checkout";
+}
+
 function getVoucherDiscountRate(title: string) {
   const discountMatch = title.match(/(\d+)%/);
 
@@ -229,7 +239,7 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
           </Button>
         ) : (
           <Button size="lg" className="w-full" asChild>
-            <Link href="/checkout">
+            <Link href={getCheckoutHref(items)}>
               Check Out
               <ArrowRight size="5" />
             </Link>
