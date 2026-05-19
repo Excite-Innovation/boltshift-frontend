@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -30,6 +30,7 @@ type OrderSummaryItem = {
 
 type OrderSummaryProps = {
   items?: OrderSummaryItem[];
+  children?: ReactNode;
 };
 
 const currencyFormatter = new Intl.NumberFormat("en-KE", {
@@ -90,7 +91,7 @@ function getVoucherDiscount(
   };
 }
 
-export function OrderSummary({ items = [] }: OrderSummaryProps) {
+export function OrderSummary({ items = [], children }: OrderSummaryProps) {
   const [voucherCode, setVoucherCode] = useState("");
   const [selectedVoucherId, setSelectedVoucherId] = useState("");
   const selectedVoucher = vouchers.find(
@@ -144,6 +145,8 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
       </CardHeader>
 
       <CardContent className="w-72 p-0 flex flex-col gap-4">
+        {children}
+
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Subtotal</span>
           <span>

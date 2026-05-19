@@ -13,6 +13,7 @@ import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
 import { Separator } from "@/components/ui/separator";
+import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -66,11 +67,23 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
         />
 
         <div className="flex flex-wrap gap-10 pb-12">
-          <PersonalDetailsCard />
-          <Separator />
-          <ShippingDetailsCard />
-          <Separator />
-          <ShippingMethodCard />
+          <div className="flex flex-col gap-12">
+            <PersonalDetailsCard />
+            <Separator />
+            <ShippingDetailsCard />
+            <Separator />
+            <ShippingMethodCard />
+            <Separator />
+          </div>
+          <OrderSummary items={checkoutItems}>
+            {checkoutItems.map(({ product, quantity }) => (
+              <CheckoutProductCard
+                key={product.id}
+                product={product}
+                quantity={quantity}
+              />
+            ))}
+          </OrderSummary>
         </div>
       </main>
 

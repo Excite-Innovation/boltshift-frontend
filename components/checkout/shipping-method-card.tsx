@@ -4,7 +4,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 
 export function ShippingMethodCard() {
   return (
-    <Card className="w-full py-4 flex flex-col gap-8 shadow-none">
+    <Card className="w-full py-4 flex flex-col gap-8 border-0 shadow-none">
       <CardHeader className="flex gap-4 px-0 items-center">
         {/* Title */}
         <div className="flex size-8 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">

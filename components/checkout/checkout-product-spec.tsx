@@ -33,8 +33,8 @@ export function CheckoutProductCard({
   const productTotal = product.price * quantity;
 
   return (
-    <Card className="w-full max-w-72 border-b shadow-none">
-      <CardContent className="flex gap-4 px-0 py-3">
+    <Card className="w-full max-w-72 border-0 shadow-none">
+      <CardContent className="flex gap-4 px-0 py-3 border-b border-border/5">
         {/* Product Image */}
         <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
           <Image
