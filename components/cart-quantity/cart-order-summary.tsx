@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
@@ -221,10 +222,19 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
         </div>
 
         {/* Checkout */}
-        <Button size="lg" className="w-full" disabled={items.length === 0}>
-          Check Out
-          <ArrowRight size="5" />
-        </Button>
+        {items.length === 0 ? (
+          <Button size="lg" className="w-full" disabled>
+            Check Out
+            <ArrowRight size="5" />
+          </Button>
+        ) : (
+          <Button size="lg" className="w-full" asChild>
+            <Link href="/checkout">
+              Check Out
+              <ArrowRight size="5" />
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
