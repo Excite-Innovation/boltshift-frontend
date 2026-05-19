@@ -30,7 +30,7 @@ export function CartPageClient() {
   const cartItems = getCartItems(cart, products);
 
   return (
-    <div className="overflow-x-hidden overflow-y-auto">
+    <div className="overflow-x-clip">
       <div>
         <div className="hidden md:block">
           <Navbar />
@@ -56,7 +56,7 @@ export function CartPageClient() {
           {cartItems.length > 0 ? (
             <div className="flex w-full flex-wrap items-start justify-center gap-10">
               <div className="grid w-full min-w-0 flex-[1_1_42rem] gap-2">
-                <div className="hidden border-b border-border/50 py-1 text-lg font-bold md:flex md:items-center md:justify-between">
+                <div className="sticky top-24 z-20 hidden border-b border-border/50 bg-background py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                   <span>Item</span>
 
                   <div className="flex min-w-93.75 items-center gap-4">
@@ -96,7 +96,7 @@ export function CartPageClient() {
               </div>
 
               {/* Order summary */}
-              <div className="flex flex-[0_1_21rem] justify-center">
+              <div className="flex flex-[0_1_21rem] justify-center md:sticky md:top-24 md:self-start">
                 <OrderSummary items={cartItems} />
               </div>
             </div>
