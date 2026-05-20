@@ -41,8 +41,7 @@ export interface Country {
 }
 
 // Dropdown props
-interface CountryDropdownProps
-  extends Omit<React.ComponentPropsWithoutRef<"button">, "onChange"> {
+interface CountryDropdownProps {
   options?: Country[];
   onChange?: (country: Country) => void;
   defaultValue?: string;
@@ -51,14 +50,12 @@ interface CountryDropdownProps
   slim?: boolean;
 }
 
-const defaultCountryOptions = countries.all.filter(
-  (country: Country) =>
-    country.emoji && country.status !== "deleted" && country.ioc !== "PRK",
-);
-
 const CountryDropdownComponent = (
   {
-    options = defaultCountryOptions,
+    options = countries.all.filter(
+      (country: Country) =>
+        country.emoji && country.status !== "deleted" && country.ioc !== "PRK"
+    ),
     onChange,
     defaultValue,
     disabled = false,
@@ -66,7 +63,7 @@ const CountryDropdownComponent = (
     slim = false,
     ...props
   }: CountryDropdownProps,
-  ref: React.ForwardedRef<HTMLButtonElement>,
+  ref: React.ForwardedRef<HTMLButtonElement>
 ) => {
   const [open, setOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(
@@ -76,7 +73,7 @@ const CountryDropdownComponent = (
   useEffect(() => {
     if (defaultValue) {
       const initialCountry = options.find(
-        (country) => country.alpha3 === defaultValue,
+        (country) => country.alpha3 === defaultValue
       );
       if (initialCountry) {
         setSelectedCountry(initialCountry);
