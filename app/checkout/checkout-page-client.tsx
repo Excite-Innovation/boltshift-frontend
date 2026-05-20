@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer/footer-section";
@@ -8,7 +8,7 @@ import { SectionTitle } from "@/components/section-title";
 import { BackButton } from "@/components/back/back";
 import { CheckoutProductCard } from "@/components/checkout/checkout-product-spec";
 import { GetProductItems } from "@/lib/product-items";
-import { getCartItems } from "@/lib/wishlist";
+import { cartReducer, getCartItems, writeStoredCart } from "@/lib/wishlist";
 import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
@@ -39,9 +39,19 @@ function parseCheckoutItems(itemsParam: string | null | undefined) {
 
 export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
   const products = useMemo(() => GetProductItems(), []);
+  const [checkoutCart, dispatchCheckoutCart] = useReducer(
+    cartReducer,
+    itemsParam,
+    parseCheckoutItems,
+  );
+
+  useEffect(() => {
+    writeStoredCart(checkoutCart);
+  }, [checkoutCart]);
+
   const checkoutItems = useMemo(
-    () => getCartItems(parseCheckoutItems(itemsParam), products),
-    [itemsParam, products],
+    () => getCartItems(checkoutCart, products),
+    [checkoutCart, products],
   );
 
   return (
@@ -78,15 +88,35 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
           </div>
           <div className="lg:shrink-0">
             <OrderSummary items={checkoutItems}>
-              <div className="flex flex-col">
-                {checkoutItems.map(({ product, quantity }) => (
-                  <CheckoutProductCard
-                    key={product.id}
-                    product={product}
-                    quantity={quantity}
-                  />
-                ))}
-              </div>
+              {checkoutItems.length > 0 ? (
+                <div className="flex flex-col">
+                  {checkoutItems.map(({ product, quantity }) => (
+                    <CheckoutProductCard
+                      key={product.id}
+                      product={product}
+                      quantity={quantity}
+                      onRemove={() =>
+                        dispatchCheckoutCart({
+                          type: "remove",
+                          productId: product.id,
+                        })
+                      }
+                      onDecrement={() =>
+                        dispatchCheckoutCart({
+                          type: "decrement",
+                          productId: product.id,
+                        })
+                      }
+                      onIncrement={() =>
+                        dispatchCheckoutCart({
+                          type: "increment",
+                          productId: product.id,
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              ) : null}
             </OrderSummary>
           </div>
         </div>

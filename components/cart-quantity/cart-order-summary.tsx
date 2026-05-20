@@ -2,6 +2,7 @@
 
 import { type ReactNode, useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
@@ -92,8 +93,11 @@ function getVoucherDiscount(
 }
 
 export function OrderSummary({ items = [], children }: OrderSummaryProps) {
+  const pathname = usePathname();
   const [voucherCode, setVoucherCode] = useState("");
   const [selectedVoucherId, setSelectedVoucherId] = useState("");
+  const checkoutButtonLabel =
+    pathname === "/checkout" ? "Order Now" : "Check Out";
   const selectedVoucher = vouchers.find(
     (voucher) => voucher.id === selectedVoucherId,
   );
@@ -238,13 +242,13 @@ export function OrderSummary({ items = [], children }: OrderSummaryProps) {
         {/* Checkout */}
         {items.length === 0 ? (
           <Button size="lg" className="w-full" disabled>
-            Check Out
+            {checkoutButtonLabel}
             <ArrowRight size="5" />
           </Button>
         ) : (
           <Button size="lg" className="w-full" asChild>
             <Link href={getCheckoutHref(items)}>
-              Check Out
+              {checkoutButtonLabel}
               <ArrowRight size="5" />
             </Link>
           </Button>

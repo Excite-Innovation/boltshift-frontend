@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
 import { Card, CardContent } from "@/components/ui/card";
@@ -55,22 +56,35 @@ export function CheckoutProductCard({
           {/* Actions + Quantity */}
           <div className="flex items-center justify-between gap-6">
             {/* Delete Button */}
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-8 w-8 text-muted-foreground hover:bg-transparent"
-              onClick={onRemove}
-            >
-              <Trash2 className="size-5" />
-            </Button>
+            <DeleteModal
+              title="Remove Item from Cart"
+              description="Are you sure you want to delete this item from cart? This action cannot be undone."
+              actionLabel="Remove Item"
+              onConfirm={() => onRemove?.()}
+              trigger={
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Remove item"
+                  disabled={!onRemove}
+                  className="h-8 w-8 text-muted-foreground hover:bg-transparent hover:text-destructive"
+                >
+                  <Trash2 className="size-5" />
+                </Button>
+              }
+            />
 
             {/* Quantity Controls */}
             <ButtonGroup className="rounded-lg border border-border">
               <Button
+                type="button"
                 size="icon"
                 variant="ghost"
+                aria-label="Decrease quantity"
                 className="h-10 w-10 rounded-xl hover:bg-transparent"
                 onClick={onDecrement}
+                disabled={quantity <= 1}
               >
                 <Minus className="size-4" />
               </Button>
@@ -80,8 +94,10 @@ export function CheckoutProductCard({
               </ButtonGroupText>
 
               <Button
+                type="button"
                 size="icon"
                 variant="ghost"
+                aria-label="Increase quantity"
                 className="h-10 w-10 rounded-xl hover:bg-transparent"
                 onClick={onIncrement}
               >
