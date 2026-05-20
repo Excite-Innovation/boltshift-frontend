@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormInputField } from "@/components/checkout/form-input-field";
+import { CountryDropdown } from "@/components/ui/country-dropdown";
+import { Label } from "@/components/ui/label";
 
 export function ShippingDetailsCard() {
   return (
@@ -34,12 +36,13 @@ export function ShippingDetailsCard() {
           />
 
           {/* Country */}
-          <FormInputField
-            id="country"
-            label="Country"
-            type="text"
-            placeholder="Enter your street address"
-          />
+          <div className="w-full max-w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
+            <Label htmlFor="country">Country</Label>
+            <CountryDropdown
+              id="country"
+              placeholder="Select your country"
+            />
+          </div>
 
           {/* City/Town */}
           <FormInputField
