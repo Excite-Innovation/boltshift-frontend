@@ -4,7 +4,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
 import { cn, EditNum } from "@/lib/utils";
 
 type CartQuantityGroupProps = {
@@ -97,9 +97,9 @@ export function CartQuantityGroup({
           <Minus className="size-4" />
         </Button>
 
-        <div className="flex h-full flex-1 items-center justify-center text-sm font-semibold">
+        <ButtonGroupText className="h-full min-w-8 flex-1 justify-center rounded-none border-0 bg-transparent px-0 text-sm font-semibold shadow-none">
           {quantity}
-        </div>
+        </ButtonGroupText>
 
         <Button
           type="button"
