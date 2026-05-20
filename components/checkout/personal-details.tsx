@@ -5,8 +5,7 @@ import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SocialAuthButton } from "@/components/checkout/SocialAuthButton";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { FormInputField } from "@/components/checkout/form-input-field";
 
 export function PersonalDetailsCard() {
   return (
@@ -58,52 +57,29 @@ export function PersonalDetailsCard() {
       </div>
 
       <CardContent className="px-0">
-        <form className="grid gap-8 md:grid-cols-2">
-          {/* First Name */}
-          <div className="flex flex-col gap-1 text-muted-foreground text-xs font-medium">
-            <Label htmlFor="first-name">First Name</Label>
-
-            <Input
-              id="first-name"
-              placeholder="Enter first name"
-              className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
-            />
-          </div>
-
-          {/* Last Name */}
-          <div className="flex flex-col gap-1 text-muted-foreground text-xs font-medium">
-            <Label htmlFor="last-name">Last Name</Label>
-
-            <Input
-              id="last-name"
-              placeholder="Enter last name"
-              className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="flex flex-col gap-1 text-muted-foreground text-xs font-medium">
-            <Label htmlFor="email">Email Address</Label>
-
-            <Input
-              id="email"
-              type="email"
-              placeholder="Enter email address"
-              className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="flex flex-col gap-1 text-muted-foreground text-xs font-medium">
-            <Label htmlFor="phone">Phone Number</Label>
-
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Enter phone number"
-              className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
-            />
-          </div>
+        <form className="flex flex-wrap justify-start gap-8">
+          <FormInputField
+            id="first-name"
+            label="First Name"
+            placeholder="Enter first name"
+          />
+          <FormInputField
+            id="last-name"
+            label="Last Name"
+            placeholder="Enter last name"
+          />
+          <FormInputField
+            id="email"
+            label="Email Address"
+            type="email"
+            placeholder="Enter email address"
+          />
+          <FormInputField
+            id="phone"
+            label="Phone Number"
+            type="tel"
+            placeholder="Enter phone number"
+          />
         </form>
       </CardContent>
     </Card>

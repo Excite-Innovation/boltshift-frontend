@@ -146,6 +146,7 @@ export function OrderSummary({ items = [], children }: OrderSummaryProps) {
 
       <CardContent className="w-72 p-0 flex flex-col gap-4">
         {children}
+        {children ? <Separator /> : null}
 
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Subtotal</span>

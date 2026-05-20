@@ -66,8 +66,9 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
           className="py-4"
         />
 
-        <div className="flex flex-wrap gap-10 pb-12">
-          <div className="flex flex-col gap-12">
+        <div className="flex w-full flex-col gap-10 pb-12 lg:flex-row lg:items-start">
+          {/* Shipping details */}
+          <div className="flex min-w-0 flex-1 flex-col gap-12">
             <PersonalDetailsCard />
             <Separator />
             <ShippingDetailsCard />
@@ -75,15 +76,19 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <ShippingMethodCard />
             <Separator />
           </div>
-          <OrderSummary items={checkoutItems}>
-            {checkoutItems.map(({ product, quantity }) => (
-              <CheckoutProductCard
-                key={product.id}
-                product={product}
-                quantity={quantity}
-              />
-            ))}
-          </OrderSummary>
+          <div className="lg:shrink-0">
+            <OrderSummary items={checkoutItems}>
+              <div className="flex flex-col">
+                {checkoutItems.map(({ product, quantity }) => (
+                  <CheckoutProductCard
+                    key={product.id}
+                    product={product}
+                    quantity={quantity}
+                  />
+                ))}
+              </div>
+            </OrderSummary>
+          </div>
         </div>
       </main>
 
