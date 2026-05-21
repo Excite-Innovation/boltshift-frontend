@@ -58,7 +58,7 @@ function PaymentCardFlipper({
       <div
         className={cn(
           "relative size-full rounded-2xl transition-transform duration-700 transform-3d",
-          "group-hover/payment-card:transform-[rotateY(180deg)] data-[flipped=true]:transform-[rotateY(180deg)]",
+          "group-hover/payment-card:transform-[rotateY(-180deg)] data-[flipped=true]:transform-[rotateY(180deg)]",
         )}
       >
         <div className="absolute inset-0 size-full rounded-2xl backface-hidden">
@@ -157,13 +157,13 @@ function PaymentCardFace({
         <div className="flex items-start justify-between gap-3">
           <p className="text-xl font-semibold leading-none">{card.brand}</p>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {card.isDefault ? (
               <Badge
                 variant="secondary"
-                className="h-6 rounded-md bg-white px-2 text-xs font-medium text-[#3d434e] hover:bg-white"
+                className="h-6 rounded-md bg-white text-xs font-medium border border-border text-[#414651] hover:bg-white"
               >
-                <span className="size-1.5 rounded-full bg-[#7d8490]" />
+                <span className="size-1.5 rounded-full bg-[#717680]" />
                 Default
               </Badge>
             ) : null}
@@ -172,9 +172,14 @@ function PaymentCardFace({
               id={radioId}
               value={card.id}
               className={cn(
+                // Keeps the selector small, circular, and visible on the dark card surface.
                 "size-5 border-white/80 bg-transparent text-white",
-                "data-[state=checked]:border-white data-[state=checked]:bg-white data-[state=checked]:text-[#6d617c]",
-                "[&_svg]:size-2.5",
+
+                // When selected, the radio keeps a muted fill while the inner indicator dot turns white.
+                "data-[state=checked]:border-4 data-[state=checked]:border-white data-[state=checked]:bg-[#6d617c] data-[state=checked]:text-white",
+
+                // Shrinks the default shadcn/radix indicator icon to fit the custom radio size.
+                "[&_svg]:size-1.5",
               )}
             />
 
