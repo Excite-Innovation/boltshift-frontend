@@ -14,7 +14,7 @@ import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
 import { Separator } from "@/components/ui/separator";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
-import { PaymentCard } from "@/components/payment-card/payment-card";
+import { PaymentMethodCard } from "@/components/checkout/payment-method";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -86,7 +86,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <Separator />
             <ShippingMethodCard />
             <Separator />
-            <PaymentCard />
+            <PaymentMethodCard />
           </div>
           <div className="lg:shrink-0">
             <OrderSummary items={checkoutItems}>

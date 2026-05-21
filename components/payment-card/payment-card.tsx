@@ -252,7 +252,7 @@ function PaymentCardFace({
                 <span className="truncate">{card.holder}</span>
                 <span>{card.expiry}</span>
               </div>
-              <p className="font-mono text-xl tracking-[0.22em] text-white">
+              <p className="font-mono font-semibold text-base tracking-[0.22em] text-white">
                 {displayCardNumber}
               </p>
             </div>
@@ -260,25 +260,11 @@ function PaymentCardFace({
             <div className="flex h-9 shrink-0 items-center gap-1 rounded-md bg-white/10 px-2 text-sm font-semibold">
               {card.merchantIcon ??
                 (isAppleMerchant ? <FaApple className="size-4" /> : null)}
-              {merchantName}
+              {/* {merchantName} */}
             </div>
           </div>
         )}
       </div>
-
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-xs"
-        className="absolute right-3 bottom-3 text-white hover:bg-white/10 hover:text-white"
-        onClick={(event) => {
-          event.preventDefault();
-          onFlip?.();
-        }}
-        aria-label={isBack ? "Show card front" : "Show card back"}
-      >
-        <RotateCcw className="size-3.5" />
-      </Button>
     </div>
   );
 }
