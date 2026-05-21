@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Eye, EyeOff, MoreVertical, RotateCcw, Trash2 } from "lucide-react";
+import { Eye, EyeOff, MoreVertical, RotateCcw } from "lucide-react";
+import { MdOutlineCreditScore, MdCreditCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
 import { Badge } from "@/components/ui/badge";
@@ -199,18 +200,31 @@ function PaymentCardFace({
                       </Button>
                     </DropdownMenuTrigger>
                   </TooltipTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent
+                    align="start"
+                    className="p-3 text-sm font-medium gap-2 border rounded-xl"
+                  >
                     <DropdownMenuItem
                       onSelect={(event) => event.preventDefault()}
+                      className="p-4 rounded-lg"
                     >
-                      Set as default
+                      <MdOutlineCreditScore className="size-4" />
+                      Make default
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={(event) => event.preventDefault()}
+                      className="p-4 rounded-lg"
+                    >
+                      <MdCreditCard />
+                      Edit Details
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       variant="destructive"
                       onSelect={(event) => event.preventDefault()}
+                      className="p-4 rounded-lg"
                     >
-                      <Trash2 className="size-4" />
-                      Remove
+                      <MdCreditCard className="size-4" />
+                      Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
