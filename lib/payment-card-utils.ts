@@ -1,4 +1,4 @@
-const MASKED_CARD_GROUP = "****";
+const MASKED_CARD_GROUP = "••••";
 
 // Normalize card numbers for masking and screen-reader labels.
 function getCardDigits(value: string) {

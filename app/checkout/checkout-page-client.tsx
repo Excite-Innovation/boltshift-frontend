@@ -88,7 +88,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <Separator />
             <PaymentMethodCard />
           </div>
-          <div className="lg:shrink-0">
+          <div className="flex justify-center lg:shrink-0">
             <OrderSummary items={checkoutItems}>
               {checkoutItems.length > 0 ? (
                 <div className="flex flex-col">

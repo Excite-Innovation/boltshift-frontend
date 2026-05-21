@@ -344,7 +344,7 @@ export function PaymentCard({
         <RadioGroup
           value={selectedCard}
           onValueChange={setSelectedCard}
-          className="flex flex-wrap justify-start gap-8"
+          className="flex flex-wrap justify-center gap-8 md:justify-start"
         >
           {cards.map((card) => (
             <PaymentCardOption
