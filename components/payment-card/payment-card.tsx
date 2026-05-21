@@ -26,13 +26,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Tooltip,
@@ -109,11 +114,11 @@ function PaymentInputField({
   ...props
 }: PaymentInputFieldProps) {
   return (
-    <div className={cn("space-y-1.5", className)}>
-      <Label htmlFor={id} className="gap-0 text-xs font-medium">
+    <Field className={cn("gap-1.5", className)}>
+      <FieldLabel htmlFor={id} className="gap-0 text-xs font-medium">
         {label}
         {required ? <span className="text-primary">*</span> : null}
-      </Label>
+      </FieldLabel>
       <div className="relative">
         {icon ? (
           <span className="pointer-events-none absolute left-2.5 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center text-muted-foreground">
@@ -131,7 +136,7 @@ function PaymentInputField({
           {...props}
         />
       </div>
-    </div>
+    </Field>
   );
 }
 
@@ -186,82 +191,88 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
             </div>
           </div>
 
-          <div className="space-y-1">
-            <h3 className="text-sm font-bold">Add a payment method</h3>
-            <p className="flex items-center gap-1.5 text-[10px] text-foreground">
-              <ShieldCheck className="size-4 shrink-0" />
+          <div className="pt-6 flex-col gap-1">
+            <h3 className="text-lg/7 font-semibold">Add a payment method</h3>
+            <p className="flex items-center gap-2 text-xs text-foreground">
+              <ShieldCheck className="size-6 shrink-0" />
               Your transaction is secured with SSL encryption
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
-            <PaymentInputField
-              id="payment-card-holder"
-              label="Name on card"
-              required
-              icon={<Mail className="size-4" />}
-              defaultValue="Paul Mbingu"
-            />
-            <PaymentInputField
-              id="payment-card-expiry"
-              label="Expiry"
-              required
-              icon={<Calendar className="size-4" />}
-              defaultValue="06 / 26"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
-            <PaymentInputField
-              id="payment-card-number"
-              label="Card number"
-              required
-              inputClassName="pl-12"
-              defaultValue="1234 1234 1234 1234"
-              icon={
-                <span className="relative flex h-4 w-6 items-center">
-                  <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
-                  <span className="absolute right-0 size-3.5 rounded-full bg-[#f79e1b] mix-blend-multiply" />
-                </span>
-              }
-            />
-            <PaymentInputField
-              id="payment-card-cvv"
-              label="CVV"
-              icon={<LockKeyhole className="size-4" />}
-              defaultValue="•••"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
-            <PaymentInputField
-              id="payment-card-vendor"
-              label="Card Vendor"
-              required
-              icon={<CreditCard className="size-4" />}
-              defaultValue="Excite!"
-            />
-            <div className="space-y-1.5">
-              <Label className="text-xs font-medium">Personalize</Label>
-              <Button
-                type="button"
-                variant="outline"
-                className="h-8 w-full rounded-md text-xs shadow-none"
-              >
-                Edit
-              </Button>
+          <FieldGroup className="gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+              <PaymentInputField
+                id="payment-card-holder"
+                label="Name on card"
+                required
+                icon={<Mail className="size-4" />}
+                defaultValue="Paul Mbingu"
+              />
+              <PaymentInputField
+                id="payment-card-expiry"
+                label="Expiry"
+                required
+                icon={<Calendar className="size-4" />}
+                defaultValue="06 / 26"
+              />
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+              <PaymentInputField
+                id="payment-card-number"
+                label="Card number"
+                required
+                inputClassName="pl-12"
+                defaultValue="1234 1234 1234 1234"
+                icon={
+                  <span className="relative flex h-4 w-6 items-center">
+                    <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
+                    <span className="absolute right-0 size-3.5 rounded-full bg-[#f79e1b] mix-blend-multiply" />
+                  </span>
+                }
+              />
+              <PaymentInputField
+                id="payment-card-cvv"
+                label="CVV"
+                icon={<LockKeyhole className="size-4" />}
+                defaultValue="•••"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+              <PaymentInputField
+                id="payment-card-vendor"
+                label="Card Vendor"
+                required
+                icon={<CreditCard className="size-4" />}
+                defaultValue="Excite!"
+              />
+              <Field className="gap-1.5">
+                <FieldLabel className="text-xs font-medium">
+                  Personalize
+                </FieldLabel>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="h-8 w-full rounded-md text-xs shadow-none"
+                >
+                  Edit
+                </Button>
+              </Field>
+            </div>
+          </FieldGroup>
+
+          <Field orientation="horizontal" className="gap-2">
             <Checkbox id="payment-card-default" defaultChecked />
-            <Label
-              htmlFor="payment-card-default"
-              className="text-xs font-normal"
-            >
-              Make Default
-            </Label>
-          </div>
+            <FieldContent className="gap-0">
+              <FieldLabel
+                htmlFor="payment-card-default"
+                className="text-xs font-normal"
+              >
+                Make Default
+              </FieldLabel>
+            </FieldContent>
+          </Field>
 
           <DialogFooter className="grid grid-cols-2 gap-3 sm:grid-cols-2">
             <DialogClose asChild>
