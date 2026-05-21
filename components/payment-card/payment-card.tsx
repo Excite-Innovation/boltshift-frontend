@@ -47,7 +47,6 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
       className={cn(
         "group h-47.5 w-full max-w-79 flex-col gap-4 whitespace-normal rounded-xl bg-[#f3f4f6] px-5 py-0 text-center text-[#111827] shadow-none",
         "hover:text-primary hover:ring-2 hover:ring-ring hover:ring-offset-2",
-        // "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e40046] focus-visible:ring-offset-2",
       )}
       aria-label="Add a new payment card"
     >
