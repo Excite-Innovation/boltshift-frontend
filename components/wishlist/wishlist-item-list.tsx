@@ -1,7 +1,7 @@
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { ProductItemSummary } from "@/components/product-item-summary/product-item-summary";
 import { Product } from "@/types/type";
@@ -103,9 +103,9 @@ export function WishlistItem({
             <Minus className="size-4" />
           </Button>
 
-          <div className="flex h-full flex-1 items-center justify-center  text-sm font-semibold">
+          <ButtonGroupText className="h-full min-w-8 flex-1 justify-center rounded-none border-0 bg-transparent px-0 text-sm font-semibold shadow-none">
             {quantity}
-          </div>
+          </ButtonGroupText>
 
           <Button
             type="button"

@@ -68,7 +68,7 @@ export function WishlistPageClient() {
   };
 
   return (
-    <div className="overflow-x-hidden overflow-y-auto">
+    <div className="overflow-x-clip">
       <div>
         <div className="hidden md:block">
           <Navbar />
@@ -93,7 +93,7 @@ export function WishlistPageClient() {
         <div className="flex flex-col gap-10 pb-12">
           {wishlistItems.length > 0 ? (
             <div className="grid gap-2">
-              <div className="hidden border-b py-1 text-lg font-bold md:flex md:items-center md:justify-between">
+              <div className="sticky top-24 z-20 hidden border-b border-border/50 bg-background py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                 <span>Item</span>
 
                 <div className="flex min-w-93.75 items-center gap-4">
