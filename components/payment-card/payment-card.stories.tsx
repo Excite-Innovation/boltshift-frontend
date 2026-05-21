@@ -54,6 +54,18 @@ export const SingleCard: Story = {
   ),
 };
 
+export const NoCards: Story = {
+  args: {
+    cards: [],
+    defaultSelectedCardId: "",
+  },
+  render: (args) => (
+    <div className="w-95 max-w-[calc(100vw-2rem)]">
+      <PaymentCard {...args} />
+    </div>
+  ),
+};
+
 export const CustomMerchant: Story = {
   args: {
     cards: [

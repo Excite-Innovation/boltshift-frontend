@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Eye, EyeOff, MoreVertical, RotateCcw } from "lucide-react";
-import { MdOutlineCreditScore, MdCreditCard } from "react-icons/md";
+import { CreditCard, MoreVertical, Plus, ShieldCheck } from "lucide-react";
+import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +33,39 @@ import type {
 import { cn } from "@/lib/utils";
 
 const DEFAULT_CARD_BACKGROUND = "#3d434e";
+
+type AddPaymentCardTileProps = {
+  onClick?: () => void;
+};
+
+function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={onClick}
+      className={cn(
+        "group h-47.5 w-full max-w-79 flex-col gap-4 whitespace-normal rounded-xl bg-[#f3f4f6] px-5 py-0 text-center text-[#111827] shadow-none",
+        "hover:text-primary hover:ring-2 hover:ring-ring hover:ring-offset-2",
+        // "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e40046] focus-visible:ring-offset-2",
+      )}
+      aria-label="Add a new payment card"
+    >
+      <span className="flex size-12 items-center justify-center rounded-lg border border-border bg-background transition-colors group-hover:border-border">
+        <MdAddCard className="size-6" />
+      </span>
+
+      <span className="block text-base font-semibold">Add a New Card</span>
+
+      <div className="flex flex-col gap-1">
+        <span className="block text-xs">
+          Your transaction is secured with SSL encryption
+        </span>
+        <ShieldCheck className="mx-auto size-6" strokeWidth={2} />
+      </div>
+    </Button>
+  );
+}
 
 type PaymentCardFlipperProps = {
   front: React.ReactNode;
@@ -222,7 +255,7 @@ function PaymentCardFace({
                       onSelect={(event) => event.preventDefault()}
                       className="p-4 rounded-lg"
                     >
-                      <MdCreditCard />
+                      <MdCreditCard className="size-4" />
                       Edit Details
                     </DropdownMenuItem>
                     <DropdownMenuItem
@@ -340,11 +373,11 @@ export function PaymentCard({
         </TooltipProvider> */}
       </CardHeader>
 
-      <CardContent className="px-0">
+      <CardContent className="flex flex-wrap justify-center gap-8 px-0 md:justify-start">
         <RadioGroup
           value={selectedCard}
           onValueChange={setSelectedCard}
-          className="flex flex-wrap justify-center gap-8 md:justify-start"
+          className="contents"
         >
           {cards.map((card) => (
             <PaymentCardOption
@@ -360,6 +393,7 @@ export function PaymentCard({
             />
           ))}
         </RadioGroup>
+        <AddPaymentCardTile />
       </CardContent>
     </Card>
   );
