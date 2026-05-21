@@ -1,19 +1,38 @@
 "use client";
 
 import * as React from "react";
-import { CreditCard, MoreVertical, Plus, ShieldCheck } from "lucide-react";
+import {
+  Calendar,
+  CreditCard,
+  LockKeyhole,
+  Mail,
+  MoreVertical,
+  ShieldCheck,
+} from "lucide-react";
 import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Tooltip,
@@ -63,6 +82,207 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
         <ShieldCheck className="mx-auto size-6" strokeWidth={2} />
       </div>
     </Button>
+  );
+}
+
+type AddPaymentCardModalProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+type PaymentInputFieldProps = {
+  id: string;
+  label: string;
+  required?: boolean;
+  icon?: React.ReactNode;
+  className?: string;
+  inputClassName?: string;
+} & React.ComponentProps<typeof Input>;
+
+function PaymentInputField({
+  id,
+  label,
+  required,
+  icon,
+  className,
+  inputClassName,
+  ...props
+}: PaymentInputFieldProps) {
+  return (
+    <div className={cn("space-y-1.5", className)}>
+      <Label htmlFor={id} className="gap-0 text-xs font-medium">
+        {label}
+        {required ? <span className="text-primary">*</span> : null}
+      </Label>
+      <div className="relative">
+        {icon ? (
+          <span className="pointer-events-none absolute left-2.5 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center text-muted-foreground">
+            {icon}
+          </span>
+        ) : null}
+        <Input
+          id={id}
+          required={required}
+          className={cn(
+            "h-8 rounded-md border-border bg-background text-xs shadow-none focus-visible:ring-1",
+            icon ? "pl-8" : null,
+            inputClassName,
+          )}
+          {...props}
+        />
+      </div>
+    </div>
+  );
+}
+
+function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-120 gap-4 overflow-y-auto rounded-xl p-4">
+        <DialogHeader className="flex-row items-center gap-4 text-left">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-foreground">
+            <MdAddCard className="size-6" />
+          </div>
+          <div className="min-w-0">
+            <DialogTitle className="text-lg font-semibold">
+              Add a New Card
+            </DialogTitle>
+            <DialogDescription className="sr-only">
+              Add a payment method by entering card details.
+            </DialogDescription>
+          </div>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="rounded-xl bg-[linear-gradient(135deg,#aee4fb_0%,#d8f2ff_46%,#fff0e9_100%)] p-7">
+            <div className="mx-auto flex h-32 max-w-87 flex-col justify-between rounded-xl bg-[#343944] p-4 text-white shadow-sm">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm font-semibold">ApplePay</span>
+                <Badge className="h-5 rounded-sm bg-white px-1.5 text-[10px] font-semibold text-[#343944] hover:bg-white">
+                  <span className="size-1 rounded-full bg-[#343944]" />
+                  Default
+                </Badge>
+              </div>
+              <div className="flex items-end justify-between gap-3">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-12 text-[10px] font-medium uppercase">
+                    <span>PAUL MBINGU</span>
+                    <span>08/26</span>
+                  </div>
+                  <p className="font-mono text-xs font-semibold tracking-[0.18em]">
+                    4321 4321 4321 4321
+                  </p>
+                </div>
+                <div className="rounded-sm bg-white/10 px-2 py-1 text-[10px] font-semibold">
+                  <FaApple className="mr-0.5 inline size-3" />
+                  Pay
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <h3 className="text-sm font-bold">Add a payment method</h3>
+            <p className="flex items-center gap-1.5 text-[10px] text-foreground">
+              <ShieldCheck className="size-4 shrink-0" />
+              Your transaction is secured with SSL encryption
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+            <PaymentInputField
+              id="payment-card-holder"
+              label="Name on card"
+              required
+              icon={<Mail className="size-4" />}
+              defaultValue="Paul Mbingu"
+            />
+            <PaymentInputField
+              id="payment-card-expiry"
+              label="Expiry"
+              required
+              icon={<Calendar className="size-4" />}
+              defaultValue="06 / 26"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+            <PaymentInputField
+              id="payment-card-number"
+              label="Card number"
+              required
+              inputClassName="pl-12"
+              defaultValue="1234 1234 1234 1234"
+              icon={
+                <span className="relative flex h-4 w-6 items-center">
+                  <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
+                  <span className="absolute right-0 size-3.5 rounded-full bg-[#f79e1b] mix-blend-multiply" />
+                </span>
+              }
+            />
+            <PaymentInputField
+              id="payment-card-cvv"
+              label="CVV"
+              icon={<LockKeyhole className="size-4" />}
+              defaultValue="•••"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_8rem]">
+            <PaymentInputField
+              id="payment-card-vendor"
+              label="Card Vendor"
+              required
+              icon={<CreditCard className="size-4" />}
+              defaultValue="Excite!"
+            />
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium">Personalize</Label>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-8 w-full rounded-md text-xs shadow-none"
+              >
+                Edit
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Checkbox id="payment-card-default" defaultChecked />
+            <Label
+              htmlFor="payment-card-default"
+              className="text-xs font-normal"
+            >
+              Make Default
+            </Label>
+          </div>
+
+          <DialogFooter className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-11 rounded-md text-xs font-semibold shadow-none"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="h-11 rounded-md text-xs font-semibold"
+            >
+              Add
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -324,6 +544,7 @@ export function PaymentCard({
   const [hideCardNumbers, setHideCardNumbers] = React.useState(
     defaultHideCardNumbers,
   );
+  const [addCardModalOpen, setAddCardModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     // Keep local selection in sync when Storybook controls or parent props change.
@@ -336,17 +557,18 @@ export function PaymentCard({
   }, [defaultHideCardNumbers]);
 
   return (
-    <Card className={cn("w-full border-0 py-4 shadow-none", className)}>
-      <CardHeader className="flex items-center gap-4 px-0">
-        <div className="flex min-w-0 flex-1 items-center gap-4">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
-            {step}
+    <>
+      <Card className={cn("w-full border-0 py-4 shadow-none", className)}>
+        <CardHeader className="flex items-center gap-4 px-0">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
+              {step}
+            </div>
+            <CardTitle className="text-lg font-semibold">{title}</CardTitle>
           </div>
-          <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-        </div>
 
-        {/* Toggle for card numbers, don't remove */}
-        {/* <TooltipProvider>
+          {/* Toggle for card numbers, don't remove */}
+          {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -370,30 +592,36 @@ export function PaymentCard({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider> */}
-      </CardHeader>
+        </CardHeader>
 
-      <CardContent className="flex flex-wrap justify-center gap-8 px-0 md:justify-start">
-        <RadioGroup
-          value={selectedCard}
-          onValueChange={setSelectedCard}
-          className="contents"
-        >
-          {cards.map((card) => (
-            <PaymentCardOption
-              key={card.id}
-              card={card}
-              hideNumber={card.hideNumber ?? hideCardNumbers}
-              flipped={flippedCard === card.id}
-              onFlip={() =>
-                setFlippedCard((currentCard) =>
-                  currentCard === card.id ? null : card.id,
-                )
-              }
-            />
-          ))}
-        </RadioGroup>
-        <AddPaymentCardTile />
-      </CardContent>
-    </Card>
+        <CardContent className="flex flex-wrap justify-center gap-8 px-0 md:justify-start">
+          <RadioGroup
+            value={selectedCard}
+            onValueChange={setSelectedCard}
+            className="contents"
+          >
+            {cards.map((card) => (
+              <PaymentCardOption
+                key={card.id}
+                card={card}
+                hideNumber={card.hideNumber ?? hideCardNumbers}
+                flipped={flippedCard === card.id}
+                onFlip={() =>
+                  setFlippedCard((currentCard) =>
+                    currentCard === card.id ? null : card.id,
+                  )
+                }
+              />
+            ))}
+          </RadioGroup>
+          <AddPaymentCardTile onClick={() => setAddCardModalOpen(true)} />
+        </CardContent>
+      </Card>
+
+      <AddPaymentCardModal
+        open={addCardModalOpen}
+        onOpenChange={setAddCardModalOpen}
+      />
+    </>
   );
 }
