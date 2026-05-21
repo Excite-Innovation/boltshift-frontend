@@ -12,22 +12,25 @@ import { usePathname } from "next/navigation";
 // Desktop version
 export function Navbar() {
   return (
-    <header className="h-24 flex items-center justify-between gap-4 rounded-none">
-      <div className="h-12  flex items-center gap-4 shrink-0">
-        <Menu aria-hidden="true" />
-        <Link href="/">
-          <Logo />
-        </Link>
-      </div>
+    <>
+      <header className="fixed left-1/2 top-0 z-50 flex h-24 w-full max-w-360 -translate-x-1/2 items-center justify-between gap-4 rounded-none bg-background px-4">
+        <div className="flex h-12 shrink-0 items-center gap-4">
+          <Menu aria-hidden="true" />
+          <Link href="/">
+            <Logo />
+          </Link>
+        </div>
 
-      <div className="flex-1 min-w-0">
-        <NavbarSearch />
-      </div>
+        <div className="flex-1 min-w-0">
+          <NavbarSearch />
+        </div>
 
-      <div className="shrink-0">
-        <Profile />
-      </div>
-    </header>
+        <div className="shrink-0">
+          <Profile />
+        </div>
+      </header>
+      <div className="h-24" aria-hidden="true" />
+    </>
   );
 }
 
@@ -45,35 +48,38 @@ export function NavbarMobile({ showFilterButton }: NavbarMobileProps) {
   const shouldShowFilterButton = showFilterButton ?? !isProductPage;
 
   return (
-    <header className="h-33 flex flex-col gap-4">
-      <div className="h-10 flex flex-row justify-between">
-        <div className="flex items-center gap-2">
-          <Menu className="size-6" aria-hidden="true" />
-          <Link href="/">
-            <Logo />
-          </Link>
+    <>
+      <header className="fixed left-1/2 top-0 z-50 flex h-33 w-full max-w-360 -translate-x-1/2 flex-col gap-4 bg-background px-4 py-4">
+        <div className="h-10 flex flex-row justify-between">
+          <div className="flex items-center gap-2">
+            <Menu className="size-6" aria-hidden="true" />
+            <Link href="/">
+              <Logo />
+            </Link>
+          </div>
+          <div>
+            <Profile />
+          </div>
         </div>
-        <div>
-          <Profile />
-        </div>
-      </div>
 
-      <div className="flex items-center gap-2 h-11">
-        {shouldShowFilterButton ? (
-          <Button
-            variant="outline"
-            className="rounded-lg h-11 w-11 p-3 shrink-0"
-            aria-label="Filter button"
-            onClick={toggleSidebar}
-          >
-            <ListFilter className="size-5" aria-hidden="true" />
-          </Button>
-        ) : null}
+        <div className="flex h-11 items-center gap-2">
+          {shouldShowFilterButton ? (
+            <Button
+              variant="outline"
+              className="h-11 w-11 shrink-0 rounded-lg p-3"
+              aria-label="Filter button"
+              onClick={toggleSidebar}
+            >
+              <ListFilter className="size-5" aria-hidden="true" />
+            </Button>
+          ) : null}
 
-        <div className="flex-1 min-w-0">
-          <NavbarSearch />
+          <div className="flex-1 min-w-0">
+            <NavbarSearch />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      <div className="h-33" aria-hidden="true" />
+    </>
   );
 }

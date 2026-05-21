@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
@@ -29,6 +31,7 @@ type OrderSummaryItem = {
 
 type OrderSummaryProps = {
   items?: OrderSummaryItem[];
+  children?: ReactNode;
 };
 
 const currencyFormatter = new Intl.NumberFormat("en-KE", {
@@ -41,6 +44,16 @@ function formatCurrency(amount: number) {
 
 function formatPercentage(rate: number) {
   return `${Math.round(rate)}%`;
+}
+
+function getCheckoutHref(items: OrderSummaryItem[]) {
+  const checkoutItems = items
+    .map(({ product, quantity }) => `${product.id}:${quantity}`)
+    .join(",");
+
+  return checkoutItems
+    ? `/checkout?items=${encodeURIComponent(checkoutItems)}`
+    : "/checkout";
 }
 
 function getVoucherDiscountRate(title: string) {
@@ -79,9 +92,12 @@ function getVoucherDiscount(
   };
 }
 
-export function OrderSummary({ items = [] }: OrderSummaryProps) {
+export function OrderSummary({ items = [], children }: OrderSummaryProps) {
+  const pathname = usePathname();
   const [voucherCode, setVoucherCode] = useState("");
   const [selectedVoucherId, setSelectedVoucherId] = useState("");
+  const checkoutButtonLabel =
+    pathname === "/checkout" ? "Order Now" : "Check Out";
   const selectedVoucher = vouchers.find(
     (voucher) => voucher.id === selectedVoucherId,
   );
@@ -133,6 +149,9 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
       </CardHeader>
 
       <CardContent className="w-72 p-0 flex flex-col gap-4">
+        {children}
+        {children ? <Separator /> : null}
+
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Subtotal</span>
           <span>
@@ -221,10 +240,19 @@ export function OrderSummary({ items = [] }: OrderSummaryProps) {
         </div>
 
         {/* Checkout */}
-        <Button size="lg" className="w-full" disabled={items.length === 0}>
-          Check Out
-          <ArrowRight size="5" />
-        </Button>
+        {items.length === 0 ? (
+          <Button size="lg" className="w-full" disabled>
+            {checkoutButtonLabel}
+            <ArrowRight size="5" />
+          </Button>
+        ) : (
+          <Button size="lg" className="w-full" asChild>
+            <Link href={getCheckoutHref(items)}>
+              {checkoutButtonLabel}
+              <ArrowRight size="5" />
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
