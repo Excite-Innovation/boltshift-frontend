@@ -48,18 +48,13 @@ function PaymentCardFlipper({
   className,
 }: PaymentCardFlipperProps) {
   return (
-    <div
-      className={cn(
-        "group/payment-card h-51 w-full perspective-[1600px] sm:w-85",
-        className,
-      )}
-      data-flipped={flipped}
-    >
-      {/* Preserve both faces in a shared 3D scene so hover and button flips use the same motion. */}
+    <div className={cn("h-51 w-full max-w-79 perspective-[1600px]", className)}>
+      {/* Preserve both faces in a shared 3D scene so click flips use the same motion. */}
       <div
+        data-flipped={flipped}
         className={cn(
           "relative size-full rounded-2xl transition-transform duration-700 transform-3d",
-          "group-hover/payment-card:transform-[rotateY(-180deg)] data-[flipped=true]:transform-[rotateY(180deg)]",
+          "data-[flipped=true]:transform-[rotateY(180deg)]",
         )}
       >
         <div className="absolute inset-0 size-full rounded-2xl backface-hidden">
@@ -88,14 +83,28 @@ function PaymentCardOption({
 }: PaymentCardOptionProps) {
   const id = React.useId();
   const accessibleEnding = getAccessibleCardEnding(card.number);
+  const handleClick = (event: React.MouseEvent<HTMLLabelElement>) => {
+    const target = event.target as HTMLElement;
+
+    if (
+      target.closest(
+        "button, input, [role='button'], [role='menuitem'], [data-slot='radio-group-item']",
+      )
+    ) {
+      return;
+    }
+
+    onFlip?.();
+  };
 
   return (
     // The label lets the whole card act as the selectable radio target.
     <label
       htmlFor={id}
+      onClick={handleClick}
       className={cn(
-        "block w-full cursor-pointer rounded-2xl outline-none sm:w-85",
-        "focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+        "block w-full max-w-79 cursor-pointer rounded-2xl outline-none",
+        // "focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
       )}
     >
       <span className="sr-only">
@@ -108,7 +117,6 @@ function PaymentCardOption({
             card={card}
             radioId={id}
             hideNumber={hideNumber}
-            onFlip={onFlip}
             isBack={false}
           />
         }
@@ -117,7 +125,6 @@ function PaymentCardOption({
             card={card}
             radioId={id}
             hideNumber={hideNumber}
-            onFlip={onFlip}
             isBack
           />
         }
@@ -130,7 +137,6 @@ type PaymentCardFaceProps = {
   card: SavedPaymentCard;
   radioId: string;
   hideNumber: boolean;
-  onFlip?: () => void;
   isBack: boolean;
 };
 
@@ -138,7 +144,6 @@ function PaymentCardFace({
   card,
   radioId,
   hideNumber,
-  onFlip,
   isBack,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
@@ -155,8 +160,10 @@ function PaymentCardFace({
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
 
       <div className="relative flex size-full flex-col justify-between">
-        <div className="flex items-start justify-between gap-3">
-          <p className="text-xl font-semibold leading-none">{card.brand}</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="max-w-40 truncate text-base font-semibold leading-none">
+            {card.brand}
+          </p>
 
           <div className="flex items-center gap-3">
             {card.isDefault ? (
@@ -201,7 +208,7 @@ function PaymentCardFace({
                     </DropdownMenuTrigger>
                   </TooltipTrigger>
                   <DropdownMenuContent
-                    align="start"
+                    align="end"
                     className="p-3 text-sm font-medium gap-2 border rounded-xl"
                   >
                     <DropdownMenuItem
@@ -306,7 +313,8 @@ export function PaymentCard({
           <CardTitle className="text-lg font-semibold">{title}</CardTitle>
         </div>
 
-        <TooltipProvider>
+        {/* Toggle for card numbers, don't remove */}
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -329,14 +337,14 @@ export function PaymentCard({
               {hideCardNumbers ? "Show card numbers" : "Hide card numbers"}
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
       </CardHeader>
 
       <CardContent className="px-0">
         <RadioGroup
           value={selectedCard}
           onValueChange={setSelectedCard}
-          className="flex flex-wrap justify-start gap-6"
+          className="flex flex-wrap justify-start gap-8"
         >
           {cards.map((card) => (
             <PaymentCardOption
