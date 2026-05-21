@@ -69,7 +69,7 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
       variant="outline"
       onClick={onClick}
       className={cn(
-        "group h-47.5 w-full max-w-79 flex-col gap-4 whitespace-normal rounded-xl bg-[#f3f4f6] px-5 py-0 text-center text-[#111827] shadow-none",
+        "group h-47.5 w-full max-w-79 flex-col gap-4 whitespace-normal rounded-xl bg-backgroung px-5 py-0 text-center text-foreground shadow-none",
         "hover:text-primary hover:ring-2 hover:ring-ring hover:ring-offset-2",
       )}
       aria-label="Add a new payment card"
@@ -93,6 +93,15 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
 type AddPaymentCardModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+};
+
+type AddPaymentCardFormValues = {
+  holder: string;
+  expiry: string;
+  number: string;
+  cvv: string;
+  vendor: string;
+  isDefault: boolean;
 };
 
 type PaymentInputFieldProps = {
@@ -141,6 +150,41 @@ function PaymentInputField({
 }
 
 function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
+  const [formValues, setFormValues] =
+    React.useState<AddPaymentCardFormValues>({
+      holder: "",
+      expiry: "",
+      number: "",
+      cvv: "",
+      vendor: "Excite!",
+      isDefault: true,
+    });
+
+  const previewCard = React.useMemo<SavedPaymentCard>(
+    () => ({
+      id: "new-card-preview",
+      brand: formValues.vendor || "Card Vendor",
+      holder: formValues.holder || "Name on card",
+      expiry: formValues.expiry || "MM / YY",
+      number: formValues.number || "1234 1234 1234 1234",
+      cvv: formValues.cvv || "CVV",
+      isDefault: formValues.isDefault,
+      backgroundColor: DEFAULT_CARD_BACKGROUND,
+      merchantName: "ApplePay",
+      merchantIcon: <FaApple className="size-4" />,
+    }),
+    [formValues],
+  );
+
+  const updateFormValue =
+    (field: keyof AddPaymentCardFormValues) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormValues((current) => ({
+        ...current,
+        [field]: event.target.value,
+      }));
+    };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onOpenChange(false);
@@ -148,7 +192,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-120 gap-4 overflow-y-auto rounded-xl p-4">
+      <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-120 gap-4 overflow-y-auto rounded-xl p-4">
         <DialogHeader className="flex-row items-center gap-4 text-left">
           <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-foreground">
             <MdAddCard className="size-6" />
@@ -165,30 +209,25 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="rounded-xl bg-[linear-gradient(135deg,#aee4fb_0%,#d8f2ff_46%,#fff0e9_100%)] p-7">
-            <div className="mx-auto flex h-32 max-w-87 flex-col justify-between rounded-xl bg-[#343944] p-4 text-white shadow-sm">
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-sm font-semibold">ApplePay</span>
-                <Badge className="h-5 rounded-sm bg-white px-1.5 text-[10px] font-semibold text-[#343944] hover:bg-white">
-                  <span className="size-1 rounded-full bg-[#343944]" />
-                  Default
-                </Badge>
-              </div>
-              <div className="flex items-end justify-between gap-3">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-12 text-[10px] font-medium uppercase">
-                    <span>PAUL MBINGU</span>
-                    <span>08/26</span>
-                  </div>
-                  <p className="font-mono text-xs font-semibold tracking-[0.18em]">
-                    4321 4321 4321 4321
-                  </p>
-                </div>
-                <div className="rounded-sm bg-white/10 px-2 py-1 text-[10px] font-semibold">
-                  <FaApple className="mr-0.5 inline size-3" />
-                  Pay
-                </div>
-              </div>
-            </div>
+            <PaymentCardFlipper
+              className="mx-auto"
+              front={
+                <PaymentCardFace
+                  card={previewCard}
+                  hideNumber={false}
+                  isBack={false}
+                  showControls={false}
+                />
+              }
+              back={
+                <PaymentCardFace
+                  card={previewCard}
+                  hideNumber={false}
+                  isBack
+                  showControls={false}
+                />
+              }
+            />
           </div>
 
           <div className="pt-6 flex-col gap-1">
@@ -206,14 +245,18 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Name on card"
                 required
                 icon={<Mail className="size-4" />}
-                defaultValue="Paul Mbingu"
+                placeholder="Full name"
+                value={formValues.holder}
+                onChange={updateFormValue("holder")}
               />
               <PaymentInputField
                 id="payment-card-expiry"
                 label="Expiry"
                 required
                 icon={<Calendar className="size-4" />}
-                defaultValue="06 / 26"
+                placeholder="06 / 26"
+                value={formValues.expiry}
+                onChange={updateFormValue("expiry")}
               />
             </div>
 
@@ -223,7 +266,9 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Card number"
                 required
                 inputClassName="pl-12"
-                defaultValue="1234 1234 1234 1234"
+                placeholder="1234 1234 1234 1234"
+                value={formValues.number}
+                onChange={updateFormValue("number")}
                 icon={
                   <span className="relative flex h-4 w-6 items-center">
                     <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
@@ -234,8 +279,11 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
               <PaymentInputField
                 id="payment-card-cvv"
                 label="CVV"
+                type="password"
                 icon={<LockKeyhole className="size-4" />}
-                defaultValue="•••"
+                placeholder="•••"
+                value={formValues.cvv}
+                onChange={updateFormValue("cvv")}
               />
             </div>
 
@@ -245,7 +293,8 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Card Vendor"
                 required
                 icon={<CreditCard className="size-4" />}
-                defaultValue="Excite!"
+                value={formValues.vendor}
+                onChange={updateFormValue("vendor")}
               />
               <Field className="gap-1.5">
                 <FieldLabel className="text-xs font-medium">
@@ -263,7 +312,16 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
           </FieldGroup>
 
           <Field orientation="horizontal" className="gap-2">
-            <Checkbox id="payment-card-default" defaultChecked />
+            <Checkbox
+              id="payment-card-default"
+              checked={formValues.isDefault}
+              onCheckedChange={(checked) =>
+                setFormValues((current) => ({
+                  ...current,
+                  isDefault: checked === true,
+                }))
+              }
+            />
             <FieldContent className="gap-0">
               <FieldLabel
                 htmlFor="payment-card-default"
@@ -398,9 +456,10 @@ function PaymentCardOption({
 
 type PaymentCardFaceProps = {
   card: SavedPaymentCard;
-  radioId: string;
+  radioId?: string;
   hideNumber: boolean;
   isBack: boolean;
+  showControls?: boolean;
 };
 
 function PaymentCardFace({
@@ -408,6 +467,7 @@ function PaymentCardFace({
   radioId,
   hideNumber,
   isBack,
+  showControls = true,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
   const merchantName = card.merchantName ?? "Pay";
@@ -428,80 +488,86 @@ function PaymentCardFace({
             {card.brand}
           </p>
 
-          <div className="flex items-center gap-3">
-            {card.isDefault ? (
-              <Badge
-                variant="secondary"
-                className="h-6 rounded-md bg-white text-xs font-medium border border-border text-[#414651] hover:bg-white"
-              >
-                <span className="size-1.5 rounded-full bg-[#717680]" />
-                Default
-              </Badge>
-            ) : null}
+          {card.isDefault || showControls ? (
+            <div className="flex items-center gap-3">
+              {card.isDefault ? (
+                <Badge
+                  variant="secondary"
+                  className="h-6 rounded-md bg-white text-xs font-medium border border-border text-[#414651] hover:bg-white"
+                >
+                  <span className="size-1.5 rounded-full bg-[#717680]" />
+                  Default
+                </Badge>
+              ) : null}
 
-            <RadioGroupItem
-              id={radioId}
-              value={card.id}
-              className={cn(
-                // Keeps the selector small, circular, and visible on the dark card surface.
-                "size-5 border-white/80 bg-transparent text-white",
+              {showControls && radioId ? (
+                <>
+                  <RadioGroupItem
+                    id={radioId}
+                    value={card.id}
+                    className={cn(
+                      // Keeps the selector small, circular, and visible on the dark card surface.
+                      "size-5 border-white/80 bg-transparent text-white",
 
-                // When selected, the radio keeps a muted fill while the inner indicator dot turns white.
-                "data-[state=checked]:border-4 data-[state=checked]:border-white data-[state=checked]:bg-[#6d617c] data-[state=checked]:text-white",
+                      // When selected, the radio keeps a muted fill while the inner indicator dot turns white.
+                      "data-[state=checked]:border-4 data-[state=checked]:border-white data-[state=checked]:bg-[#6d617c] data-[state=checked]:text-white",
 
-                // Shrinks the default shadcn/radix indicator icon to fit the custom radio size.
-                "[&_svg]:size-1.5",
-              )}
-            />
+                      // Shrinks the default shadcn/radix indicator icon to fit the custom radio size.
+                      "[&_svg]:size-1.5",
+                    )}
+                  />
 
-            <TooltipProvider>
-              <Tooltip>
-                <DropdownMenu>
-                  <TooltipTrigger asChild>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon-xs"
-                        className="text-white hover:bg-white/10 hover:text-white"
-                        aria-label="Payment card actions"
-                      >
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                  </TooltipTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    className="p-3 text-sm font-medium gap-2 border rounded-xl"
-                  >
-                    <DropdownMenuItem
-                      onSelect={(event) => event.preventDefault()}
-                      className="p-4 rounded-lg"
-                    >
-                      <MdOutlineCreditScore className="size-4" />
-                      Make default
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onSelect={(event) => event.preventDefault()}
-                      className="p-4 rounded-lg"
-                    >
-                      <MdCreditCard className="size-4" />
-                      Edit Details
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onSelect={(event) => event.preventDefault()}
-                      className="p-4 rounded-lg"
-                    >
-                      <MdCreditCard className="size-4" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <TooltipContent>Card actions</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <DropdownMenu>
+                        <TooltipTrigger asChild>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon-xs"
+                              className="text-white hover:bg-white/10 hover:text-white"
+                              aria-label="Payment card actions"
+                            >
+                              <MoreVertical className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                        </TooltipTrigger>
+                        <DropdownMenuContent
+                          align="end"
+                          className="p-3 text-sm font-medium gap-2 border rounded-xl"
+                        >
+                          <DropdownMenuItem
+                            onSelect={(event) => event.preventDefault()}
+                            className="p-4 rounded-lg"
+                          >
+                            <MdOutlineCreditScore className="size-4" />
+                            Make default
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onSelect={(event) => event.preventDefault()}
+                            className="p-4 rounded-lg"
+                          >
+                            <MdCreditCard className="size-4" />
+                            Edit Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            variant="destructive"
+                            onSelect={(event) => event.preventDefault()}
+                            className="p-4 rounded-lg"
+                          >
+                            <MdCreditCard className="size-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <TooltipContent>Card actions</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : null}
+            </div>
+          ) : null}
         </div>
 
         {isBack ? (
