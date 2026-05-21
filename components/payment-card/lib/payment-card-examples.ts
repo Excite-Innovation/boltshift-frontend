@@ -1,4 +1,4 @@
-import type { SavedPaymentCard } from "@/lib/payment-types";
+import type { SavedPaymentCard } from "@/types/payment/payment-types";
 
 export const paymentCardExamples: SavedPaymentCard[] = [
   {
@@ -9,6 +9,8 @@ export const paymentCardExamples: SavedPaymentCard[] = [
     number: "4321 4321 4321 4321",
     cvv: "483",
     isDefault: true,
+    backgroundColor: "#3d434e",
+    merchantName: "Apple Pay",
   },
   {
     id: "apple-pay-backup",
@@ -17,5 +19,7 @@ export const paymentCardExamples: SavedPaymentCard[] = [
     expiry: "08/26",
     number: "4321 4321 4321 4321",
     cvv: "219",
+    backgroundColor: "#3d434e",
+    merchantName: "Apple Pay",
   },
 ];

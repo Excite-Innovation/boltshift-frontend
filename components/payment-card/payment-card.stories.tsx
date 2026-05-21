@@ -13,6 +13,7 @@ const meta = {
   args: {
     cards: paymentCardExamples,
     defaultSelectedCardId: paymentCardExamples[1].id,
+    defaultHideCardNumbers: true,
     step: 4,
     title: "Payment Card",
   },
@@ -24,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => (
-    <div className="w-[760px] max-w-[calc(100vw-2rem)]">
+    <div className="w-190 max-w-[calc(100vw-2rem)]">
       <PaymentCard {...args} />
     </div>
   ),
@@ -35,7 +36,7 @@ export const PrimarySelected: Story = {
     defaultSelectedCardId: paymentCardExamples[0].id,
   },
   render: (args) => (
-    <div className="w-[760px] max-w-[calc(100vw-2rem)]">
+    <div className="w-190 max-w-[calc(100vw-2rem)]">
       <PaymentCard {...args} />
     </div>
   ),
@@ -47,7 +48,47 @@ export const SingleCard: Story = {
     defaultSelectedCardId: paymentCardExamples[0].id,
   },
   render: (args) => (
-    <div className="w-[380px] max-w-[calc(100vw-2rem)]">
+    <div className="w-95 max-w-[calc(100vw-2rem)]">
+      <PaymentCard {...args} />
+    </div>
+  ),
+};
+
+export const CustomMerchant: Story = {
+  args: {
+    cards: [
+      {
+        ...paymentCardExamples[0],
+        id: "boltshift-wallet",
+        brand: "Boltshift",
+        backgroundColor: "#075e54",
+        merchantName: "M-Pesa Global",
+        number: "5188 9231 7740 1159",
+      },
+      {
+        ...paymentCardExamples[1],
+        id: "market-card",
+        brand: "MarketPay",
+        backgroundColor: "#6d28d9",
+        merchantName: "Boltshift",
+        number: "4929 1804 5568 9072",
+      },
+    ],
+    defaultSelectedCardId: "market-card",
+  },
+  render: (args) => (
+    <div className="w-190 max-w-[calc(100vw-2rem)]">
+      <PaymentCard {...args} />
+    </div>
+  ),
+};
+
+export const NumbersVisible: Story = {
+  args: {
+    defaultHideCardNumbers: false,
+  },
+  render: (args) => (
+    <div className="w-190 max-w-[calc(100vw-2rem)]">
       <PaymentCard {...args} />
     </div>
   ),

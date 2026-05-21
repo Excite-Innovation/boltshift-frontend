@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MoreVertical, RotateCcw, Trash2 } from "lucide-react";
+import { Eye, EyeOff, MoreVertical, RotateCcw, Trash2 } from "lucide-react";
 import { FaApple } from "react-icons/fa";
 
 import { Badge } from "@/components/ui/badge";
@@ -21,8 +21,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { paymentCardExamples } from "@/components/payment-card/lib/payment-card-examples";
-import type { PaymentCardProps, SavedPaymentCard } from "@/lib/payment-types";
+import {
+  getAccessibleCardEnding,
+  getDisplayCardNumber,
+} from "@/lib/payment-card-utils";
+import type {
+  PaymentCardProps,
+  SavedPaymentCard,
+} from "@/types/payment/payment-types";
 import { cn } from "@/lib/utils";
+
+const DEFAULT_CARD_BACKGROUND = "#3d434e";
 
 type PaymentCardFlipperProps = {
   front: React.ReactNode;
@@ -40,21 +49,22 @@ function PaymentCardFlipper({
   return (
     <div
       className={cn(
-        "group/payment-card h-[204px] w-full [perspective:1600px] sm:w-[340px]",
+        "group/payment-card h-51 w-full perspective-[1600px] sm:w-85",
         className,
       )}
       data-flipped={flipped}
     >
+      {/* Preserve both faces in a shared 3D scene so hover and button flips use the same motion. */}
       <div
         className={cn(
-          "relative size-full rounded-2xl transition-transform duration-700 [transform-style:preserve-3d]",
-          "group-hover/payment-card:[transform:rotateY(180deg)] data-[flipped=true]:[transform:rotateY(180deg)]",
+          "relative size-full rounded-2xl transition-transform duration-700 transform-3d",
+          "group-hover/payment-card:transform-[rotateY(180deg)] data-[flipped=true]:transform-[rotateY(180deg)]",
         )}
       >
-        <div className="absolute inset-0 size-full rounded-2xl [backface-visibility:hidden]">
+        <div className="absolute inset-0 size-full rounded-2xl backface-hidden">
           {front}
         </div>
-        <div className="absolute inset-0 size-full rounded-2xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="absolute inset-0 size-full rounded-2xl backface-hidden transform-[rotateY(180deg)]">
           {back}
         </div>
       </div>
@@ -64,34 +74,51 @@ function PaymentCardFlipper({
 
 type PaymentCardOptionProps = {
   card: SavedPaymentCard;
+  hideNumber: boolean;
   flipped?: boolean;
   onFlip?: () => void;
 };
 
-function PaymentCardOption({ card, flipped, onFlip }: PaymentCardOptionProps) {
+function PaymentCardOption({
+  card,
+  hideNumber,
+  flipped,
+  onFlip,
+}: PaymentCardOptionProps) {
   const id = React.useId();
+  const accessibleEnding = getAccessibleCardEnding(card.number);
 
   return (
+    // The label lets the whole card act as the selectable radio target.
     <label
       htmlFor={id}
       className={cn(
-        "block w-full cursor-pointer rounded-2xl outline-none sm:w-[340px]",
+        "block w-full cursor-pointer rounded-2xl outline-none sm:w-85",
         "focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
       )}
     >
-      <span className="sr-only">Select {card.brand} ending in 4321</span>
+      <span className="sr-only">
+        Select {card.brand} ending in {accessibleEnding}
+      </span>
       <PaymentCardFlipper
         flipped={flipped}
         front={
           <PaymentCardFace
             card={card}
             radioId={id}
+            hideNumber={hideNumber}
             onFlip={onFlip}
             isBack={false}
           />
         }
         back={
-          <PaymentCardFace card={card} radioId={id} onFlip={onFlip} isBack />
+          <PaymentCardFace
+            card={card}
+            radioId={id}
+            hideNumber={hideNumber}
+            onFlip={onFlip}
+            isBack
+          />
         }
       />
     </label>
@@ -101,6 +128,7 @@ function PaymentCardOption({ card, flipped, onFlip }: PaymentCardOptionProps) {
 type PaymentCardFaceProps = {
   card: SavedPaymentCard;
   radioId: string;
+  hideNumber: boolean;
   onFlip?: () => void;
   isBack: boolean;
 };
@@ -108,11 +136,21 @@ type PaymentCardFaceProps = {
 function PaymentCardFace({
   card,
   radioId,
+  hideNumber,
   onFlip,
   isBack,
 }: PaymentCardFaceProps) {
+  const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
+  const merchantName = card.merchantName ?? "Pay";
+  const isAppleMerchant = merchantName.toLowerCase().includes("apple");
+  const displayCardNumber = getDisplayCardNumber(card.number, hideNumber);
+
   return (
-    <div className="relative flex size-full overflow-hidden rounded-2xl bg-[#3d434e] p-4 text-white shadow-sm ring-1 ring-black/5">
+    <div
+      className="relative flex size-full overflow-hidden rounded-2xl p-4 text-white shadow-sm ring-1 ring-black/5"
+      style={{ backgroundColor: cardBackgroundColor }}
+    >
+      {/* A subtle overlay keeps custom card colors from feeling flat. */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
 
       <div className="relative flex size-full flex-col justify-between">
@@ -178,6 +216,7 @@ function PaymentCardFace({
         </div>
 
         {isBack ? (
+          // Back side mirrors a physical card strip and CVV block.
           <div className="space-y-6">
             <div className="-mx-4 h-11 bg-black/45" />
             <div className="flex items-center justify-between gap-3">
@@ -195,13 +234,14 @@ function PaymentCardFace({
                 <span>{card.expiry}</span>
               </div>
               <p className="font-mono text-xl tracking-[0.22em] text-white">
-                {card.number}
+                {displayCardNumber}
               </p>
             </div>
 
             <div className="flex h-9 shrink-0 items-center gap-1 rounded-md bg-white/10 px-2 text-sm font-semibold">
-              <FaApple className="size-4" />
-              Pay
+              {card.merchantIcon ??
+                (isAppleMerchant ? <FaApple className="size-4" /> : null)}
+              {merchantName}
             </div>
           </div>
         )}
@@ -227,6 +267,7 @@ function PaymentCardFace({
 export function PaymentCard({
   cards = paymentCardExamples,
   defaultSelectedCardId,
+  defaultHideCardNumbers = true,
   step = 4,
   title = "Payment Card",
   className,
@@ -236,19 +277,54 @@ export function PaymentCard({
     defaultSelectedCardId ?? fallbackSelectedCardId,
   );
   const [flippedCard, setFlippedCard] = React.useState<string | null>(null);
+  const [hideCardNumbers, setHideCardNumbers] = React.useState(
+    defaultHideCardNumbers,
+  );
 
   React.useEffect(() => {
+    // Keep local selection in sync when Storybook controls or parent props change.
     setSelectedCard(defaultSelectedCardId ?? fallbackSelectedCardId);
     setFlippedCard(null);
   }, [defaultSelectedCardId, fallbackSelectedCardId]);
 
+  React.useEffect(() => {
+    setHideCardNumbers(defaultHideCardNumbers);
+  }, [defaultHideCardNumbers]);
+
   return (
     <Card className={cn("w-full border-0 py-4 shadow-none", className)}>
       <CardHeader className="flex items-center gap-4 px-0">
-        <div className="flex size-8 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
-          {step}
+        <div className="flex min-w-0 flex-1 items-center gap-4">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
+            {step}
+          </div>
+          <CardTitle className="text-lg font-semibold">{title}</CardTitle>
         </div>
-        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                onClick={() => setHideCardNumbers((current) => !current)}
+                aria-label={
+                  hideCardNumbers ? "Show card numbers" : "Hide card numbers"
+                }
+              >
+                {hideCardNumbers ? (
+                  <Eye className="size-4" />
+                ) : (
+                  <EyeOff className="size-4" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {hideCardNumbers ? "Show card numbers" : "Hide card numbers"}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </CardHeader>
 
       <CardContent className="px-0">
@@ -261,6 +337,7 @@ export function PaymentCard({
             <PaymentCardOption
               key={card.id}
               card={card}
+              hideNumber={card.hideNumber ?? hideCardNumbers}
               flipped={flippedCard === card.id}
               onFlip={() =>
                 setFlippedCard((currentCard) =>
