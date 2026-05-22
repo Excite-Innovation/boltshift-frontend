@@ -372,7 +372,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
             </FieldContent>
           </Field>
 
-          <DialogFooter className="pt-4 pb-6 grid grid-cols-2 gap-3 sm:grid-cols-2">
+          <DialogFooter className="grid grid-cols-2 gap-3 sm:grid-cols-2">
             <DialogClose asChild>
               <Button
                 type="button"
