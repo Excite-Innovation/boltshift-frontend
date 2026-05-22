@@ -124,7 +124,7 @@ function PaymentInputField({
 }: PaymentInputFieldProps) {
   return (
     <Field className={cn("gap-1.5", className)}>
-      <FieldLabel htmlFor={id} className="gap-0 text-xs font-medium">
+      <FieldLabel htmlFor={id} className="gap-0 text-sm font-medium text-muted-foreground">
         {label}
         {required ? <span className="text-primary">*</span> : null}
       </FieldLabel>
@@ -138,7 +138,7 @@ function PaymentInputField({
           id={id}
           required={required}
           className={cn(
-            "h-8 rounded-md border-border bg-background text-xs shadow-none focus-visible:ring-1",
+            "h-8 rounded-md border-border bg-background text-base shadow-none focus-visible:ring-1",
             icon ? "pl-8" : null,
             inputClassName,
           )}
@@ -150,15 +150,14 @@ function PaymentInputField({
 }
 
 function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
-  const [formValues, setFormValues] =
-    React.useState<AddPaymentCardFormValues>({
-      holder: "",
-      expiry: "",
-      number: "",
-      cvv: "",
-      vendor: "Excite!",
-      isDefault: true,
-    });
+  const [formValues, setFormValues] = React.useState<AddPaymentCardFormValues>({
+    holder: "",
+    expiry: "",
+    number: "",
+    cvv: "",
+    vendor: "",
+    isDefault: false,
+  });
 
   const previewCard = React.useMemo<SavedPaymentCard>(
     () => ({
@@ -166,7 +165,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
       brand: formValues.vendor || "Card Vendor",
       holder: formValues.holder || "Name on card",
       expiry: formValues.expiry || "MM / YY",
-      number: formValues.number || "1234 1234 1234 1234",
+      number: formValues.number || "4321 1234 1234 1234",
       cvv: formValues.cvv || "CVV",
       isDefault: formValues.isDefault,
       backgroundColor: DEFAULT_CARD_BACKGROUND,
@@ -190,6 +189,44 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
     onOpenChange(false);
   };
 
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, "");
+
+    // Limit to 4 digits (MMYY)
+    value = value.slice(0, 4);
+
+    // Add slash automatically after 2 digits
+    if (value.length > 2) {
+      value = `${value.slice(0, 2)} / ${value.slice(2)}`;
+    }
+
+    updateFormValue("expiry")({
+      ...e,
+      target: {
+        ...e.target,
+        value,
+      },
+    });
+  };
+
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    // remove anything that's not a number
+    value = value.replace(/\D/g, "");
+
+    // hard limit to 3 digits (extra input is ignored)
+    if (value.length > 3) return;
+
+    updateFormValue("cvv")({
+      ...e,
+      target: {
+        ...e.target,
+        value,
+      },
+    });
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-120 gap-4 overflow-y-auto rounded-xl p-4">
@@ -208,7 +245,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="rounded-xl bg-[linear-gradient(135deg,#aee4fb_0%,#d8f2ff_46%,#fff0e9_100%)] p-7">
+          <div className="rounded-2xl bg-linear-to-t from-[#FFF1EB] to-[#ACE0F9] p-4">
             <PaymentCardFlipper
               className="mx-auto"
               front={
@@ -254,9 +291,9 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Expiry"
                 required
                 icon={<Calendar className="size-4" />}
-                placeholder="06 / 26"
+                placeholder="MM / YY"
                 value={formValues.expiry}
-                onChange={updateFormValue("expiry")}
+                onChange={handleExpiryChange}
               />
             </div>
 
@@ -271,7 +308,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 onChange={updateFormValue("number")}
                 icon={
                   <span className="relative flex h-4 w-6 items-center">
-                    <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
+                    <span className="absolute left-0.5 size-3.5 rounded-full bg-[#eb001b]" />
                     <span className="absolute right-0 size-3.5 rounded-full bg-[#f79e1b] mix-blend-multiply" />
                   </span>
                 }
@@ -279,11 +316,12 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
               <PaymentInputField
                 id="payment-card-cvv"
                 label="CVV"
+                required
                 type="password"
                 icon={<LockKeyhole className="size-4" />}
                 placeholder="•••"
                 value={formValues.cvv}
-                onChange={updateFormValue("cvv")}
+                onChange={handleCvvChange}
               />
             </div>
 
@@ -293,17 +331,19 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Card Vendor"
                 required
                 icon={<CreditCard className="size-4" />}
+                placeholder="Apple Pay"
                 value={formValues.vendor}
                 onChange={updateFormValue("vendor")}
               />
+
               <Field className="gap-1.5">
-                <FieldLabel className="text-xs font-medium">
+                <FieldLabel className="text-sm font-medium text-muted-foreground">
                   Personalize
                 </FieldLabel>
                 <Button
                   type="button"
                   variant="outline"
-                  className="h-8 w-full rounded-md text-xs shadow-none"
+                  className="h-8 w-full rounded-md text-sm font-semibold shadow-none focus-visible:ring-1 focus-visible:ring-offset-2"
                 >
                   Edit
                 </Button>
@@ -325,26 +365,26 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
             <FieldContent className="gap-0">
               <FieldLabel
                 htmlFor="payment-card-default"
-                className="text-xs font-normal"
+                className="text-sm font-medium"
               >
                 Make Default
               </FieldLabel>
             </FieldContent>
           </Field>
 
-          <DialogFooter className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+          <DialogFooter className="pt-4 pb-6 grid grid-cols-2 gap-3 sm:grid-cols-2">
             <DialogClose asChild>
               <Button
                 type="button"
                 variant="outline"
-                className="h-11 rounded-md text-xs font-semibold shadow-none"
+                size="lg"
               >
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="h-11 rounded-md text-xs font-semibold"
+              size="lg"
             >
               Add
             </Button>
