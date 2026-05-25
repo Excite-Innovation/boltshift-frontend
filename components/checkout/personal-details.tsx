@@ -4,6 +4,8 @@ import { Mail } from "lucide-react";
 import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { SocialAuthButton } from "@/components/checkout/SocialAuthButton";
 import { FormInputField } from "@/components/checkout/form-input-field";
 
@@ -74,12 +76,14 @@ export function PersonalDetailsCard() {
             type="email"
             placeholder="Enter email address"
           />
-          <FormInputField
-            id="phone"
-            label="Phone Number"
-            type="tel"
-            placeholder="Enter phone number"
-          />
+          <div className="w-full max-w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
+            <Label htmlFor="phone">Phone Number</Label>
+            <PhoneInput
+              id="phone"
+              placeholder="Enter phone number"
+              className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
+            />
+          </div>
         </form>
       </CardContent>
     </Card>
