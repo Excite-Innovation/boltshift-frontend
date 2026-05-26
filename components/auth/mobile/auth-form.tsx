@@ -26,6 +26,7 @@ type AuthLayoutProps = {
   children: ReactNode;
   footer: ReactNode;
   className?: string;
+  mainClassName?: string;
 };
 
 export function AuthLayout({
@@ -34,9 +35,15 @@ export function AuthLayout({
   children,
   footer,
   className,
+  mainClassName,
 }: AuthLayoutProps) {
   return (
-    <main className="min-h-screen w-full bg-background px-12 py-12">
+    <main
+      className={cn(
+        "min-h-screen w-full bg-background px-12 py-12",
+        mainClassName,
+      )}
+    >
       <section
         className={cn(
           "mx-auto flex w-full max-w-84 flex-col items-center gap-10",

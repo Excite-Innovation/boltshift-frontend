@@ -1,13 +1,106 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { useState } from "react";
+import { Mail, ArrowLeft } from "lucide-react";
 import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 
+import { SignInForm, signInAuthCopy } from "@/components/auth/mobile/sign_in";
+import { SignUpForm, signUpAuthCopy } from "@/components/auth/mobile/sign_up";
+import { AuthLayout } from "@/components/auth/mobile/auth-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { SocialAuthButton } from "@/components/checkout/SocialAuthButton";
 import { FormInputField } from "@/components/checkout/form-input-field";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+
+type AuthMode = "sign-in" | "sign-up";
+
+const authContent = {
+  "sign-in": {
+    ...signInAuthCopy,
+    Form: SignInForm,
+    footerText: "Don't have an account?",
+    footerAction: "Sign up",
+    nextMode: "sign-up" as const,
+  },
+  "sign-up": {
+    ...signUpAuthCopy,
+    Form: SignUpForm,
+    footerText: "Already have an account?",
+    footerAction: "Sign in",
+    nextMode: "sign-in" as const,
+  },
+};
+
+function CheckoutAuthDrawer() {
+  const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
+  const content = authContent[authMode];
+  const AuthForm = content.Form;
+
+  return (
+    <Drawer
+      direction="right"
+      onOpenChange={(open) => open && setAuthMode("sign-in")}
+    >
+      <DrawerTrigger asChild>
+        <SocialAuthButton
+          provider="Email"
+          icon={<Mail className="text-card size-6" />}
+          className="bg-primary text-card hover:bg-primary hover:text-card"
+        />
+      </DrawerTrigger>
+      <DrawerContent className="w-full sm:max-w-110">
+        <DrawerHeader className="py-4 px-8 text-left">
+          <DrawerClose asChild>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="-ml-2 size-9"
+              aria-label="Close authentication drawer"
+            >
+              <ArrowLeft className="size-5" aria-hidden="true" />
+            </Button>
+          </DrawerClose>
+
+          <DrawerTitle className="sr-only">{content.title}</DrawerTitle>
+        </DrawerHeader>
+
+        <div className="no-scrollbar overflow-y-auto py-12 px-4 ">
+          <AuthLayout
+            title={content.title}
+            subtitle={content.subtitle}
+            mainClassName="min-h-0 px-0 py-0"
+            footer={
+              <>
+                {content.footerText}{" "}
+                <Button
+                  type="button"
+                  variant="link"
+                  className="h-auto p-0 text-sm font-semibold text-primary"
+                  onClick={() => setAuthMode(content.nextMode)}
+                >
+                  {content.footerAction}
+                </Button>
+              </>
+            }
+          >
+            <AuthForm />
+          </AuthLayout>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 export function PersonalDetailsCard() {
   return (
@@ -49,12 +142,7 @@ export function PersonalDetailsCard() {
             onClick={() => console.log("Facebook")}
           />
 
-          <SocialAuthButton
-            provider="Email"
-            icon={<Mail className="text-card size-6" />}
-            className="bg-primary text-card hover:bg-primary hover:text-card"
-            onClick={() => console.log("Mail")}
-          />
+          <CheckoutAuthDrawer />
         </div>
       </div>
 
