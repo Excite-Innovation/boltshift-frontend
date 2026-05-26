@@ -45,7 +45,7 @@ const authContent = {
 
 function CheckoutAuthDrawer() {
   const signinIcon = "/T&C/Locked_with_key.png";
-  const signupIcon = "public/T&C/Office_worker.png";
+  const signupIcon = "/T&C/Office_worker.png";
   const termsAndConditionIcon = "/T&C/Scroll.png";
 
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
@@ -76,8 +76,8 @@ function CheckoutAuthDrawer() {
           className="bg-primary text-card hover:bg-primary hover:text-card"
         />
       </DrawerTrigger>
-      <DrawerContent className="data-[vaul-drawer-direction=right]:w-full sm:max-w-lg">
-        <DrawerHeader className="py-4 px-8 text-left flex flex-row items-center">
+      <DrawerContent className="data-[vaul-drawer-direction=right]:w-full sm:data-[vaul-drawer-direction=right]:max-w-lg">
+        <DrawerHeader className="py-4 text-left flex flex-row items-center gap-4">
           {isTermsView ? (
             <Button
               type="button"
@@ -118,7 +118,7 @@ function CheckoutAuthDrawer() {
 
         <div className="no-scrollbar overflow-y-auto py-12 px-4">
           {isTermsView ? (
-            <div className="px-4">
+            <div className="px-4 flex flex-col justify-center items-center">
               <TermsAndPrivacy />
             </div>
           ) : (

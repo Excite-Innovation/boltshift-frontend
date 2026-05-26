@@ -189,7 +189,7 @@ function LegalSectionContent({ section }: { section: LegalSection }) {
 
 export function TermsAndPrivacy() {
   return (
-    <main className="text-sm">
+    <main className="text-sm max-w-84">
       <LegalDocumentContent document={privacyPolicy} />
       <br />
       <br />
