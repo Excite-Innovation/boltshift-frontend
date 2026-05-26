@@ -59,7 +59,7 @@ function TermsAndPrivacyTrigger({
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent className="w-full sm:max-w-110">
+      <DrawerContent className="w-full data-[vaul-drawer-direction=right]:w-full sm:max-w-110">
         <DrawerHeader className="py-4 px-8 text-left">
           <DrawerClose asChild>
             <Button

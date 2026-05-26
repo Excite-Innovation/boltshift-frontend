@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Mail, ArrowLeft } from "lucide-react";
 import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
@@ -43,6 +44,10 @@ const authContent = {
 };
 
 function CheckoutAuthDrawer() {
+  const signinIcon = "/T&C/Locked_with_key.png";
+  const signupIcon = "public/T&C/Office_worker.png";
+  const termsAndConditionIcon = "/T&C/Scroll.png";
+
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
   const isTermsView = authMode === "terms";
   const authModeContent =
@@ -52,6 +57,12 @@ function CheckoutAuthDrawer() {
     : authMode === "sign-up"
       ? "Sign Up"
       : "Sign In";
+
+  const icon = isTermsView
+    ? termsAndConditionIcon
+    : authMode === "sign-up"
+      ? signupIcon
+      : signinIcon;
 
   return (
     <Drawer
@@ -65,7 +76,7 @@ function CheckoutAuthDrawer() {
           className="bg-primary text-card hover:bg-primary hover:text-card"
         />
       </DrawerTrigger>
-      <DrawerContent className="w-full sm:max-w-lg">
+      <DrawerContent className="data-[vaul-drawer-direction=right]:w-full sm:max-w-lg">
         <DrawerHeader className="py-4 px-8 text-left flex flex-row items-center">
           {isTermsView ? (
             <Button
@@ -92,7 +103,17 @@ function CheckoutAuthDrawer() {
             </DrawerClose>
           )}
 
-          <DrawerTitle>{title}</DrawerTitle>
+          {/* Icon and title */}
+          <div className="flex flex-row gap-2 items-center">
+            <Image
+              src={icon}
+              alt={`${title} icon`}
+              width={32}
+              height={32}
+              className="h-auto w-8"
+            />
+            <DrawerTitle>{title}</DrawerTitle>
+          </div>
         </DrawerHeader>
 
         <div className="no-scrollbar overflow-y-auto py-12 px-4">
