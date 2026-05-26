@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 import {
   AuthDivider,
@@ -10,14 +11,80 @@ import {
   AuthSocialButtons,
   PasswordField,
 } from "@/components/auth/mobile/auth-form";
+import { TermsAndPrivacy } from "@/components/terms-and-privacy/terms-and-privacy";
 import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 export const signUpAuthCopy = {
   title: "Create an account",
   subtitle: "Join other million shoppers in the country.",
 };
 
-export function SignUpForm() {
+type SignUpFormProps = {
+  onTermsClick?: () => void;
+};
+
+function TermsAndPrivacyTrigger({
+  onTermsClick,
+}: {
+  onTermsClick?: () => void;
+}) {
+  const trigger = (
+    <button
+      type="button"
+      className="font-semibold text-primary"
+      onClick={(event) => {
+        if (!onTermsClick) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        onTermsClick();
+      }}
+    >
+      Ts&Cs and Privacy Policy
+    </button>
+  );
+
+  if (onTermsClick) {
+    return trigger;
+  }
+
+  return (
+    <Drawer direction="right">
+      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+      <DrawerContent className="w-full sm:max-w-110">
+        <DrawerHeader className="py-4 px-8 text-left">
+          <DrawerClose asChild>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="-ml-2 size-9"
+              aria-label="Close terms and privacy drawer"
+            >
+              <ArrowLeft className="size-5" aria-hidden="true" />
+            </Button>
+          </DrawerClose>
+
+          <DrawerTitle className="sr-only">Terms & Privacy</DrawerTitle>
+        </DrawerHeader>
+
+        <div className="no-scrollbar overflow-y-auto px-8 pb-12 pt-4">
+          <TermsAndPrivacy />
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+export function SignUpForm({ onTermsClick }: SignUpFormProps) {
   return (
     <form className="flex flex-col gap-6">
       <div className="grid gap-4">
@@ -60,12 +127,7 @@ export function SignUpForm() {
           required
         >
           I have read and agree with{" "}
-          <Link
-            href="/terms-and-privacy"
-            className="font-semibold text-primary"
-          >
-            Ts&Cs and Privacy Policy
-          </Link>
+          <TermsAndPrivacyTrigger onTermsClick={onTermsClick} />
         </CheckedAgreement>
       </div>
 

@@ -7,6 +7,7 @@ import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
 import { SignInForm, signInAuthCopy } from "@/components/auth/mobile/sign_in";
 import { SignUpForm, signUpAuthCopy } from "@/components/auth/mobile/sign_up";
 import { AuthLayout } from "@/components/auth/mobile/auth-form";
+import { TermsAndPrivacy } from "@/components/terms-and-privacy/terms-and-privacy";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -22,7 +23,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 
-type AuthMode = "sign-in" | "sign-up";
+type AuthMode = "sign-in" | "sign-up" | "terms";
 
 const authContent = {
   "sign-in": {
@@ -43,8 +44,14 @@ const authContent = {
 
 function CheckoutAuthDrawer() {
   const [authMode, setAuthMode] = useState<AuthMode>("sign-in");
-  const content = authContent[authMode];
-  const AuthForm = content.Form;
+  const isTermsView = authMode === "terms";
+  const authModeContent =
+    authMode === "terms" ? authContent["sign-up"] : authContent[authMode];
+  const title = isTermsView
+    ? "Privacy Policy and, Terms & Conditions"
+    : authMode === "sign-up"
+      ? "Sign Up"
+      : "Sign In";
 
   return (
     <Drawer
@@ -58,44 +65,67 @@ function CheckoutAuthDrawer() {
           className="bg-primary text-card hover:bg-primary hover:text-card"
         />
       </DrawerTrigger>
-      <DrawerContent className="w-full sm:max-w-110">
-        <DrawerHeader className="py-4 px-8 text-left">
-          <DrawerClose asChild>
+      <DrawerContent className="w-full sm:max-w-lg">
+        <DrawerHeader className="py-4 px-8 text-left flex flex-row items-center">
+          {isTermsView ? (
             <Button
               type="button"
               variant="ghost"
               size="icon"
               className="-ml-2 size-9"
-              aria-label="Close authentication drawer"
+              aria-label="Back to sign up"
+              onClick={() => setAuthMode("sign-up")}
             >
               <ArrowLeft className="size-5" aria-hidden="true" />
             </Button>
-          </DrawerClose>
+          ) : (
+            <DrawerClose asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="-ml-2 size-9"
+                aria-label="Close authentication drawer"
+              >
+                <ArrowLeft className="size-5" aria-hidden="true" />
+              </Button>
+            </DrawerClose>
+          )}
 
-          <DrawerTitle className="sr-only">{content.title}</DrawerTitle>
+          <DrawerTitle>{title}</DrawerTitle>
         </DrawerHeader>
 
-        <div className="no-scrollbar overflow-y-auto py-12 px-4 ">
-          <AuthLayout
-            title={content.title}
-            subtitle={content.subtitle}
-            mainClassName="min-h-0 px-0 py-0"
-            footer={
-              <>
-                {content.footerText}{" "}
-                <Button
-                  type="button"
-                  variant="link"
-                  className="h-auto p-0 text-sm font-semibold text-primary"
-                  onClick={() => setAuthMode(content.nextMode)}
-                >
-                  {content.footerAction}
-                </Button>
-              </>
-            }
-          >
-            <AuthForm />
-          </AuthLayout>
+        <div className="no-scrollbar overflow-y-auto py-12 px-4">
+          {isTermsView ? (
+            <div className="px-4">
+              <TermsAndPrivacy />
+            </div>
+          ) : (
+            <AuthLayout
+              title={authModeContent.title}
+              subtitle={authModeContent.subtitle}
+              mainClassName="min-h-0 px-0 py-0"
+              footer={
+                <>
+                  {authModeContent.footerText}{" "}
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="h-auto p-0 text-sm font-semibold text-primary"
+                    onClick={() => setAuthMode(authModeContent.nextMode)}
+                  >
+                    {authModeContent.footerAction}
+                  </Button>
+                </>
+              }
+            >
+              {authMode === "sign-up" ? (
+                <SignUpForm onTermsClick={() => setAuthMode("terms")} />
+              ) : (
+                <SignInForm />
+              )}
+            </AuthLayout>
+          )}
         </div>
       </DrawerContent>
     </Drawer>
