@@ -12,6 +12,7 @@ import {
 import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -434,6 +435,7 @@ type PaymentCardOptionProps = {
   hideNumber: boolean;
   flipped?: boolean;
   onFlip?: () => void;
+  onDelete?: () => void;
 };
 
 function PaymentCardOption({
@@ -441,6 +443,7 @@ function PaymentCardOption({
   hideNumber,
   flipped,
   onFlip,
+  onDelete,
 }: PaymentCardOptionProps) {
   const id = React.useId();
   const accessibleEnding = getAccessibleCardEnding(card.number);
@@ -479,6 +482,7 @@ function PaymentCardOption({
             radioId={id}
             hideNumber={hideNumber}
             isBack={false}
+            onDelete={onDelete}
           />
         }
         back={
@@ -487,6 +491,7 @@ function PaymentCardOption({
             radioId={id}
             hideNumber={hideNumber}
             isBack
+            onDelete={onDelete}
           />
         }
       />
@@ -500,6 +505,7 @@ type PaymentCardFaceProps = {
   hideNumber: boolean;
   isBack: boolean;
   showControls?: boolean;
+  onDelete?: () => void;
 };
 
 function PaymentCardFace({
@@ -508,6 +514,7 @@ function PaymentCardFace({
   hideNumber,
   isBack,
   showControls = true,
+  onDelete,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
   const merchantName = card.merchantName ?? "Pay";
@@ -591,14 +598,29 @@ function PaymentCardFace({
                             <MdCreditCard className="size-4" />
                             Edit Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            variant="destructive"
-                            onSelect={(event) => event.preventDefault()}
-                            className="p-4 rounded-lg"
-                          >
-                            <MdCreditCard className="size-4" />
-                            Delete
-                          </DropdownMenuItem>
+                          <DeleteModal
+                            title="Remove Payment Card"
+                            description="Are you sure you want to delete this payment card? This action cannot be undone."
+                            actionLabel="Remove Card"
+                            notification={{
+                              variant: "delete",
+                              title: "Payment Card Removed",
+                              description:
+                                "The payment card has been removed from your account.",
+                              iconSrc: "/sonnar/Red-Featured-outline.svg",
+                            }}
+                            onConfirm={() => onDelete?.()}
+                            trigger={
+                              <DropdownMenuItem
+                                variant="destructive"
+                                onSelect={(event) => event.preventDefault()}
+                                className="p-4 rounded-lg"
+                              >
+                                <MdCreditCard className="size-4" />
+                                Delete
+                              </DropdownMenuItem>
+                            }
+                          />
                         </DropdownMenuContent>
                       </DropdownMenu>
                       <TooltipContent>Card actions</TooltipContent>
@@ -647,13 +669,16 @@ function PaymentCardFace({
 
 export function PaymentCard({
   cards = paymentCardExamples,
+  onRemoveCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
   step = 4,
   title = "Payment Card",
   className,
 }: PaymentCardProps) {
-  const fallbackSelectedCardId = cards[1]?.id ?? cards[0]?.id ?? "";
+  const [visibleCards, setVisibleCards] = React.useState(cards);
+  const fallbackSelectedCardId =
+    visibleCards[1]?.id ?? visibleCards[0]?.id ?? "";
   const [selectedCard, setSelectedCard] = React.useState(
     defaultSelectedCardId ?? fallbackSelectedCardId,
   );
@@ -664,6 +689,10 @@ export function PaymentCard({
   const [addCardModalOpen, setAddCardModalOpen] = React.useState(false);
 
   React.useEffect(() => {
+    setVisibleCards(cards);
+  }, [cards]);
+
+  React.useEffect(() => {
     // Keep local selection in sync when Storybook controls or parent props change.
     setSelectedCard(defaultSelectedCardId ?? fallbackSelectedCardId);
     setFlippedCard(null);
@@ -672,6 +701,16 @@ export function PaymentCard({
   React.useEffect(() => {
     setHideCardNumbers(defaultHideCardNumbers);
   }, [defaultHideCardNumbers]);
+
+  const handleRemoveCard = (cardId: string) => {
+    setVisibleCards((currentCards) =>
+      currentCards.filter((card) => card.id !== cardId),
+    );
+    setFlippedCard((currentCard) =>
+      currentCard === cardId ? null : currentCard,
+    );
+    onRemoveCard?.(cardId);
+  };
 
   return (
     <>
@@ -717,12 +756,13 @@ export function PaymentCard({
             onValueChange={setSelectedCard}
             className="contents"
           >
-            {cards.map((card) => (
+            {visibleCards.map((card) => (
               <PaymentCardOption
                 key={card.id}
                 card={card}
                 hideNumber={card.hideNumber ?? hideCardNumbers}
                 flipped={flippedCard === card.id}
+                onDelete={() => handleRemoveCard(card.id)}
                 onFlip={() =>
                   setFlippedCard((currentCard) =>
                     currentCard === card.id ? null : card.id,

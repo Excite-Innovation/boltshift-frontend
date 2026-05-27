@@ -16,6 +16,7 @@ export type SavedPaymentCard = {
 
 export type PaymentCardProps = {
   cards?: SavedPaymentCard[];
+  onRemoveCard?: (cardId: string) => void;
   defaultSelectedCardId?: string;
   defaultHideCardNumbers?: boolean;
   step?: ReactNode;
