@@ -242,6 +242,14 @@ function AddPaymentCardModal({
       cvv: formValues.cvv,
       isDefault: formValues.isDefault,
     });
+    showSonnerMessage({
+      variant: "success",
+      title: isEditMode ? "Payment Card Updated" : "Payment Card Added",
+      description: isEditMode
+        ? "Your payment card details have been updated successfully."
+        : "Your payment card has been added successfully.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
     onOpenChange(false);
   };
 
