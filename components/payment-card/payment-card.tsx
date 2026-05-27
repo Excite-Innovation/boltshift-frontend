@@ -95,6 +95,9 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
 type AddPaymentCardModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  mode?: "add" | "edit";
+  card?: SavedPaymentCard | null;
+  onSubmit?: (card: SavedPaymentCard) => void;
 };
 
 type AddPaymentCardFormValues = {
@@ -105,6 +108,30 @@ type AddPaymentCardFormValues = {
   vendor: string;
   isDefault: boolean;
 };
+
+const emptyPaymentCardFormValues: AddPaymentCardFormValues = {
+  holder: "",
+  expiry: "",
+  number: "",
+  cvv: "",
+  vendor: "",
+  isDefault: false,
+};
+
+function getPaymentCardFormValues(
+  card?: SavedPaymentCard | null,
+): AddPaymentCardFormValues {
+  if (!card) return emptyPaymentCardFormValues;
+
+  return {
+    holder: card.holder,
+    expiry: card.expiry,
+    number: card.number,
+    cvv: card.cvv,
+    vendor: card.brand,
+    isDefault: card.isDefault === true,
+  };
+}
 
 type PaymentInputFieldProps = {
   id: string;
@@ -151,15 +178,28 @@ function PaymentInputField({
   );
 }
 
-function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
-  const [formValues, setFormValues] = React.useState<AddPaymentCardFormValues>({
-    holder: "",
-    expiry: "",
-    number: "",
-    cvv: "",
-    vendor: "",
-    isDefault: false,
-  });
+function AddPaymentCardModal({
+  open,
+  onOpenChange,
+  mode = "add",
+  card,
+  onSubmit,
+}: AddPaymentCardModalProps) {
+  const isEditMode = mode === "edit";
+  const modalTitle = isEditMode ? "Edit Payment Card" : "Add a New Card";
+  const sectionTitle = isEditMode
+    ? "Edit payment method"
+    : "Add a payment method";
+  const submitLabel = isEditMode ? "Save" : "Add";
+  const [formValues, setFormValues] = React.useState<AddPaymentCardFormValues>(
+    () => getPaymentCardFormValues(card),
+  );
+
+  React.useEffect(() => {
+    if (!open) return;
+
+    setFormValues(getPaymentCardFormValues(card));
+  }, [card, open]);
 
   const previewCard = React.useMemo<SavedPaymentCard>(
     () => ({
@@ -170,11 +210,11 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
       number: formValues.number || "4321 1234 1234 1234",
       cvv: formValues.cvv || "CVV",
       isDefault: formValues.isDefault,
-      backgroundColor: DEFAULT_CARD_BACKGROUND,
-      merchantName: "ApplePay",
-      merchantIcon: <FaApple className="size-4" />,
+      backgroundColor: card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
+      merchantName: card?.merchantName ?? "ApplePay",
+      merchantIcon: card?.merchantIcon ?? <FaApple className="size-4" />,
     }),
-    [formValues],
+    [card, formValues],
   );
 
   const updateFormValue =
@@ -188,6 +228,20 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    onSubmit?.({
+      ...(card ?? {
+        id: `payment-card-${Date.now()}`,
+        backgroundColor: DEFAULT_CARD_BACKGROUND,
+        merchantName: "ApplePay",
+        merchantIcon: <FaApple className="size-4" />,
+      }),
+      brand: formValues.vendor,
+      holder: formValues.holder,
+      expiry: formValues.expiry,
+      number: formValues.number,
+      cvv: formValues.cvv,
+      isDefault: formValues.isDefault,
+    });
     onOpenChange(false);
   };
 
@@ -238,10 +292,10 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
           </div>
           <div className="min-w-0">
             <DialogTitle className="text-lg font-semibold">
-              Add a New Card
+              {modalTitle}
             </DialogTitle>
             <DialogDescription className="sr-only">
-              Add a payment method by entering card details.
+              {modalTitle} by entering card details.
             </DialogDescription>
           </div>
         </DialogHeader>
@@ -270,7 +324,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
           </div>
 
           <div className="pt-6 flex-col gap-1">
-            <h3 className="text-lg/7 font-semibold">Add a payment method</h3>
+            <h3 className="text-lg/7 font-semibold">{sectionTitle}</h3>
             <p className="flex items-center gap-2 text-xs text-foreground">
               <ShieldCheck className="size-6 shrink-0" />
               Your transaction is secured with SSL encryption
@@ -388,7 +442,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
               type="submit"
               size="lg"
             >
-              Add
+              {submitLabel}
             </Button>
           </DialogFooter>
         </form>
@@ -438,6 +492,7 @@ type PaymentCardOptionProps = {
   onFlip?: () => void;
   onDelete?: () => void;
   onSetDefault?: () => void;
+  onEdit?: () => void;
 };
 
 function PaymentCardOption({
@@ -447,6 +502,7 @@ function PaymentCardOption({
   onFlip,
   onDelete,
   onSetDefault,
+  onEdit,
 }: PaymentCardOptionProps) {
   const id = React.useId();
   const accessibleEnding = getAccessibleCardEnding(card.number);
@@ -487,6 +543,7 @@ function PaymentCardOption({
             isBack={false}
             onDelete={onDelete}
             onSetDefault={onSetDefault}
+            onEdit={onEdit}
           />
         }
         back={
@@ -497,6 +554,7 @@ function PaymentCardOption({
             isBack
             onDelete={onDelete}
             onSetDefault={onSetDefault}
+            onEdit={onEdit}
           />
         }
       />
@@ -512,6 +570,7 @@ type PaymentCardFaceProps = {
   showControls?: boolean;
   onDelete?: () => void;
   onSetDefault?: () => void;
+  onEdit?: () => void;
 };
 
 function PaymentCardFace({
@@ -522,6 +581,7 @@ function PaymentCardFace({
   showControls = true,
   onDelete,
   onSetDefault,
+  onEdit,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
   const merchantName = card.merchantName ?? "Pay";
@@ -604,7 +664,7 @@ function PaymentCardFace({
 
                           {/* Edit card details */}
                           <DropdownMenuItem
-                            onSelect={(event) => event.preventDefault()}
+                            onSelect={() => onEdit?.()}
                             className="p-4 rounded-lg"
                           >
                             <MdCreditCard className="size-4" />
@@ -685,6 +745,7 @@ export function PaymentCard({
   cards = paymentCardExamples,
   onRemoveCard,
   onSetDefaultCard,
+  onUpdateCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
   step = 4,
@@ -701,7 +762,10 @@ export function PaymentCard({
   const [hideCardNumbers, setHideCardNumbers] = React.useState(
     defaultHideCardNumbers,
   );
-  const [addCardModalOpen, setAddCardModalOpen] = React.useState(false);
+  const [paymentCardModalOpen, setPaymentCardModalOpen] = React.useState(false);
+  const [editingCard, setEditingCard] = React.useState<SavedPaymentCard | null>(
+    null,
+  );
 
   React.useEffect(() => {
     setVisibleCards(cards);
@@ -742,6 +806,38 @@ export function PaymentCard({
       description: "This payment card is now your default payment method.",
       iconSrc: "/sonnar/Green-Featured-outline.svg",
     });
+  };
+
+  const handleOpenAddCardModal = () => {
+    setEditingCard(null);
+    setPaymentCardModalOpen(true);
+  };
+
+  const handleOpenEditCardModal = (card: SavedPaymentCard) => {
+    setEditingCard(card);
+    setPaymentCardModalOpen(true);
+  };
+
+  const handlePaymentCardSubmit = (card: SavedPaymentCard) => {
+    setVisibleCards((currentCards) => {
+      const existingCard = currentCards.some(
+        (currentCard) => currentCard.id === card.id,
+      );
+      const nextCards = existingCard
+        ? currentCards.map((currentCard) =>
+            currentCard.id === card.id ? card : currentCard,
+          )
+        : [...currentCards, card];
+
+      if (!card.isDefault) return nextCards;
+
+      return nextCards.map((currentCard) => ({
+        ...currentCard,
+        isDefault: currentCard.id === card.id,
+      }));
+    });
+    setSelectedCard(card.id);
+    onUpdateCard?.(card);
   };
 
   return (
@@ -796,6 +892,7 @@ export function PaymentCard({
                 flipped={flippedCard === card.id}
                 onDelete={() => handleRemoveCard(card.id)}
                 onSetDefault={() => handleSetDefaultCard(card.id)}
+                onEdit={() => handleOpenEditCardModal(card)}
                 onFlip={() =>
                   setFlippedCard((currentCard) =>
                     currentCard === card.id ? null : card.id,
@@ -804,13 +901,16 @@ export function PaymentCard({
               />
             ))}
           </RadioGroup>
-          <AddPaymentCardTile onClick={() => setAddCardModalOpen(true)} />
+          <AddPaymentCardTile onClick={handleOpenAddCardModal} />
         </CardContent>
       </Card>
 
       <AddPaymentCardModal
-        open={addCardModalOpen}
-        onOpenChange={setAddCardModalOpen}
+        open={paymentCardModalOpen}
+        onOpenChange={setPaymentCardModalOpen}
+        mode={editingCard ? "edit" : "add"}
+        card={editingCard}
+        onSubmit={handlePaymentCardSubmit}
       />
     </>
   );
