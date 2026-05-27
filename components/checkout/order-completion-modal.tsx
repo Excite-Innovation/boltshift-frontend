@@ -28,14 +28,16 @@ export function OrderCompletionModal({ open }: OrderCompletionModalProps) {
         className="w-[calc(100vw-1.5rem)] max-w-100 gap-0 rounded-xl border-0 p-0 shadow-xl sm:max-w-100"
       >
         <div className="flex flex-col items-center text-center">
-          <Image
-            src="/checkout/Content.png"
-            alt="Animation of a delivery driver confirming orders"
-            width={400}
-            height={224}
-            priority
-            className="h-auto w-full"
-          />
+          <div className="rounded-xl overflow-hidden">
+            <Image
+              src="/checkout/order-completion.png"
+              alt="Animation of a delivery driver confirming orders"
+              width={400}
+              height={224}
+              priority
+              className="h-auto w-full"
+            />
+          </div>
 
           <DialogHeader className="pt-6 px-6 items-center gap-1 text-center">
             <DialogTitle className="text-lg font-semibold text-foreground">

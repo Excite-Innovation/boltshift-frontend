@@ -8,6 +8,9 @@ const meta = {
   parameters: {
     layout: "fullscreen",
   },
+  args: {
+    open: true,
+  },
   tags: ["autodocs"],
 } satisfies Meta<typeof OrderCompletionModal>;
 
@@ -15,10 +18,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Open: Story = {
-  args: {
-    open: true,
-  },
+export const Default: Story = {
   render: (args) => (
     <div className="min-h-screen w-full bg-muted/40">
       <OrderCompletionModal {...args} />
