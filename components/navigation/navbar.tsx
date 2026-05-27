@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 export function Navbar() {
   return (
     <>
-      <header className="fixed left-1/2 top-0 z-50 flex h-24 w-full max-w-360 -translate-x-1/2 items-center justify-between gap-4 rounded-none bg-background px-4">
+      <header className="scroll-lock-centered-fixed fixed top-0 z-50 flex h-24 w-full max-w-360 -translate-x-1/2 items-center justify-between gap-4 rounded-none bg-background px-4">
         <div className="flex h-12 shrink-0 items-center gap-4">
           <Menu aria-hidden="true" />
           <Link href="/">
@@ -49,7 +49,7 @@ export function NavbarMobile({ showFilterButton }: NavbarMobileProps) {
 
   return (
     <>
-      <header className="fixed left-1/2 top-0 z-50 flex h-33 w-full max-w-360 -translate-x-1/2 flex-col gap-4 bg-background px-4 py-4">
+      <header className="scroll-lock-centered-fixed fixed top-0 z-50 flex h-33 w-full max-w-360 -translate-x-1/2 flex-col gap-4 bg-background px-4 py-4">
         <div className="h-10 flex flex-row justify-between">
           <div className="flex items-center gap-2">
             <Menu className="size-6" aria-hidden="true" />

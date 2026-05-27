@@ -204,6 +204,11 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -215,18 +220,6 @@
   scrollbar-width: none;
 }
 
-body[data-scroll-locked] {
-  margin-right: 0 !important;
-  padding-right: 0 !important;
-}
-
-.with-scroll-bars-hidden {
-  padding-right: 0 !important;
-}
-
-@layer base {
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
+.scroll-lock-centered-fixed {
+  left: calc(50% - (var(--removed-body-scroll-bar-size, 0px) / 2));
 }
