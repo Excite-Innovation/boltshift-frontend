@@ -12,6 +12,7 @@ import {
 import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
+import { showSonnerMessage } from "@/components/alert/alert";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -436,6 +437,7 @@ type PaymentCardOptionProps = {
   flipped?: boolean;
   onFlip?: () => void;
   onDelete?: () => void;
+  onSetDefault?: () => void;
 };
 
 function PaymentCardOption({
@@ -444,6 +446,7 @@ function PaymentCardOption({
   flipped,
   onFlip,
   onDelete,
+  onSetDefault,
 }: PaymentCardOptionProps) {
   const id = React.useId();
   const accessibleEnding = getAccessibleCardEnding(card.number);
@@ -483,6 +486,7 @@ function PaymentCardOption({
             hideNumber={hideNumber}
             isBack={false}
             onDelete={onDelete}
+            onSetDefault={onSetDefault}
           />
         }
         back={
@@ -492,6 +496,7 @@ function PaymentCardOption({
             hideNumber={hideNumber}
             isBack
             onDelete={onDelete}
+            onSetDefault={onSetDefault}
           />
         }
       />
@@ -506,6 +511,7 @@ type PaymentCardFaceProps = {
   isBack: boolean;
   showControls?: boolean;
   onDelete?: () => void;
+  onSetDefault?: () => void;
 };
 
 function PaymentCardFace({
@@ -515,6 +521,7 @@ function PaymentCardFace({
   isBack,
   showControls = true,
   onDelete,
+  onSetDefault,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
   const merchantName = card.merchantName ?? "Pay";
@@ -584,13 +591,18 @@ function PaymentCardFace({
                           align="end"
                           className="p-3 text-sm font-medium gap-2 border rounded-xl"
                         >
+
+                          {/* Set card as default */}
                           <DropdownMenuItem
-                            onSelect={(event) => event.preventDefault()}
+                            disabled={card.isDefault}
+                            onSelect={() => onSetDefault?.()}
                             className="p-4 rounded-lg"
                           >
                             <MdOutlineCreditScore className="size-4" />
                             Make default
                           </DropdownMenuItem>
+
+                          {/* Edit card details */}
                           <DropdownMenuItem
                             onSelect={(event) => event.preventDefault()}
                             className="p-4 rounded-lg"
@@ -598,6 +610,8 @@ function PaymentCardFace({
                             <MdCreditCard className="size-4" />
                             Edit Details
                           </DropdownMenuItem>
+
+                          {/* Delete card */}
                           <DeleteModal
                             title="Remove Payment Card"
                             description="Are you sure you want to delete this payment card? This action cannot be undone."
@@ -670,6 +684,7 @@ function PaymentCardFace({
 export function PaymentCard({
   cards = paymentCardExamples,
   onRemoveCard,
+  onSetDefaultCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
   step = 4,
@@ -710,6 +725,23 @@ export function PaymentCard({
       currentCard === cardId ? null : currentCard,
     );
     onRemoveCard?.(cardId);
+  };
+
+  const handleSetDefaultCard = (cardId: string) => {
+    setVisibleCards((currentCards) =>
+      currentCards.map((card) => ({
+        ...card,
+        isDefault: card.id === cardId,
+      })),
+    );
+    setSelectedCard(cardId);
+    onSetDefaultCard?.(cardId);
+    showSonnerMessage({
+      variant: "success",
+      title: "Default Payment Card Updated",
+      description: "This payment card is now your default payment method.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
   };
 
   return (
@@ -763,6 +795,7 @@ export function PaymentCard({
                 hideNumber={card.hideNumber ?? hideCardNumbers}
                 flipped={flippedCard === card.id}
                 onDelete={() => handleRemoveCard(card.id)}
+                onSetDefault={() => handleSetDefaultCard(card.id)}
                 onFlip={() =>
                   setFlippedCard((currentCard) =>
                     currentCard === card.id ? null : card.id,
