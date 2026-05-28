@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer/footer-section";
@@ -15,6 +15,7 @@ import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
 import { Separator } from "@/components/ui/separator";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
 import { PaymentMethodCard } from "@/components/checkout/payment-method";
+import { OrderCompletionModal } from "@/components/checkout/order-completion-modal";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -45,6 +46,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     itemsParam,
     parseCheckoutItems,
   );
+  const [orderCompleteOpen, setOrderCompleteOpen] = useState(false);
 
   useEffect(() => {
     writeStoredCart(checkoutCart);
@@ -89,7 +91,13 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <PaymentMethodCard />
           </div>
           <div className="flex justify-center lg:shrink-0">
-            <OrderSummary items={checkoutItems}>
+            <OrderSummary
+              items={checkoutItems}
+              onOrderNow={() => {
+                dispatchCheckoutCart({ type: "clear" });
+                setOrderCompleteOpen(true);
+              }}
+            >
               {checkoutItems.length > 0 ? (
                 <div className="flex flex-col">
                   {checkoutItems.map(({ product, quantity }) => (
@@ -124,6 +132,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
         </div>
       </main>
 
+      <OrderCompletionModal open={orderCompleteOpen} />
       <Footer />
     </div>
   );

@@ -32,6 +32,7 @@ type OrderSummaryItem = {
 type OrderSummaryProps = {
   items?: OrderSummaryItem[];
   children?: ReactNode;
+  onOrderNow?: () => void;
 };
 
 const currencyFormatter = new Intl.NumberFormat("en-KE", {
@@ -47,6 +48,7 @@ function formatPercentage(rate: number) {
 }
 
 function getCheckoutHref(items: OrderSummaryItem[]) {
+  // Preserve the cart quantities in the checkout URL so refreshes keep context.
   const checkoutItems = items
     .map(({ product, quantity }) => `${product.id}:${quantity}`)
     .join(",");
@@ -57,6 +59,7 @@ function getCheckoutHref(items: OrderSummaryItem[]) {
 }
 
 function getVoucherDiscountRate(title: string) {
+  // Voucher copy currently carries percentage values, for example "10% off".
   const discountMatch = title.match(/(\d+)%/);
 
   return discountMatch ? Number(discountMatch[1]) / 100 : 0;
@@ -76,6 +79,7 @@ function getVoucherDiscount(
   }
 
   if (voucher.title.toLowerCase().includes("free shipping")) {
+    // Free-shipping vouchers only remove delivery cost, not product subtotal.
     return {
       productDiscount: 0,
       shippingDiscount: shipping,
@@ -92,16 +96,22 @@ function getVoucherDiscount(
   };
 }
 
-export function OrderSummary({ items = [], children }: OrderSummaryProps) {
+export function OrderSummary({
+  items = [],
+  children,
+  onOrderNow,
+}: OrderSummaryProps) {
   const pathname = usePathname();
   const [voucherCode, setVoucherCode] = useState("");
   const [selectedVoucherId, setSelectedVoucherId] = useState("");
+  const isCheckoutPage = pathname === "/checkout";
   const checkoutButtonLabel =
-    pathname === "/checkout" ? "Order Now" : "Check Out";
+    isCheckoutPage ? "Order Now" : "Check Out";
   const selectedVoucher = vouchers.find(
     (voucher) => voucher.id === selectedVoucherId,
   );
   const orderTotals = useMemo(() => {
+    // Recalculate totals only when cart items or the selected voucher changes.
     const subtotal = items.reduce(
       (total, item) => total + item.product.price * item.quantity,
       0,
@@ -239,9 +249,19 @@ export function OrderSummary({ items = [], children }: OrderSummaryProps) {
           <span>Kshs. {formatCurrency(orderTotals.total)}</span>
         </div>
 
-        {/* Checkout */}
+        {/* Checkout becomes an action button on /checkout so order completion can open a modal. */}
         {items.length === 0 ? (
           <Button size="lg" className="w-full" disabled>
+            {checkoutButtonLabel}
+            <ArrowRight size="5" />
+          </Button>
+        ) : isCheckoutPage ? (
+          <Button
+            type="button"
+            size="lg"
+            className="w-full"
+            onClick={onOrderNow}
+          >
             {checkoutButtonLabel}
             <ArrowRight size="5" />
           </Button>
