@@ -8,6 +8,8 @@ type SocialAuthButtonProps = {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  showLabel?: boolean;
+  "aria-label"?: string;
 };
 
 export function SocialAuthButton({
@@ -16,17 +18,25 @@ export function SocialAuthButton({
   onClick,
   disabled,
   className,
+  showLabel = true,
+  "aria-label": ariaLabel,
 }: SocialAuthButtonProps) {
   return (
     <Button
       type="button"
       variant="outline"
-      className={cn("min-w-35 py-2 px-4 border text-sm font-semibold rounded-lg", className)}
+      className={cn(
+        "min-w-35 rounded-lg border px-4 py-2 text-sm font-semibold",
+        className,
+      )}
       onClick={onClick}
       disabled={disabled}
+      aria-label={
+        ariaLabel ?? (showLabel ? undefined : `Continue with ${provider}`)
+      }
     >
       {icon}
-      {provider}
+      {showLabel ? provider : <span className="sr-only">{provider}</span>}
     </Button>
   );
 }

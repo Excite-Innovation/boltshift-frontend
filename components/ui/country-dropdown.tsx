@@ -138,7 +138,7 @@ const CountryDropdownComponent = (
       <PopoverContent
         collisionPadding={10}
         side="bottom"
-        className="min-w-[--radix-popper-anchor-width] p-0"
+        className="w-[var(--radix-popover-trigger-width)] p-0"
       >
         <Command className="w-full max-h-50 sm:max-h-67.5">
           <CommandList>

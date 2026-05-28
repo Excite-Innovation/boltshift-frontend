@@ -12,6 +12,8 @@ import {
 import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
+import { showSonnerMessage } from "@/components/alert/alert";
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -93,6 +95,9 @@ function AddPaymentCardTile({ onClick }: AddPaymentCardTileProps) {
 type AddPaymentCardModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  mode?: "add" | "edit";
+  card?: SavedPaymentCard | null;
+  onSubmit?: (card: SavedPaymentCard) => void;
 };
 
 type AddPaymentCardFormValues = {
@@ -103,6 +108,30 @@ type AddPaymentCardFormValues = {
   vendor: string;
   isDefault: boolean;
 };
+
+const emptyPaymentCardFormValues: AddPaymentCardFormValues = {
+  holder: "",
+  expiry: "",
+  number: "",
+  cvv: "",
+  vendor: "",
+  isDefault: false,
+};
+
+function getPaymentCardFormValues(
+  card?: SavedPaymentCard | null,
+): AddPaymentCardFormValues {
+  if (!card) return emptyPaymentCardFormValues;
+
+  return {
+    holder: card.holder,
+    expiry: card.expiry,
+    number: card.number,
+    cvv: card.cvv,
+    vendor: card.brand,
+    isDefault: card.isDefault === true,
+  };
+}
 
 type PaymentInputFieldProps = {
   id: string;
@@ -124,7 +153,7 @@ function PaymentInputField({
 }: PaymentInputFieldProps) {
   return (
     <Field className={cn("gap-1.5", className)}>
-      <FieldLabel htmlFor={id} className="gap-0 text-xs font-medium">
+      <FieldLabel htmlFor={id} className="gap-0 text-sm font-medium text-muted-foreground">
         {label}
         {required ? <span className="text-primary">*</span> : null}
       </FieldLabel>
@@ -138,7 +167,7 @@ function PaymentInputField({
           id={id}
           required={required}
           className={cn(
-            "h-8 rounded-md border-border bg-background text-xs shadow-none focus-visible:ring-1",
+            "h-8 rounded-md border-border bg-background text-base shadow-none focus-visible:ring-1",
             icon ? "pl-8" : null,
             inputClassName,
           )}
@@ -149,16 +178,28 @@ function PaymentInputField({
   );
 }
 
-function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
-  const [formValues, setFormValues] =
-    React.useState<AddPaymentCardFormValues>({
-      holder: "",
-      expiry: "",
-      number: "",
-      cvv: "",
-      vendor: "Excite!",
-      isDefault: true,
-    });
+function AddPaymentCardModal({
+  open,
+  onOpenChange,
+  mode = "add",
+  card,
+  onSubmit,
+}: AddPaymentCardModalProps) {
+  const isEditMode = mode === "edit";
+  const modalTitle = isEditMode ? "Edit Payment Card" : "Add a New Card";
+  const sectionTitle = isEditMode
+    ? "Edit payment method"
+    : "Add a payment method";
+  const submitLabel = isEditMode ? "Save" : "Add";
+  const [formValues, setFormValues] = React.useState<AddPaymentCardFormValues>(
+    () => getPaymentCardFormValues(card),
+  );
+
+  React.useEffect(() => {
+    if (!open) return;
+
+    setFormValues(getPaymentCardFormValues(card));
+  }, [card, open]);
 
   const previewCard = React.useMemo<SavedPaymentCard>(
     () => ({
@@ -166,14 +207,14 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
       brand: formValues.vendor || "Card Vendor",
       holder: formValues.holder || "Name on card",
       expiry: formValues.expiry || "MM / YY",
-      number: formValues.number || "1234 1234 1234 1234",
+      number: formValues.number || "4321 1234 1234 1234",
       cvv: formValues.cvv || "CVV",
       isDefault: formValues.isDefault,
-      backgroundColor: DEFAULT_CARD_BACKGROUND,
-      merchantName: "ApplePay",
-      merchantIcon: <FaApple className="size-4" />,
+      backgroundColor: card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
+      merchantName: card?.merchantName ?? "ApplePay",
+      merchantIcon: card?.merchantIcon ?? <FaApple className="size-4" />,
     }),
-    [formValues],
+    [card, formValues],
   );
 
   const updateFormValue =
@@ -187,7 +228,67 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    onSubmit?.({
+      ...(card ?? {
+        id: `payment-card-${Date.now()}`,
+        backgroundColor: DEFAULT_CARD_BACKGROUND,
+        merchantName: "ApplePay",
+        merchantIcon: <FaApple className="size-4" />,
+      }),
+      brand: formValues.vendor,
+      holder: formValues.holder,
+      expiry: formValues.expiry,
+      number: formValues.number,
+      cvv: formValues.cvv,
+      isDefault: formValues.isDefault,
+    });
+    showSonnerMessage({
+      variant: "success",
+      title: isEditMode ? "Payment Card Updated" : "Payment Card Added",
+      description: isEditMode
+        ? "Your payment card details have been updated successfully."
+        : "Your payment card has been added successfully.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
     onOpenChange(false);
+  };
+
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, "");
+
+    // Limit to 4 digits (MMYY)
+    value = value.slice(0, 4);
+
+    // Add slash automatically after 2 digits
+    if (value.length > 2) {
+      value = `${value.slice(0, 2)} / ${value.slice(2)}`;
+    }
+
+    updateFormValue("expiry")({
+      ...e,
+      target: {
+        ...e.target,
+        value,
+      },
+    });
+  };
+
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    // remove anything that's not a number
+    value = value.replace(/\D/g, "");
+
+    // hard limit to 3 digits (extra input is ignored)
+    if (value.length > 3) return;
+
+    updateFormValue("cvv")({
+      ...e,
+      target: {
+        ...e.target,
+        value,
+      },
+    });
   };
 
   return (
@@ -199,16 +300,16 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
           </div>
           <div className="min-w-0">
             <DialogTitle className="text-lg font-semibold">
-              Add a New Card
+              {modalTitle}
             </DialogTitle>
             <DialogDescription className="sr-only">
-              Add a payment method by entering card details.
+              {modalTitle} by entering card details.
             </DialogDescription>
           </div>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="rounded-xl bg-[linear-gradient(135deg,#aee4fb_0%,#d8f2ff_46%,#fff0e9_100%)] p-7">
+          <div className="rounded-2xl bg-linear-to-t from-[#FFF1EB] to-[#ACE0F9] p-4">
             <PaymentCardFlipper
               className="mx-auto"
               front={
@@ -231,7 +332,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
           </div>
 
           <div className="pt-6 flex-col gap-1">
-            <h3 className="text-lg/7 font-semibold">Add a payment method</h3>
+            <h3 className="text-lg/7 font-semibold">{sectionTitle}</h3>
             <p className="flex items-center gap-2 text-xs text-foreground">
               <ShieldCheck className="size-6 shrink-0" />
               Your transaction is secured with SSL encryption
@@ -254,9 +355,9 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Expiry"
                 required
                 icon={<Calendar className="size-4" />}
-                placeholder="06 / 26"
+                placeholder="MM / YY"
                 value={formValues.expiry}
-                onChange={updateFormValue("expiry")}
+                onChange={handleExpiryChange}
               />
             </div>
 
@@ -271,7 +372,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 onChange={updateFormValue("number")}
                 icon={
                   <span className="relative flex h-4 w-6 items-center">
-                    <span className="absolute left-0 size-3.5 rounded-full bg-[#eb001b]" />
+                    <span className="absolute left-0.5 size-3.5 rounded-full bg-[#eb001b]" />
                     <span className="absolute right-0 size-3.5 rounded-full bg-[#f79e1b] mix-blend-multiply" />
                   </span>
                 }
@@ -279,11 +380,12 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
               <PaymentInputField
                 id="payment-card-cvv"
                 label="CVV"
+                required
                 type="password"
                 icon={<LockKeyhole className="size-4" />}
                 placeholder="•••"
                 value={formValues.cvv}
-                onChange={updateFormValue("cvv")}
+                onChange={handleCvvChange}
               />
             </div>
 
@@ -293,17 +395,19 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
                 label="Card Vendor"
                 required
                 icon={<CreditCard className="size-4" />}
+                placeholder="Apple Pay"
                 value={formValues.vendor}
                 onChange={updateFormValue("vendor")}
               />
+
               <Field className="gap-1.5">
-                <FieldLabel className="text-xs font-medium">
+                <FieldLabel className="text-sm font-medium text-muted-foreground">
                   Personalize
                 </FieldLabel>
                 <Button
                   type="button"
                   variant="outline"
-                  className="h-8 w-full rounded-md text-xs shadow-none"
+                  className="h-8 w-full rounded-md text-sm font-semibold shadow-none focus-visible:ring-1 focus-visible:ring-offset-2"
                 >
                   Edit
                 </Button>
@@ -325,7 +429,7 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
             <FieldContent className="gap-0">
               <FieldLabel
                 htmlFor="payment-card-default"
-                className="text-xs font-normal"
+                className="text-sm font-medium"
               >
                 Make Default
               </FieldLabel>
@@ -337,16 +441,16 @@ function AddPaymentCardModal({ open, onOpenChange }: AddPaymentCardModalProps) {
               <Button
                 type="button"
                 variant="outline"
-                className="h-11 rounded-md text-xs font-semibold shadow-none"
+                size="lg"
               >
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              className="h-11 rounded-md text-xs font-semibold"
+              size="lg"
             >
-              Add
+              {submitLabel}
             </Button>
           </DialogFooter>
         </form>
@@ -394,6 +498,9 @@ type PaymentCardOptionProps = {
   hideNumber: boolean;
   flipped?: boolean;
   onFlip?: () => void;
+  onDelete?: () => void;
+  onSetDefault?: () => void;
+  onEdit?: () => void;
 };
 
 function PaymentCardOption({
@@ -401,6 +508,9 @@ function PaymentCardOption({
   hideNumber,
   flipped,
   onFlip,
+  onDelete,
+  onSetDefault,
+  onEdit,
 }: PaymentCardOptionProps) {
   const id = React.useId();
   const accessibleEnding = getAccessibleCardEnding(card.number);
@@ -439,6 +549,9 @@ function PaymentCardOption({
             radioId={id}
             hideNumber={hideNumber}
             isBack={false}
+            onDelete={onDelete}
+            onSetDefault={onSetDefault}
+            onEdit={onEdit}
           />
         }
         back={
@@ -447,6 +560,9 @@ function PaymentCardOption({
             radioId={id}
             hideNumber={hideNumber}
             isBack
+            onDelete={onDelete}
+            onSetDefault={onSetDefault}
+            onEdit={onEdit}
           />
         }
       />
@@ -460,6 +576,9 @@ type PaymentCardFaceProps = {
   hideNumber: boolean;
   isBack: boolean;
   showControls?: boolean;
+  onDelete?: () => void;
+  onSetDefault?: () => void;
+  onEdit?: () => void;
 };
 
 function PaymentCardFace({
@@ -468,6 +587,9 @@ function PaymentCardFace({
   hideNumber,
   isBack,
   showControls = true,
+  onDelete,
+  onSetDefault,
+  onEdit,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
   const merchantName = card.merchantName ?? "Pay";
@@ -537,28 +659,50 @@ function PaymentCardFace({
                           align="end"
                           className="p-3 text-sm font-medium gap-2 border rounded-xl"
                         >
+
+                          {/* Set card as default */}
                           <DropdownMenuItem
-                            onSelect={(event) => event.preventDefault()}
+                            disabled={card.isDefault}
+                            onSelect={() => onSetDefault?.()}
                             className="p-4 rounded-lg"
                           >
                             <MdOutlineCreditScore className="size-4" />
                             Make default
                           </DropdownMenuItem>
+
+                          {/* Edit card details */}
                           <DropdownMenuItem
-                            onSelect={(event) => event.preventDefault()}
+                            onSelect={() => onEdit?.()}
                             className="p-4 rounded-lg"
                           >
                             <MdCreditCard className="size-4" />
                             Edit Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            variant="destructive"
-                            onSelect={(event) => event.preventDefault()}
-                            className="p-4 rounded-lg"
-                          >
-                            <MdCreditCard className="size-4" />
-                            Delete
-                          </DropdownMenuItem>
+
+                          {/* Delete card */}
+                          <DeleteModal
+                            title="Remove Payment Card"
+                            description="Are you sure you want to delete this payment card? This action cannot be undone."
+                            actionLabel="Remove Card"
+                            notification={{
+                              variant: "delete",
+                              title: "Payment Card Removed",
+                              description:
+                                "The payment card has been removed from your account.",
+                              iconSrc: "/sonnar/Red-Featured-outline.svg",
+                            }}
+                            onConfirm={() => onDelete?.()}
+                            trigger={
+                              <DropdownMenuItem
+                                variant="destructive"
+                                onSelect={(event) => event.preventDefault()}
+                                className="p-4 rounded-lg"
+                              >
+                                <MdCreditCard className="size-4" />
+                                Delete
+                              </DropdownMenuItem>
+                            }
+                          />
                         </DropdownMenuContent>
                       </DropdownMenu>
                       <TooltipContent>Card actions</TooltipContent>
@@ -607,13 +751,18 @@ function PaymentCardFace({
 
 export function PaymentCard({
   cards = paymentCardExamples,
+  onRemoveCard,
+  onSetDefaultCard,
+  onUpdateCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
   step = 4,
   title = "Payment Card",
   className,
 }: PaymentCardProps) {
-  const fallbackSelectedCardId = cards[1]?.id ?? cards[0]?.id ?? "";
+  const [visibleCards, setVisibleCards] = React.useState(cards);
+  const fallbackSelectedCardId =
+    visibleCards[1]?.id ?? visibleCards[0]?.id ?? "";
   const [selectedCard, setSelectedCard] = React.useState(
     defaultSelectedCardId ?? fallbackSelectedCardId,
   );
@@ -621,7 +770,14 @@ export function PaymentCard({
   const [hideCardNumbers, setHideCardNumbers] = React.useState(
     defaultHideCardNumbers,
   );
-  const [addCardModalOpen, setAddCardModalOpen] = React.useState(false);
+  const [paymentCardModalOpen, setPaymentCardModalOpen] = React.useState(false);
+  const [editingCard, setEditingCard] = React.useState<SavedPaymentCard | null>(
+    null,
+  );
+
+  React.useEffect(() => {
+    setVisibleCards(cards);
+  }, [cards]);
 
   React.useEffect(() => {
     // Keep local selection in sync when Storybook controls or parent props change.
@@ -632,6 +788,65 @@ export function PaymentCard({
   React.useEffect(() => {
     setHideCardNumbers(defaultHideCardNumbers);
   }, [defaultHideCardNumbers]);
+
+  const handleRemoveCard = (cardId: string) => {
+    setVisibleCards((currentCards) =>
+      currentCards.filter((card) => card.id !== cardId),
+    );
+    setFlippedCard((currentCard) =>
+      currentCard === cardId ? null : currentCard,
+    );
+    onRemoveCard?.(cardId);
+  };
+
+  const handleSetDefaultCard = (cardId: string) => {
+    setVisibleCards((currentCards) =>
+      currentCards.map((card) => ({
+        ...card,
+        isDefault: card.id === cardId,
+      })),
+    );
+    setSelectedCard(cardId);
+    onSetDefaultCard?.(cardId);
+    showSonnerMessage({
+      variant: "success",
+      title: "Default Payment Card Updated",
+      description: "This payment card is now your default payment method.",
+      iconSrc: "/sonnar/Green-Featured-outline.svg",
+    });
+  };
+
+  const handleOpenAddCardModal = () => {
+    setEditingCard(null);
+    setPaymentCardModalOpen(true);
+  };
+
+  const handleOpenEditCardModal = (card: SavedPaymentCard) => {
+    setEditingCard(card);
+    setPaymentCardModalOpen(true);
+  };
+
+  const handlePaymentCardSubmit = (card: SavedPaymentCard) => {
+    setVisibleCards((currentCards) => {
+      const existingCard = currentCards.some(
+        (currentCard) => currentCard.id === card.id,
+      );
+      const nextCards = existingCard
+        ? currentCards.map((currentCard) =>
+            currentCard.id === card.id ? card : currentCard,
+          )
+        : [...currentCards, card];
+
+      if (!card.isDefault) return nextCards;
+
+      return nextCards.map((currentCard) => ({
+        ...currentCard,
+        isDefault: currentCard.id === card.id,
+      }));
+    });
+    setSelectedCard(card.id);
+    onUpdateCard?.(card);
+  };
 
   return (
     <>
@@ -677,12 +892,15 @@ export function PaymentCard({
             onValueChange={setSelectedCard}
             className="contents"
           >
-            {cards.map((card) => (
+            {visibleCards.map((card) => (
               <PaymentCardOption
                 key={card.id}
                 card={card}
                 hideNumber={card.hideNumber ?? hideCardNumbers}
                 flipped={flippedCard === card.id}
+                onDelete={() => handleRemoveCard(card.id)}
+                onSetDefault={() => handleSetDefaultCard(card.id)}
+                onEdit={() => handleOpenEditCardModal(card)}
                 onFlip={() =>
                   setFlippedCard((currentCard) =>
                     currentCard === card.id ? null : card.id,
@@ -691,13 +909,16 @@ export function PaymentCard({
               />
             ))}
           </RadioGroup>
-          <AddPaymentCardTile onClick={() => setAddCardModalOpen(true)} />
+          <AddPaymentCardTile onClick={handleOpenAddCardModal} />
         </CardContent>
       </Card>
 
       <AddPaymentCardModal
-        open={addCardModalOpen}
-        onOpenChange={setAddCardModalOpen}
+        open={paymentCardModalOpen}
+        onOpenChange={setPaymentCardModalOpen}
+        mode={editingCard ? "edit" : "add"}
+        card={editingCard}
+        onSubmit={handlePaymentCardSubmit}
       />
     </>
   );
