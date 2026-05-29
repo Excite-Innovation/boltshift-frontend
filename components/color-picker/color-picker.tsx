@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const gradients = [
+export const cardGradients = [
   {
     name: "Slate",
     className: "from-[#6b7280] to-[#545b66]",
@@ -48,21 +48,30 @@ const gradients = [
   },
 ];
 
+export type CardGradient = (typeof cardGradients)[number];
+
 type GradientSelectorModalProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  onSave?: (gradient: (typeof gradients)[number]) => void;
+  initialGradientClassName?: string;
+  onSave?: (gradient: CardGradient) => void;
 };
 
 export function GradientSelectorModal({
   open,
   defaultOpen = true,
   onOpenChange,
+  initialGradientClassName,
   onSave,
 }: GradientSelectorModalProps) {
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
-  const [selectedGradient, setSelectedGradient] = React.useState(gradients[0]);
+  const [selectedGradient, setSelectedGradient] = React.useState<CardGradient>(
+    () =>
+      cardGradients.find(
+        (gradient) => gradient.className === initialGradientClassName,
+      ) ?? cardGradients[0],
+  );
 
   const isControlled = open !== undefined;
   const currentOpen = isControlled ? open : internalOpen;
@@ -75,12 +84,22 @@ export function GradientSelectorModal({
     onOpenChange?.(nextOpen);
   }
 
+  React.useEffect(() => {
+    if (!currentOpen) return;
+
+    setSelectedGradient(
+      cardGradients.find(
+        (gradient) => gradient.className === initialGradientClassName,
+      ) ?? cardGradients[0],
+    );
+  }, [currentOpen, initialGradientClassName]);
+
   return (
     <Dialog open={currentOpen} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={false}
-        overlayClassName="bg-[#e8edf3]"
-        className="w-[calc(100vw-1.25rem)] max-w-96.5 gap-0 overflow-hidden rounded-xl border bg-background p-0 shadow-0 sm:max-w-96.5"
+        overlayClassName="z-[60] bg-black/35"
+        className="z-[70] w-[calc(100vw-1.25rem)] max-w-96.5 gap-0 overflow-hidden rounded-xl border bg-background p-0 shadow-0 sm:max-w-96.5"
       >
         <div className="p-4">
           <DialogHeader className="flex-row items-start pt-6 gap-4 text-left">
@@ -101,7 +120,7 @@ export function GradientSelectorModal({
 
           <div className="pt-8 grid gap-2">
             <div className="flex items-center gap-2">
-              {gradients.map((gradient) => {
+              {cardGradients.map((gradient) => {
                 const active = selectedGradient.name === gradient.name;
 
                 return (
@@ -145,7 +164,13 @@ export function GradientSelectorModal({
               Close
             </Button>
 
-            <Button size="lg" onClick={() => onSave?.(selectedGradient)}>
+            <Button
+              size="lg"
+              onClick={() => {
+                onSave?.(selectedGradient);
+                handleOpenChange(false);
+              }}
+            >
               Save changes
             </Button>
           </div>
