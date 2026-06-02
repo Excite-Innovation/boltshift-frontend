@@ -13,6 +13,7 @@ import { MdOutlineCreditScore, MdCreditCard, MdAddCard } from "react-icons/md";
 import { FaApple } from "react-icons/fa";
 
 import { showSonnerMessage } from "@/components/alert/alert";
+import { GradientSelectorModal } from "@/components/color-picker/color-picker";
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -194,11 +195,16 @@ function AddPaymentCardModal({
   const [formValues, setFormValues] = React.useState<AddPaymentCardFormValues>(
     () => getPaymentCardFormValues(card),
   );
+  const [gradientModalOpen, setGradientModalOpen] = React.useState(false);
+  const [backgroundColor, setBackgroundColor] = React.useState(
+    () => card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
+  );
 
   React.useEffect(() => {
     if (!open) return;
 
     setFormValues(getPaymentCardFormValues(card));
+    setBackgroundColor(card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND);
   }, [card, open]);
 
   const previewCard = React.useMemo<SavedPaymentCard>(
@@ -210,11 +216,11 @@ function AddPaymentCardModal({
       number: formValues.number || "4321 1234 1234 1234",
       cvv: formValues.cvv || "CVV",
       isDefault: formValues.isDefault,
-      backgroundColor: card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
+      backgroundColor,
       merchantName: card?.merchantName ?? "ApplePay",
       merchantIcon: card?.merchantIcon ?? <FaApple className="size-4" />,
     }),
-    [card, formValues],
+    [backgroundColor, card, formValues],
   );
 
   const updateFormValue =
@@ -235,6 +241,8 @@ function AddPaymentCardModal({
         merchantName: "ApplePay",
         merchantIcon: <FaApple className="size-4" />,
       }),
+      backgroundColor,
+      backgroundGradient: undefined,
       brand: formValues.vendor,
       holder: formValues.holder,
       expiry: formValues.expiry,
@@ -407,6 +415,7 @@ function AddPaymentCardModal({
                 <Button
                   type="button"
                   variant="outline"
+                  onClick={() => setGradientModalOpen(true)}
                   className="h-8 w-full rounded-md text-sm font-semibold shadow-none focus-visible:ring-1 focus-visible:ring-offset-2"
                 >
                   Edit
@@ -455,6 +464,14 @@ function AddPaymentCardModal({
           </DialogFooter>
         </form>
       </DialogContent>
+
+      <GradientSelectorModal
+        open={gradientModalOpen}
+        defaultOpen={false}
+        onOpenChange={setGradientModalOpen}
+        initialColor={backgroundColor}
+        onSave={setBackgroundColor}
+      />
     </Dialog>
   );
 }
@@ -592,14 +609,23 @@ function PaymentCardFace({
   onEdit,
 }: PaymentCardFaceProps) {
   const cardBackgroundColor = card.backgroundColor ?? DEFAULT_CARD_BACKGROUND;
+  const cardBackgroundGradient = card.backgroundGradient;
   const merchantName = card.merchantName ?? "Pay";
   const isAppleMerchant = merchantName.toLowerCase().includes("apple");
   const displayCardNumber = getDisplayCardNumber(card.number, hideNumber);
 
   return (
     <div
-      className="relative flex size-full overflow-hidden rounded-2xl p-4 text-white shadow-sm ring-1 ring-black/5"
-      style={{ backgroundColor: cardBackgroundColor }}
+      className={cn(
+        "relative flex size-full overflow-hidden rounded-2xl p-4 text-white shadow-sm ring-1 ring-black/5",
+        cardBackgroundGradient && "bg-gradient-to-br",
+        cardBackgroundGradient,
+      )}
+      style={
+        cardBackgroundGradient
+          ? undefined
+          : { backgroundColor: cardBackgroundColor }
+      }
     >
       {/* A subtle overlay keeps custom card colors from feeling flat. */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />

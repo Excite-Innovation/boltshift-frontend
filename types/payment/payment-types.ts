@@ -9,6 +9,7 @@ export type SavedPaymentCard = {
   cvv: string;
   isDefault?: boolean;
   backgroundColor?: string;
+  backgroundGradient?: string;
   merchantName?: string;
   merchantIcon?: ReactNode;
   hideNumber?: boolean;
