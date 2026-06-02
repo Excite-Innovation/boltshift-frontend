@@ -11,67 +11,47 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import {
+  ColorPicker,
+  ColorPickerAlpha,
+  ColorPickerEyeDropper,
+  ColorPickerFormat,
+  ColorPickerHue,
+  ColorPickerOutput,
+  ColorPickerSelection,
+} from "@/components/ui/color-picker";
 
-export const cardGradients = [
-  {
-    name: "Slate",
-    className: "from-[#6b7280] to-[#545b66]",
-  },
-  {
-    name: "Sunset",
-    className: "from-[#ffd56a] to-[#ff7bb2]",
-  },
-  {
-    name: "Lavender",
-    className: "from-[#cfd7ff] to-[#e5d4ff]",
-  },
-  {
-    name: "Mint",
-    className: "from-[#8ed9e9] to-[#6ee7a4]",
-  },
-  {
-    name: "Meadow",
-    className: "from-[#e4f878] to-[#74e2a2]",
-  },
-  {
-    name: "Sky",
-    className: "from-[#71e5e8] to-[#57b8ee]",
-  },
-  {
-    name: "Citrus",
-    className: "from-[#ffd35a] to-[#ffe62f]",
-  },
-  {
-    name: "Lilac",
-    className: "from-[#e7d6ff] to-[#d7c4f2]",
-  },
-];
+const DEFAULT_PICKER_COLOR = "#3d434e";
 
-export type CardGradient = (typeof cardGradients)[number];
+function rgbaToHex(value: unknown) {
+  if (!Array.isArray(value)) return DEFAULT_PICKER_COLOR;
+
+  const [red = 0, green = 0, blue = 0] = value;
+  const toHex = (channel: unknown) =>
+    Math.max(0, Math.min(255, Math.round(Number(channel) || 0)))
+      .toString(16)
+      .padStart(2, "0");
+
+  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+}
 
 type GradientSelectorModalProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  initialGradientClassName?: string;
-  onSave?: (gradient: CardGradient) => void;
+  initialColor?: string;
+  onSave?: (color: string) => void;
 };
 
 export function GradientSelectorModal({
   open,
   defaultOpen = true,
   onOpenChange,
-  initialGradientClassName,
+  initialColor = DEFAULT_PICKER_COLOR,
   onSave,
 }: GradientSelectorModalProps) {
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
-  const [selectedGradient, setSelectedGradient] = React.useState<CardGradient>(
-    () =>
-      cardGradients.find(
-        (gradient) => gradient.className === initialGradientClassName,
-      ) ?? cardGradients[0],
-  );
+  const [selectedColor, setSelectedColor] = React.useState(initialColor);
 
   const isControlled = open !== undefined;
   const currentOpen = isControlled ? open : internalOpen;
@@ -87,12 +67,8 @@ export function GradientSelectorModal({
   React.useEffect(() => {
     if (!currentOpen) return;
 
-    setSelectedGradient(
-      cardGradients.find(
-        (gradient) => gradient.className === initialGradientClassName,
-      ) ?? cardGradients[0],
-    );
-  }, [currentOpen, initialGradientClassName]);
+    setSelectedColor(initialColor);
+  }, [currentOpen, initialColor]);
 
   return (
     <Dialog open={currentOpen} onOpenChange={handleOpenChange}>
@@ -113,46 +89,35 @@ export function GradientSelectorModal({
               </DialogTitle>
 
               <DialogDescription className="text-sm">
-                Change gradient color and apply graphics
+                Change card color and apply graphics
               </DialogDescription>
             </div>
           </DialogHeader>
 
-          <div className="pt-8 grid gap-2">
-            <div className="flex items-center gap-2">
-              {cardGradients.map((gradient) => {
-                const active = selectedGradient.name === gradient.name;
+          <div className="pt-8 grid gap-4">
+            <ColorPicker
+              key={`${currentOpen}-${initialColor}`}
+              defaultValue={selectedColor}
+              onChange={(value) => setSelectedColor(rgbaToHex(value))}
+              className="h-auto w-full gap-4"
+            >
+              <ColorPickerSelection className="h-40 rounded-xl border" />
+              <ColorPickerHue />
+              <ColorPickerAlpha />
 
-                return (
-                  <button
-                    key={gradient.name}
-                    type="button"
-                    onClick={() => setSelectedGradient(gradient)}
-                    aria-label={`Select ${gradient.name} gradient`}
-                    aria-pressed={active}
-                    className={cn(
-                      "grid size-8 place-items-center rounded-full transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ec4899] focus-visible:ring-offset-2",
-                      active && "ring-2 ring-[#ec4899] ring-offset-2",
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "size-7 rounded-full bg-gradient-to-br",
-                        gradient.className,
-                        active && "border-[3px] border-white",
-                      )}
-                    />
-                  </button>
-                );
-              })}
+              <div className="flex items-center gap-2">
+                <ColorPickerEyeDropper className="size-8 rounded-md shadow-none" />
+                <ColorPickerOutput />
+                <ColorPickerFormat />
+              </div>
+            </ColorPicker>
+
+            <div className="grid gap-2">
+              <div
+                className="h-14 w-full rounded-xl border"
+                style={{ backgroundColor: selectedColor }}
+              />
             </div>
-
-            <div
-              className={cn(
-                "h-40 w-full rounded-xl border bg-gradient-to-br",
-                selectedGradient.className,
-              )}
-            />
           </div>
 
           <div className="py-8 grid grid-cols-2 gap-3">
@@ -167,7 +132,7 @@ export function GradientSelectorModal({
             <Button
               size="lg"
               onClick={() => {
-                onSave?.(selectedGradient);
+                onSave?.(selectedColor);
                 handleOpenChange(false);
               }}
             >

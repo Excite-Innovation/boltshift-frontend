@@ -196,15 +196,15 @@ function AddPaymentCardModal({
     () => getPaymentCardFormValues(card),
   );
   const [gradientModalOpen, setGradientModalOpen] = React.useState(false);
-  const [backgroundGradient, setBackgroundGradient] = React.useState<
-    string | undefined
-  >(() => card?.backgroundGradient);
+  const [backgroundColor, setBackgroundColor] = React.useState(
+    () => card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
+  );
 
   React.useEffect(() => {
     if (!open) return;
 
     setFormValues(getPaymentCardFormValues(card));
-    setBackgroundGradient(card?.backgroundGradient);
+    setBackgroundColor(card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND);
   }, [card, open]);
 
   const previewCard = React.useMemo<SavedPaymentCard>(
@@ -216,12 +216,11 @@ function AddPaymentCardModal({
       number: formValues.number || "4321 1234 1234 1234",
       cvv: formValues.cvv || "CVV",
       isDefault: formValues.isDefault,
-      backgroundColor: card?.backgroundColor ?? DEFAULT_CARD_BACKGROUND,
-      backgroundGradient,
+      backgroundColor,
       merchantName: card?.merchantName ?? "ApplePay",
       merchantIcon: card?.merchantIcon ?? <FaApple className="size-4" />,
     }),
-    [backgroundGradient, card, formValues],
+    [backgroundColor, card, formValues],
   );
 
   const updateFormValue =
@@ -242,7 +241,8 @@ function AddPaymentCardModal({
         merchantName: "ApplePay",
         merchantIcon: <FaApple className="size-4" />,
       }),
-      backgroundGradient,
+      backgroundColor,
+      backgroundGradient: undefined,
       brand: formValues.vendor,
       holder: formValues.holder,
       expiry: formValues.expiry,
@@ -469,8 +469,8 @@ function AddPaymentCardModal({
         open={gradientModalOpen}
         defaultOpen={false}
         onOpenChange={setGradientModalOpen}
-        initialGradientClassName={backgroundGradient}
-        onSave={(gradient) => setBackgroundGradient(gradient.className)}
+        initialColor={backgroundColor}
+        onSave={setBackgroundColor}
       />
     </Dialog>
   );
