@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { DropdownWrapper } from "@/components/user-profile/dropdown-wrapper";
+import { ProfileDropdown } from "@/components/user-profile/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 
 const actions = [
@@ -60,9 +62,21 @@ export function Profile() {
         );
       })}
 
-      <div className="w-8 h-8 rounded-full border-2 flex items-center justify-center">
-        <AvatarProfile />
-      </div>
+      <DropdownWrapper
+        trigger={
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-8 rounded-full border-2 p-0"
+            aria-label="Open profile menu"
+          >
+            <AvatarProfile />
+          </Button>
+        }
+      >
+        <ProfileDropdown />
+      </DropdownWrapper>
     </div>
   );
 }
