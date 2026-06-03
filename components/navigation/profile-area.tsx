@@ -1,6 +1,7 @@
 "use client";
 
 import { AvatarProfile } from "@/components/avatar/avatar";
+import { NotificationDrawer } from "@/components/notification/notification-drawer";
 import { ShoppingCart, Heart, Bell } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,7 +14,6 @@ import { cn } from "@/lib/utils";
 const actions = [
   { id: "wishlist", icon: Heart, href: "/wishlist" },
   { id: "cart", icon: ShoppingCart, href: "/cart" },
-  { id: "notifications", icon: Bell },
 ];
 
 export function Profile() {
@@ -21,12 +21,10 @@ export function Profile() {
 
   return (
     <div className="w-41 h-10 flex items-center gap-1">
-      {actions.map((ActionIcon) => {
-        const Icon = ActionIcon.icon;
+      {actions.map((action) => {
+        const Icon = action.icon;
         const isActive =
-          ActionIcon.href &&
-          (pathname === ActionIcon.href ||
-            pathname.startsWith(`${ActionIcon.href}/`));
+          pathname === action.href || pathname.startsWith(`${action.href}/`);
 
         const content = (
           <Icon
@@ -38,29 +36,36 @@ export function Profile() {
           />
         );
 
-        return ActionIcon.href ? (
+        return (
           <Button
-            key={ActionIcon.id}
+            key={action.id}
             variant="ghost"
             size="icon"
-            className="w-10 h-10 rounded-full"
-            aria-label={ActionIcon.id}
+            className="h-10 w-10 rounded-full"
+            aria-label={action.id}
             asChild
           >
-            <Link href={ActionIcon.href}>{content}</Link>
-          </Button>
-        ) : (
-          <Button
-            key={ActionIcon.id}
-            variant="ghost"
-            size="icon"
-            className="w-10 h-10 rounded-full"
-            aria-label={ActionIcon.id}
-          >
-            {content}
+            <Link href={action.href}>{content}</Link>
           </Button>
         );
       })}
+
+      <DropdownWrapper
+        trigger={
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-10 w-10 rounded-full"
+            aria-label="Open notifications"
+          >
+            <Bell className="size-6 stroke-[1.5]" aria-hidden="true" />
+          </Button>
+        }
+        contentClassName="w-[480px] max-w-[calc(100vw-2rem)] border-0"
+      >
+        <NotificationDrawer />
+      </DropdownWrapper>
 
       <DropdownWrapper
         trigger={

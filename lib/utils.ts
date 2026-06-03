@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ProductVariant } from "../types/type"
 
+// Combines conditional class names and resolves conflicting Tailwind utilities.
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -11,6 +12,7 @@ export function EditNum(num: number): string {
   return num.toLocaleString('en-US')
 }
 
+// Maps product card layout variants to their display aspect ratios.
 export function GetRatio(variant: ProductVariant) {
   switch (variant) {
     case "wide":
@@ -26,7 +28,7 @@ type FormatOptions = {
   decimals?: number;
 };
 
-// Formats a long number into a human readable format
+// Formats a long number into a compact human-readable value.
 export function FormatNumber(
   value: number,
   options: FormatOptions = {}
@@ -46,12 +48,14 @@ export function FormatNumber(
   return `${parseFloat(result.toFixed(decimals))}M`;
 }
 
+// Normalizes numeric input strings so range fields never store negative values.
 export const clampToPositive = (value: string) => {
   const num = Number(value);
   if (isNaN(num)) return "";
   return Math.max(0, num).toString();
 };
 
+// Keeps paired min/max range fields valid when both sides have a value.
 export const enforceRangeOrder = (min: string, max: string) => {
   const minNum = Number(min);
   const maxNum = Number(max);
@@ -64,3 +68,13 @@ export const enforceRangeOrder = (min: string, max: string) => {
 
   return { min, max };
 };
+
+// Returns a two-letter fallback label for avatar and profile displays.
+export function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
