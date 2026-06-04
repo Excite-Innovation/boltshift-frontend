@@ -1,8 +1,9 @@
 "use client";
 
 import { Logo } from "@/components/brand/logo";
+import { MegaMenu } from "@/components/navigation/mega-menu";
 import { NavbarSearch } from "@/components/navigation/navbar-search";
-import { Menu, ListFilter } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import { Profile } from "@/components/navigation/profile-area";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -15,7 +16,7 @@ export function Navbar() {
     <>
       <header className="scroll-lock-centered-fixed fixed top-0 z-50 flex h-24 w-full max-w-360 -translate-x-1/2 items-center justify-between gap-4 rounded-none bg-background px-4">
         <div className="flex h-12 shrink-0 items-center gap-4">
-          <Menu aria-hidden="true" />
+          <MegaMenu />
           <Link href="/">
             <Logo />
           </Link>
@@ -52,7 +53,7 @@ export function NavbarMobile({ showFilterButton }: NavbarMobileProps) {
       <header className="scroll-lock-centered-fixed fixed top-0 z-50 flex h-33 w-full max-w-360 -translate-x-1/2 flex-col gap-4 bg-background px-4 py-4">
         <div className="h-10 flex flex-row justify-between">
           <div className="flex items-center gap-2">
-            <Menu className="size-6" aria-hidden="true" />
+            <MegaMenu />
             <Link href="/">
               <Logo />
             </Link>
