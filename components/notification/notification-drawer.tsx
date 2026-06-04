@@ -43,7 +43,7 @@ export function NotificationDrawer({
   }
 
   return (
-    <section className="p-8 flex h-160 w-full flex-col gap-8 bg-background text-foreground">
+    <section className="p-8 flex h-160 w-full flex-col gap-8 border border-border bg-background text-foreground">
       <header className="flex items-center justify-between">
         <h2 className="text-base font-semibold text-foreground">
           Notifications
