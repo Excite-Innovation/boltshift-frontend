@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { Check, FileText, Settings } from "lucide-react";
 
 import {
@@ -13,9 +14,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  getNotificationsByTab,
+  notifications as initialNotifications,
   notificationTabs,
   type NotificationItem,
+  type NotificationTabId,
 } from "@/lib/notifications";
 import { cn, getInitials } from "@/lib/utils";
 
@@ -26,7 +28,19 @@ type NotificationDrawerProps = {
 export function NotificationDrawer({
   variant = "default",
 }: NotificationDrawerProps) {
-  const isEmpty = variant === "empty";
+  const [notifications, setNotifications] = useState<NotificationItem[]>(() =>
+    variant === "empty" ? [] : initialNotifications,
+  );
+  const isEmpty = notifications.length === 0;
+
+  const tabs = notificationTabs.map((tab) => ({
+    ...tab,
+    count: getNotificationsByTab(notifications, tab.id).length,
+  }));
+
+  function handleMarkAllAsRead() {
+    setNotifications([]);
+  }
 
   return (
     <section className="p-8 flex h-160 w-full flex-col gap-8 bg-background text-foreground">
@@ -52,7 +66,7 @@ export function NotificationDrawer({
           className="justify-start gap-1"
           aria-label="Notification filters"
         >
-          {notificationTabs.map((tab) => (
+          {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
@@ -69,29 +83,33 @@ export function NotificationDrawer({
           ))}
         </TabsList>
 
-        {notificationTabs.map((tab) => (
-          <TabsContent
-            key={tab.id}
-            value={tab.id}
-            className="min-h-0 data-[state=active]:flex data-[state=active]:flex-1"
-          >
-            {isEmpty ? (
-              <EmptyNotifications />
-            ) : (
-              <NotificationList notifications={getNotificationsByTab(tab.id)} />
-            )}
-          </TabsContent>
-        ))}
+        {tabs.map((tab) => {
+          const tabNotifications = getNotificationsByTab(notifications, tab.id);
+
+          return (
+            <TabsContent
+              key={tab.id}
+              value={tab.id}
+              className="min-h-0 data-[state=active]:flex data-[state=active]:flex-1"
+            >
+              {tabNotifications.length === 0 ? (
+                <EmptyNotifications />
+              ) : (
+                <NotificationList notifications={tabNotifications} />
+              )}
+            </TabsContent>
+          );
+        })}
       </Tabs>
 
       <footer className="flex h-16 items-center justify-end">
         <Button
           type="button"
           variant="ghost"
+          onClick={handleMarkAllAsRead}
           className={cn(
             "text-primary",
-            isEmpty &&
-              "text-muted-foreground",
+            isEmpty && "text-muted-foreground",
           )}
           disabled={isEmpty}
         >
@@ -101,6 +119,21 @@ export function NotificationDrawer({
       </footer>
     </section>
   );
+}
+
+function getNotificationsByTab(
+  notifications: NotificationItem[],
+  tabId: NotificationTabId,
+) {
+  if (tabId === "unread") {
+    return notifications.filter((notification) => notification.unread);
+  }
+
+  if (tabId === "read") {
+    return notifications.filter((notification) => !notification.unread);
+  }
+
+  return notifications;
 }
 
 function EmptyNotifications() {
