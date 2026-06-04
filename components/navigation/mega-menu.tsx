@@ -294,7 +294,9 @@ function TopProducts({ className }: { className?: string }) {
   const products = GetProductItems().slice(3, 8);
 
   return (
-    <aside className={cn("pt-2 px-4 pb-16 grid content-start gap-4", className)}>
+    <aside
+      className={cn("pt-2 px-4 pb-16 grid content-start gap-4", className)}
+    >
       <div className="py-2 px-4 flex items-center gap-1 text-base font-medium">
         <Star
           className="size-8 fill-amber-400 text-amber-400"
@@ -322,7 +324,7 @@ function MegaMenuContent({ mobile = false }: { mobile?: boolean }) {
     <div className={cn("grid gap-6", mobile ? "pb-6" : "")}>
       <Link
         href="/catalog"
-        className="flex w-fit pt-8 pb-4 px-10 items-center gap-2 text-2xl font-semibold text-foreground hover:text-primary"
+        className="flex w-fit pt-3 pl-4 items-center gap-1 text-2xl font-semibold text-foreground hover:text-primary sm:gap-2 md:pt-8 md:pb-4 md:px-10"
       >
         <Image
           src="/popular-categories-icons/Shopping-bags.svg"
@@ -349,6 +351,7 @@ function MegaMenuContent({ mobile = false }: { mobile?: boolean }) {
 export function MegaMenu({ defaultOpen = false }: MegaMenuProps) {
   return (
     <>
+      {/* Desktop screen */}
       <div className="hidden md:block">
         <Popover defaultOpen={defaultOpen}>
           <PopoverTrigger asChild>
@@ -357,13 +360,14 @@ export function MegaMenu({ defaultOpen = false }: MegaMenuProps) {
           <PopoverContent
             align="start"
             sideOffset={12}
-            className="max-h-[calc(100vh-7rem)] w-[calc(100vw-2rem)] max-w-320 p-0 overflow-y-auto rounded-2xl"
+            className="max-h-[calc(100vh-7rem)] w-[calc(100vw-2rem)] max-w-7xl p-0 overflow-y-auto rounded-2xl"
           >
             <MegaMenuContent />
           </PopoverContent>
         </Popover>
       </div>
 
+      {/* Mobile screen */}
       <div className="block md:hidden">
         <Sheet defaultOpen={defaultOpen}>
           <SheetTrigger asChild>
@@ -371,14 +375,12 @@ export function MegaMenu({ defaultOpen = false }: MegaMenuProps) {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="w-[92vw] max-w-none overflow-y-auto p-0"
+            className="w-[92vw] max-w-none overflow-y-auto p-0 gap-0"
           >
             <SheetHeader className="border-b px-4 py-4">
-              <SheetTitle>Catalog</SheetTitle>
+              <SheetTitle>Menu</SheetTitle>
             </SheetHeader>
-            <div className="px-4 py-5">
-              <MegaMenuContent mobile />
-            </div>
+            <MegaMenuContent mobile />
           </SheetContent>
         </Sheet>
       </div>
