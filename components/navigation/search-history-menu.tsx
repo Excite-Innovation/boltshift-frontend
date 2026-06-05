@@ -2,6 +2,8 @@
 
 import { History, X } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+
 type SearchHistoryMenuProps = {
   items: string[];
   onSelect: (searchTerm: string) => void;
@@ -18,29 +20,38 @@ export function SearchHistoryMenu({
   }
 
   return (
-    <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[min(28rem,calc(100vh-10rem))] overflow-y-auto rounded-lg bg-background p-3 shadow-[0_12px_32px_rgba(15,23,42,0.16)]">
-      <ul className="flex flex-col gap-1" aria-label="Search history">
+    <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-lg bg-background p-3 shadow-[0_12px_32px_rgba(15,23,42,0.16)]">
+      <ul
+        aria-label="Search history"
+        className="max-h-[min(36rem,calc(60vh-8rem))] overflow-y-auto"
+      >
         {items.map((searchTerm) => (
-          <li key={searchTerm} className="flex min-h-9 items-center gap-2">
-            <button
+          <li
+            key={searchTerm}
+            className="group/history-item flex min-h-9 items-center rounded-md hover:bg-accent focus-within:bg-accent"
+          >
+            <Button
               type="button"
+              variant="ghost"
               onClick={() => onSelect(searchTerm)}
-              className="flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-2 text-left text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="h-auto min-w-0 flex-1 justify-start gap-2 rounded-md bg-transparent px-2 py-2 text-sm hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               <History
                 className="size-6 shrink-0 text-foreground"
                 aria-hidden="true"
               />
-              <span className="truncate">{searchTerm}</span>
-            </button>
-            <button
+              <span className="truncate font-medium">{searchTerm}</span>
+            </Button>
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               onClick={() => onRemove(searchTerm)}
-              className="flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="size-8 shrink-0 text-muted-foreground opacity-0 transition-opacity hover:text-foreground focus-visible:opacity-100 group-hover/history-item:opacity-100 group-focus-within/history-item:opacity-100"
               aria-label={`Remove ${searchTerm} from search history`}
             >
-              <X className="size-6" aria-hidden="true" />
-            </button>
+              <X className="size-5" aria-hidden="true" />
+            </Button>
           </li>
         ))}
       </ul>
