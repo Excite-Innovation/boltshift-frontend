@@ -20,28 +20,34 @@ import {
   type SonnerMessageProps,
 } from "@/components/alert/alert";
 
-type DeleteModalProps = {
+type ConfirmationModalProps = {
   trigger: ReactNode;
   onConfirm: () => void;
   title?: string;
   description?: string;
   actionLabel?: string;
   notification?: SonnerMessageProps | false;
+  ringsSrc?: string;
+  ringsAlt?: string;
 };
 
-export function DeleteModal({
+const deleteNotification: SonnerMessageProps = {
+  variant: "delete",
+  title: "Item Removed Successfully",
+  description: "The item has been removed from wishlist.",
+  iconSrc: "/sonnar/Red-Featured-outline.svg",
+};
+
+export function ConfirmationModal({
   trigger,
   onConfirm,
   title = "Remove Item",
   description = "Are you sure you want to delete this item? This action cannot be undone.",
   actionLabel = "Remove Item",
-  notification = {
-    variant: "delete",
-    title: "Item Removed Successfully",
-    description: "The item has been removed from wishlist.",
-    iconSrc: "/sonnar/Red-Featured-outline.svg",
-  },
-}: DeleteModalProps) {
+  notification = false,
+  ringsSrc = "/sonnar/rings.svg",
+  ringsAlt = "svg rings displaying a ripple effect around the confirmation icon",
+}: ConfirmationModalProps) {
   const handleConfirm = () => {
     onConfirm();
 
@@ -58,8 +64,8 @@ export function DeleteModal({
         {/* Top section */}
         <div className="relative not-only:flex pt-6 px-6 gap-4">
           <Image
-            src="/sonnar/rings.svg"
-            alt="svg rings displaying a ripple effect around the trash icon"
+            src={ringsSrc}
+            alt={ringsAlt}
             width={336}
             height={336}
             aria-hidden="true"
@@ -95,5 +101,14 @@ export function DeleteModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function DeleteModal(props: ConfirmationModalProps) {
+  return (
+    <ConfirmationModal
+      notification={deleteNotification}
+      {...props}
+    />
   );
 }

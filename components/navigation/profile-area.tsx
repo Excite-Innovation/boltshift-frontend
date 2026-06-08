@@ -5,10 +5,14 @@ import { NotificationDrawer } from "@/components/notification/notification-drawe
 import { ShoppingCart, Heart, Bell } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownWrapper } from "@/components/user-profile/dropdown-wrapper";
-import { ProfileDropdown } from "@/components/user-profile/user-profile-dropdown";
+import {
+  GuestUserDropdown,
+  ProfileDropdown,
+} from "@/components/user-profile/user-profile-dropdown";
 import { cn } from "@/lib/utils";
 
 const actions = [
@@ -16,8 +20,16 @@ const actions = [
   { id: "cart", icon: ShoppingCart, href: "/cart" },
 ];
 
+const mockInitialAuthState = false;
+
 export function Profile() {
   const pathname = usePathname();
+  const [isAuthenticated, setIsAuthenticated] = useState(mockInitialAuthState);
+  const profileDropdown = isAuthenticated ? (
+    <ProfileDropdown onLogout={() => setIsAuthenticated(false)} />
+  ) : (
+    <GuestUserDropdown onSignIn={() => setIsAuthenticated(true)} />
+  );
 
   return (
     <div className="w-41 h-10 flex items-center gap-1">
@@ -79,8 +91,9 @@ export function Profile() {
             <AvatarProfile />
           </Button>
         }
+        contentClassName="h-(--radix-dropdown-menu-content-available-height) max-h-(--radix-dropdown-menu-content-available-height) w-80 sm:h-auto sm:w-64"
       >
-        <ProfileDropdown />
+        {profileDropdown}
       </DropdownWrapper>
     </div>
   );
