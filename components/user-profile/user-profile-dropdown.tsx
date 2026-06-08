@@ -40,7 +40,7 @@ const menuItems = [
   },
 ];
 
-function DesktopGuestUser() {
+export function DesktopGuestUser() {
   return (
     <div className="rounded-xl border p-3">
       <div className="p-2 flex gap-3">
@@ -51,29 +51,30 @@ function DesktopGuestUser() {
   );
 }
 
-function MobileGuestUser() {
+export function MobileGuestUser() {
   return (
     <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
       <div className="rounded-xl overflow-hidden">
-        <div className="bg-linear-to-b from-transparent to-[#DA154D]">
+        <div className="relative h-97 bg-[linear-gradient(180deg,rgba(0,0,0,0)_51.56%,#DA154D_100%)]">
           <Image
             src="/guest-dropdown/user.png"
             alt="Profile"
-            sizes=""
+            sizes="320px"
             fill
             className="object-cover"
           />
         </div>
 
-        <div className="py-8 px-4 bg-[#DA154D] grid gap-4">
-          <div>🌟 Embark on a Brand Odyssey in Our Exquisite Catalog! 🛍️</div>
+        <div className="py-8 px-4 bg-[#DA154D] grid gap-4 border-none">
+          <div className="text-accent-foreground text-2xl font-bold">
+            🌟 Embark on a Brand Odyssey in Our Exquisite Catalog! 🛍️
+          </div>
           <div>
             <AvatarGroup>
               <Avatar>
                 <AvatarImage
                   src="/guest-dropdown/Avatar_1.png"
                   alt="user avatar"
-                  className="border-0.75"
                 />
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
@@ -81,7 +82,7 @@ function MobileGuestUser() {
                 <AvatarImage
                   src="/guest-dropdown/Avatar_2.png"
                   alt="user avatar"
-                  className="border-0.75 bg-accent-foreground"
+                  className="bg-accent-foreground"
                 />
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
@@ -89,7 +90,7 @@ function MobileGuestUser() {
                 <AvatarImage
                   src="/guest-dropdown/Avatar_3.png"
                   alt="user avatar"
-                  className="border-0.75 bg-accent-foreground"
+                  className="bg-accent-foreground"
                 />
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
@@ -97,7 +98,7 @@ function MobileGuestUser() {
                 <AvatarImage
                   src="/guest-dropdown/Avatar_4.png"
                   alt="user avatar"
-                  className="border-0.75 bg-accent-foreground"
+                  className="bg-accent-foreground"
                 />
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
@@ -105,18 +106,20 @@ function MobileGuestUser() {
                 <AvatarImage
                   src="/guest-dropdown/Avatar_5.png"
                   alt="user avatar"
-                  className="border-0.75 bg-accent-foreground"
+                  className="bg-accent-foreground"
                 />
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
             </AvatarGroup>
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col gap-2 justify-between">
               <div className="grid gap-1">
-                <div>
+                <div className="flex gap-2 items-center">
                   <StartRating value={5} readonly />
-                  <p>5.0</p>
+                  <p className="text-accent-foreground text-base font-bold">5.0</p>
                 </div>
-                <p className="text-base font-bold">from Million+ shoppers</p>
+                <p className="text-accent-foreground text-base font-bold">
+                  from Million+ shoppers
+                </p>
               </div>
 
               {/* Pagination */}
@@ -131,12 +134,11 @@ function MobileGuestUser() {
             </div>
           </div>
         </div>
-
-        {/* Sign in */}
-        <div className="rounded-lg border p-4 grid gap-2">
-            <Avatar size="lg" />
-            <p>Sign In/Create Account</p>
-        </div>
+      </div>
+      {/* Sign in */}
+      <div className="rounded-lg p-4 flex gap-2">
+        <User />
+        <p>Sign In/Create Account</p>
       </div>
     </div>
   );
