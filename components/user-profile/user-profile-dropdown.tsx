@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { StartRating } from "@/components/rating/rating";
+import { DeleteModal } from "@/components/delete-item/delete-modal";
 
 const menuItems = [
   {
@@ -44,6 +45,35 @@ const menuItems = [
 type GuestUserProps = {
   onSignIn?: () => void;
 };
+
+type ProfileDropdownProps = {
+  onLogout?: () => void;
+};
+
+function LogoutConfirmModal({ onLogout }: ProfileDropdownProps) {
+  return (
+    <DeleteModal
+      title="Log Out"
+      description="Are you sure you want to log out? You will need to sign in again to access your account."
+      actionLabel="Log Out"
+      notification={{
+        variant: "success",
+        title: "Logged Out Successfully",
+        description: "You have been signed out of your account.",
+      }}
+      onConfirm={() => onLogout?.()}
+      trigger={
+        <DropdownMenuItem
+          onSelect={(event) => event.preventDefault()}
+          className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+        >
+          <LogOut className="size-6" />
+          <span>Log Out</span>
+        </DropdownMenuItem>
+      }
+    />
+  );
+}
 
 export function DesktopGuestUser({ onSignIn }: GuestUserProps) {
   return (
@@ -172,7 +202,7 @@ export function GuestUserDropdown({ onSignIn }: GuestUserProps) {
   );
 }
 
-function MobileProfileDropdown() {
+function MobileProfileDropdown({ onLogout }: ProfileDropdownProps) {
   return (
     <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
       <div className="grid gap-2">
@@ -222,18 +252,15 @@ function MobileProfileDropdown() {
         </DropdownMenuGroup>
       </div>
 
-      <DropdownMenuItem className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground">
-        <LogOut className="size-6" />
-        <span>Log Out</span>
-      </DropdownMenuItem>
+      <LogoutConfirmModal onLogout={onLogout} />
     </div>
   );
 }
 
-export function ProfileDropdown() {
+export function ProfileDropdown({ onLogout }: ProfileDropdownProps) {
   return (
     <>
-      <MobileProfileDropdown />
+      <MobileProfileDropdown onLogout={onLogout} />
 
       <div className="hidden gap-2 p-3 sm:grid">
         <div className="flex items-center gap-3 rounded-lg p-2">
@@ -270,10 +297,7 @@ export function ProfileDropdown() {
           })}
         </DropdownMenuGroup>
 
-        <DropdownMenuItem className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground">
-          <LogOut className="size-6" />
-          <span>Log Out</span>
-        </DropdownMenuItem>
+        <LogoutConfirmModal onLogout={onLogout} />
       </div>
     </>
   );

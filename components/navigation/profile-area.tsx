@@ -26,7 +26,7 @@ export function Profile() {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(mockInitialAuthState);
   const profileDropdown = isAuthenticated ? (
-    <ProfileDropdown />
+    <ProfileDropdown onLogout={() => setIsAuthenticated(false)} />
   ) : (
     <GuestUserDropdown onSignIn={() => setIsAuthenticated(true)} />
   );
