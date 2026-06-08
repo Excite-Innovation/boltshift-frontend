@@ -13,6 +13,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { StartRating } from "@/components/rating/rating";
 
 const menuItems = [
   {
@@ -32,6 +39,108 @@ const menuItems = [
     label: "Voucher",
   },
 ];
+
+function DesktopGuestUser() {
+  return (
+    <div className="rounded-xl border p-3">
+      <div className="p-2 flex gap-3">
+        <Avatar size="lg" />
+        <p>Sign In/Create Account</p>
+      </div>
+    </div>
+  );
+}
+
+function MobileGuestUser() {
+  return (
+    <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
+      <div className="rounded-xl overflow-hidden">
+        <div className="bg-linear-to-b from-transparent to-[#DA154D]">
+          <Image
+            src="/guest-dropdown/user.png"
+            alt="Profile"
+            sizes=""
+            fill
+            className="object-cover"
+          />
+        </div>
+
+        <div className="py-8 px-4 bg-[#DA154D] grid gap-4">
+          <div>🌟 Embark on a Brand Odyssey in Our Exquisite Catalog! 🛍️</div>
+          <div>
+            <AvatarGroup>
+              <Avatar>
+                <AvatarImage
+                  src="/guest-dropdown/Avatar_1.png"
+                  alt="user avatar"
+                  className="border-0.75"
+                />
+                <AvatarFallback>PL</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/guest-dropdown/Avatar_2.png"
+                  alt="user avatar"
+                  className="border-0.75 bg-accent-foreground"
+                />
+                <AvatarFallback>PL</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/guest-dropdown/Avatar_3.png"
+                  alt="user avatar"
+                  className="border-0.75 bg-accent-foreground"
+                />
+                <AvatarFallback>PL</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/guest-dropdown/Avatar_4.png"
+                  alt="user avatar"
+                  className="border-0.75 bg-accent-foreground"
+                />
+                <AvatarFallback>PL</AvatarFallback>
+              </Avatar>
+              <Avatar>
+                <AvatarImage
+                  src="/guest-dropdown/Avatar_5.png"
+                  alt="user avatar"
+                  className="border-0.75 bg-accent-foreground"
+                />
+                <AvatarFallback>PL</AvatarFallback>
+              </Avatar>
+            </AvatarGroup>
+            <div className="flex flex-col justify-between">
+              <div className="grid gap-1">
+                <div>
+                  <StartRating value={5} readonly />
+                  <p>5.0</p>
+                </div>
+                <p className="text-base font-bold">from Million+ shoppers</p>
+              </div>
+
+              {/* Pagination */}
+              <div className="flex gap-2">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="bg-foreground h-1.5 w-5.5 rounded-full"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sign in */}
+        <div className="rounded-lg border p-4 grid gap-2">
+            <Avatar size="lg" />
+            <p>Sign In/Create Account</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function MobileProfileDropdown() {
   return (
