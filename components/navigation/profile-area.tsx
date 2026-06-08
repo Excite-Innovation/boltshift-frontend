@@ -79,6 +79,7 @@ export function Profile() {
             <AvatarProfile />
           </Button>
         }
+        contentClassName="w-80 sm:w-64"
       >
         <ProfileDropdown />
       </DropdownWrapper>
