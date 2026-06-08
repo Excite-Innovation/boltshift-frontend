@@ -618,7 +618,7 @@ function PaymentCardFace({
     <div
       className={cn(
         "relative flex size-full overflow-hidden rounded-2xl p-4 text-white shadow-sm ring-1 ring-black/5",
-        cardBackgroundGradient && "bg-gradient-to-br",
+        cardBackgroundGradient && "bg-linear-to-br",
         cardBackgroundGradient,
       )}
       style={
@@ -717,6 +717,8 @@ function PaymentCardFace({
                                 "The payment card has been removed from your account.",
                               iconSrc: "/sonnar/Red-Featured-outline.svg",
                             }}
+                            ringsSrc="/sonnar/remove-card.png"
+                            ringsAlt="red colored card with rings sorounding it"
                             onConfirm={() => onDelete?.()}
                             trigger={
                               <DropdownMenuItem

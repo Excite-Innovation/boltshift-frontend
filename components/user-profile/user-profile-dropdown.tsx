@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { StartRating } from "@/components/rating/rating";
-import { DeleteModal } from "@/components/delete-item/delete-modal";
+import { ConfirmationModal } from "@/components/delete-item/delete-modal";
 
 const menuItems = [
   {
@@ -52,7 +52,7 @@ type ProfileDropdownProps = {
 
 function LogoutConfirmModal({ onLogout }: ProfileDropdownProps) {
   return (
-    <DeleteModal
+    <ConfirmationModal
       title="Log Out"
       description="Are you sure you want to log out? You will need to sign in again to access your account."
       actionLabel="Log Out"
