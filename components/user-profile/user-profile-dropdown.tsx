@@ -19,6 +19,7 @@ import {
   AvatarGroup,
   AvatarImage,
 } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { StartRating } from "@/components/rating/rating";
 
 const menuItems = [
@@ -40,18 +41,26 @@ const menuItems = [
   },
 ];
 
-export function DesktopGuestUser() {
+type GuestUserProps = {
+  onSignIn?: () => void;
+};
+
+export function DesktopGuestUser({ onSignIn }: GuestUserProps) {
   return (
-    <div className="rounded-xl border p-3">
-      <div className="p-2 flex gap-3">
-        <Avatar size="lg" />
-        <p>Sign In/Create Account</p>
-      </div>
-    </div>
+    <Button
+      type="button"
+      variant="ghost"
+      onClick={onSignIn}
+      size="lg"
+      className="h-auto w-full justify-start gap-3 rounded-lg p-5 font-semibold text-left"
+    >
+      <User size={40} />
+      <p>Sign In/Create Account</p>
+    </Button>
   );
 }
 
-export function MobileGuestUser() {
+export function MobileGuestUser({ onSignIn }: GuestUserProps) {
   return (
     <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
       <div className="rounded-xl overflow-hidden">
@@ -69,7 +78,7 @@ export function MobileGuestUser() {
           <div className="text-accent-foreground text-2xl font-bold">
             🌟 Embark on a Brand Odyssey in Our Exquisite Catalog! 🛍️
           </div>
-          <div>
+          <div className="flex flex-col gap-4">
             <AvatarGroup>
               <Avatar>
                 <AvatarImage
@@ -111,11 +120,13 @@ export function MobileGuestUser() {
                 <AvatarFallback>PL</AvatarFallback>
               </Avatar>
             </AvatarGroup>
-            <div className="flex flex-col gap-2 justify-between">
+            <div className="flex flex-col gap-3 justify-between">
               <div className="grid gap-1">
                 <div className="flex gap-2 items-center">
                   <StartRating value={5} readonly />
-                  <p className="text-accent-foreground text-base font-bold">5.0</p>
+                  <p className="text-accent-foreground text-base font-bold">
+                    5.0
+                  </p>
                 </div>
                 <p className="text-accent-foreground text-base font-bold">
                   from Million+ shoppers
@@ -136,11 +147,28 @@ export function MobileGuestUser() {
         </div>
       </div>
       {/* Sign in */}
-      <div className="rounded-lg p-4 flex gap-2">
+      <Button
+        type="button"
+        variant="ghost"
+        onClick={onSignIn}
+        className="h-auto w-full justify-start gap-2 rounded-lg p-4 text-left"
+      >
         <User />
         <p>Sign In/Create Account</p>
-      </div>
+      </Button>
     </div>
+  );
+}
+
+export function GuestUserDropdown({ onSignIn }: GuestUserProps) {
+  return (
+    <>
+      <MobileGuestUser onSignIn={onSignIn} />
+
+      <div className="hidden p-3 sm:block">
+        <DesktopGuestUser onSignIn={onSignIn} />
+      </div>
+    </>
   );
 }
 
