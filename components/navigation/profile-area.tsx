@@ -79,7 +79,7 @@ export function Profile() {
             <AvatarProfile />
           </Button>
         }
-        contentClassName="w-80 sm:w-64"
+        contentClassName="h-(--radix-dropdown-menu-content-available-height) max-h-(--radix-dropdown-menu-content-available-height) w-80 sm:h-auto sm:w-64"
       >
         <ProfileDropdown />
       </DropdownWrapper>

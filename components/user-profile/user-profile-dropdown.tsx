@@ -35,7 +35,7 @@ const menuItems = [
 
 function MobileProfileDropdown() {
   return (
-    <div className="flex h-dvh w-80 flex-col justify-between px-3 pt-12 pb-4 overflow-y-auto sm:hidden">
+    <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
       <div className="grid gap-2">
         <div className="relative h-56">
           {/* Background */}
