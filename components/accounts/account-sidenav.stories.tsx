@@ -17,32 +17,29 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function AccountSidenavCanvas({ withContent = false }: { withContent?: boolean }) {
+function AccountSidenavCanvas({
+  withContent = false,
+}: {
+  withContent?: boolean;
+}) {
   return (
-    <>
-      <style>
-        {`
-          @media (min-width: 640px) {
-            .account-sidenav-story > aside {
-              display: flex !important;
-            }
-          }
-        `}
-      </style>
-      <div className="account-sidenav-story flex min-h-screen w-full bg-background">
-        <AccountSidenav />
-        {withContent && (
-          <main className="min-w-0 flex-1 p-6">
-            <div className="h-full rounded-lg border border-dashed" />
-          </main>
-        )}
-      </div>
-    </>
+    <div className="flex w-full bg-background">
+      <AccountSidenav />
+      {withContent && (
+        <main className="min-w-0 flex-1 p-6">
+          <div className="h-full rounded-lg border border-dashed" />
+        </main>
+      )}
+    </div>
   );
 }
 
 export const Default: Story = {
-  render: () => <AccountSidenavCanvas />,
+  render: () => (
+    <div className="flex min-h-screen w-full items-center justify-center">
+      <AccountSidenav />
+    </div>
+  ),
 };
 
 export const WithContent: Story = {
