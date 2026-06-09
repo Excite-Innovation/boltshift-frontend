@@ -67,19 +67,22 @@ function BasicDetails() {
           id="first-name"
           label="First Name"
           placeholder="Enter first name"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="last-name"
           label="Last Name"
           placeholder="Enter last name"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="email"
           label="Email Address"
           type="email"
           placeholder="Enter email address"
+          className="h-13 max-w-120"
         />
-        <div className="w-full max-w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
+        <div className="w-full max-w-120 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
           <Label htmlFor="phone">Phone Number</Label>
           <PhoneInput
             id="phone"
@@ -92,12 +95,14 @@ function BasicDetails() {
           label="Birthday"
           type="calendar"
           placeholder="mm dd, yy"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="sex"
           label="Sex"
           type="dropdown"
           placeholder="Choose"
+          className="h-13 max-w-120"
         />
       </form>
     </div>
@@ -119,24 +124,28 @@ function Address() {
           label="Apartment Details"
           type="text"
           placeholder="Enter appartment details"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="street address"
           label="Street Address"
           type="text"
           placeholder="Enter street address"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="country"
           label="Country"
           type="text"
           placeholder="Enter your country"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="city/town"
           label="City/Town"
           type="text"
           placeholder="Enter your City/Town"
+          className="h-13 max-w-120"
         />
       </form>
     </div>
@@ -157,11 +166,13 @@ function Password() {
           id="old password"
           label="Old Password"
           type="password"
+          className="h-13 max-w-120"
         />
         <FormInputField
           id="new password"
           label="New Password"
           type="password"
+          className="h-13 max-w-120"
         />
       </form>
     </div>
