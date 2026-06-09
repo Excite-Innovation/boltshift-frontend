@@ -30,8 +30,8 @@ const menuItems = [
 
 export function AccountSidenav() {
   return (
-    <aside>
-      <Card className="min-h-0 w-84 gap-4 rounded-xl border bg-transparent pt-0 pb-8 shadow-none">
+    <aside className="w-full lg:w-auto">
+      <Card className="min-h-0 w-full lg:w-84 gap-4 rounded-xl border bg-transparent pt-0 pb-8 shadow-none">
         <div className="grid gap-2">
           <div className="relative h-56">
             {/* Background */}
@@ -60,7 +60,7 @@ export function AccountSidenav() {
             </div>
           </div>
 
-          <nav className="grid gap-2 px-4" aria-label="Account navigation">
+          <nav className="flex overflow-x-auto scrollbar-hide gap-2 px-4 lg:flex-col" aria-label="Account navigation">
             {menuItems.map((item) => {
               const Icon = item.icon;
 
@@ -69,7 +69,7 @@ export function AccountSidenav() {
                   key={item.label}
                   asChild
                   variant="ghost"
-                  className="h-auto w-full justify-start gap-4 rounded-lg p-2 text-base font-medium"
+                  className="h-auto justify-start gap-4 rounded-lg p-2 text-base font-medium"
                 >
                   <Link href={item.href}>
                     <Icon className="size-8 text-muted-foreground" />

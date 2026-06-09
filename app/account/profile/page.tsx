@@ -18,7 +18,7 @@ export function PersonalInfo() {
       <Password />
 
       <div className="border-t py-6 flex justify-end items-center">
-        <Button size="lg" className="px-4.5">
+        <Button size="lg" className="w-full sm:w-auto px-4.5">
           <Save />
           Save Changes
         </Button>
@@ -62,25 +62,25 @@ function BasicDetails() {
         <AccountSocialButtons />
       </div>
 
-      <form className="flex flex-wrap justify-start text-xs font-medium gap-8">
+      <form className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-xs font-medium w-full max-w-248">
         <FormInputField
           id="first-name"
           label="First Name"
           placeholder="Enter first name"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="last-name"
           label="Last Name"
           placeholder="Enter last name"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="email"
           label="Email Address"
           type="email"
           placeholder="Enter email address"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <div className="w-full max-w-120 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
           <Label htmlFor="phone">Phone Number</Label>
@@ -95,14 +95,14 @@ function BasicDetails() {
           label="Birthday"
           type="calendar"
           placeholder="mm dd, yy"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="sex"
           label="Sex"
           type="dropdown"
           placeholder="Choose"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
       </form>
     </div>
@@ -118,34 +118,34 @@ function Address() {
         title="Address"
       />
 
-      <form className="flex flex-wrap justify-start text-xs font-medium gap-8">
+      <form className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-xs font-medium w-full max-w-248">
         <FormInputField
           id="apartment details"
           label="Apartment Details"
           type="text"
           placeholder="Enter appartment details"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="street address"
           label="Street Address"
           type="text"
           placeholder="Enter street address"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="country"
           label="Country"
           type="text"
           placeholder="Enter your country"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="city/town"
           label="City/Town"
           type="text"
           placeholder="Enter your City/Town"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
       </form>
     </div>
@@ -161,18 +161,18 @@ function Password() {
         title="Password"
       />
 
-      <form className="flex flex-wrap justify-start text-xs font-medium gap-8">
+      <form className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-xs font-medium w-full max-w-248">
         <FormInputField
           id="old password"
           label="Old Password"
           type="password"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="new password"
           label="New Password"
           type="password"
-          className="h-13 max-w-120"
+          className="h-auto sm:h-13 max-w-120"
         />
       </form>
     </div>
