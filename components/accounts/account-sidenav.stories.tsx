@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { AccountSidenav } from "@/components/accounts/account-sidenav";
-import { PersonalInfo } from "@/app/account/profile/page";
+import PersonalInfo from "@/app/account/profile/page";
 
 const meta = {
   title: "Components/Accounts/AccountSidenav",
