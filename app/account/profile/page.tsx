@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export function PersonalInfo() {
   return (
-    <div className="grid gap-8">
+    <div className="flex flex-col gap-8">
       <BasicDetails />
       <Separator />
       <Address />
@@ -49,7 +49,7 @@ function SectionHeadings({ icon, alt, title }: sectionProps) {
 
 function BasicDetails() {
   return (
-    <div className="flex flex-col gap-8 py-4">
+    <div className="w-full flex flex-col gap-8 py-4">
       <SectionHeadings
         icon="/account/file-02.png"
         title="Basic Details"
@@ -111,7 +111,7 @@ function BasicDetails() {
 
 function Address() {
   return (
-    <div className="flex flex-col gap-8 py-4">
+    <div className="w-full flex flex-col gap-8 py-4">
       <SectionHeadings
         icon="/account/marker-pin-01.png"
         alt="location marker icon"
@@ -154,7 +154,7 @@ function Address() {
 
 function Password() {
   return (
-    <div className="flex flex-col gap-8 py-4">
+    <div className="w-full flex flex-col gap-8 py-4">
       <SectionHeadings
         icon="/account/passcode-lock.png"
         alt="password and lock icon"

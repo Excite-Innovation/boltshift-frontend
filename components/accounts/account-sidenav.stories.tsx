@@ -24,7 +24,7 @@ function AccountSidenavCanvas({
   withContent?: boolean;
 }) {
   return (
-    <div className="flex w-full bg-background">
+    <div className="flex flex-col gap-4 pb-12 lg:flex-row">
       <AccountSidenav />
       {withContent && (
         <main className="min-w-0 flex-1 p-6">

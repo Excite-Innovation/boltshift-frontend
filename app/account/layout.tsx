@@ -63,8 +63,9 @@ export default function AccountLayout({
         className="py-4"
       />
 
-      <div className="flex pb-12 gap-4">
+      <div className="flex flex-col gap-4 pb-12 lg:flex-row">
         <AccountSidenav />
+
         <main className="min-w-0 flex-1">{children}</main>
       </div>
 
