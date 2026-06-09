@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer/footer-section";
 import { AccountSidenav } from "@/components/accounts/account-sidenav";
+import { SectionTitle } from "@/components/section-title";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -10,8 +11,7 @@ export const metadata: Metadata = {
 
   title: "Account",
 
-  description:
-    "User account details",
+  description: "User account details",
 
   openGraph: {
     url: "/account",
@@ -56,7 +56,14 @@ export default function AccountLayout({
         </div>
       </div>
 
-      <div className="flex">
+      <SectionTitle
+        title="Account"
+        icon="/section-title-icons/Gear.svg"
+        alt="Gear icon"
+        className="py-4"
+      />
+
+      <div className="flex pb-12 gap-4">
         <AccountSidenav />
         <main className="min-w-0 flex-1">{children}</main>
       </div>

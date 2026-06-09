@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { AccountSidenav } from "@/components/accounts/account-sidenav";
+import { PersonalInfo } from "@/app/account/profile/page";
 
 const meta = {
   title: "Components/Accounts/AccountSidenav",
@@ -27,7 +28,7 @@ function AccountSidenavCanvas({
       <AccountSidenav />
       {withContent && (
         <main className="min-w-0 flex-1 p-6">
-          <div className="h-full rounded-lg border border-dashed" />
+          <PersonalInfo />
         </main>
       )}
     </div>

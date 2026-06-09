@@ -31,7 +31,7 @@ const menuItems = [
 export function AccountSidenav() {
   return (
     <aside>
-      <Card className="h-full min-h-0 w-84 gap-4 rounded-xl border bg-transparent pt-0 pb-8 shadow-none">
+      <Card className="min-h-0 w-84 gap-4 rounded-xl border bg-transparent pt-0 pb-8 shadow-none">
         <div className="grid gap-2">
           <div className="relative h-56">
             {/* Background */}
