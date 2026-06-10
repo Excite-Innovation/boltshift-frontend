@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Save } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
@@ -7,6 +10,8 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { SectionHeadings } from "@/components/accounts/section-headings";
+import { DatePickerField } from "@/app/account/profile/date-field";
+import { SelectList } from "@/components/dropdown/select";
 
 export function PersonalInfo() {
   return (
@@ -30,6 +35,9 @@ export function PersonalInfo() {
 export default PersonalInfo;
 
 function BasicDetails() {
+  const [sex, setSex] = useState("");
+  const options = ["Male", "Female", "Other"];
+
   return (
     <div className="w-full flex flex-col gap-8 py-4">
       <SectionHeadings
@@ -72,20 +80,14 @@ function BasicDetails() {
             className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
           />
         </div>
-        <FormInputField
-          id="birthday"
-          label="Birthday"
-          type="calendar"
-          placeholder="mm dd, yy"
-          className="h-auto sm:h-13 max-w-120"
-        />
-        <FormInputField
-          id="sex"
-          label="Sex"
-          type="dropdown"
-          placeholder="Choose"
-          className="h-auto sm:h-13 max-w-120"
-        />
+        <div className="w-full max-w-120 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
+          <Label htmlFor="birthday">Birthday</Label>
+          <DatePickerField />
+        </div>
+        <div className="w-full max-w-120 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
+          <Label htmlFor="sex">Sex</Label>
+          <SelectList list={options} value={sex} onValueChange={setSex} />
+        </div>
       </form>
     </div>
   );
