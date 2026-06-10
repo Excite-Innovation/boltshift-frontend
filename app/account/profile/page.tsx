@@ -6,7 +6,7 @@ import { FormInputField } from "@/components/checkout/form-input-field";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { SectionHeadings } from "@/components/accounts/section-headings";
 
 export function PersonalInfo() {
   return (
@@ -28,24 +28,6 @@ export function PersonalInfo() {
 }
 
 export default PersonalInfo;
-
-type sectionProps = {
-  icon: string;
-  alt: string;
-  title: String;
-};
-
-function SectionHeadings({ icon, alt, title }: sectionProps) {
-  return (
-    <div className={cn("flex items-center gap-2")}>
-      <div className="flex items-center justify-center">
-        <img src={icon} alt={alt} className="w-6 h-6" />
-      </div>
-
-      <span className="h-8 font-semibold text-2xl">{title}</span>
-    </div>
-  );
-}
 
 function BasicDetails() {
   return (
