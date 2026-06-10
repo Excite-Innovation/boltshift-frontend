@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Order } from "@/types/orders/types";
-import { OrderStatusBadge } from "./order-status-badge";
+import { OrderStatusBadge } from "@/components/accounts/orders/order-status-badge";
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -15,18 +15,14 @@ export const columns: ColumnDef<Order>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) =>
-          table.toggleAllPageRowsSelected(!!value)
-        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       />
     ),
 
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) =>
-          row.toggleSelected(!!value)
-        }
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
       />
     ),
   },
@@ -42,11 +38,7 @@ export const columns: ColumnDef<Order>[] = [
 
     header: ({ column }) => (
       <button
-        onClick={() =>
-          column.toggleSorting(
-            column.getIsSorted() === "asc"
-          )
-        }
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         className="flex items-center gap-2"
       >
         Items
@@ -60,8 +52,7 @@ export const columns: ColumnDef<Order>[] = [
 
     header: "Cost",
 
-    cell: ({ row }) =>
-      `Ksh. ${row.original.cost.toLocaleString()}`,
+    cell: ({ row }) => `Ksh. ${row.original.cost.toLocaleString()}`,
   },
 
   {
@@ -89,8 +80,6 @@ export const columns: ColumnDef<Order>[] = [
 
     header: "View",
 
-    cell: () => (
-      <Eye className="h-4 w-4 text-muted-foreground" />
-    ),
+    cell: () => <Eye className="h-4 w-4 text-muted-foreground" />,
   },
 ];

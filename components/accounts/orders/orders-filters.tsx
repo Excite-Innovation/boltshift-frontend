@@ -22,7 +22,7 @@ export function OrdersFilters() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex flex-col gap-3 px-6 py-7 md:flex-row md:items-center">
+    <div className="flex flex-col gap-3 px-6 py-7 border-b md:flex-row md:items-center">
       {/* Search */}
       <div className="flex-1">
         <InputGroup>
