@@ -1,9 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Brush, ShieldCheck, ShoppingBag, Ticket, User } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { GradientSelectorModal } from "@/components/color-picker/color-picker";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   {
@@ -28,17 +33,36 @@ const menuItems = [
   },
 ];
 
+const DEFAULT_BACKGROUND = "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)"
+
 export function AccountSidenav() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [backgroundStyle, setBackgroundStyle] = useState<string>(
+    "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)",
+  );
+
   return (
     <aside className="w-full lg:w-auto">
       <Card className="min-h-0 w-full lg:w-84 gap-4 rounded-xl border bg-transparent pt-0 pb-8 shadow-none">
         <div className="grid gap-2">
           <div className="relative h-56">
             {/* Background */}
-            <div className="relative h-32 rounded-t-xl bg-[linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)]">
-              <div className="absolute top-2 right-2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-2 border-border bg-white p-2.5">
-                <Brush size={40} className="text-primary" />
-              </div>
+            <div
+              className={cn(
+                "relative h-32 rounded-t-xl",
+                `bg-[${backgroundStyle}]`,
+              )}
+            >
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                onClick={() => setIsOpen(true)}
+                className="absolute top-2 right-2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-2 border-border bg-white p-2.5 hover:bg-muted transition-colors cursor-pointer"
+                aria-label="Personalize background"
+              >
+                <Brush className="size-5 text-primary" />
+              </Button>
             </div>
 
             <div className="absolute inset-x-0 top-14 z-20 flex flex-col items-center gap-3 rounded-lg p-2 text-center">
@@ -81,6 +105,13 @@ export function AccountSidenav() {
           </nav>
         </div>
       </Card>
+
+      <GradientSelectorModal
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        initialColor={backgroundStyle.startsWith("linear-gradient") ? "#F74FAC" : backgroundStyle}
+        onSave={setBackgroundStyle}
+      />
     </aside>
   );
 }
