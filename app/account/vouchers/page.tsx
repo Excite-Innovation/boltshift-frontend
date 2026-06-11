@@ -1,5 +1,5 @@
 export function Vouchers() {
-    return <></>
+    return <>Vouchers</>
 }
 
 export default Vouchers;

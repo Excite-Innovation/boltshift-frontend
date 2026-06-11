@@ -42,6 +42,7 @@ export const initialCart: CartEntry[] = [
 
 const WISHLIST_STORAGE_KEY = "boltshift:wishlist";
 const CART_STORAGE_KEY = "boltshift:cart";
+export const STORED_COLLECTIONS_CHANGED_EVENT = "boltshift:stored-collections-changed";
 
 // TODO: Replace these storage helpers with the shared wishlist state manager once it exists.
 
@@ -55,6 +56,14 @@ function isWishlistEntry(entry: unknown): entry is WishlistEntry {
     typeof entry.productId === "number" &&
     typeof entry.quantity === "number"
   );
+}
+
+function notifyStoredCollectionsChanged() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.dispatchEvent(new Event(STORED_COLLECTIONS_CHANGED_EVENT));
 }
 
 export function addWishlistItem(
@@ -105,6 +114,7 @@ export function writeStoredWishlist(wishlist: WishlistEntry[]) {
   }
 
   window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+  notifyStoredCollectionsChanged();
 }
 
 export function isProductInStoredWishlist(productId: number) {
@@ -211,6 +221,7 @@ export function writeStoredCart(cart: CartEntry[]) {
   }
 
   window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  notifyStoredCollectionsChanged();
 }
 
 export function addProductToStoredCart(productId: number, quantity = 1) {
@@ -265,4 +276,12 @@ export function addWishlistToCart(
         : cartItem,
     );
   }, cart);
+}
+
+export function getWishlistItemCount(wishlist: WishlistEntry[]) {
+  return wishlist.reduce((count, item) => count + item.quantity, 0);
+}
+
+export function getCartItemCount(cart: CartEntry[]) {
+  return cart.reduce((count, item) => count + item.quantity, 0);
 }

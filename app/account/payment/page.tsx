@@ -1,5 +1,5 @@
 export function Payment() {
-    return <></>
+    return <>Payment</>
 }
 
 export default Payment;
