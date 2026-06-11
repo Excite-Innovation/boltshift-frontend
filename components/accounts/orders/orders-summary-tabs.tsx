@@ -1,7 +1,6 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const stats = [
@@ -19,23 +18,18 @@ const stats = [
 
 export function OrdersSummaryTabs() {
   return (
-    <Tabs defaultValue="All" className="w-full bg-muted-foreground/5 pr-2.5 pl-6 pt-4">
-      <TabsList className="flex flex-wrap gap-5 bg-transparent h-auto p-0">
-        {stats.map((stat) => (
-          <TabsTrigger
-            key={stat.label}
-            value={stat.label}
-            className={cn(
-              "relative flex items-center gap-2 pt-1 text-sm",
-              "data-[state=active]:shadow-none data-[state=active]:bg-transparent",
-              "after:absolute after:-bottom-4 after:left-0 after:h-1 after:w-full after:bg-[#1570EF]",
-              "after:opacity-0 data-[state=active]:after:opacity-100",
-            )}
-          >
-            <Button
-              variant="ghost"
-              size="sm"
-              className="flex items-center gap-2 p-0 border-0 shadow-none"
+    <Tabs defaultValue="All" className="min-w-0 bg-muted-foreground/5 pl-6 pt-4">
+      <div className="w-full overflow-x-auto scroll-smooth scrollbar-hide">
+        <TabsList variant="line" className="h-8 gap-5 whitespace-nowrap">
+          {stats.map((stat) => (
+            <TabsTrigger
+              key={stat.label}
+              value={stat.label}
+              className={cn(
+                "flex-none! shrink-0 gap-2 text-sm whitespace-nowrap",
+                "data-[state=active]:shadow-none data-[state=active]:bg-transparent",
+                "after:bg-[#1570EF]",
+              )}
             >
               <span
                 className={cn(
@@ -45,11 +39,11 @@ export function OrdersSummaryTabs() {
               >
                 {stat.value}
               </span>
-              {stat.label}
-            </Button>
-          </TabsTrigger>
-        ))}
-      </TabsList>
+              <span>{stat.label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
     </Tabs>
   );
 }

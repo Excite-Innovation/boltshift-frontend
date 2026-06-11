@@ -103,11 +103,16 @@ export function AccountSidenav() {
                   variant="ghost"
                   className={cn(
                     "h-auto justify-start gap-4 rounded-lg p-2 text-base font-medium",
-                    isActive && "bg-muted/60",
+                    isActive && "text-primary",
                   )}
                 >
                   <Link href={item.href}>
-                    <Icon className="size-8 text-muted-foreground" />
+                    <Icon
+                      className={cn(
+                        "size-8 text-muted-foreground",
+                        isActive && "text-primary fill-primary",
+                      )}
+                    />
                     <span>{item.label}</span>
                   </Link>
                 </Button>

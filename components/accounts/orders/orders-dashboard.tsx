@@ -12,11 +12,15 @@ export function OrdersDashboard() {
   return (
     <>
       {hasOrders ? (
-        <div className="rounded-2xl border bg-background overflow-hidden">
+        <div className="rounded-2xl border bg-background">
           <OrdersSummaryTabs />
 
           <OrdersFilters />
-          <OrdersTable data={orders} />
+
+          {/* only the table scrolls horizontally */}
+          <div className="w-full overflow-x-auto">
+            <OrdersTable data={orders} />
+          </div>
 
           <OrdersTableFooter />
         </div>

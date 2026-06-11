@@ -33,8 +33,8 @@ export function OrdersTable({ data }: Props) {
   });
 
   return (
-    <div className="overflow-hidden">
-      <Table>
+    <div className="w-full overflow-x-auto">
+      <Table className="min-w-max">
         <TableHeader className="border-0">
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id} className="border-0 bg-muted-foreground/5">
