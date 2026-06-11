@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+
 import { Brush, ShieldCheck, ShoppingBag, Ticket, User } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,9 +35,11 @@ const menuItems = [
   },
 ];
 
-const DEFAULT_BACKGROUND = "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)"
+const DEFAULT_BACKGROUND = "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)";
 
 export function AccountSidenav() {
+  const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState<string>(
     "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)",
@@ -84,16 +88,23 @@ export function AccountSidenav() {
             </div>
           </div>
 
-          <nav className="flex overflow-x-auto scrollbar-hide gap-2 px-4 lg:flex-col" aria-label="Account navigation">
+          <nav
+            className="flex overflow-x-auto scrollbar-hide gap-2 px-4 lg:flex-col"
+            aria-label="Account navigation"
+          >
             {menuItems.map((item) => {
               const Icon = item.icon;
+              const isActive = pathname === item.href;
 
               return (
                 <Button
                   key={item.label}
                   asChild
                   variant="ghost"
-                  className="h-auto justify-start gap-4 rounded-lg p-2 text-base font-medium"
+                  className={cn(
+                    "h-auto justify-start gap-4 rounded-lg p-2 text-base font-medium",
+                    isActive && "bg-muted/60",
+                  )}
                 >
                   <Link href={item.href}>
                     <Icon className="size-8 text-muted-foreground" />
@@ -109,7 +120,11 @@ export function AccountSidenav() {
       <GradientSelectorModal
         open={isOpen}
         onOpenChange={setIsOpen}
-        initialColor={backgroundStyle.startsWith("linear-gradient") ? "#F74FAC" : backgroundStyle}
+        initialColor={
+          backgroundStyle.startsWith("linear-gradient")
+            ? "#F74FAC"
+            : backgroundStyle
+        }
         onSave={setBackgroundStyle}
       />
     </aside>

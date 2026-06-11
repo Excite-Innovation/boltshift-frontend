@@ -19,6 +19,7 @@ import {
 
 import { columns } from "@/components/accounts/orders/order-table-columns";
 import { Order } from "@/types/orders/types";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: Order[];
@@ -51,7 +52,13 @@ export function OrdersTable({ data }: Props) {
 
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id} className="h-18 border-0">
+            <TableRow
+              key={row.id}
+              className={cn(
+                "h-18 border-0",
+                row.getIsSelected() && "bg-muted-foreground/5",
+              )}
+            >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
