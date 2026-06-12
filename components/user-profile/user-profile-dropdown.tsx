@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   User,
   ShoppingBag,
@@ -27,18 +28,22 @@ const menuItems = [
   {
     icon: User,
     label: "Personal Info",
+    href: "/account/profile",
   },
   {
     icon: ShoppingBag,
     label: "Orders",
+    href: "/account/orders",
   },
   {
     icon: ShieldCheck,
     label: "Payment",
+    href: "/account/payment",
   },
   {
     icon: Ticket,
     label: "Voucher",
+    href: "/account/vouchers",
   },
 ];
 
@@ -243,9 +248,12 @@ function MobileProfileDropdown({ onLogout }: ProfileDropdownProps) {
               <DropdownMenuItem
                 key={item.label}
                 className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+                asChild
               >
-                <Icon className="size-6" />
-                <span>{item.label}</span>
+                <Link href={item.href}>
+                  <Icon className="size-6" />
+                  <span>{item.label}</span>
+                </Link>
               </DropdownMenuItem>
             );
           })}
@@ -289,9 +297,12 @@ export function ProfileDropdown({ onLogout }: ProfileDropdownProps) {
               <DropdownMenuItem
                 key={item.label}
                 className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+                asChild
               >
-                <Icon className="size-6" />
+                <Link href={item.href}>
+                  <Icon className="size-6" />
                 <span>{item.label}</span>
+                </Link>
               </DropdownMenuItem>
             );
           })}
