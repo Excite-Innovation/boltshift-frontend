@@ -22,9 +22,9 @@ export function OrdersFilters() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex flex-col gap-3 px-6 py-7 border-b md:flex-row md:items-center">
+    <div className="flex min-w-0 flex-col gap-3 border-b px-6 py-7 md:flex-row md:items-center">
       {/* Search */}
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         <InputGroup>
           {/* Left icon */}
           <InputGroupAddon>
@@ -48,9 +48,9 @@ export function OrdersFilters() {
       </div>
 
       {/* Select */}
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         <Select>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full min-w-0">
             <SelectValue placeholder="Jan 6, 2022 - Jan 13, 2022" />
           </SelectTrigger>
 

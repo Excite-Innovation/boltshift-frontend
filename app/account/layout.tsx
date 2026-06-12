@@ -45,7 +45,7 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="overflow-hidden">
       {/* Navbar */}
       <div>
         <div className="hidden md:block">
@@ -63,8 +63,8 @@ export default function AccountLayout({
         className="py-4"
       />
 
-      <div className="flex flex-col gap-4 pb-12 lg:flex-row">
-        <div className="lg:sticky lg:top-24 lg:self-start lg:shrink-0">
+      <div className="flex min-w-0 flex-col gap-4 pb-12 lg:flex-row">
+        <div className="hidden lg:sticky lg:top-24 lg:block lg:self-start lg:shrink-0">
           <AccountSidenav />
         </div>
 

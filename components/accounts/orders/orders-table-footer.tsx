@@ -16,12 +16,12 @@ export function OrdersTableFooter() {
   return (
     <div
       className="
-        flex w-full flex-col gap-4 border-t px-6 py-6.5
+        flex w-full min-w-0 flex-col gap-4 border-t px-6 py-6.5
         md:flex-row md:items-center md:justify-between
       "
     >
       {/* Left: Pagination */}
-      <Pagination className="w-full md:w-auto">
+      <Pagination className="w-full min-w-0 md:w-auto">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious href="#" />
@@ -48,7 +48,7 @@ export function OrdersTableFooter() {
       </Pagination>
 
       {/* Right: Download */}
-      <Button className="w-full md:w-auto">
+      <Button className="w-full min-w-0 md:w-auto">
         <Download className="h-4 w-4" />
         Download
       </Button>

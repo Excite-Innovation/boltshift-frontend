@@ -18,8 +18,11 @@ const stats = [
 
 export function OrdersSummaryTabs() {
   return (
-    <Tabs defaultValue="All" className="min-w-0 bg-muted-foreground/5 pl-6 pt-4">
-      <div className="w-full overflow-x-auto scroll-smooth scrollbar-hide">
+    <Tabs
+      defaultValue="All"
+      className="min-w-0 w-full bg-muted-foreground/5 pl-6 pt-4"
+    >
+      <div className="min-w-0 w-full overflow-x-auto scroll-smooth scrollbar-hide">
         <TabsList variant="line" className="h-8 gap-5 whitespace-nowrap">
           {stats.map((stat) => (
             <TabsTrigger

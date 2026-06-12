@@ -12,7 +12,7 @@ export function OrdersDashboard() {
   return (
     <>
       {hasOrders ? (
-        <div className="rounded-2xl border bg-background">
+        <div className="min-w-0 w-full max-w-full overflow-hidden rounded-2xl border bg-background">
           <OrdersSummaryTabs />
 
           <OrdersFilters />
