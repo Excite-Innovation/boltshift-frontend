@@ -35,6 +35,7 @@ export function DatePickerField() {
         <Calendar
           mode="single"
           selected={date}
+          captionLayout="dropdown"
           onSelect={setDate}
           defaultMonth={date}
           className="w-full"
