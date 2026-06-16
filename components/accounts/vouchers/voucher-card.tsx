@@ -38,7 +38,7 @@ export function VoucherCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 items-start justify-between py-5 gap-2">
+      <div className="relative flex flex-1 items-start justify-between py-5 gap-2">
         <div className="grid gap-1">
           <p className="text-xs">{code}</p>
 
@@ -53,7 +53,7 @@ export function VoucherCard({
           </p>
         </div>
 
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="absolute right-0 top-1 z-10">
           <MoreVertical className="h-5 w-5" />
         </Button>
       </div>
