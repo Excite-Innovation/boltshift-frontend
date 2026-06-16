@@ -25,7 +25,7 @@ export function VoucherCard({
   expiryDate,
 }: VoucherCardProps) {
   return (
-    <Card className="w-84 flex flex-row overflow-hidden rounded-xl p-0 border">
+    <Card className="w-full flex flex-row overflow-hidden rounded-xl p-0 border sm:w-84">
       {/* Left section */}
       <div className="flex w-32 items-center justify-center py-8 border-r border-dashed">
         <Image

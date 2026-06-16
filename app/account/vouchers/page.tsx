@@ -32,7 +32,7 @@ export function Vouchers() {
       <DashedSeparator />
 
       {/* Vouchers */}
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap justify-center gap-6 sm:justify-start">
         {vouchers.map((voucher) => (
           <VoucherCard
             key={`${voucher.code}-${voucher.discount}`}
