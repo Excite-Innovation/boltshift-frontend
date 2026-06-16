@@ -784,8 +784,8 @@ export function PaymentCard({
   onUpdateCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
-  step = 4,
-  title = "Payment Card",
+  step = 0,
+  title = "",
   className,
 }: PaymentCardProps) {
   const [visibleCards, setVisibleCards] = React.useState(cards);
