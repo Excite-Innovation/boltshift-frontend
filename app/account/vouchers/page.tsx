@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Separator } from "@/components/ui/separator";
+import { DashedSeparator } from "@/components/separator/dashed-separator";
 import { SectionHeadings } from "@/components/accounts/section-headings";
 import { VoucherCodeInput } from "@/components/accounts/vouchers/voucher-code-input";
 import { VoucherCard } from "@/components/accounts/vouchers/voucher-card";
@@ -29,7 +29,7 @@ export function Vouchers() {
         onAdd={handleAdd}
       />
 
-      <Separator />
+      <DashedSeparator />
 
       {/* Vouchers */}
       <div className="flex flex-wrap gap-6">

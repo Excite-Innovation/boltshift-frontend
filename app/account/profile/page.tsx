@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Save } from "lucide-react";
 
-import { Separator } from "@/components/ui/separator";
+import { DashedSeparator } from "@/components/separator/dashed-separator";
 import { AccountSocialButtons } from "./account-social-buttons";
 import { FormInputField } from "@/components/checkout/form-input-field";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -17,9 +17,9 @@ export function PersonalInfo() {
   return (
     <div className="flex flex-col gap-8">
       <BasicDetails />
-      <Separator />
+      <DashedSeparator />
       <Address />
-      <Separator />
+      <DashedSeparator />
       <Password />
 
       <div className="border-t py-6 flex justify-end items-center">
