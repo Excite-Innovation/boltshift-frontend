@@ -784,8 +784,9 @@ export function PaymentCard({
   onUpdateCard,
   defaultSelectedCardId,
   defaultHideCardNumbers = true,
-  step = 4,
-  title = "Payment Card",
+  step = 0,
+  title = "",
+  showHeader = true,
   className,
 }: PaymentCardProps) {
   const [visibleCards, setVisibleCards] = React.useState(cards);
@@ -879,40 +880,42 @@ export function PaymentCard({
   return (
     <>
       <Card className={cn("w-full border-0 py-4 shadow-none", className)}>
-        <CardHeader className="flex items-center gap-4 px-0">
-          <div className="flex min-w-0 flex-1 items-center gap-4">
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
-              {step}
+        {showHeader ? (
+          <CardHeader className="flex items-center gap-4 px-0">
+            <div className="flex min-w-0 flex-1 items-center gap-4">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-card">
+                {step}
+              </div>
+              <CardTitle className="text-lg font-semibold">{title}</CardTitle>
             </div>
-            <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-          </div>
 
-          {/* Toggle for card numbers, don't remove */}
-          {/* <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-sm"
-                onClick={() => setHideCardNumbers((current) => !current)}
-                aria-label={
-                  hideCardNumbers ? "Show card numbers" : "Hide card numbers"
-                }
-              >
-                {hideCardNumbers ? (
-                  <Eye className="size-4" />
-                ) : (
-                  <EyeOff className="size-4" />
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              {hideCardNumbers ? "Show card numbers" : "Hide card numbers"}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider> */}
-        </CardHeader>
+            {/* Toggle for card numbers, don't remove */}
+            {/* <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => setHideCardNumbers((current) => !current)}
+                  aria-label={
+                    hideCardNumbers ? "Show card numbers" : "Hide card numbers"
+                  }
+                >
+                  {hideCardNumbers ? (
+                    <Eye className="size-4" />
+                  ) : (
+                    <EyeOff className="size-4" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {hideCardNumbers ? "Show card numbers" : "Hide card numbers"}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider> */}
+          </CardHeader>
+        ) : null}
 
         <CardContent className="flex flex-wrap justify-center gap-8 px-0 md:justify-start">
           <RadioGroup

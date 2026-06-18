@@ -12,10 +12,10 @@ import { cartReducer, getCartItems, writeStoredCart } from "@/lib/wishlist";
 import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
-import { Separator } from "@/components/ui/separator";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
 import { PaymentMethodCard } from "@/components/checkout/payment-method";
 import { OrderCompletionModal } from "@/components/checkout/order-completion-modal";
+import { DashedSeparator } from "@/components/separator/dashed-separator";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -83,11 +83,11 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
           {/* Shipping details */}
           <div className="flex min-w-0 flex-1 flex-col gap-12">
             <PersonalDetailsCard />
-            <Separator />
+            <DashedSeparator />
             <ShippingDetailsCard />
-            <Separator />
+            <DashedSeparator />
             <ShippingMethodCard />
-            <Separator />
+            <DashedSeparator />
             <PaymentMethodCard />
           </div>
           <div className="flex justify-center lg:shrink-0">

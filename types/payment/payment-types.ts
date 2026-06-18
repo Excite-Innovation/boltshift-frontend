@@ -24,5 +24,6 @@ export type PaymentCardProps = {
   defaultHideCardNumbers?: boolean;
   step?: ReactNode;
   title?: string;
+  showHeader?: boolean;
   className?: string;
 };

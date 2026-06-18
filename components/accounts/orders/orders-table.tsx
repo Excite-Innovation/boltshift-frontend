@@ -1,12 +1,6 @@
 "use client";
 
-import * as React from "react";
-
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { flexRender, type Table as ReactTable } from "@tanstack/react-table";
 
 import {
   Table,
@@ -17,21 +11,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { columns } from "@/components/accounts/orders/order-table-columns";
-import { Order } from "@/types/orders/types";
 import { cn } from "@/lib/utils";
+import { Order } from "@/types/orders/types";
 
 interface Props {
-  data: Order[];
+  table: ReactTable<Order>;
 }
 
-export function OrdersTable({ data }: Props) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
+export function OrdersTable({ table }: Props) {
   return (
     <div className="w-full overflow-x-auto">
       <Table className="min-w-max">
