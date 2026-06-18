@@ -108,9 +108,10 @@ export function AccountSidenav() {
                 >
                   <Link href={item.href}>
                     <Icon
+                      strokeWidth={1.5}
                       className={cn(
                         "size-8 text-muted-foreground",
-                        isActive && "text-primary fill-primary",
+                        isActive && "text-primary",
                       )}
                     />
                     <span>{item.label}</span>

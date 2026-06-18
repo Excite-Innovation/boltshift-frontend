@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { DashedSeparator } from "@/components/separator/dashed-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -160,7 +160,7 @@ export function OrderSummary({
 
       <CardContent className="w-72 p-0 flex flex-col gap-4">
         {children}
-        {children ? <Separator /> : null}
+        {children ? <DashedSeparator /> : null}
 
         <div className="w-full py-1 flex justify-between text-muted-foreground">
           <span>Subtotal</span>
@@ -240,7 +240,7 @@ export function OrderSummary({
         </div>
       </CardContent>
 
-      <Separator />
+      <DashedSeparator />
 
       <CardFooter className="w-full p-0 flex flex-col gap-8">
         {/* Total */}

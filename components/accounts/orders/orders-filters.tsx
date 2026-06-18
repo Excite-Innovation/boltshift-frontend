@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { DateRange } from "react-day-picker";
 import { Search, CircleX } from "lucide-react";
+
+import { DateRangePicker } from "@/components/accounts/orders/date-range-input";
 
 import {
   Select,
@@ -20,6 +23,7 @@ import {
 
 export function OrdersFilters() {
   const [search, setSearch] = useState("");
+  const [dateRange, setDateRange] = useState<DateRange>();
 
   return (
     <div className="flex min-w-0 flex-col gap-3 border-b px-6 py-7 md:flex-row md:items-center">
@@ -49,16 +53,7 @@ export function OrdersFilters() {
 
       {/* Select */}
       <div className="min-w-0 flex-1">
-        <Select>
-          <SelectTrigger className="w-full min-w-0">
-            <SelectValue placeholder="Jan 6, 2022 - Jan 13, 2022" />
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectItem value="week">Last Week</SelectItem>
-            <SelectItem value="month">Last Month</SelectItem>
-          </SelectContent>
-        </Select>
+        <DateRangePicker value={dateRange} onChange={setDateRange} />
       </div>
     </div>
   );
