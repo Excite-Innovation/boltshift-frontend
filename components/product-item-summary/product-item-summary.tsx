@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Color from "color";
 
 import { ModalWrapper } from "@/components/product-modal/modal-wraper";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +12,16 @@ type ProductItemSummaryProps = {
   label: string;
   colorName: string;
 };
+
+const DEFAULT_SWATCH_COLOR = "#f59e0b";
+
+function getSwatchColor(colorName: string) {
+  try {
+    return Color(colorName).hexa();
+  } catch {
+    return DEFAULT_SWATCH_COLOR;
+  }
+}
 
 export function ProductItemSummary({
   product,
@@ -54,7 +65,8 @@ export function ProductItemSummary({
           <div className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
             <span
               aria-hidden="true"
-              className="size-5 shrink-0 rounded-full bg-amber-500"
+              className="size-5 shrink-0 rounded-full border bg-amber-500"
+              style={{ backgroundColor: getSwatchColor(colorName) }}
             />
             <span className="truncate capitalize">{colorName}</span>
           </div>

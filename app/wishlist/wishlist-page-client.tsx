@@ -109,6 +109,8 @@ export function WishlistPageClient() {
                     key={product.id}
                     product={product}
                     quantity={quantity}
+                    label={product.variants[0]?.sizes[0] ?? "Default"}
+                    colorName={product.variants[0]?.color ?? "Default"}
                     onRemove={() =>
                       dispatchWishlist({
                         type: "remove",
