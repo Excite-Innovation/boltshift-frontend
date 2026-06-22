@@ -15,6 +15,7 @@ import {
 import { DeleteModal } from "@/components/delete-item/delete-modal";
 
 interface VoucherCardProps {
+  id: string;
   imageSrc: string;
   imageAlt?: string;
   code: string;
@@ -23,10 +24,11 @@ interface VoucherCardProps {
   expiryDate: string;
   onCopyCode?: (code: string) => void;
   onShare?: (code: string) => void;
-  onDelete?: (code: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 export function VoucherCard({
+  id,
   imageSrc,
   imageAlt = "Voucher image",
   code,
@@ -63,7 +65,7 @@ export function VoucherCard({
   };
 
   const handleDelete = () => {
-    onDelete?.(code);
+    onDelete?.(id);
   };
 
   return (
