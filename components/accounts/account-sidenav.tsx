@@ -35,14 +35,14 @@ const menuItems = [
   },
 ];
 
-const DEFAULT_BACKGROUND = "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)";
+const DEFAULT_BACKGROUND = "linear-gradient(135deg, #F74FAC 0%, #FCB24F 100%)";
 
 export function AccountSidenav() {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState<string>(
-    "linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)",
+    DEFAULT_BACKGROUND,
   );
 
   return (
@@ -52,10 +52,8 @@ export function AccountSidenav() {
           <div className="relative h-56">
             {/* Background */}
             <div
-              className={cn(
-                "relative h-32 rounded-t-xl",
-                `bg-[${backgroundStyle}]`,
-              )}
+              className="relative h-32 rounded-t-xl"
+              style={{ background: backgroundStyle }}
             >
               <Button
                 type="button"
