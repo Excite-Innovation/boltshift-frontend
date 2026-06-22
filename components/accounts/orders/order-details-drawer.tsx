@@ -57,8 +57,10 @@ export function OrderDetailsDrawer({ order }: { order: Order }) {
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent className="w-full border-r bg-background data-[vaul-drawer-direction=left]:w-full sm:data-[vaul-drawer-direction=left]:max-w-md">
-        <DrawerHeader className="flex flex-row items-center gap-6 border-b py-4 px-8 text-left">
+      <DrawerContent className="data-[vaul-drawer-direction=right]:w-full sm:data-[vaul-drawer-direction=right]:max-w-lg border-r bg-background">
+        <DrawerHeader className="flex flex-row items-center gap-6 border-b py-4 px-8">
+          <DrawerTitle className="sr-only">Order Details</DrawerTitle>
+
           <DrawerClose asChild>
             <Button
               type="button"
