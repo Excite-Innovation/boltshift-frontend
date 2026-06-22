@@ -59,7 +59,7 @@ export function VoucherActionMenu({
 
       <DropdownMenuContent
         align="start"
-        side="right"
+        side="left"
         sideOffset={8}
         className="w-48 gap-1 rounded-xl border p-3"
       >

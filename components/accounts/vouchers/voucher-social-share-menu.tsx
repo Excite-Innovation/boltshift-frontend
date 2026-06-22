@@ -98,7 +98,7 @@ export function VoucherSocialShareMenu({
           Share
         </DropdownMenuSubTrigger>
 
-        <DropdownMenuSubContent className="w-48 rounded-xl border p-3">
+        <DropdownMenuSubContent className="w-48 rounded-xl border p-3" sideOffset={20}>
           <div className="grid gap-1">
             {shareTargets.map((target) => {
               const Icon = target.icon;
