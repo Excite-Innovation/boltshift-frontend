@@ -4,79 +4,92 @@ set -e
 
 echo "Starting PWA dev setup..."
 
-CERT_DIR="certificates"
-CERT_FILE="$CERT_DIR/dev.pem"
-KEY_FILE="$CERT_DIR/dev-key.pem"
-IP_FILE="$CERT_DIR/ip.txt"
+PORT="${PORT:-3000}"
+HOST="${HOST:-localhost}"
+USE_HTTPS="${USE_HTTPS:-false}"
 
-mkdir -p $CERT_DIR
+NEXT_DEV_ARGS=()
 
-# -----------------------------
-# Detect OS
-# -----------------------------
-OS="$(uname)"
-echo "OS: $OS"
+if [[ "$USE_HTTPS" == "true" ]]; then
+  CERT_DIR="certificates"
+  CERT_FILE="$CERT_DIR/dev.pem"
+  KEY_FILE="$CERT_DIR/dev-key.pem"
+  IP_FILE="$CERT_DIR/ip.txt"
 
-# -----------------------------
-# Install mkcert if missing
-# -----------------------------
-if ! command -v mkcert &> /dev/null
-then
-  echo "Installing mkcert..."
+  mkdir -p "$CERT_DIR"
 
-  if [[ "$OS" == "Linux" ]]; then
-    sudo apt update
-    sudo apt install -y mkcert libnss3-tools
-  elif [[ "$OS" == "Darwin" ]]; then
-    brew install mkcert nss
-  else
-    echo " Unsupported OS \n Supported OS includes: Ubuntu/Debian, macOS, WSL"
-    exit 1
+  # -----------------------------
+  # Detect OS
+  # -----------------------------
+  OS="$(uname)"
+  echo "OS: $OS"
+
+  # -----------------------------
+  # Install mkcert if missing
+  # -----------------------------
+  if ! command -v mkcert &> /dev/null
+  then
+    echo "Installing mkcert..."
+
+    if [[ "$OS" == "Linux" ]]; then
+      sudo apt update
+      sudo apt install -y mkcert libnss3-tools
+    elif [[ "$OS" == "Darwin" ]]; then
+      brew install mkcert nss
+    else
+      echo "Unsupported OS. Supported OS includes: Ubuntu/Debian, macOS, WSL"
+      exit 1
+    fi
   fi
-fi
 
-mkcert -install
+  mkcert -install
 
-# -----------------------------
-# Detect LAN IP
-# -----------------------------
-if [[ "$OS" == "Linux" ]]; then
-  IP=$(hostname -I | awk '{print $1}')
-elif [[ "$OS" == "Darwin" ]]; then
-  IP=$(ipconfig getifaddr en0)
-fi
+  # -----------------------------
+  # Detect LAN IP
+  # -----------------------------
+  if [[ "$OS" == "Linux" ]]; then
+    IP=$(hostname -I | awk '{print $1}')
+  elif [[ "$OS" == "Darwin" ]]; then
+    IP=$(ipconfig getifaddr en0)
+  fi
 
-echo "Current IP: $IP"
+  echo "Current IP: $IP"
 
-# -----------------------------
-# Check previous IP
-# -----------------------------
-OLD_IP=""
+  # -----------------------------
+  # Check previous IP
+  # -----------------------------
+  OLD_IP=""
 
-if [ -f "$IP_FILE" ]; then
-  OLD_IP=$(cat "$IP_FILE")
-fi
+  if [ -f "$IP_FILE" ]; then
+    OLD_IP=$(cat "$IP_FILE")
+  fi
 
-# -----------------------------
-# Regenerate certificate if IP changed
-# -----------------------------
-if [[ "$IP" != "$OLD_IP" ]]; then
+  # -----------------------------
+  # Regenerate certificate if IP changed
+  # -----------------------------
+  if [[ "$IP" != "$OLD_IP" ]]; then
+    echo "IP changed (or first run)"
+    echo "Old IP: $OLD_IP"
+    echo "New IP: $IP"
+    echo "Regenerating HTTPS certificate..."
 
-  echo "IP changed (or first run)"
-  echo "Old IP: $OLD_IP"
-  echo "New IP: $IP"
+    mkcert \
+      -cert-file "$CERT_FILE" \
+      -key-file "$KEY_FILE" \
+      "$IP" localhost 127.0.0.1
 
-  echo "Regenerating HTTPS certificate..."
+    echo "$IP" > "$IP_FILE"
+  else
+    echo "IP unchanged — certificate still valid"
+  fi
 
-  mkcert \
-    -cert-file $CERT_FILE \
-    -key-file $KEY_FILE \
-    $IP localhost 127.0.0.1
-
-  echo $IP > $IP_FILE
-
+  NEXT_DEV_ARGS=(
+    --experimental-https
+    --experimental-https-cert "$CERT_FILE"
+    --experimental-https-key "$KEY_FILE"
+  )
 else
-  echo "IP unchanged — certificate still valid"
+  echo "Running Next.js over plain HTTP for local PWA development."
 fi
 
 # -----------------------------
@@ -116,11 +129,12 @@ fi
 npm install
 
 # -----------------------------
-# Start Next.js with HTTPS
+# Start Next.js
 # -----------------------------
-echo "Starting Next.js..."
+if [[ "$USE_HTTPS" == "true" ]]; then
+  echo "Starting Next.js with HTTPS on https://${HOST}:${PORT}..."
+else
+  echo "Starting Next.js on http://${HOST}:${PORT}..."
+fi
 
-npx next dev \
-  --experimental-https \
-  --experimental-https-cert $CERT_FILE \
-  --experimental-https-key $KEY_FILE
+npx next dev --hostname "$HOST" --port "$PORT" "${NEXT_DEV_ARGS[@]}"
