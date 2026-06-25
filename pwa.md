@@ -15,9 +15,9 @@ This project now has a fuller Progressive Web App setup built around Next.js App
 
 - Install flow in [`components/install-prompt.tsx`](/home/denil/Boltshift/boltshift-frontend/components/install-prompt.tsx)
   - Listens for the browser install prompt.
-  - Shows an install CTA when the prompt is available.
-  - Falls back to iOS home-screen instructions when needed.
-  - Shows installed/ready state messaging to avoid confusing repeat prompts.
+  - Shows only a single install button with a dismiss control when the prompt is available.
+  - Remembers dismissal in local storage so the popup does not keep returning.
+  - Hides itself once the app is installed.
 
 - Push notifications in [`components/push-notification-manager.tsx`](/home/denil/Boltshift/boltshift-frontend/components/push-notification-manager.tsx)
   - Registers the service worker.
@@ -25,6 +25,7 @@ This project now has a fuller Progressive Web App setup built around Next.js App
   - Subscribes and unsubscribes the user from push notifications.
   - Supports sending a test notification for quick verification.
   - Uses VAPID-based subscription handling through the existing server actions.
+  - Is separate from the install popup so the browser or system permission UI can handle notification prompts naturally.
 
 - Service worker caching in [`public/sw.js`](/home/denil/Boltshift/boltshift-frontend/public/sw.js)
   - Pre-caches key app shell assets.
