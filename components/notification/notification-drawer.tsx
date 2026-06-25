@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PushNotificationManager } from "@/components/push-notification-manager";
 import {
   notifications as initialNotifications,
   notificationTabs,
@@ -45,9 +46,12 @@ export function NotificationDrawer({
   return (
     <section className="p-8 flex h-160 w-full flex-col gap-8 border border-border bg-background text-foreground">
       <header className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-foreground">
-          Notifications
-        </h2>
+        <div className="grid gap-1">
+          <h2 className="text-base font-semibold text-foreground">
+            Notifications
+          </h2>
+          <PushNotificationManager className="pt-0.5" />
+        </div>
 
         <Button
           type="button"

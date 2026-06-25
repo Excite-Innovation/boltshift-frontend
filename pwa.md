@@ -20,12 +20,10 @@ This project now has a fuller Progressive Web App setup built around Next.js App
   - Hides itself once the app is installed.
 
 - Push notifications in [`components/push-notification-manager.tsx`](/home/denil/Boltshift/boltshift-frontend/components/push-notification-manager.tsx)
-  - Registers the service worker.
-  - Requests notification permission.
+  - Lives in the notifications drawer so the browser or system permission prompt is triggered by an explicit user action.
+  - Requests notification permission only when the user taps the enable button.
   - Subscribes and unsubscribes the user from push notifications.
-  - Supports sending a test notification for quick verification.
   - Uses VAPID-based subscription handling through the existing server actions.
-  - Is separate from the install popup so the browser or system permission UI can handle notification prompts naturally.
 
 - Service worker caching in [`public/sw.js`](/home/denil/Boltshift/boltshift-frontend/public/sw.js)
   - Pre-caches key app shell assets.

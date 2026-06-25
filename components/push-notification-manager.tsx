@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BellOff, BellRing, Loader2, Send } from "lucide-react";
+import { BellOff, BellRing, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { subscribeUser, unsubscribeUser, sendNotification } from "@/lib/actions";
+import { subscribeUser, unsubscribeUser } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 type PushNotificationManagerProps = {
@@ -28,33 +27,27 @@ function urlBase64ToUint8Array(base64String: string) {
 
 function getPushSubscriptionErrorMessage(error: unknown) {
   if (error instanceof DOMException && error.name === "AbortError") {
-    return "Push registration failed. Your browser could not reach its push service. Try a different browser, disable VPN/proxy filtering, or retry once network access is available.";
+    return "Push registration failed. Your browser could not reach its push service.";
   }
 
-  if (error instanceof Error) {
-    if (/applicationserverkey|vapid/i.test(error.message)) {
-      return "The push key looks invalid. Restart the dev server so it reloads .env.local, then try again.";
-    }
+  if (error instanceof Error && /applicationserverkey|vapid/i.test(error.message)) {
+    return "The push key looks invalid. Restart the dev server so it reloads .env.local.";
   }
 
-  return "Could not enable push notifications.";
+  return "Could not update push notifications.";
 }
 
 export function PushNotificationManager({
   className,
 }: PushNotificationManagerProps) {
   const [isSupported, setIsSupported] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const [permission, setPermission] =
     useState<NotificationPermission>("default");
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null,
   );
-  const [message, setMessage] = useState(
-    "New Boltshift updates are ready for you.",
-  );
-  const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (
@@ -70,27 +63,19 @@ export function PushNotificationManager({
 
     let isMounted = true;
 
-    async function registerServiceWorker() {
+    async function syncSubscription() {
       try {
         const registration = await navigator.serviceWorker.register("/sw.js", {
           scope: "/",
           updateViaCache: "none",
         });
 
-        if (!isMounted) {
-          return;
-        }
-
-        setIsRegistered(true);
-
         const currentSubscription =
           await registration.pushManager.getSubscription();
 
-        if (!isMounted) {
-          return;
+        if (isMounted) {
+          setSubscription(currentSubscription);
         }
-
-        setSubscription(currentSubscription);
       } catch (error) {
         if (isMounted) {
           setStatus("Service worker registration failed.");
@@ -99,11 +84,11 @@ export function PushNotificationManager({
       }
     }
 
-    registerServiceWorker()
+    syncSubscription();
 
     return () => {
       isMounted = false;
-    }
+    };
   }, []);
 
   async function ensureNotificationPermission() {
@@ -117,7 +102,7 @@ export function PushNotificationManager({
     return nextPermission === "granted";
   }
 
-  async function subscribeToPush() {
+  async function enablePushNotifications() {
     setIsBusy(true);
     setStatus("");
 
@@ -140,15 +125,16 @@ export function PushNotificationManager({
       }
 
       if (!navigator.onLine) {
-        setStatus("Push registration needs a network connection to reach the browser push service.");
+        setStatus("Push registration needs a network connection.");
         return;
       }
 
       const registration = await navigator.serviceWorker.ready;
-      const existingSubscription = await registration.pushManager.getSubscription();
+      const currentSubscription =
+        await registration.pushManager.getSubscription();
 
-      if (existingSubscription) {
-        setSubscription(existingSubscription);
+      if (currentSubscription) {
+        setSubscription(currentSubscription);
         setStatus("Push notifications are already enabled.");
         return;
       }
@@ -164,8 +150,8 @@ export function PushNotificationManager({
         applicationServerKey,
       });
 
-      setSubscription(nextSubscription);
       await subscribeUser(JSON.parse(JSON.stringify(nextSubscription)));
+      setSubscription(nextSubscription);
       setStatus("Push notifications enabled.");
     } catch (error) {
       console.error("Failed to subscribe to push:", error);
@@ -175,7 +161,7 @@ export function PushNotificationManager({
     }
   }
 
-  async function unsubscribeFromPush() {
+  async function disablePushNotifications() {
     setIsBusy(true);
     setStatus("");
 
@@ -196,114 +182,61 @@ export function PushNotificationManager({
     }
   }
 
-  async function sendTestNotification() {
-    if (!subscription) {
-      return;
-    }
-
-    setIsBusy(true);
-    setStatus("");
-
-    try {
-      await sendNotification(message.trim() || "Boltshift has a new update.");
-      setMessage("New Boltshift updates are ready for you.");
-      setStatus("Test notification sent.");
-    } catch (error) {
-      console.error("Failed to send test notification:", error);
-      setStatus("Could not send the test notification.");
-    } finally {
-      setIsBusy(false);
-    }
-  }
-
   if (!isSupported) {
     return (
-      <div className={cn("rounded-2xl border border-border/70 p-4", className)}>
-        <p className="text-sm font-medium text-foreground">
-          Push notifications are not supported in this browser.
-        </p>
-      </div>
+      <p className={cn("text-xs text-muted-foreground", className)}>
+        Push notifications are not supported in this browser.
+      </p>
     );
   }
 
+  const isEnabled = Boolean(subscription);
+
   return (
-    <div className={cn("grid gap-4", className)}>
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="space-y-1">
-          <h3 className="text-sm font-semibold text-foreground">
-            Push notifications
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Stay informed about order updates, delivery changes, and special
-            offers.
-          </p>
-        </div>
-
-        <div className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-          {subscription
-            ? "Enabled"
-            : !isRegistered
-              ? "Starting"
-              : permission === "denied"
-              ? "Blocked"
-              : "Off"}
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {subscription ? (
+    <div className={cn("grid gap-2", className)}>
+      <div className="flex flex-wrap items-center gap-2">
+        {isEnabled ? (
           <Button
             type="button"
             size="sm"
             variant="outline"
-            onClick={unsubscribeFromPush}
+            onClick={disablePushNotifications}
             disabled={isBusy}
           >
-            {isBusy ? <Loader2 className="size-4 animate-spin" /> : <BellOff className="size-4" />}
-            Disable push
+            {isBusy ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <BellOff className="size-4" />
+            )}
+            Disable notifications
           </Button>
         ) : (
           <Button
             type="button"
             size="sm"
-            onClick={subscribeToPush}
+            onClick={enablePushNotifications}
             disabled={isBusy}
           >
-            {isBusy ? <Loader2 className="size-4 animate-spin" /> : <BellRing className="size-4" />}
-            Enable push
+            {isBusy ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <BellRing className="size-4" />
+            )}
+            Enable notifications
           </Button>
         )}
-
-        <Button
-          type="button"
-          size="sm"
-          variant="ghost"
-          onClick={sendTestNotification}
-          disabled={!subscription || isBusy}
-        >
-          <Send className="size-4" />
-          Send test
-        </Button>
       </div>
 
-      <label className="grid gap-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Test notification message
-        </span>
-        <Input
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          placeholder="Write a short notification message"
-        />
-      </label>
-
-      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-        <span>Service worker: {isRegistered ? "ready" : "registering"}</span>
-        <span>Permission: {permission}</span>
-      </div>
+      <p className="text-xs text-muted-foreground">
+        {isEnabled
+          ? "Push alerts are active on this device."
+          : permission === "denied"
+            ? "Notifications are blocked. You can re-enable them from browser settings."
+            : "Tap to let the browser or system show the permission prompt."}
+      </p>
 
       {status ? (
-        <p className="text-xs leading-5 text-muted-foreground">{status}</p>
+        <p className="text-xs text-muted-foreground">{status}</p>
       ) : null}
     </div>
   );
