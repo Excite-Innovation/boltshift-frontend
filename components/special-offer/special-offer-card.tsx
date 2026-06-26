@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { showSonnerMessage } from "@/components/alert/alert";
@@ -14,6 +15,7 @@ import { GetProductItems } from "@/lib/product-items";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { StartRating } from "@/components/rating/rating";
 import { cn, EditNum } from "@/lib/utils";
+import type { Product } from "@/types/type";
 import {
   Card,
   CardContent,
@@ -23,15 +25,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function SpecialOfferCard() {
-  const productItems = GetProductItems();
+type SpecialOfferCardProps = {
+  product?: Product;
+};
 
-  const [selectedItem, setSelectedItem] = useState(productItems[0]);
+export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
+  const productItems = GetProductItems();
+  const selectedItem = product ?? productItems[0];
+
   const [selectedColor, setSelectedColor] = useState(
-    productItems[1].variants[0].color,
+    selectedItem.variants[0]?.color ?? "",
   );
   const [selectedSize, setSelectedSize] = useState(
-    productItems[1].variants[0].sizes[0],
+    selectedItem.variants[0]?.sizes[0] ?? "",
   );
   const [quantity, setQuantity] = useState(1);
 
@@ -40,6 +46,10 @@ export function SpecialOfferCard() {
     selectedItem.variants[0];
 
   const colors = selectedItem.variants.map((v) => v.color);
+  const selectedVariantIndex = Math.max(
+    0,
+    selectedItem.variants.findIndex((variant) => variant.color === selectedColor),
+  );
 
   const isStorage = selectedVariant?.sizes.some(
     (s) => s.toLowerCase().includes("gb") || s.toLowerCase().includes("tb"),
@@ -47,19 +57,27 @@ export function SpecialOfferCard() {
 
   const price = selectedItem.price;
   const totalPrice = EditNum(price * quantity);
-  const selectedImage = selectedItem.images[0];
+  const selectedImage =
+    selectedItem.images[selectedVariantIndex] ?? selectedItem.images[0];
 
   useEffect(() => {
     const firstVariant = selectedItem.variants[0];
+    if (!firstVariant) {
+      return;
+    }
+
     setSelectedColor(firstVariant.color);
-    setSelectedSize(firstVariant.sizes[0]);
-  }, [selectedItem]);
+    setSelectedSize(firstVariant.sizes[0] ?? "");
+    setQuantity(1);
+  }, [selectedItem.id]);
 
   useEffect(() => {
     if (!selectedVariant?.sizes.includes(selectedSize)) {
-      setSelectedSize(selectedVariant.sizes[0]);
+      setSelectedSize(selectedVariant?.sizes[0] ?? "");
     }
-  }, [selectedColor]);
+  }, [selectedColor, selectedVariant, selectedSize]);
+
+  const checkoutHref = `/checkout?items=${encodeURIComponent(`${selectedItem.id}:${quantity}`)}`;
 
   const Increment = () => {
     setQuantity((prev) => prev + 1);
@@ -128,27 +146,25 @@ export function SpecialOfferCard() {
             </AspectRatio>
           </div>
 
-          <div
-            className="p-1 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide 
-                 md:max-h-157.5 md:flex-col md:overflow-y-auto
-                 lg:max-h-221.5 xl:max-h-143.5
-              "
-          >
-            {productItems.map((p) => (
+          <div className="p-1 flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide md:max-h-157.5 md:flex-col md:overflow-y-auto lg:max-h-221.5 xl:max-h-143.5">
+            {selectedItem.variants.map((variant, index) => (
               <div
-                key={p.id}
-                onClick={() => setSelectedItem(p)}
+                key={variant.color}
+                onClick={() => {
+                  setSelectedColor(variant.color);
+                  setSelectedSize(variant.sizes[0] ?? "");
+                }}
                 className={cn(
                   "h-20 w-20 min-w-20 aspect-square rounded-xl relative cursor-pointer transition",
-                  selectedItem.id === p.id
+                  selectedVariantIndex === index
                     ? "ring-2 ring-offset-2 ring-ring"
                     : "",
                 )}
               >
                 <AspectRatio ratio={1 / 1} className="relative">
                   <Image
-                    src={p.images[0]}
-                    alt={p.name}
+                    src={selectedItem.images[index] ?? selectedItem.images[0]}
+                    alt={`${selectedItem.name} ${variant.color}`}
                     fill
                     sizes="80px"
                     className="object-cover rounded-xl"
@@ -285,8 +301,8 @@ export function SpecialOfferCard() {
                 Add to Cart
               </Button>
 
-              <Button className="w-full col-span-2">
-                Buy Now
+              <Button asChild className="w-full col-span-2">
+                <Link href={checkoutHref}>Buy Now</Link>
               </Button>
             </CardFooter>
           </div>

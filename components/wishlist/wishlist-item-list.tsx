@@ -18,6 +18,8 @@ type WishlistItemProps = {
   onDecrement: () => void;
   onIncrement: () => void;
   onAddToCart: () => void;
+  label?: string;
+  colorName?: string;
 };
 
 export function WishlistItem({
@@ -27,9 +29,11 @@ export function WishlistItem({
   onDecrement,
   onIncrement,
   onAddToCart,
+  label,
+  colorName,
 }: WishlistItemProps) {
-  const label = "Designer Edition";
-  const colorName = "Sunset Golden Yellow";
+  const itemLabel = label ?? product.variants[0]?.sizes[0] ?? "Default";
+  const itemColorName = colorName ?? product.variants[0]?.color ?? "Default";
 
   const title = "Remove Item from Wishlist";
   const description =
@@ -56,8 +60,8 @@ export function WishlistItem({
     <div className="flex flex-col w-full gap-4 border-b py-4 md:flex-row md:justify-between">
       <ProductItemSummary
         product={product}
-        label={label}
-        colorName={colorName}
+        label={itemLabel}
+        colorName={itemColorName}
       />
 
       {/* Items price and quantity */}

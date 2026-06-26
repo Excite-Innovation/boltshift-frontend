@@ -22,7 +22,7 @@ export function OrdersSummaryTabs() {
       defaultValue="All"
       className="min-w-0 w-full bg-muted-foreground/5 pl-6 pt-4"
     >
-      <div className="min-w-0 w-full overflow-x-auto scroll-smooth scrollbar-hide">
+      <div className="min-w-0 w-full overflow-x-auto scroll-smooth scrollbar-hide overflow-y-hidden">
         <TabsList variant="line" className="h-8 gap-5 whitespace-nowrap">
           {stats.map((stat) => (
             <TabsTrigger

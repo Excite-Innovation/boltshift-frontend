@@ -58,7 +58,7 @@ npm run dev:pwa
 4. Open in browser:
 
 ```text
-https://localhost:3000
+http://localhost:3000
 ```
 
 ## Run with Docker (Production)

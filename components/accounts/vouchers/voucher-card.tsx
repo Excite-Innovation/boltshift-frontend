@@ -1,28 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { MoreVertical } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { VoucherActionMenu } from "@/components/accounts/vouchers/voucher-action-menu";
 
 interface VoucherCardProps {
+  id: string;
   imageSrc: string;
   imageAlt?: string;
   code: string;
   discount: string;
   minimumSpend: number;
   expiryDate: string;
+  onCopyCode?: (code: string) => void;
+  onShare?: (code: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 export function VoucherCard({
+  id,
   imageSrc,
   imageAlt = "Voucher image",
   code,
   discount,
   minimumSpend,
   expiryDate,
+  onCopyCode,
+  onShare,
+  onDelete,
 }: VoucherCardProps) {
   return (
     <Card className="w-full flex flex-row overflow-hidden rounded-xl p-0 border sm:w-84">
@@ -53,9 +59,13 @@ export function VoucherCard({
           </p>
         </div>
 
-        <Button variant="ghost" size="icon" className="absolute right-0 top-1 z-10">
-          <MoreVertical className="h-5 w-5" />
-        </Button>
+        <VoucherActionMenu
+          id={id}
+          code={code}
+          onCopyCode={onCopyCode}
+          onShare={onShare}
+          onDelete={onDelete}
+        />
       </div>
     </Card>
   );

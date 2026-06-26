@@ -1,9 +1,10 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { inter, merriweather, jetBrainsMono } from "@/lib/fonts";
+import { inter } from "@/lib/fonts";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import InstallPrompt from "@/components/install-prompt";
 import Script from "next/script";
 import "./globals.css";
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </div>
         </ThemeProvider>
         <Toaster />
+        <InstallPrompt />
       </body>
     </html>
   );
