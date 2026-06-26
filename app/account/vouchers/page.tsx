@@ -7,12 +7,20 @@ import { SectionHeadings } from "@/components/accounts/section-headings";
 import { VoucherCodeInput } from "@/components/accounts/vouchers/voucher-code-input";
 import { VoucherCard } from "@/components/accounts/vouchers/voucher-card";
 import { vouchers } from "@/components/accounts/vouchers/data";
+import type { Voucher } from "@/components/accounts/vouchers/data";
 
 export function Vouchers() {
   const [voucher, setVoucher] = useState("");
+  const [voucherList, setVoucherList] = useState<Voucher[]>(() => vouchers);
 
   const handleAdd = () => {
     console.log("Voucher:", voucher);
+  };
+
+  const handleDeleteVoucher = (voucherId: string) => {
+    setVoucherList((currentVouchers) =>
+      currentVouchers.filter(({ id }) => id !== voucherId),
+    );
   };
 
   return (
@@ -33,14 +41,16 @@ export function Vouchers() {
 
       {/* Vouchers */}
       <div className="flex flex-wrap justify-center gap-6 sm:justify-start">
-        {vouchers.map((voucher) => (
+        {voucherList.map((voucher) => (
           <VoucherCard
-            key={`${voucher.code}-${voucher.discount}`}
+            key={voucher.id}
+            id={voucher.id}
             imageSrc={voucher.image}
             code={voucher.code}
             discount={voucher.discount}
             minimumSpend={voucher.minimumSpend}
             expiryDate={voucher.expiryDate}
+            onDelete={handleDeleteVoucher}
           />
         ))}
       </div>

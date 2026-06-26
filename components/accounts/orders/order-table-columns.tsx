@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, ArrowDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { ColumnDef, type Column } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { Order } from "@/types/orders/types";
 import { OrderStatusBadge } from "@/components/accounts/orders/order-status-badge";
+import { OrderDetailsDrawer } from "@/components/accounts/orders/order-details-drawer";
 
 function SortHeader({
   column,
@@ -130,6 +131,6 @@ export const columns: ColumnDef<Order>[] = [
 
     header: "View",
 
-    cell: () => <Eye className="h-4 w-4 text-muted-foreground" />,
+    cell: ({ row }) => <OrderDetailsDrawer order={row.original} />,
   },
 ];
