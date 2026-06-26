@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BellOff, BellRing, Loader2 } from "lucide-react";
+import { BellOff, BellRing, Loader2, Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { subscribeUser, unsubscribeUser } from "@/lib/actions";
+import { sendNotification, subscribeUser, unsubscribeUser } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 type PushNotificationManagerProps = {
@@ -41,7 +41,8 @@ export function PushNotificationManager({
   className,
 }: PushNotificationManagerProps) {
   const [isSupported, setIsSupported] = useState(false);
-  const [isBusy, setIsBusy] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
+  const [isSendingTest, setIsSendingTest] = useState(false);
   const [permission, setPermission] =
     useState<NotificationPermission>("default");
   const [subscription, setSubscription] = useState<PushSubscription | null>(
@@ -103,7 +104,7 @@ export function PushNotificationManager({
   }
 
   async function enablePushNotifications() {
-    setIsBusy(true);
+    setIsToggling(true);
     setStatus("");
 
     try {
@@ -157,12 +158,12 @@ export function PushNotificationManager({
       console.error("Failed to subscribe to push:", error);
       setStatus(getPushSubscriptionErrorMessage(error));
     } finally {
-      setIsBusy(false);
+      setIsToggling(false);
     }
   }
 
   async function disablePushNotifications() {
-    setIsBusy(true);
+    setIsToggling(true);
     setStatus("");
 
     try {
@@ -178,7 +179,35 @@ export function PushNotificationManager({
       console.error("Failed to unsubscribe from push:", error);
       setStatus("Could not disable push notifications.");
     } finally {
-      setIsBusy(false);
+      setIsToggling(false);
+    }
+  }
+
+  async function handleSendTestNotification() {
+    if (!subscription) {
+      setStatus("Enable push notifications first.");
+      return;
+    }
+
+    setIsSendingTest(true);
+    setStatus("");
+
+    try {
+      const result = await sendNotification(
+        JSON.parse(JSON.stringify(subscription)),
+      );
+
+      if (!result.success) {
+        setStatus(result.error ?? "Failed to send test notification.");
+        return;
+      }
+
+      setStatus("Test notification sent.");
+    } catch (error) {
+      console.error("Failed to send test notification:", error);
+      setStatus("Could not send test notification.");
+    } finally {
+      setIsSendingTest(false);
     }
   }
 
@@ -191,6 +220,7 @@ export function PushNotificationManager({
   }
 
   const isEnabled = Boolean(subscription);
+  const isBusy = isToggling || isSendingTest;
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -225,6 +255,20 @@ export function PushNotificationManager({
             Enable notifications
           </Button>
         )}
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          onClick={handleSendTestNotification}
+          disabled={!subscription || isBusy}
+        >
+          {isSendingTest ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <Send className="size-4" />
+          )}
+          Test notification
+        </Button>
       </div>
 
       <p className="text-xs text-muted-foreground">
