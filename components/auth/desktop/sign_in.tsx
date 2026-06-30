@@ -51,7 +51,7 @@ function TestimonialCard() {
 
 function DesktopHero() {
   return (
-    <div className="relative min-h-[620px] overflow-hidden rounded-[28px] bg-slate-100 shadow-[0_18px_60px_rgba(15,23,42,0.12)] lg:min-h-[760px]">
+    <div className="relative w-full h-full overflow-hidden rounded-3xl bg-background">
       <Image
         src="/auth/sign_in_Image.jpg"
         alt="Happy shoppers planning their purchases together"
@@ -72,7 +72,7 @@ function DesktopHero() {
 function DesktopAuthPanel() {
   return (
     <div className="flex h-full flex-col justify-center px-2 py-8 sm:px-6 lg:px-10">
-      <div className="mx-auto w-full max-w-[420px]">
+      <div className="mx-auto max-w-84">
         <div className="flex flex-col items-center text-center">
           <Link href="/" className="flex items-center gap-2">
             <Logomark className="size-11" aria-hidden="true" />
@@ -116,11 +116,11 @@ function DesktopAuthPanel() {
 
 export function SignInDesktop() {
   return (
-    <main className="min-h-screen bg-[#eef0f4] p-4 sm:p-6 lg:p-8">
-      <section className="mx-auto grid min-h-[calc(100vh-2rem)] w-full max-w-7xl gap-8 rounded-[32px] bg-white p-4 shadow-[0_20px_80px_rgba(15,23,42,0.08)] sm:p-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(420px,0.85fr)] lg:p-8">
+    <main className="min-h-screen bg-background p-12">
+      <div className="mx-auto grid w-full lg:grid-cols-[minmax(0,1.15fr)_minmax(420px,0.85fr)]">
         <DesktopHero />
         <DesktopAuthPanel />
-      </section>
+      </div>
     </main>
   );
 }
