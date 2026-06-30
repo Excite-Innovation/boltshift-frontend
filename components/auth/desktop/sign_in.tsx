@@ -42,7 +42,7 @@ function DesktopHero() {
   return (
     <div className="relative flex h-full w-full overflow-hidden rounded-3xl bg-background p-20">
       <Image
-        src="/auth/sign_in_Image.jpg"
+        src="/auth/sign_in_image.jpg"
         alt="Happy shoppers planning their purchases together"
         fill
         priority
@@ -106,11 +106,11 @@ function DesktopAuthPanel() {
 
 export function SignInDesktop() {
   return (
-    <main className="h-screen bg-background p-12">
+    <div className="h-screen bg-background py-12">
       <div className="grid h-full w-full lg:grid-cols-2">
         <DesktopHero />
         <DesktopAuthPanel />
       </div>
-    </main>
+    </div>
   );
 }
