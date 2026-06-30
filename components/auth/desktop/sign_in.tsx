@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Star } from "lucide-react";
 
 import { SignInForm, signInAuthCopy } from "@/components/auth/mobile/sign_in";
+import { StartRating } from "@/components/rating/rating";
 import { Logomark } from "@/components/brand/logomark";
 import { Logotype } from "@/components/brand/logotype";
 
@@ -19,30 +20,18 @@ const testimonial = {
 
 function TestimonialCard() {
   return (
-    <div className="absolute inset-x-4 bottom-4 z-10 rounded-[26px] border border-white/15 bg-slate-950/45 p-5 text-white shadow-2xl shadow-slate-950/30 backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 lg:right-8 lg:max-w-[88%]">
-      <p className="max-w-xl text-balance text-[1.08rem] font-semibold leading-snug tracking-tight sm:text-[1.25rem]">
-        "{testimonial.quote}"
-      </p>
+    <div className="absolute inset-x-4 bottom-4 z-10 rounded-3xl border border-border/50 p-12 text-background backdrop-blur-xl grid gap-8 sm:inset-x-6 sm:bottom-6 sm:p-6 lg:right-8">
+      <p className="text-4xl font-semibold">"{testimonial.quote}"</p>
 
-      <div className="mt-5 flex items-end justify-between gap-4">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-white/90">
-            {testimonial.author}
-          </p>
-          <div className="flex items-center gap-1 text-amber-400">
-            {Array.from({ length: testimonial.rating }).map((_, index) => (
-              <Star
-                key={index}
-                className="size-4 fill-current"
-                aria-hidden="true"
-              />
-            ))}
-          </div>
+      <div className="flex items-end justify-between gap-4">
+        <div className="flex flex-col gap-2">
+          <p className="text-2xl font-medium">{testimonial.author}</p>
+          <StartRating id="client-testimony" value={5} readonly />
         </div>
 
-        <div className="text-right text-xs text-white/80">
-          <p className="font-medium text-white">{testimonial.group}</p>
-          <p>{testimonial.segment}</p>
+        <div className="text-right">
+          <p className="text-lg font-semibold">{testimonial.group}</p>
+          <p className="text-white/80 text-sm">{testimonial.segment}</p>
         </div>
       </div>
     </div>
@@ -116,8 +105,8 @@ function DesktopAuthPanel() {
 
 export function SignInDesktop() {
   return (
-    <main className="min-h-screen bg-background p-12">
-      <div className="mx-auto grid w-full lg:grid-cols-[minmax(0,1.15fr)_minmax(420px,0.85fr)]">
+    <main className="h-screen bg-background p-12">
+      <div className="grid h-full w-full lg:grid-cols-2">
         <DesktopHero />
         <DesktopAuthPanel />
       </div>
