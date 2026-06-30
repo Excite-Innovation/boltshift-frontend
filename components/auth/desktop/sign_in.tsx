@@ -20,7 +20,7 @@ const testimonial = {
 
 function TestimonialCard() {
   return (
-    <div className="absolute inset-x-4 bottom-4 z-10 rounded-3xl border border-border/50 p-12 text-background backdrop-blur-xl grid gap-8 sm:inset-x-6 sm:bottom-6 sm:p-6 lg:right-8">
+    <div className="w-full rounded-3xl border border-border/50 p-12 text-background backdrop-blur-xl grid gap-8">
       <p className="text-4xl font-semibold">"{testimonial.quote}"</p>
 
       <div className="flex items-end justify-between gap-4">
@@ -40,7 +40,7 @@ function TestimonialCard() {
 
 function DesktopHero() {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-3xl bg-background">
+    <div className="relative flex h-full w-full overflow-hidden rounded-3xl bg-background p-20">
       <Image
         src="/auth/sign_in_Image.jpg"
         alt="Happy shoppers planning their purchases together"
@@ -50,10 +50,11 @@ function DesktopHero() {
         sizes="(min-width: 1024px) 58vw, 100vw"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-[#da154d]/70 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/10 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_51.56%,#DA154D_100%)]" />
 
-      <TestimonialCard />
+      <div className="relative z-10 mt-auto w-full">
+        <TestimonialCard />
+      </div>
     </div>
   );
 }
@@ -61,43 +62,43 @@ function DesktopHero() {
 function DesktopAuthPanel() {
   return (
     <div className="flex h-full flex-col justify-center px-2 py-8 sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-84">
+      <div className="mx-auto max-w-90 grid gap-8">
         <div className="flex flex-col items-center text-center">
           <Link href="/" className="flex items-center gap-2">
             <Logomark className="size-11" aria-hidden="true" />
             <Logotype className="h-6 w-32" aria-hidden="true" />
             <span className="sr-only">Boltshift home</span>
           </Link>
+        </div>
 
-          <div className="mt-8 space-y-3">
+        <div>
+          <div className="grid gap-3 text-center">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground">
               {signInAuthCopy.title}
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-base text-muted-foreground">
               {signInAuthCopy.subtitle}
             </p>
           </div>
+
+          <div className="mt-6">
+            <SignInForm />
+          </div>
         </div>
 
-        <div className="mt-8">
-          <SignInForm />
-        </div>
-
-        <div className="mt-6 space-y-4 text-center text-sm">
-          <p className="text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="font-semibold text-primary">
-              Sign up
-            </Link>
-          </p>
-
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center text-sm font-semibold text-foreground transition-colors hover:text-primary"
-          >
-            Continue as Guest
+        <p className="text-muted-foreground text-center">
+          Don&apos;t have an account?{" "}
+          <Link href="/sign-up" className="font-semibold text-primary">
+            Sign up
           </Link>
-        </div>
+        </p>
+
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center text-base font-semibold text-muted-foreground transition-colors hover:text-primary"
+        >
+          Continue as Guest
+        </Link>
       </div>
     </div>
   );
