@@ -1,37 +1,64 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
 
 import { SignUpForm, signUpAuthCopy } from "@/components/auth/mobile/sign_up";
 import { StartRating } from "@/components/rating/rating";
 import { Logomark } from "@/components/brand/logomark";
 import { Logotype } from "@/components/brand/logotype";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+} from "@/components/ui/avatar";
 
 const testimonial = {
-  quote:
-    "Exceptional tracking and communication makes planning around our busy schedules a breeze.",
-  author: "Marion & Paul Mbingu",
-  group: "Couples",
-  segment: "Weekly Shoppers",
+  quote: "🌟 Embark on a Brand Odyssey in Our Exquisite Catalog! 🛍️",
+  stats: "from Million+ shoppers",
+  phrase: "Sign up for free, no credit card needed.",
   rating: 5,
 };
 
+function CustomersAvatar() {
+  return (
+    <AvatarGroup>
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+        <AvatarFallback>LR</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarImage
+          src="https://github.com/evilrabbit.png"
+          alt="@evilrabbit"
+        />
+        <AvatarFallback>ER</AvatarFallback>
+      </Avatar>
+    </AvatarGroup>
+  );
+}
+
 function TestimonialCard() {
   return (
-    <div className="w-full rounded-3xl border border-border/50 p-12 text-background backdrop-blur-xl grid gap-8">
+    <div className="w-full rounded-3xl border border-border/50 p-12 text-background backdrop-blur-xl grid gap-4">
       <p className="text-4xl font-semibold">"{testimonial.quote}"</p>
 
-      <div className="flex items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <p className="text-2xl font-medium">{testimonial.author}</p>
-          <StartRating id="client-testimony" value={5} readonly />
-        </div>
+      <div className="flex flex-col gap-8">
+        <p>{testimonial.phrase}</p>
+        <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex">
+              <StartRating id="client-testimony" value={5} readonly />
+              <p> 5.0</p>
+            </div>
+            <p className="text-2xl font-medium">{testimonial.stats}</p>
+          </div>
 
-        <div className="text-right">
-          <p className="text-lg font-semibold">{testimonial.group}</p>
-          <p className="text-white/80 text-sm">{testimonial.segment}</p>
+          <CustomersAvatar />
         </div>
       </div>
     </div>
@@ -41,13 +68,12 @@ function TestimonialCard() {
 function DesktopHero() {
   return (
     <div className="relative flex h-full w-full overflow-hidden rounded-3xl bg-background p-20">
-      <Image
+      <img
         src="/auth/sign_up_image.jpg"
         alt="Happy shoppers planning their purchases together"
-        fill
-        priority
-        className="object-cover object-center"
-        sizes="(min-width: 1024px) 58vw, 100vw"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+        loading="eager"
+        decoding="async"
       />
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_51.56%,#DA154D_100%)]" />
