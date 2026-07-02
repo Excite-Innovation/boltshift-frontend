@@ -33,7 +33,7 @@ export function ShippingDetailsCard() {
             id="home-address"
             label="Office/Apartment Details"
             type="text"
-            placeholder="Enter your home/office address"
+            placeholder=""
           />
 
           {/* Street Address */}
@@ -41,7 +41,7 @@ export function ShippingDetailsCard() {
             id="street-address"
             label="Street Address"
             type="text"
-            placeholder="Enter your street address"
+            placeholder=""
           />
 
           {/* Country */}
@@ -58,7 +58,7 @@ export function ShippingDetailsCard() {
             id="city-town"
             label="City/Town"
             type="text"
-            placeholder="Enter your street address"
+            placeholder=""
           />
         </form>
       </CardContent>
