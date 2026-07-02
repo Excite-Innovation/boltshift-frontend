@@ -48,14 +48,14 @@ function TestimonialCard() {
       <p className="text-4xl font-semibold">"{testimonial.quote}"</p>
 
       <div className="flex flex-col gap-8">
-        <p>{testimonial.phrase}</p>
+        <p className="text-2xl font-medium">{testimonial.phrase}</p>
         <div className="flex items-end justify-between gap-4">
           <div className="flex flex-col gap-2">
-            <div className="flex">
+            <div className="flex gap-2">
               <StartRating id="client-testimony" value={5} readonly />
-              <p> 5.0</p>
+              <p className="text-lg font-semibold">5.0</p>
             </div>
-            <p className="text-2xl font-medium">{testimonial.stats}</p>
+            <p className="text-lg font-semi-bold">{testimonial.stats}</p>
           </div>
 
           <CustomersAvatar />
