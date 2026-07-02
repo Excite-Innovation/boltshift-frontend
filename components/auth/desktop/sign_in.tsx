@@ -106,7 +106,7 @@ function DesktopAuthPanel() {
 
 export function SignInDesktop() {
   return (
-    <div className="h-screen bg-background py-12">
+    <div className="h-screen bg-background p-12">
       <div className="grid h-full w-full lg:grid-cols-2">
         <DesktopHero />
         <DesktopAuthPanel />

@@ -114,8 +114,8 @@ function DesktopAuthPanel() {
 
         <p className="text-muted-foreground text-center">
           Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="font-semibold text-primary">
-            Sign up
+          <Link href="/sign-in" className="font-semibold text-primary">
+            Sign in
           </Link>
         </p>
 
@@ -132,7 +132,7 @@ function DesktopAuthPanel() {
 
 export function SignUpDesktop() {
   return (
-    <div className="h-screen bg-background py-12">
+    <div className="h-screen bg-background p-12">
       <div className="grid h-full w-full lg:grid-cols-2">
         <DesktopHero />
         <DesktopAuthPanel />
