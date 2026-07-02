@@ -112,7 +112,7 @@ export function Footer() {
           <span className="font-semibold">Paul Mbingu</span> for Excite!
           Innovation Company. Special thanks to{" "}
           <span className="font-semibold">
-            Senje's Cuisines, Marion Ngayi, Mercy Mbingu, and Kombo Mwanake
+            Denil Anyonyi, Wonder Adams, Pauline Wanjiru, and Andrew Muatha
           </span>
           .
         </p>

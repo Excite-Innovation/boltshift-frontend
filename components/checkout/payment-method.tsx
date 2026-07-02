@@ -9,7 +9,7 @@ export function PaymentMethodCard() {
       defaultHideCardNumbers
       step={4}
       title="Payment Method"
-      showHeader={false}
+      showHeader={true}
     />
   );
 }

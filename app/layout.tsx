@@ -2,10 +2,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import InstallPrompt from "@/components/install-prompt";
 import Script from "next/script";
+import { AppShell } from "@/components/app-shell";
 import "./globals.css";
 
 type RootLayoutProps = Readonly<{
@@ -87,9 +87,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <div className="max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0">
-            <SidebarProvider>{children}</SidebarProvider>
-          </div>
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
         <Toaster />
         <InstallPrompt />

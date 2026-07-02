@@ -24,7 +24,7 @@ export function SignInForm() {
         <AuthField
           id="email-or-phone"
           label="Email or phone"
-          placeholder="Enter email or phone number"
+          placeholder=""
           required
         />
 

@@ -202,24 +202,24 @@ export function PersonalDetailsCard() {
           <FormInputField
             id="first-name"
             label="First Name"
-            placeholder="Enter first name"
+            placeholder=""
           />
           <FormInputField
             id="last-name"
             label="Last Name"
-            placeholder="Enter last name"
+            placeholder=""
           />
           <FormInputField
             id="email"
             label="Email Address"
             type="email"
-            placeholder="Enter email address"
+            placeholder=""
           />
           <div className="w-full max-w-104 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
             <Label htmlFor="phone">Phone Number</Label>
             <PhoneInput
               id="phone"
-              placeholder="Enter phone number"
+              placeholder=""
               className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
             />
           </div>

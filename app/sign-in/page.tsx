@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import { SignInDesktop } from "@/components/auth/desktop/sign_in";
 import { SignInMobile } from "@/components/auth/mobile/sign_in";
 
 export const metadata: Metadata = {
@@ -8,5 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default function SignInPage() {
-  return <SignInMobile />;
+  return (
+    <>
+      <div className="lg:hidden">
+        <SignInMobile />
+      </div>
+      <div className="hidden lg:block">
+        <SignInDesktop />
+      </div>
+    </>
+  );
 }
