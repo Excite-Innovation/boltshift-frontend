@@ -91,14 +91,14 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
         <AuthField
           id="first-name"
           label="First Name*"
-          placeholder="Bright"
+          placeholder=""
           autoComplete="given-name"
           required
         />
         <AuthField
           id="last-name"
           label="Last Name*"
-          placeholder="Kingdom"
+          placeholder=""
           autoComplete="family-name"
           required
         />
@@ -106,7 +106,7 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
           id="email"
           label="Email*"
           type="email"
-          placeholder="example@organization.company"
+          placeholder=""
           autoComplete="email"
           required
         />
@@ -114,7 +114,7 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
           id="phone-number"
           label="Phone Number*"
           type="tel"
-          placeholder="0705475879"
+          placeholder=""
           autoComplete="tel"
           required
         />
