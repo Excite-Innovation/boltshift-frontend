@@ -14,6 +14,47 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#ffffff",
     theme_color: "#EE2255",
     categories: ["shopping", "lifestyle"],
+    shortcuts: [
+      {
+        name: "Cart",
+        short_name: "Cart",
+        description: "Open your shopping cart.",
+        url: "/cart",
+        icons: [
+          {
+            src: "/icons/standard/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+        ],
+      },
+      {
+        name: "Wishlist",
+        short_name: "Wishlist",
+        description: "Open your saved items.",
+        url: "/wishlist",
+        icons: [
+          {
+            src: "/icons/standard/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+        ],
+      },
+      {
+        name: "Catalog",
+        short_name: "Catalog",
+        description: "Open the product catalog.",
+        url: "/catalog",
+        icons: [
+          {
+            src: "/icons/standard/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+        ],
+      },
+    ],
     icons: [
       {
         src: "/icons/standard/icon-72x72.png",
