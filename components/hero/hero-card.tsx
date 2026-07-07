@@ -39,7 +39,6 @@ export function HeroCard({ item }: HeroCardProps) {
           aria-label={`Save ${item.title}`}
         >
           <ViewTransition
-            key={deferredSaved ? "saved" : "unsaved"}
             name={`hero-heart-${item.title}`}
             share="auto"
             enter="auto"

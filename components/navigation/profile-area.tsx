@@ -7,7 +7,7 @@ import { ShoppingCart, Heart, Bell } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ViewTransition } from "react";
-import { useDeferredValue, useState } from "react";
+import { useDeferredValue, useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownWrapper } from "@/components/user-profile/dropdown-wrapper";
@@ -26,6 +26,7 @@ const actions = [
 const mockInitialAuthState = false;
 
 export function Profile() {
+  const transitionScope = useId();
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(mockInitialAuthState);
   const { wishlistCount, cartCount } = useStoredCollectionCounts();
@@ -55,8 +56,7 @@ export function Profile() {
 
         const content = (
           <ViewTransition
-            key={`${action.id}-${count}`}
-            name={`profile-count-${action.id}`}
+            name={`profile-count-${transitionScope}-${action.id}`}
             share="auto"
             enter="auto"
             default="none"

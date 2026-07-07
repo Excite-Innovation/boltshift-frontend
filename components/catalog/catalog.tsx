@@ -17,25 +17,9 @@ export function CatalogCard({
   products: productsProp,
 }: CatalogCardProps) {
   const products = filterCatalogProducts(productsProp ?? GetProductItems(), filters);
-  const transitionKey = JSON.stringify({
-    q: filters.q ?? "",
-    sort: filters.sort ?? "",
-    minPrice: filters.minPrice ?? "",
-    maxPrice: filters.maxPrice ?? "",
-    ratings: filters.ratings ?? "",
-    categories: filters.categories ?? "",
-    subcategories: filters.subcategories ?? "",
-    brands: filters.brands ?? "",
-    shipping: filters.shipping ?? "",
-    tags: filters.tags ?? "",
-    inStock: filters.inStock ?? "",
-    productCount: products.length,
-  });
-
   return (
     <main className="w-full flex flex-col gap-2 md:p-4">
       <ViewTransition
-        key={transitionKey}
         name="catalog-products"
         share="auto"
         enter="auto"

@@ -127,7 +127,6 @@ function CardImage({
         aria-pressed={deferredSaved}
       >
         <ViewTransition
-          key={deferredSaved ? "saved" : "unsaved"}
           name={`wishlist-heart-${product.id}`}
           share="auto"
           enter="auto"

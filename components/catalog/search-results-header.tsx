@@ -13,7 +13,6 @@ interface SearchResultsHeaderProps {
 export function SearchResultsHeader({ count, query }: SearchResultsHeaderProps) {
   return (
     <ViewTransition
-      key={`${count}-${query ?? ""}`}
       name="catalog-results-summary"
       share="auto"
       enter="auto"
