@@ -50,7 +50,7 @@ export function OrderCompletionModal({ open }: OrderCompletionModalProps) {
 
           <DialogFooter className="flex w-full justify-center py-8 px-6 sm:justify-center">
             <Button asChild size="lg" className="w-full">
-              <Link href="/catalog">
+              <Link href="/catalog" transitionTypes={["cross-fade"]}>
                 <ArrowLeft className="size-5" />
                 Continue Shopping
               </Link>

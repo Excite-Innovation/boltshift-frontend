@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ViewTransition, useDeferredValue, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, ChevronRight } from "lucide-react";
@@ -21,6 +21,7 @@ type HeroCardProps = {
 
 export function HeroCard({ item }: HeroCardProps) {
   const [saved, setSaved] = useState(false);
+  const deferredSaved = useDeferredValue(saved);
 
   return (
     <Card className="bg-card-foreground/10 mx-auto w-full py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
@@ -30,14 +31,25 @@ export function HeroCard({ item }: HeroCardProps) {
           type="button"
           variant="outline"
           size="icon-sm"
-          onClick={() => setSaved(!saved)}
+          onClick={() => setSaved((current) => !current)}
           className={cn(
             "bg-background/50 border-0 absolute right-2 top-2 z-10 rounded-full hover:cursor-pointer hover:bg-background/50",
-            saved ? "text-red-500" : "",
+            deferredSaved ? "text-red-500" : "",
           )}
           aria-label={`Save ${item.title}`}
         >
-          <Heart aria-hidden="true" className={saved ? "fill-current" : ""} />
+          <ViewTransition
+            key={deferredSaved ? "saved" : "unsaved"}
+            name={`hero-heart-${item.title}`}
+            share="auto"
+            enter="auto"
+            default="none"
+          >
+            <Heart
+              aria-hidden="true"
+              className={deferredSaved ? "fill-current" : ""}
+            />
+          </ViewTransition>
         </Button>
         <img
           src={item.image}

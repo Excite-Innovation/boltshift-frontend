@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Heart, Bell } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { ViewTransition } from "react";
+import { useDeferredValue, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownWrapper } from "@/components/user-profile/dropdown-wrapper";
@@ -28,6 +29,8 @@ export function Profile() {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(mockInitialAuthState);
   const { wishlistCount, cartCount } = useStoredCollectionCounts();
+  const deferredWishlistCount = useDeferredValue(wishlistCount);
+  const deferredCartCount = useDeferredValue(cartCount);
   const profileDropdown = isAuthenticated ? (
     <ProfileDropdown onLogout={() => setIsAuthenticated(false)} />
   ) : (
@@ -35,8 +38,8 @@ export function Profile() {
   );
 
   const countsByAction = {
-    wishlist: wishlistCount,
-    cart: cartCount,
+    wishlist: deferredWishlistCount,
+    cart: deferredCartCount,
   };
 
   const getCountLabel = (count: number) =>
@@ -51,24 +54,32 @@ export function Profile() {
           pathname === action.href || pathname.startsWith(`${action.href}/`);
 
         const content = (
-          <span className="relative inline-flex">
-            <Icon
-              className={cn(
-                "size-6 stroke-[1.5]",
-                isActive && "fill-primary text-primary",
-              )}
-              aria-hidden="true"
-            />
+          <ViewTransition
+            key={`${action.id}-${count}`}
+            name={`profile-count-${action.id}`}
+            share="auto"
+            enter="auto"
+            default="none"
+          >
+            <span className="relative inline-flex">
+              <Icon
+                className={cn(
+                  "size-6 stroke-[1.5]",
+                  isActive && "fill-primary text-primary",
+                )}
+                aria-hidden="true"
+              />
 
-            {count > 0 ? (
-              <Badge
-                variant="destructive"
-                className="absolute -right-2 -top-2 h-5 min-w-5 rounded-full px-1 text-[10px] leading-none shadow-sm"
-              >
-                {getCountLabel(count)}
-              </Badge>
-            ) : null}
-          </span>
+              {count > 0 ? (
+                <Badge
+                  variant="destructive"
+                  className="absolute -right-2 -top-2 h-5 min-w-5 rounded-full px-1 text-[10px] leading-none shadow-sm"
+                >
+                  {getCountLabel(count)}
+                </Badge>
+              ) : null}
+            </span>
+          </ViewTransition>
         );
 
         return (
@@ -80,7 +91,9 @@ export function Profile() {
             aria-label={`${action.id}${count > 0 ? `, ${count} items` : ""}`}
             asChild
           >
-            <Link href={action.href}>{content}</Link>
+            <Link href={action.href} transitionTypes={["cross-fade"]}>
+              {content}
+            </Link>
           </Button>
         );
       })}

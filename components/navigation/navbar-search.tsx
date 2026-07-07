@@ -61,7 +61,9 @@ export function NavbarSearch() {
       : "/catalog";
 
     setIsHistoryOpen(false);
-    router.push(url);
+    router.push(url, {
+      transitionTypes: ["cross-fade"],
+    });
   }
 
   function handleSubmit(e: SyntheticEvent<HTMLFormElement>) {

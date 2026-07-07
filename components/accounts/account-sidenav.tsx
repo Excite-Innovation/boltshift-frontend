@@ -104,7 +104,7 @@ export function AccountSidenav() {
                     isActive && "text-primary",
                   )}
                 >
-                  <Link href={item.href}>
+                  <Link href={item.href} transitionTypes={["cross-fade"]}>
                     <Icon
                       strokeWidth={1.5}
                       className={cn(
