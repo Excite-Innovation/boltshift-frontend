@@ -19,7 +19,11 @@ export function BackButton({
       asChild
       className="h-auto px-0 text-xs font-normal text-muted-foreground hover:bg-transparent hover:text-foreground has-[>svg]:px-0"
     >
-      <Link href={href} className="justify-start">
+      <Link
+        href={href}
+        transitionTypes={["cross-fade"]}
+        className="justify-start"
+      >
         <ArrowLeft className="size-4" />
         {content}
       </Link>

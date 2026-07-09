@@ -70,6 +70,7 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
     const query = params.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, {
       scroll: false,
+      transitionTypes: ["cross-fade"],
     });
   };
 
@@ -98,6 +99,7 @@ export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {
     const query = params.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, {
       scroll: false,
+      transitionTypes: ["cross-fade"],
     });
   };
 

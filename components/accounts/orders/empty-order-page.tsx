@@ -24,7 +24,7 @@ export function EmptyOrderPage() {
 
       <div className="w-full flex justify-center">
         <Button asChild size="lg">
-          <Link href="/catalog">
+          <Link href="/catalog" transitionTypes={["cross-fade"]}>
             <ArrowLeft /> Browse Our Catalog
           </Link>
         </Button>

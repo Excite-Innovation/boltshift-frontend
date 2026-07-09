@@ -267,7 +267,10 @@ export function OrderSummary({
           </Button>
         ) : (
           <Button size="lg" className="w-full" asChild>
-            <Link href={getCheckoutHref(items)}>
+            <Link
+              href={getCheckoutHref(items)}
+              transitionTypes={["cross-fade"]}
+            >
               {checkoutButtonLabel}
               <ArrowRight size="5" />
             </Link>
