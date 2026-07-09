@@ -14,6 +14,9 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#ffffff",
     theme_color: "#EE2255",
     categories: ["shopping", "lifestyle"],
+    launch_handler: {
+      client_mode: "navigate-existing",
+    } as any,
     shortcuts: [
       {
         name: "Cart",
