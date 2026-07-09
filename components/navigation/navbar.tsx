@@ -17,7 +17,7 @@ export function Navbar() {
       <header className="scroll-lock-centered-fixed fixed top-0 z-50 flex h-24 w-full max-w-360 -translate-x-1/2 items-center justify-between gap-4 rounded-none bg-background px-4">
         <div className="flex h-12 shrink-0 items-center gap-4">
           <MegaMenu />
-          <Link href="/">
+          <Link href="/" transitionTypes={["cross-fade"]}>
             <Logo />
           </Link>
         </div>
@@ -54,7 +54,7 @@ export function NavbarMobile({ showFilterButton }: NavbarMobileProps) {
         <div className="h-10 flex flex-row justify-between">
           <div className="flex items-center gap-2">
             <MegaMenu />
-            <Link href="/">
+            <Link href="/" transitionTypes={["cross-fade"]}>
               <Logo />
             </Link>
           </div>

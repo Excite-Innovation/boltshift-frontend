@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { ViewTransition, useDeferredValue, useEffect, useRef, useState } from "react";
 import type { ComponentProps, MouseEvent } from "react";
 import Image from "next/image";
 import { showSonnerMessage } from "@/components/alert/alert";
@@ -75,6 +75,7 @@ function CardImage({
   sizes?: string;
 }) {
   const [saved, setSaved] = useState(false);
+  const deferredSaved = useDeferredValue(saved);
   const lastSaveClickRef = useRef(0);
   const productImage = product.images[0];
 
@@ -118,14 +119,24 @@ function CardImage({
         className={cn(
           "bg-background/50 border-0 h-8 w-8 absolute top-2 right-2 rounded-full hover:cursor-pointer hover:bg-background/50 hover:text-primary",
           savePosition,
-          saved ? "text-primary" : "",
+          deferredSaved ? "text-primary" : "",
         )}
-        aria-label={`${saved ? "Remove" : "Save"} ${product.name} ${
-          saved ? "from" : "to"
+        aria-label={`${deferredSaved ? "Remove" : "Save"} ${product.name} ${
+          deferredSaved ? "from" : "to"
         } wishlist`}
-        aria-pressed={saved}
+        aria-pressed={deferredSaved}
       >
-        <Heart aria-hidden="true" className={saved ? "fill-current" : ""} />
+        <ViewTransition
+          name={`wishlist-heart-${product.id}`}
+          share="auto"
+          enter="auto"
+          default="none"
+        >
+          <Heart
+            aria-hidden="true"
+            className={deferredSaved ? "fill-current" : ""}
+          />
+        </ViewTransition>
       </Button>
     </div>
   );
