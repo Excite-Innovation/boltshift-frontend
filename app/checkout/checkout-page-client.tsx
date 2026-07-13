@@ -17,6 +17,7 @@ import { PaymentMethodCard } from "@/components/checkout/payment-method";
 import { OrderCompletionModal } from "@/components/checkout/order-completion-modal";
 import { DashedSeparator } from "@/components/separator/dashed-separator";
 import { usePersistentCollection } from "@/hooks/use-persistent-collection";
+import { CheckoutSummarySkeleton } from "@/components/collection-loading-skeleton";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -46,12 +47,15 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     () => parseCheckoutItems(itemsParam),
     [itemsParam],
   );
-  const { value: checkoutCart, setValue: setCheckoutCart } =
-    usePersistentCollection<CartEntry[]>({
-      storageKey: "boltshift:cart",
-      fallback: initialCheckoutCart.length > 0 ? initialCheckoutCart : [],
-      hydrateFromStorage: !itemsParam,
-    });
+  const {
+    value: checkoutCart,
+    setValue: setCheckoutCart,
+    isHydrated,
+  } = usePersistentCollection<CartEntry[]>({
+    storageKey: "boltshift:cart",
+    fallback: initialCheckoutCart.length > 0 ? initialCheckoutCart : [],
+    hydrateFromStorage: !itemsParam,
+  });
   const [orderCompleteOpen, setOrderCompleteOpen] = useState(false);
 
   const dispatchCheckoutCart = (
@@ -99,43 +103,47 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <PaymentMethodCard />
           </div>
           <div className="flex justify-center lg:shrink-0">
-            <OrderSummary
-              items={checkoutItems}
-              onOrderNow={() => {
-                dispatchCheckoutCart({ type: "clear" });
-                setOrderCompleteOpen(true);
-              }}
-            >
-              {checkoutItems.length > 0 ? (
-                <div className="flex flex-col">
-                  {checkoutItems.map(({ product, quantity }) => (
-                    <CheckoutProductCard
-                      key={product.id}
-                      product={product}
-                      quantity={quantity}
-                      onRemove={() =>
-                        dispatchCheckoutCart({
-                          type: "remove",
-                          productId: product.id,
-                        })
-                      }
-                      onDecrement={() =>
-                        dispatchCheckoutCart({
-                          type: "decrement",
-                          productId: product.id,
-                        })
-                      }
-                      onIncrement={() =>
-                        dispatchCheckoutCart({
-                          type: "increment",
-                          productId: product.id,
-                        })
-                      }
-                    />
-                  ))}
-                </div>
-              ) : null}
-            </OrderSummary>
+            {!isHydrated ? (
+              <CheckoutSummarySkeleton />
+            ) : (
+              <OrderSummary
+                items={checkoutItems}
+                onOrderNow={() => {
+                  dispatchCheckoutCart({ type: "clear" });
+                  setOrderCompleteOpen(true);
+                }}
+              >
+                {checkoutItems.length > 0 ? (
+                  <div className="flex flex-col">
+                    {checkoutItems.map(({ product, quantity }) => (
+                      <CheckoutProductCard
+                        key={product.id}
+                        product={product}
+                        quantity={quantity}
+                        onRemove={() =>
+                          dispatchCheckoutCart({
+                            type: "remove",
+                            productId: product.id,
+                          })
+                        }
+                        onDecrement={() =>
+                          dispatchCheckoutCart({
+                            type: "decrement",
+                            productId: product.id,
+                          })
+                        }
+                        onIncrement={() =>
+                          dispatchCheckoutCart({
+                            type: "increment",
+                            productId: product.id,
+                          })
+                        }
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </OrderSummary>
+            )}
           </div>
         </div>
       </main>

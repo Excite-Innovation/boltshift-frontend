@@ -23,7 +23,7 @@ export function usePersistentCollection<T>({
 }: UsePersistentCollectionOptions<T>) {
   const fallbackRef = useRef(fallback);
   const [value, setValue] = useState<T>(fallback);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(!hydrateFromStorage);
 
   useEffect(() => {
     if (!hydrateFromStorage) {

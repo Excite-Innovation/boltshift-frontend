@@ -24,10 +24,15 @@ import {
   type SonnerMessageProps,
 } from "@/components/alert/alert";
 import { usePersistentCollection } from "@/hooks/use-persistent-collection";
+import { WishlistLoadingSkeleton } from "@/components/collection-loading-skeleton";
 
 export function WishlistPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const { value: wishlist, setValue: setWishlist } = usePersistentCollection<WishlistEntry[]>({
+  const {
+    value: wishlist,
+    setValue: setWishlist,
+    isHydrated,
+  } = usePersistentCollection<WishlistEntry[]>({
     storageKey: "boltshift:wishlist",
     fallback: [],
   });
@@ -88,7 +93,9 @@ export function WishlistPageClient() {
         />
 
         <div className="flex flex-col gap-10 pb-12">
-          {wishlistItems.length > 0 ? (
+          {!isHydrated ? (
+            <WishlistLoadingSkeleton />
+          ) : wishlistItems.length > 0 ? (
             <div className="grid gap-2">
               <div className="sticky top-24 z-20 hidden border-b border-border/50 bg-background py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                 <span>Item</span>
