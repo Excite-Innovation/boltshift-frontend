@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useMemo } from "react";
 
 import { BackButton } from "@/components/back/back";
 import { CartItem } from "@/components/cart/cart-item-list";
@@ -12,20 +12,21 @@ import {
   cartReducer,
   getCartItems,
   readStoredCart,
-  writeStoredCart,
 } from "@/lib/wishlist";
 import { GetProductItems } from "@/lib/product-items";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
+import { usePersistentCollection } from "@/hooks/use-persistent-collection";
 
 export function CartPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const [cart, dispatchCart] = useReducer(cartReducer, undefined, () =>
-    readStoredCart(),
-  );
+  const { value: cart, setValue: setCart } = usePersistentCollection({
+    storageKey: "boltshift:cart",
+    fallback: readStoredCart(),
+  });
 
-  useEffect(() => {
-    writeStoredCart(cart);
-  }, [cart]);
+  const dispatchCart = (action: Parameters<typeof cartReducer>[1]) => {
+    setCart((currentCart) => cartReducer(currentCart, action));
+  };
 
   const cartItems = getCartItems(cart, products);
 

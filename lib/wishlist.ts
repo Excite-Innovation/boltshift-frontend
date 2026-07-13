@@ -1,4 +1,8 @@
 import { Product } from "@/types/type";
+import {
+  persistCollectionRecord,
+  readCollectionRecordFromStorage,
+} from "@/lib/offline-storage";
 
 export type WishlistEntry = {
   productId: number;
@@ -81,39 +85,21 @@ export function addWishlistItem(
 }
 
 export function readStoredWishlist(fallback = initialWishlist) {
-  if (typeof window === "undefined") {
-    return fallback;
-  }
+  const storedWishlist = readCollectionRecordFromStorage(
+    WISHLIST_STORAGE_KEY,
+    fallback,
+  ).value;
 
-  try {
-    // Use the seeded wishlist until the shopper has saved their own items.
-    const storedWishlist = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
-
-    if (!storedWishlist) {
-      return fallback;
-    }
-
-    const parsedWishlist: unknown = JSON.parse(storedWishlist);
-
-    if (!Array.isArray(parsedWishlist)) {
-      return fallback;
-    }
-
-    return parsedWishlist.filter(isWishlistEntry).map((item) => ({
-      productId: item.productId,
-      quantity: Math.max(1, item.quantity),
-    }));
-  } catch {
-    return fallback;
-  }
+  return Array.isArray(storedWishlist)
+    ? storedWishlist.filter(isWishlistEntry).map((item) => ({
+        productId: item.productId,
+        quantity: Math.max(1, item.quantity),
+      }))
+    : fallback;
 }
 
 export function writeStoredWishlist(wishlist: WishlistEntry[]) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+  persistCollectionRecord(WISHLIST_STORAGE_KEY, wishlist);
   notifyStoredCollectionsChanged();
 }
 
@@ -189,38 +175,19 @@ export function wishlistReducer(
 }
 
 export function readStoredCart(fallback = initialCart) {
-  if (typeof window === "undefined") {
-    return fallback;
-  }
+  const storedCart = readCollectionRecordFromStorage(CART_STORAGE_KEY, fallback)
+    .value;
 
-  try {
-    const storedCart = window.localStorage.getItem(CART_STORAGE_KEY);
-
-    if (!storedCart) {
-      return fallback;
-    }
-
-    const parsedCart: unknown = JSON.parse(storedCart);
-
-    if (!Array.isArray(parsedCart)) {
-      return fallback;
-    }
-
-    return parsedCart.filter(isWishlistEntry).map((item) => ({
-      productId: item.productId,
-      quantity: Math.max(1, item.quantity),
-    }));
-  } catch {
-    return fallback;
-  }
+  return Array.isArray(storedCart)
+    ? storedCart.filter(isWishlistEntry).map((item) => ({
+        productId: item.productId,
+        quantity: Math.max(1, item.quantity),
+      }))
+    : fallback;
 }
 
 export function writeStoredCart(cart: CartEntry[]) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  persistCollectionRecord(CART_STORAGE_KEY, cart);
   notifyStoredCollectionsChanged();
 }
 

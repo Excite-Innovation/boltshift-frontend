@@ -4,13 +4,14 @@ import { ViewTransition } from "react";
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
+import { OfflineStatusBanner } from "@/components/offline-status-banner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 type AppShellProps = Readonly<{
   children: ReactNode;
 }>;
 
-const AUTH_ROUTES = new Set(["/sign-in", "/sign-up"]);
+const AUTH_ROUTES = new Set(["/sign-in", "/sign-up", "/offline"]);
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
@@ -24,6 +25,7 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0">
       <SidebarProvider>
+        <OfflineStatusBanner />
         <ViewTransition
           key={transitionKey}
           name="app-page"

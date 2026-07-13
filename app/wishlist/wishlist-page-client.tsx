@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useMemo } from "react";
 import { ShoppingCart } from "lucide-react";
 
 import { Footer } from "@/components/footer/footer-section";
@@ -17,25 +17,24 @@ import {
   readStoredCart,
   readStoredWishlist,
   writeStoredCart,
-  writeStoredWishlist,
   wishlistReducer,
 } from "@/lib/wishlist";
 import {
   showSonnerMessage,
   type SonnerMessageProps,
 } from "@/components/alert/alert";
+import { usePersistentCollection } from "@/hooks/use-persistent-collection";
 
 export function WishlistPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const [wishlist, dispatchWishlist] = useReducer(
-    wishlistReducer,
-    undefined,
-    () => readStoredWishlist(),
-  );
+  const { value: wishlist, setValue: setWishlist } = usePersistentCollection({
+    storageKey: "boltshift:wishlist",
+    fallback: readStoredWishlist(),
+  });
 
-  useEffect(() => {
-    writeStoredWishlist(wishlist);
-  }, [wishlist]);
+  const dispatchWishlist = (action: Parameters<typeof wishlistReducer>[1]) => {
+    setWishlist((currentWishlist) => wishlistReducer(currentWishlist, action));
+  };
 
   const wishlistItems = getWishlistItems(wishlist, products);
 
@@ -62,9 +61,7 @@ export function WishlistPageClient() {
   const handleConfirm = () => {
     addAllToCart();
 
-    if (notification) {
-      showSonnerMessage(notification);
-    }
+    showSonnerMessage(notification);
   };
 
   return (
