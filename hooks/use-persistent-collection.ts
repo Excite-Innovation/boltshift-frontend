@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 import {
   persistCollectionRecord,
-  readCollectionRecordFromStorage,
   readLatestCollectionRecord,
 } from "@/lib/offline-storage";
 
@@ -23,12 +22,7 @@ export function usePersistentCollection<T>({
   hydrateFromStorage = true,
 }: UsePersistentCollectionOptions<T>) {
   const fallbackRef = useRef(fallback);
-  const [value, setValue] = useState<T>(() => {
-    return readCollectionRecordFromStorage(
-      storageKey,
-      fallbackRef.current,
-    ).value;
-  });
+  const [value, setValue] = useState<T>(fallback);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {

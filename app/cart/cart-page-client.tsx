@@ -11,7 +11,7 @@ import { SectionTitle } from "@/components/section-title";
 import {
   cartReducer,
   getCartItems,
-  readStoredCart,
+  type CartEntry,
 } from "@/lib/wishlist";
 import { GetProductItems } from "@/lib/product-items";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
@@ -19,9 +19,9 @@ import { usePersistentCollection } from "@/hooks/use-persistent-collection";
 
 export function CartPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const { value: cart, setValue: setCart } = usePersistentCollection({
+  const { value: cart, setValue: setCart } = usePersistentCollection<CartEntry[]>({
     storageKey: "boltshift:cart",
-    fallback: readStoredCart(),
+    fallback: [],
   });
 
   const dispatchCart = (action: Parameters<typeof cartReducer>[1]) => {

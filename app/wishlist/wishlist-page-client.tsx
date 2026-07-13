@@ -15,8 +15,8 @@ import {
   addWishlistToCart,
   getWishlistItems,
   readStoredCart,
-  readStoredWishlist,
   writeStoredCart,
+  type WishlistEntry,
   wishlistReducer,
 } from "@/lib/wishlist";
 import {
@@ -27,9 +27,9 @@ import { usePersistentCollection } from "@/hooks/use-persistent-collection";
 
 export function WishlistPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const { value: wishlist, setValue: setWishlist } = usePersistentCollection({
+  const { value: wishlist, setValue: setWishlist } = usePersistentCollection<WishlistEntry[]>({
     storageKey: "boltshift:wishlist",
-    fallback: readStoredWishlist(),
+    fallback: [],
   });
 
   const dispatchWishlist = (action: Parameters<typeof wishlistReducer>[1]) => {

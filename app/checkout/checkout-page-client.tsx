@@ -8,7 +8,7 @@ import { SectionTitle } from "@/components/section-title";
 import { BackButton } from "@/components/back/back";
 import { CheckoutProductCard } from "@/components/checkout/checkout-product-spec";
 import { GetProductItems } from "@/lib/product-items";
-import { cartReducer, getCartItems, readStoredCart } from "@/lib/wishlist";
+import { cartReducer, getCartItems, type CartEntry } from "@/lib/wishlist";
 import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
@@ -47,10 +47,9 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     [itemsParam],
   );
   const { value: checkoutCart, setValue: setCheckoutCart } =
-    usePersistentCollection({
+    usePersistentCollection<CartEntry[]>({
       storageKey: "boltshift:cart",
-      fallback:
-        initialCheckoutCart.length > 0 ? initialCheckoutCart : readStoredCart(),
+      fallback: initialCheckoutCart.length > 0 ? initialCheckoutCart : [],
       hydrateFromStorage: !itemsParam,
     });
   const [orderCompleteOpen, setOrderCompleteOpen] = useState(false);
