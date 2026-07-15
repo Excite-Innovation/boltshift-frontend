@@ -6,7 +6,6 @@ import { ArrowLeft } from "lucide-react";
 import { Footer } from "@/components/footer/footer-section";
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Button } from "@/components/ui/button";
-import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const errorPageMetadata: Metadata = {
   title: "Error",
@@ -140,9 +139,7 @@ export function ErrorPageView({
       </div>
 
       <div className="block md:hidden">
-        <SidebarProvider>
           <NavbarMobile showFilterButton={false} />
-        </SidebarProvider>
       </div>
 
       <ErrorPageBody variant={variant} embedded />
