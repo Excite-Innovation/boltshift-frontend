@@ -96,8 +96,8 @@ function ErrorPageBody({
             </p>
           </div>
 
-          <div>
-            <Button asChild size="lg">
+          <div className="w-full sm:w-auto">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href={copy.href}>
                 <ArrowLeft className="size-4" />
                 {copy.cta}
