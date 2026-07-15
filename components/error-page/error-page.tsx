@@ -3,7 +3,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 
+import { Footer } from "@/components/footer/footer-section";
+import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Button } from "@/components/ui/button";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const errorPageMetadata: Metadata = {
   title: "Error",
@@ -27,7 +30,7 @@ export const errorCopy: Record<ErrorVariant, ErrorPageCopy> = {
     description:
       "You might not have permission to view this page. Try heading back to the homepage and continue browsing from there.",
     cta: "Go to Homepage",
-    href: "/"
+    href: "/",
   },
   "404": {
     eyebrow: "404 Error",
@@ -35,7 +38,7 @@ export const errorCopy: Record<ErrorVariant, ErrorPageCopy> = {
     description:
       "Looks like the page is playing hide and seek. While we find it, why not explore our treasure trove of goodies?",
     cta: "Browse Our Catalog",
-    href: "/catalog"
+    href: "/catalog",
   },
   "500": {
     eyebrow: "500 Error",
@@ -43,7 +46,7 @@ export const errorCopy: Record<ErrorVariant, ErrorPageCopy> = {
     description:
       "Our team is already on it. In the meantime, you can head back home and keep shopping from there.",
     cta: "Return Home",
-    href: "/"
+    href: "/",
   },
   offline: {
     eyebrow: "Offline",
@@ -51,35 +54,48 @@ export const errorCopy: Record<ErrorVariant, ErrorPageCopy> = {
     description:
       "Once your connection is back, we'll reload the page automatically. Until then, you can continue from the homepage.",
     cta: "Go to Homepage",
-    href: "/"
+    href: "/",
   },
+};
+
+type ErrorPageBodyProps = {
+  variant?: ErrorVariant;
+  embedded?: boolean;
 };
 
 type ErrorPageViewProps = {
   variant?: ErrorVariant;
+  showChrome?: boolean;
 };
 
-export function ErrorPageView({ variant = "404" }: ErrorPageViewProps) {
+function ErrorPageBody({
+  variant = "404",
+  embedded = false,
+}: ErrorPageBodyProps) {
   const copy = errorCopy[variant];
 
   return (
-    <main className="relative flex min-h-screen items-center overflow-hidden  px-4 py-10 sm:px-6 lg:px-10">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0))]" />
+    <main
+      className={`relative flex items-center overflow-hidden lg:py-8 ${
+        embedded ? "flex-1" : "min-h-screen"
+      }`}
+    >
+      <section className="relative mx-auto flex flex-col w-full items-center gap-12 lg:flex-row lg:gap-0">
+        <div className="order-1 flex w-full flex-col gap-8 lg:order-none lg:max-w-none">
+          <div className="grid gap-4">
+            <div className="grid gap-3">
+              <p className="text-base font-semibold text-primary">
+                {copy.eyebrow}
+              </p>
+              <h1 className="text-4xl font-semibold text-primary sm:text-5xl">
+                {copy.title}
+              </h1>
+            </div>
 
-      <section className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="order-1 flex w-full max-w-[28rem] flex-col gap-8 lg:order-none lg:max-w-none">
-          <div className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-              {copy.eyebrow}
+            <p className="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
+              {copy.description}
             </p>
-            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              {copy.title}
-            </h1>
           </div>
-
-          <p className="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
-            {copy.description}
-          </p>
 
           <div>
             <Button asChild size="lg">
@@ -92,19 +108,46 @@ export function ErrorPageView({ variant = "404" }: ErrorPageViewProps) {
         </div>
 
         <div className="order-2 flex w-full items-center justify-center lg:order-none">
-          <div className="relative w-full max-w-[28rem]">
+          <div className="relative w-117">
             <Image
               src="/error-page/error_page_img.png"
               alt="A shopper sitting on a bean bag with floating question marks"
               width={469}
               height={482}
               priority
-              className="h-auto w-full drop-shadow-[0_24px_48px_rgba(17,24,39,0.16)]"
+              className="h-auto w-full"
               sizes="(min-width: 1024px) 28rem, 100vw"
             />
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+export function ErrorPageView({
+  variant = "404",
+  showChrome = true,
+}: ErrorPageViewProps) {
+  if (!showChrome) {
+    return <ErrorPageBody variant={variant} />;
+  }
+
+  return (
+    <div className="flex min-h-screen flex-col overflow-hidden">
+      <div className="hidden md:block">
+        <Navbar />
+      </div>
+
+      <div className="block md:hidden">
+        <SidebarProvider>
+          <NavbarMobile showFilterButton={false} />
+        </SidebarProvider>
+      </div>
+
+      <ErrorPageBody variant={variant} embedded />
+
+      <Footer />
+    </div>
   );
 }
