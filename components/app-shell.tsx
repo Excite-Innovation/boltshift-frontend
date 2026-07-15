@@ -23,9 +23,9 @@ export function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="relative max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0">
-      <OfflineStatusBanner />
+    <div className="max-w-360 m-auto p-4 md:px-4 md:pb-4 md:pt-0">
       <SidebarProvider>
+        <OfflineStatusBanner />
         <ViewTransition
           key={transitionKey}
           name="app-page"
