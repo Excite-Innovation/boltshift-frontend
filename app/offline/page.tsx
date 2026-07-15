@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function OfflinePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(238,34,85,0.12),_transparent_45%),linear-gradient(180deg,_#fff,_#fff6f8)] px-4 py-10">
+    <main className="flex min-h-screen items-center justify-center px-4 py-10">
       <section className="w-full max-w-xl rounded-3xl border border-border/70 bg-background/95 p-8 shadow-2xl backdrop-blur">
         <div className="flex items-start gap-4">
           <div className="rounded-2xl bg-amber-100 p-3 text-amber-700">

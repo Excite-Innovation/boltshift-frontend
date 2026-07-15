@@ -63,7 +63,7 @@ export function OfflineStatusBanner() {
   return (
     <div
       className={cn(
-        "mb-4 rounded-2xl border px-4 py-3 shadow-sm backdrop-blur",
+        "pointer-events-none absolute left-1/2 top-3 z-[60] w-[min(18rem,calc(100%-1.5rem))] -translate-x-1/2 rounded-2xl border px-4 py-3 shadow-sm backdrop-blur",
         isOffline
           ? "border-amber-300 bg-amber-50 text-amber-950"
           : "border-emerald-300 bg-emerald-50 text-emerald-950",
