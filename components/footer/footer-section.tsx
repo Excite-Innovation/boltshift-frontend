@@ -1,7 +1,6 @@
 "use client";
 
 import { Logo } from "@/components/brand/logo";
-import { useTheme } from "next-themes";
 import {
   FaDribbble,
   FaInstagram,
@@ -17,6 +16,7 @@ import {
 } from "@/components/app-store/app-store-buttons";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useTheme } from "@/components/theme-provider";
 
 const links = [
   "Overview",

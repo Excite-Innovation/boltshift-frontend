@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Navbar, NavbarMobile } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer/footer-section";
@@ -8,7 +8,7 @@ import { SectionTitle } from "@/components/section-title";
 import { BackButton } from "@/components/back/back";
 import { CheckoutProductCard } from "@/components/checkout/checkout-product-spec";
 import { GetProductItems } from "@/lib/product-items";
-import { cartReducer, getCartItems, writeStoredCart } from "@/lib/wishlist";
+import { cartReducer, getCartItems, type CartEntry } from "@/lib/wishlist";
 import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
 import { ShippingMethodCard } from "@/components/checkout/shipping-method-card";
@@ -16,6 +16,8 @@ import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
 import { PaymentMethodCard } from "@/components/checkout/payment-method";
 import { OrderCompletionModal } from "@/components/checkout/order-completion-modal";
 import { DashedSeparator } from "@/components/separator/dashed-separator";
+import { usePersistentCollection } from "@/hooks/use-persistent-collection";
+import { CheckoutSummarySkeleton } from "@/components/collection-loading-skeleton";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
@@ -41,16 +43,26 @@ function parseCheckoutItems(itemsParam: string | null | undefined) {
 
 export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
   const products = useMemo(() => GetProductItems(), []);
-  const [checkoutCart, dispatchCheckoutCart] = useReducer(
-    cartReducer,
-    itemsParam,
-    parseCheckoutItems,
+  const initialCheckoutCart = useMemo(
+    () => parseCheckoutItems(itemsParam),
+    [itemsParam],
   );
+  const {
+    value: checkoutCart,
+    setValue: setCheckoutCart,
+    isHydrated,
+  } = usePersistentCollection<CartEntry[]>({
+    storageKey: "boltshift:cart",
+    fallback: initialCheckoutCart.length > 0 ? initialCheckoutCart : [],
+    hydrateFromStorage: !itemsParam,
+  });
   const [orderCompleteOpen, setOrderCompleteOpen] = useState(false);
 
-  useEffect(() => {
-    writeStoredCart(checkoutCart);
-  }, [checkoutCart]);
+  const dispatchCheckoutCart = (
+    action: Parameters<typeof cartReducer>[1],
+  ) => {
+    setCheckoutCart((currentCart) => cartReducer(currentCart, action));
+  };
 
   const checkoutItems = useMemo(
     () => getCartItems(checkoutCart, products),
@@ -91,43 +103,47 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <PaymentMethodCard />
           </div>
           <div className="flex justify-center lg:shrink-0">
-            <OrderSummary
-              items={checkoutItems}
-              onOrderNow={() => {
-                dispatchCheckoutCart({ type: "clear" });
-                setOrderCompleteOpen(true);
-              }}
-            >
-              {checkoutItems.length > 0 ? (
-                <div className="flex flex-col">
-                  {checkoutItems.map(({ product, quantity }) => (
-                    <CheckoutProductCard
-                      key={product.id}
-                      product={product}
-                      quantity={quantity}
-                      onRemove={() =>
-                        dispatchCheckoutCart({
-                          type: "remove",
-                          productId: product.id,
-                        })
-                      }
-                      onDecrement={() =>
-                        dispatchCheckoutCart({
-                          type: "decrement",
-                          productId: product.id,
-                        })
-                      }
-                      onIncrement={() =>
-                        dispatchCheckoutCart({
-                          type: "increment",
-                          productId: product.id,
-                        })
-                      }
-                    />
-                  ))}
-                </div>
-              ) : null}
-            </OrderSummary>
+            {!isHydrated ? (
+              <CheckoutSummarySkeleton />
+            ) : (
+              <OrderSummary
+                items={checkoutItems}
+                onOrderNow={() => {
+                  dispatchCheckoutCart({ type: "clear" });
+                  setOrderCompleteOpen(true);
+                }}
+              >
+                {checkoutItems.length > 0 ? (
+                  <div className="flex flex-col">
+                    {checkoutItems.map(({ product, quantity }) => (
+                      <CheckoutProductCard
+                        key={product.id}
+                        product={product}
+                        quantity={quantity}
+                        onRemove={() =>
+                          dispatchCheckoutCart({
+                            type: "remove",
+                            productId: product.id,
+                          })
+                        }
+                        onDecrement={() =>
+                          dispatchCheckoutCart({
+                            type: "decrement",
+                            productId: product.id,
+                          })
+                        }
+                        onIncrement={() =>
+                          dispatchCheckoutCart({
+                            type: "increment",
+                            productId: product.id,
+                          })
+                        }
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </OrderSummary>
+            )}
           </div>
         </div>
       </main>

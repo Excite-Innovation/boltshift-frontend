@@ -10,6 +10,8 @@ For the full implementation guide, see:
 
 - App installation through the browser install prompt.
 - A custom service worker for caching and offline navigation.
+- Offline cart and wishlist persistence backed by IndexedDB, with localStorage as a fallback.
+- An offline recovery page plus an app-shell status banner for connection loss.
 - Push notification opt-in from the notifications drawer.
 - Local development support with an HTTP-first workflow and optional HTTPS mode.
 

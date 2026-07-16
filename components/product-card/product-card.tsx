@@ -1,6 +1,6 @@
 "use client";
 
-import { ViewTransition, useDeferredValue, useEffect, useRef, useState } from "react";
+import { ViewTransition, useDeferredValue, useEffect, useId, useRef, useState } from "react";
 import type { ComponentProps, MouseEvent } from "react";
 import Image from "next/image";
 import { showSonnerMessage } from "@/components/alert/alert";
@@ -76,6 +76,7 @@ function CardImage({
 }) {
   const [saved, setSaved] = useState(false);
   const deferredSaved = useDeferredValue(saved);
+  const transitionId = useId();
   const lastSaveClickRef = useRef(0);
   const productImage = product.images[0];
 
@@ -127,7 +128,7 @@ function CardImage({
         aria-pressed={deferredSaved}
       >
         <ViewTransition
-          name={`wishlist-heart-${product.id}`}
+          name={`wishlist-heart-${product.id}-${transitionId}`}
           share="auto"
           enter="auto"
           default="none"
