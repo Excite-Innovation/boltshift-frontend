@@ -66,10 +66,12 @@ export function PushNotificationManager({
 
     async function syncSubscription() {
       try {
-        const registration = await navigator.serviceWorker.register("/sw.js", {
-          scope: "/",
-          updateViaCache: "none",
-        });
+        const registration =
+          (await navigator.serviceWorker.getRegistration("/")) ??
+          (await navigator.serviceWorker.register("/sw.js", {
+            scope: "/",
+            updateViaCache: "none",
+          }));
 
         const currentSubscription =
           await registration.pushManager.getSubscription();
@@ -79,8 +81,8 @@ export function PushNotificationManager({
         }
       } catch (error) {
         if (isMounted) {
-          setStatus("Service worker registration failed.");
-          console.error("Service worker registration failed:", error);
+          setStatus("Service worker could not be prepared for push.");
+          console.error("Service worker subscription sync failed:", error);
         }
       }
     }

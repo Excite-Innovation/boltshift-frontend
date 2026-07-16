@@ -1,5 +1,6 @@
 import { SectionHeadings } from "@/components/accounts/section-headings";
-import { PaymentMethodCard } from "@/components/checkout/payment-method";
+import { PaymentCard } from "@/components/payment-card/payment-card";
+import { paymentCardExamples } from "@/components/payment-card/lib/payment-card-examples";
 
 export function Payment() {
   return (
@@ -10,7 +11,14 @@ export function Payment() {
         alt="dollar shield icon"
       />
 
-      <PaymentMethodCard />
+      <PaymentCard
+        cards={paymentCardExamples}
+        defaultSelectedCardId={paymentCardExamples[1]?.id}
+        defaultHideCardNumbers
+        step={4}
+        title="Payment Method"
+        showHeader={false}
+      />
     </div>
   );
 }

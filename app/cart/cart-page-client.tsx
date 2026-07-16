@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useMemo } from "react";
 
 import { BackButton } from "@/components/back/back";
 import { CartItem } from "@/components/cart/cart-item-list";
@@ -11,21 +11,27 @@ import { SectionTitle } from "@/components/section-title";
 import {
   cartReducer,
   getCartItems,
-  readStoredCart,
-  writeStoredCart,
+  type CartEntry,
 } from "@/lib/wishlist";
 import { GetProductItems } from "@/lib/product-items";
 import { OrderSummary } from "@/components/cart-quantity/cart-order-summary";
+import { usePersistentCollection } from "@/hooks/use-persistent-collection";
+import { CartLoadingSkeleton } from "@/components/collection-loading-skeleton";
 
 export function CartPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const [cart, dispatchCart] = useReducer(cartReducer, undefined, () =>
-    readStoredCart(),
-  );
+  const {
+    value: cart,
+    setValue: setCart,
+    isHydrated,
+  } = usePersistentCollection<CartEntry[]>({
+    storageKey: "boltshift:cart",
+    fallback: [],
+  });
 
-  useEffect(() => {
-    writeStoredCart(cart);
-  }, [cart]);
+  const dispatchCart = (action: Parameters<typeof cartReducer>[1]) => {
+    setCart((currentCart) => cartReducer(currentCart, action));
+  };
 
   const cartItems = getCartItems(cart, products);
 
@@ -53,7 +59,9 @@ export function CartPageClient() {
         />
 
         <div className="flex flex-col gap-10 pb-12">
-          {cartItems.length > 0 ? (
+          {!isHydrated ? (
+            <CartLoadingSkeleton />
+          ) : cartItems.length > 0 ? (
             <div className="flex w-full flex-wrap items-start justify-center gap-10">
               <div className="grid w-full min-w-0 flex-[1_1_42rem] gap-2">
                 <div className="sticky top-24 z-20 hidden border-b border-border/50 bg-background py-1 text-lg font-bold md:flex md:items-center md:justify-between">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useMemo } from "react";
 import { ShoppingCart } from "lucide-react";
 
 import { Footer } from "@/components/footer/footer-section";
@@ -15,27 +15,31 @@ import {
   addWishlistToCart,
   getWishlistItems,
   readStoredCart,
-  readStoredWishlist,
   writeStoredCart,
-  writeStoredWishlist,
+  type WishlistEntry,
   wishlistReducer,
 } from "@/lib/wishlist";
 import {
   showSonnerMessage,
   type SonnerMessageProps,
 } from "@/components/alert/alert";
+import { usePersistentCollection } from "@/hooks/use-persistent-collection";
+import { WishlistLoadingSkeleton } from "@/components/collection-loading-skeleton";
 
 export function WishlistPageClient() {
   const products = useMemo(() => GetProductItems(), []);
-  const [wishlist, dispatchWishlist] = useReducer(
-    wishlistReducer,
-    undefined,
-    () => readStoredWishlist(),
-  );
+  const {
+    value: wishlist,
+    setValue: setWishlist,
+    isHydrated,
+  } = usePersistentCollection<WishlistEntry[]>({
+    storageKey: "boltshift:wishlist",
+    fallback: [],
+  });
 
-  useEffect(() => {
-    writeStoredWishlist(wishlist);
-  }, [wishlist]);
+  const dispatchWishlist = (action: Parameters<typeof wishlistReducer>[1]) => {
+    setWishlist((currentWishlist) => wishlistReducer(currentWishlist, action));
+  };
 
   const wishlistItems = getWishlistItems(wishlist, products);
 
@@ -62,9 +66,7 @@ export function WishlistPageClient() {
   const handleConfirm = () => {
     addAllToCart();
 
-    if (notification) {
-      showSonnerMessage(notification);
-    }
+    showSonnerMessage(notification);
   };
 
   return (
@@ -91,7 +93,9 @@ export function WishlistPageClient() {
         />
 
         <div className="flex flex-col gap-10 pb-12">
-          {wishlistItems.length > 0 ? (
+          {!isHydrated ? (
+            <WishlistLoadingSkeleton />
+          ) : wishlistItems.length > 0 ? (
             <div className="grid gap-2">
               <div className="sticky top-24 z-20 hidden border-b border-border/50 bg-background py-1 text-lg font-bold md:flex md:items-center md:justify-between">
                 <span>Item</span>
