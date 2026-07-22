@@ -118,11 +118,14 @@ export function PasswordResetFlow({
 
         {currentStep === 1 ? (
           <ForgotPasswordStep
-            defaultEmail={email}
-            onSubmit={() => setCurrentStep(2)}
+            defaultEmail={currentEmail}
+            onSubmit={(submittedEmail) => {
+              setCurrentEmail(submittedEmail);
+              setCurrentStep(2);
+            }}
           />
         ) : (
-          <CheckYourEmail email={email} />
+          <CheckYourEmail email={currentEmail} />
         )}
       </div>
     </main>
