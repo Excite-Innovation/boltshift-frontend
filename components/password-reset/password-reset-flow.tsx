@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import {
   CircleCheckBig,
   KeyRound,
@@ -12,7 +15,7 @@ import { CheckYourEmail } from "@/components/password-reset/check-your-email";
 import { ForgotPasswordStep } from "@/components/password-reset/forgot-password";
 import { cn } from "@/lib/utils";
 
-type PasswordResetStep = 1 | 2;
+type PasswordResetStep = 1 | 2 | 3 | 4;
 
 type PasswordResetFlowProps = {
   step?: PasswordResetStep;
@@ -63,7 +66,10 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
           return (
             <div key={item.title} className="relative flex gap-4">
               {index < sidebarSteps.length - 1 ? (
-                <span className="absolute left-6 top-12 h-8 w-px bg-border" />
+                <span className={cn(
+                  "absolute left-6 top-13 w-0.5 bg-border rounded-xs",
+                  index === 2 ? "h-12" : "h-7",
+                )} />
               ) : null}
 
               <div
@@ -74,7 +80,7 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
                     : "text-muted-foreground",
                 )}
               >
-                <Icon className="size-4.5" aria-hidden="true" />
+                <Icon className="size-6" aria-hidden="true" />
               </div>
 
               <div className="grid gap-0.5 text-base">
@@ -102,13 +108,18 @@ export function PasswordResetFlow({
   step = 1,
   email = "",
 }: PasswordResetFlowProps = {}) {
+  const [currentStep, setCurrentStep] = useState(step);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="grid min-h-[calc(100vh-2rem)] overflow-hidden rounded-[2px] border border-[#ececf2] bg-background lg:grid-cols-[30rem_minmax(0,1fr)]">
-        <PasswordResetSidebar step={step} />
+      <div className="grid min-h-[calc(100vh-2rem)] overflow-hidden bg-background lg:grid-cols-[30rem_minmax(0,1fr)]">
+        <PasswordResetSidebar step={currentStep} />
 
-        {step === 1 ? (
-          <ForgotPasswordStep defaultEmail={email} />
+        {currentStep === 1 ? (
+          <ForgotPasswordStep
+            defaultEmail={email}
+            onSubmit={() => setCurrentStep(2)}
+          />
         ) : (
           <CheckYourEmail email={email} />
         )}

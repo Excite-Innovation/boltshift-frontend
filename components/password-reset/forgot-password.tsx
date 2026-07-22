@@ -16,10 +16,12 @@ import { PasswordResetProgress } from "@/components/password-reset/password-rese
 
 type ForgotPasswordProps = {
   defaultEmail?: string;
+  onSubmit?: () => void;
 };
 
 export function ForgotPasswordStep({
   defaultEmail = "",
+  onSubmit,
 }: ForgotPasswordProps = {}) {
   return (
     <section className="m-auto flex w-84 flex-col gap-20 text-foreground">
@@ -41,7 +43,13 @@ export function ForgotPasswordStep({
         </CardHeader>
 
         <CardContent className="p-0">
-          <form className="grid gap-6">
+          <form
+            className="grid gap-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              onSubmit?.();
+            }}
+          >
             <div className="grid gap-1">
               <Label htmlFor="email" className="text-xs font-medium">
                 Email
