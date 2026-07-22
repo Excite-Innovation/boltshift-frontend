@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Mail, Phone, KeyRound } from "lucide-react";
+import { ArrowLeft, Mail, PhoneOutgoing, KeyRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -99,7 +99,7 @@ export function ForgotPassword({
             href="tel:+254700111111"
             className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
           >
-            <Phone className="size-5" />
+            <PhoneOutgoing className="size-5" />
             +254 700 111 111
           </a>
         </footer>
