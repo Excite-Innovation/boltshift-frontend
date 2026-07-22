@@ -109,6 +109,7 @@ export function PasswordResetFlow({
   email = "",
 }: PasswordResetFlowProps = {}) {
   const [currentStep, setCurrentStep] = useState(step);
+  const [currentEmail, setCurrentEmail] = useState(email);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
