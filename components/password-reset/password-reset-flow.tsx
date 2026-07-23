@@ -2,17 +2,23 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import {
-  CircleCheckBig,
-  KeyRound,
-  Mail,
-  UserRoundPlus,
-} from "lucide-react";
+import { CircleCheck, KeyRound, Mail, UserRoundPlus } from "lucide-react";
 
 import { Logomark } from "@/components/brand/logomark";
 import { Logotype } from "@/components/brand/logotype";
 import { CheckYourEmail } from "@/components/password-reset/check-your-email";
 import { ForgotPasswordStep } from "@/components/password-reset/forgot-password";
+import { PasswordResetFooter } from "@/components/password-reset/password-reset-footer";
+import { PasswordResetProgress } from "@/components/password-reset/password-reset-progress";
+import { SetNewPassword } from "@/components/password-reset/set-new-password";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type PasswordResetStep = 1 | 2 | 3 | 4;
@@ -43,7 +49,7 @@ const sidebarSteps = [
     title: "Password reset",
     description:
       "Your password has been successfully reset. Click below to log in magically.",
-    icon: CircleCheckBig,
+    icon: CircleCheck,
   },
 ] as const;
 
@@ -66,18 +72,18 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
           return (
             <div key={item.title} className="relative flex gap-4">
               {index < sidebarSteps.length - 1 ? (
-                <span className={cn(
-                  "absolute left-6 top-13 w-0.5 bg-border rounded-xs",
-                  index === 2 ? "h-12" : "h-7",
-                )} />
+                <span
+                  className={cn(
+                    "absolute left-6 top-13 w-0.5 bg-border rounded-xs",
+                    index === 2 ? "h-12" : "h-7",
+                  )}
+                />
               ) : null}
 
               <div
                 className={cn(
                   "h-12 w-12 flex shrink-0 items-center justify-center rounded-xl border bg-background shadow-sm",
-                  isActive
-                    ? "text-foreground"
-                    : "text-muted-foreground",
+                  isActive ? "text-foreground" : "text-muted-foreground",
                 )}
               >
                 <Icon className="size-6" aria-hidden="true" />
@@ -92,15 +98,48 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
                 >
                   {item.title}
                 </p>
-                <p className="text-muted-foreground">
-                  {item.description}
-                </p>
+                <p className="text-muted-foreground">{item.description}</p>
               </div>
             </div>
           );
         })}
       </div>
     </aside>
+  );
+}
+
+function PasswordResetComplete() {
+  return (
+    <section className="m-auto flex max-w-84 flex-col gap-20 text-foreground sm:w-84">
+      <Card className="gap-8 border-0 bg-transparent p-0 shadow-none">
+        <CardHeader className="items-center justify-center gap-6 p-0 text-center">
+          <div className="m-auto flex h-14 w-14 items-center justify-center rounded-full text-primary">
+            <CircleCheck size={28} />
+          </div>
+
+          <div className="grid gap-3">
+            <CardTitle className="text-3xl font-semibold">
+              Password reset
+            </CardTitle>
+
+            <CardDescription className="text-base">
+              Your password has been successfully reset. Click below to log in
+              magically.
+            </CardDescription>
+          </div>
+        </CardHeader>
+
+        <CardContent className="p-0">
+          <Button asChild size="lg" className="w-full">
+            <Link href="/sign-in">Back to log in</Link>
+          </Button>
+        </CardContent>
+      </Card>
+
+      <PasswordResetProgress step={4} />
+
+      <PasswordResetFooter className="mt-auto px-10" />
+    </section>
   );
 }
 
@@ -124,8 +163,21 @@ export function PasswordResetFlow({
               setCurrentStep(2);
             }}
           />
+        ) : currentStep === 2 ? (
+          <CheckYourEmail
+            email={currentEmail}
+            onSubmit={() => {
+              setCurrentStep(3);
+            }}
+          />
+        ) : currentStep === 3 ? (
+          <SetNewPassword
+            onSubmit={() => {
+              setCurrentStep(4);
+            }}
+          />
         ) : (
-          <CheckYourEmail email={currentEmail} />
+          <PasswordResetComplete />
         )}
       </div>
     </main>

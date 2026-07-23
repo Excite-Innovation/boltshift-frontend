@@ -18,10 +18,12 @@ import { PasswordResetProgress } from "@/components/password-reset/password-rese
 
 type CheckYourEmailProps = {
   email?: string;
+  onSubmit?: () => void;
 };
 
 export function CheckYourEmail({
   email = "paul@excite.company",
+  onSubmit,
 }: CheckYourEmailProps = {}) {
   const hasShownToast = useRef(false);
 
@@ -60,7 +62,12 @@ export function CheckYourEmail({
         </CardHeader>
 
         <CardContent className="grid gap-8 p-0">
-          <Button type="button" size="lg" className="w-full">
+          <Button
+            type="button"
+            size="lg"
+            className="w-full"
+            onClick={() => onSubmit?.()}
+          >
             Open email app
           </Button>
 
