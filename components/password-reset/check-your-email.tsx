@@ -1,6 +1,10 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, Mail } from "lucide-react";
 
+import { showSonnerMessage } from "@/components/alert/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +23,23 @@ type CheckYourEmailProps = {
 export function CheckYourEmail({
   email = "paul@excite.company",
 }: CheckYourEmailProps = {}) {
+  const hasShownToast = useRef(false);
+
+  useEffect(() => {
+    if (hasShownToast.current) {
+      return;
+    }
+
+    hasShownToast.current = true;
+
+    showSonnerMessage({
+      variant: "success",
+      title: "Password Reset Email",
+      description: `We sent a password reset link to ${email}.`,
+      iconSrc: "/sonnar/Email-ring.svg",
+    });
+  }, [email]);
+
   return (
     <section className="m-auto flex max-w-84 flex-col gap-20 text-foreground sm:w-84">
       <Card className="gap-8 border-0 bg-transparent p-0 shadow-none">
