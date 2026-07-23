@@ -57,7 +57,7 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
   const activeIndex = step - 1;
 
   return (
-    <aside className="hidden bg-muted-foreground/5 pr-4 pl-12 pt-12 lg:flex lg:flex-col gap-20">
+    <aside className="hidden gap-20 bg-muted-foreground/5 pr-4 pl-12 pt-12 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:self-start">
       <Link href="/" className="inline-flex items-center gap-3">
         <Logomark className="size-10" aria-hidden="true" />
         <Logotype className="h-6 w-28" aria-hidden="true" />
@@ -152,33 +152,35 @@ export function PasswordResetFlow({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="grid min-h-[calc(100vh-2rem)] overflow-hidden bg-background lg:grid-cols-[30rem_minmax(0,1fr)]">
+      <div className="grid min-h-[calc(100vh-2rem)] bg-background lg:grid-cols-[30rem_minmax(0,1fr)] lg:items-start">
         <PasswordResetSidebar step={currentStep} />
 
-        {currentStep === 1 ? (
-          <ForgotPasswordStep
-            defaultEmail={currentEmail}
-            onSubmit={(submittedEmail) => {
-              setCurrentEmail(submittedEmail);
-              setCurrentStep(2);
-            }}
-          />
-        ) : currentStep === 2 ? (
-          <CheckYourEmail
-            email={currentEmail}
-            onSubmit={() => {
-              setCurrentStep(3);
-            }}
-          />
-        ) : currentStep === 3 ? (
-          <SetNewPassword
-            onSubmit={() => {
-              setCurrentStep(4);
-            }}
-          />
-        ) : (
-          <PasswordResetComplete />
-        )}
+        <div className="py-10">
+          {currentStep === 1 ? (
+            <ForgotPasswordStep
+              defaultEmail={currentEmail}
+              onSubmit={(submittedEmail) => {
+                setCurrentEmail(submittedEmail);
+                setCurrentStep(2);
+              }}
+            />
+          ) : currentStep === 2 ? (
+            <CheckYourEmail
+              email={currentEmail}
+              onSubmit={() => {
+                setCurrentStep(3);
+              }}
+            />
+          ) : currentStep === 3 ? (
+            <SetNewPassword
+              onSubmit={() => {
+                setCurrentStep(4);
+              }}
+            />
+          ) : (
+            <PasswordResetComplete />
+          )}
+        </div>
       </div>
     </main>
   );
