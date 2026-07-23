@@ -51,7 +51,7 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
   const activeIndex = step - 1;
 
   return (
-    <aside className="bg-muted-foreground/5 pr-4 pl-12 pt-12 flex flex-col gap-20">
+    <aside className="hidden bg-muted-foreground/5 pr-4 pl-12 pt-12 lg:flex lg:flex-col gap-20">
       <Link href="/" className="inline-flex items-center gap-3">
         <Logomark className="size-10" aria-hidden="true" />
         <Logotype className="h-6 w-28" aria-hidden="true" />

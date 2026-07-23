@@ -24,7 +24,7 @@ export function ForgotPasswordStep({
   onSubmit,
 }: ForgotPasswordProps = {}) {
   return (
-    <section className="m-auto flex w-84 flex-col gap-20 text-foreground">
+    <section className="m-auto flex max-w-84 flex-col gap-20 text-foreground sm:w-84">
       <Card className="gap-8 border-0 bg-transparent p-0 shadow-none">
         <CardHeader className="items-center justify-center gap-6 p-0 text-center">
           <div className="m-auto flex h-14 w-14 items-center justify-center rounded-full text-primary">
