@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
   ArrowLeft,
   CheckCircle2,
   Circle,
+  CircleCheckBig,
+  CircleX,
   RectangleEllipsis,
 } from "lucide-react";
 
@@ -23,26 +28,44 @@ type SetNewPasswordProps = {
   onSubmit?: () => void;
 };
 
-const passwordRequirements = [
+const passwordRequirementDefinitions = [
   {
     label: "Must be at least 8 characters",
-    met: false,
+    test: (password: string) => password.length >= 8,
   },
   {
     label: "Must be a combination of uppercase & lowercase letters",
-    met: true,
+    test: (password: string) => /[a-z]/.test(password) && /[A-Z]/.test(password),
   },
   {
     label: "Must include numbers",
-    met: false,
+    test: (password: string) => /\d/.test(password),
   },
   {
     label: "Must contain at least one special character (e.g., !, @, #, $, %)",
-    met: true,
+    test: (password: string) => /[!@#$%^&*(),.?":{}|<>_\-=[\]\\;/`~+]/.test(password),
   },
 ] as const;
 
 export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
+  const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+
+  const passwordRequirements = useMemo(
+    () =>
+      passwordRequirementDefinitions.map((requirement) => ({
+        label: requirement.label,
+        met: requirement.test(password),
+      })),
+    [password],
+  );
+
+  const passwordMatches = retypePassword.length > 0 && password === retypePassword;
+  const passwordRequirementsMet = passwordRequirements.every(
+    (requirement) => requirement.met,
+  );
+  const canSubmit = passwordRequirementsMet && passwordMatches;
+
   return (
     <section className="m-auto flex max-w-84 flex-col gap-20 text-foreground sm:w-84">
       <Card className="gap-8 border-0 bg-transparent p-0 shadow-none">
@@ -68,6 +91,10 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
             onSubmit={(event) => {
               event.preventDefault();
 
+              if (!canSubmit) {
+                return;
+              }
+
               onSubmit?.();
             }}
           >
@@ -75,7 +102,15 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
               <Label htmlFor="password" className="text-xs font-medium">
                 Password
               </Label>
-              <Input id="password" name="password" type="password" required />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                autoComplete="new-password"
+              />
             </div>
 
             <div className="grid gap-1">
@@ -87,23 +122,50 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
                 name="retype-password"
                 type="password"
                 required
+                value={retypePassword}
+                onChange={(event) => setRetypePassword(event.target.value)}
+                autoComplete="new-password"
+                aria-invalid={retypePassword.length > 0 && !passwordMatches}
               />
+              {retypePassword.length > 0 ? (
+                <div
+                  className={
+                    passwordMatches
+                      ? "flex items-center gap-2 text-xs text-emerald-600"
+                      : "flex items-center gap-2 text-xs text-destructive"
+                  }
+                >
+                  {passwordMatches ? (
+                    <CircleCheckBig
+                      className="size-4 shrink-0"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <CircleX className="size-4 shrink-0" aria-hidden="true" />
+                  )}
+                  <span>
+                    {passwordMatches
+                      ? "Passwords match."
+                      : "Passwords do not match."}
+                  </span>
+                </div>
+              ) : null}
             </div>
 
-            <ul className="grid gap-3 pt-1">
+            <ul className="grid gap-3">
               {passwordRequirements.map((requirement) => {
                 const Icon = requirement.met ? CheckCircle2 : Circle;
 
                 return (
                   <li
                     key={requirement.label}
-                    className="flex items-start gap-3 text-sm leading-6 text-muted-foreground"
+                    className="flex items-start gap-2 text-sm leading-6 text-muted-foreground"
                   >
                     <Icon
                       className={
                         requirement.met
-                          ? "mt-0.5 size-5 shrink-0 text-emerald-600"
-                          : "mt-0.5 size-5 shrink-0 text-muted-foreground/60"
+                          ? "size-5 shrink-0 text-emerald-600"
+                          : "size-5 shrink-0 text-muted-foreground/60"
                       }
                       aria-hidden="true"
                     />
@@ -113,7 +175,12 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
               })}
             </ul>
 
-            <Button type="submit" size="lg" className="w-full">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full"
+              disabled={!canSubmit}
+            >
               Reset password
             </Button>
           </form>
