@@ -1,6 +1,15 @@
 import { CategoryItem } from "@/types/type";
 
 export const CategoryItems: CategoryItem[] = [
+    // Special
+    {
+        id: "shopping-bags",
+        name: "All Categories",
+        slug: "all",
+        category: "all",
+        image: "/popular-categories-icons/Shopping-bags.svg",
+    },
+
     // Men's Fashion
     {
         id: "tshirts",
@@ -120,14 +129,5 @@ export const CategoryItems: CategoryItem[] = [
         slug: "backpack",
         category: "accessories",
         image: "/popular-categories-icons/Backpack.svg",
-    },
-
-    // Special
-    {
-        id: "shopping-bags",
-        name: "All Categories",
-        slug: "all",
-        category: "all",
-        image: "/popular-categories-icons/Shopping-bags.svg",
     },
 ];
