@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useTheme } from "@/components/theme-provider";
+import { getCurrentYear } from "@/lib/utils";
 
 const links = [
   "Overview",
@@ -102,7 +103,7 @@ export function Footer() {
       </div>
       <div className="pt-4 border-t border-border text-muted-foreground">
         <p className="text-xs text-center">
-          © 2010 - 2024 Paul Mbingu and/or Excite! Innovation Company. All
+          © 2010 - {getCurrentYear()} Paul Mbingu and/or Excite! Innovation Company. All
           rights reserved. All other trademarks, service marks, and company
           names are the property of their respective owners.{" "}
           <span className="font-semibold">Excite! Innovation Company</span> is a
