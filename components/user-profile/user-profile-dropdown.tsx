@@ -200,7 +200,7 @@ export function GuestUserDropdown({ onSignIn }: GuestUserProps) {
     <>
       <MobileGuestUser onSignIn={onSignIn} />
 
-      <div className="hidden p-3 sm:block">
+      <div className="hidden py-3 sm:block">
         <DesktopGuestUser onSignIn={onSignIn} />
       </div>
     </>
@@ -270,7 +270,7 @@ export function ProfileDropdown({ onLogout }: ProfileDropdownProps) {
     <>
       <MobileProfileDropdown onLogout={onLogout} />
 
-      <div className="hidden gap-2 p-3 sm:grid">
+      <div className="hidden gap-2 py-3 sm:grid">
         <div className="flex items-center gap-3 rounded-lg p-2">
           <Image
             src="https://github.com/denilany.png"
