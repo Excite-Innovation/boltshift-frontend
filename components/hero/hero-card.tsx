@@ -18,9 +18,17 @@ import { cn } from "@/lib/utils";
 
 type HeroCardProps = {
   item: HeroItem;
+  count: number;
+  current: number;
+  onDotClick: (index: number) => void;
 };
 
-export function HeroCard({ item }: HeroCardProps) {
+export function HeroCard({
+  item,
+  count,
+  current,
+  onDotClick,
+}: HeroCardProps) {
   const [saved, setSaved] = useState(false);
   const deferredSaved = useDeferredValue(saved);
 
@@ -56,10 +64,18 @@ export function HeroCard({ item }: HeroCardProps) {
           alt={item.alt}
           className="aspect-square object-cover md:h-full md:w-full"
         />
+
+        <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 md:hidden">
+          <PaginationDots
+            count={count}
+            current={current}
+            onDotClick={onDotClick}
+          />
+        </div>
       </div>
 
       {/* Content */}
-      <div className="w-72 m-auto flex flex-col gap-5 py-4 md:max-w-none md:gap-12 md:flex-1">
+      <div className="w-72 m-auto flex flex-col gap-10 py-4 md:max-w-none md:gap-12 md:flex-1">
         <CardHeader className="w-full flex flex-col gap-6 md:w-72 md:mx-auto md:p-0">
           <CardAction className="m-auto md:m-0">
             <Badge
@@ -92,7 +108,39 @@ export function HeroCard({ item }: HeroCardProps) {
             </Link>
           </Button>
         </CardFooter>
+
+        <div className="hidden md:flex md:w-72 md:mx-auto">
+          <PaginationDots
+            count={count}
+            current={current}
+            onDotClick={onDotClick}
+          />
+        </div>
       </div>
     </Card>
+  );
+}
+
+type PaginationDotsProps = {
+  count: number;
+  current: number;
+  onDotClick: (index: number) => void;
+};
+
+function PaginationDots({ count, current, onDotClick }: PaginationDotsProps) {
+  return (
+    <div className="bg-white/40 p-2 h-6 rounded-full flex gap-3">
+      {Array.from({ length: count }).map((_, index) => (
+        <button
+          key={index}
+          type="button"
+          onClick={() => onDotClick(index)}
+          className={cn(
+            "h-2 rounded-full transition-all duration-500 ease-in-out",
+            index === current ? "bg-primary w-7" : "bg-muted/40 w-2 md:bg-muted",
+          )}
+        />
+      ))}
+    </div>
   );
 }
