@@ -54,9 +54,13 @@ export function Footer() {
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="flex flex-wrap justify-center gap-8 text-muted-foreground">
+        <div className="grid grid-cols-4 justify-items-center gap-4 text-muted-foreground sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] sm:gap-8">
           {links.map((pathname) => (
-            <Link key={pathname} href="#" className="text-base font-medium">
+            <Link
+              key={pathname}
+              href="#"
+              className="text-base font-medium text-center"
+            >
               {pathname}
             </Link>
           ))}
