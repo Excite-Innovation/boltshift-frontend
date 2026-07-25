@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ViewTransition, useDeferredValue, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -81,11 +82,14 @@ export function HeroCard({ item }: HeroCardProps) {
         </CardHeader>
         <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
           <Button
+            asChild
             size="lg"
             className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5 hover:cursor-pointer"
           >
-            Shop Now
-            <ChevronRight className="size-5" aria-hidden="true" />
+            <Link href={item.href} transitionTypes={["cross-fade"]}>
+              Shop Now
+              <ChevronRight className="size-5" aria-hidden="true" />
+            </Link>
           </Button>
         </CardFooter>
       </div>
