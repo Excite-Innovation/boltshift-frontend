@@ -18,7 +18,7 @@ export function TabsLine() {
   const defaultValue = Object.keys(CategoryTabs)[0];
   return (
     <Tabs defaultValue={defaultValue} className="min-w-0 gap-12">
-      <div className="w-full overflow-x-auto scroll-smooth scrollbar-hide">
+      <div className="w-full overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide">
         <TabsList
           variant="line"
           className="h-8 gap-3 whitespace-nowrap"

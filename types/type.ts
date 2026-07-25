@@ -7,6 +7,7 @@ type HeroItem = {
   image: string;
   badge?: string;
   alt: string;
+  href: string;
 };
 
 type CategoryItem = {

@@ -106,7 +106,7 @@ export function CartPageClient() {
               </div>
 
               {/* Order summary */}
-              <div className="flex flex-[0_1_21rem] justify-center md:sticky md:top-24 md:self-start">
+              <div className="flex w-full justify-center md:flex-[0_1_21rem] md:sticky md:top-24 md:self-start">
                 <OrderSummary items={cartItems} />
               </div>
             </div>

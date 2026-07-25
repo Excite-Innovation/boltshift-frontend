@@ -10,9 +10,18 @@ import { ViewTransition } from "react";
 import { useDeferredValue, useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { DropdownWrapper } from "@/components/user-profile/dropdown-wrapper";
 import {
   GuestUserDropdown,
+  MobileGuestUser,
+  MobileProfileDropdown,
   ProfileDropdown,
 } from "@/components/user-profile/user-profile-dropdown";
 import { useStoredCollectionCounts } from "@/hooks/use-stored-collection-counts";
@@ -36,6 +45,11 @@ export function Profile() {
     <ProfileDropdown onLogout={() => setIsAuthenticated(false)} />
   ) : (
     <GuestUserDropdown onSignIn={() => setIsAuthenticated(true)} />
+  );
+  const mobileProfileDropdown = isAuthenticated ? (
+    <MobileProfileDropdown onLogout={() => setIsAuthenticated(false)} />
+  ) : (
+    <MobileGuestUser onSignIn={() => setIsAuthenticated(true)} />
   );
 
   const countsByAction = {
@@ -115,22 +129,49 @@ export function Profile() {
         <NotificationDrawer />
       </DropdownWrapper>
 
-      <DropdownWrapper
-        trigger={
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="size-8 rounded-full border-2 p-0"
-            aria-label="Open profile menu"
+      <div className="hidden md:block">
+        <DropdownWrapper
+          trigger={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="size-8 rounded-full border-2 p-0"
+              aria-label="Open profile menu"
+            >
+              <AvatarProfile />
+            </Button>
+          }
+          contentClassName="h-(--radix-dropdown-menu-content-available-height) max-h-(--radix-dropdown-menu-content-available-height) w-80 sm:h-auto sm:w-64"
+        >
+          {profileDropdown}
+        </DropdownWrapper>
+      </div>
+
+      <div className="block md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="size-8 rounded-full border-2 p-0"
+              aria-label="Open profile menu"
+            >
+              <AvatarProfile />
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side="right"
+            className="w-[80vw] max-w-none overflow-y-auto p-0 gap-0 items-center"
           >
-            <AvatarProfile />
-          </Button>
-        }
-        contentClassName="h-(--radix-dropdown-menu-content-available-height) max-h-(--radix-dropdown-menu-content-available-height) w-80 sm:h-auto sm:w-64"
-      >
-        {profileDropdown}
-      </DropdownWrapper>
+            <SheetHeader className="sr-only">
+              <SheetTitle>Profile</SheetTitle>
+            </SheetHeader>
+            {mobileProfileDropdown}
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 }

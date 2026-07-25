@@ -33,7 +33,7 @@ function NumberTicker({
                 format={{ minimumIntegerDigits: 2 }}
                 className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
               />
-              <p className="text-sm text-chart-1">Hrs</p>
+              <p className="text-sm text-chart-1 tracking-wide">Hrs</p>
             </div>
             <span className="py-3 text-chart-2 text-xl">:</span>
           </>
@@ -44,7 +44,7 @@ function NumberTicker({
             format={{ minimumIntegerDigits: 2 }}
             className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
           />
-          <p className="text-sm text-chart-1">Mins</p>
+          <p className="text-sm text-chart-1 tracking-wide">Mins</p>
         </div>
         <span className="py-3 text-chart-2 text-xl">:</span>
         <div className="flex flex-col gap-1">
@@ -53,7 +53,7 @@ function NumberTicker({
             format={{ minimumIntegerDigits: 2 }}
             className="w-12 px-3 py-2 rounded-(--radius) bg-chart-2 text-xl text-input"
           />
-          <p className="text-sm text-chart-1">Sec</p>
+          <p className="text-sm text-chart-1 tracking-wide">Sec</p>
         </div>
       </NumberFlowGroup>
     </div>
