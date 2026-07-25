@@ -277,7 +277,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
                 <Button
                   onClick={Decrement}
                   variant="outline"
-                  size="icon"
+                  size="icon-lg"
                   className="flex-1 border-r-0"
                 >
                   <Minus />
@@ -290,7 +290,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
                 <Button
                   onClick={Increment}
                   variant="outline"
-                  size="icon"
+                  size="icon-lg"
                   className="flex-1"
                 >
                   <Plus />
@@ -300,6 +300,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
               <Button
                 type="button"
                 variant="outline"
+                size="lg"
                 onClick={handleAddToCart}
                 aria-label={
                   isInCart
@@ -312,7 +313,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
                 {isInCart ? "In Cart" : "Add to Cart"}
               </Button>
 
-              <Button asChild className="w-full col-span-2">
+              <Button asChild className="w-full col-span-2" size="lg">
                 <Link href={checkoutHref}>Buy Now</Link>
               </Button>
             </CardFooter>
