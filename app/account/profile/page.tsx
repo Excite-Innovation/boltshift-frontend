@@ -56,27 +56,23 @@ function BasicDetails() {
         <FormInputField
           id="first-name"
           label="First Name"
-          placeholder="Enter first name"
           className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="last-name"
           label="Last Name"
-          placeholder="Enter last name"
           className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="email"
           label="Email Address"
           type="email"
-          placeholder="Enter email address"
           className="h-auto sm:h-13 max-w-120"
         />
         <div className="w-full max-w-120 flex flex-col gap-1 text-muted-foreground text-xs font-medium">
           <Label htmlFor="phone">Phone Number</Label>
           <PhoneInput
             id="phone"
-            placeholder="Enter phone number"
             className="hover:ring-1 hover:ring-ring hover:ring-offset-2"
           />
         </div>
@@ -107,28 +103,24 @@ function Address() {
           id="apartment details"
           label="Apartment Details"
           type="text"
-          placeholder="Enter appartment details"
           className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="street address"
           label="Street Address"
           type="text"
-          placeholder="Enter street address"
           className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="country"
           label="Country"
           type="text"
-          placeholder="Enter your country"
           className="h-auto sm:h-13 max-w-120"
         />
         <FormInputField
           id="city/town"
           label="City/Town"
           type="text"
-          placeholder="Enter your City/Town"
           className="h-auto sm:h-13 max-w-120"
         />
       </form>

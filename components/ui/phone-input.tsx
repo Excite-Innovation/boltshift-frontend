@@ -174,7 +174,6 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           ref={ref}
           value={value}
           onChange={handlePhoneChange}
-          placeholder={placeholder || "Enter number"}
           type="tel"
           autoComplete="tel"
           name="phone"
