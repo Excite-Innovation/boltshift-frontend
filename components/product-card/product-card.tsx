@@ -20,6 +20,7 @@ import {
   isProductInStoredWishlist,
   toggleProductInStoredWishlist,
 } from "@/lib/wishlist";
+import { useStoredCartItem } from "@/hooks/use-stored-cart-item";
 
 type ProductCardProps = {
   variant?: ProductVariant;
@@ -36,9 +37,15 @@ function AddToCartButton({
   className?: string;
   variant?: ComponentProps<typeof Button>["variant"];
 }) {
+  const isInCart = useStoredCartItem(product.id);
+
   const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
+
+    if (isInCart) {
+      return;
+    }
 
     addProductToStoredCart(product.id);
     showSonnerMessage({
@@ -54,10 +61,15 @@ function AddToCartButton({
       type="button"
       variant={variant}
       onClick={handleAddToCart}
-      aria-label={`Add ${product.name} to cart`}
+      disabled={isInCart}
+      aria-label={
+        isInCart
+          ? `${product.name} is already in cart`
+          : `Add ${product.name} to cart`
+      }
       className={className}
     >
-      Add to Cart
+      {isInCart ? "In Cart" : "Add to Cart"}
     </Button>
   );
 }

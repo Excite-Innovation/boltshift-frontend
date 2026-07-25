@@ -107,6 +107,10 @@ export function isProductInStoredWishlist(productId: number) {
   return readStoredWishlist([]).some((item) => item.productId === productId);
 }
 
+export function isProductInStoredCart(productId: number) {
+  return readStoredCart([]).some((item) => item.productId === productId);
+}
+
 // Return the next saved state so the button can stay synced with storage.
 export function toggleProductInStoredWishlist(productId: number) {
   const wishlist = readStoredWishlist([]);
