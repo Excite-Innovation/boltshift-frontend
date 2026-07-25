@@ -38,6 +38,7 @@ export function SignInForm() {
         <Link
           href="/forgot-password"
           className="shrink-0 text-xs font-semibold text-primary"
+          transitionTypes={["cross-fade"]}
         >
           Forgot password
         </Link>
@@ -63,7 +64,11 @@ export function SignInMobile() {
       footer={
         <>
           Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="font-semibold text-primary">
+          <Link
+            href="/sign-up"
+            className="font-semibold text-primary"
+            transitionTypes={["cross-fade"]}
+          >
             Sign up
           </Link>
         </>

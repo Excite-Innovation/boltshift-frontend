@@ -102,7 +102,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
             <DashedSeparator />
             <PaymentMethodCard />
           </div>
-          <div className="flex justify-center lg:shrink-0">
+          <div className="flex w-full justify-center lg:w-auto lg:shrink-0">
             {!isHydrated ? (
               <CheckoutSummarySkeleton />
             ) : (

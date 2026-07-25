@@ -24,6 +24,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import { useStoredCartItem } from "@/hooks/use-stored-cart-item";
 
 type SpecialOfferCardProps = {
   product?: Product;
@@ -32,6 +33,7 @@ type SpecialOfferCardProps = {
 export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
   const productItems = GetProductItems();
   const selectedItem = product ?? productItems[0];
+  const isInCart = useStoredCartItem(selectedItem.id);
 
   const [selectedColor, setSelectedColor] = useState(
     selectedItem.variants[0]?.color ?? "",
@@ -88,6 +90,10 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
   };
 
   const handleAddToCart = () => {
+    if (isInCart) {
+      return;
+    }
+
     addProductToStoredCart(selectedItem.id, quantity);
     showSonnerMessage({
       variant: "success",
@@ -271,7 +277,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
                 <Button
                   onClick={Decrement}
                   variant="outline"
-                  size="icon"
+                  size="icon-lg"
                   className="flex-1 border-r-0"
                 >
                   <Minus />
@@ -284,7 +290,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
                 <Button
                   onClick={Increment}
                   variant="outline"
-                  size="icon"
+                  size="icon-lg"
                   className="flex-1"
                 >
                   <Plus />
@@ -294,14 +300,20 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
               <Button
                 type="button"
                 variant="outline"
+                size="lg"
                 onClick={handleAddToCart}
-                aria-label={`Add ${selectedItem.name} to cart`}
+                aria-label={
+                  isInCart
+                    ? `${selectedItem.name} is already in cart`
+                    : `Add ${selectedItem.name} to cart`
+                }
+                disabled={isInCart}
               >
                 <ShoppingCart className="text-muted-foreground" />
-                Add to Cart
+                {isInCart ? "In Cart" : "Add to Cart"}
               </Button>
 
-              <Button asChild className="w-full col-span-2">
+              <Button asChild className="w-full col-span-2" size="lg">
                 <Link href={checkoutHref}>Buy Now</Link>
               </Button>
             </CardFooter>

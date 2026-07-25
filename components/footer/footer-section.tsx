@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useTheme } from "@/components/theme-provider";
+import { getCurrentYear } from "@/lib/utils";
 
 const links = [
   "Overview",
@@ -53,9 +54,13 @@ export function Footer() {
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="flex flex-wrap justify-center gap-8 text-muted-foreground">
+        <div className="grid grid-cols-4 justify-items-start gap-4 text-muted-foreground sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] sm:gap-8 lg:justify-items-center">
           {links.map((pathname) => (
-            <Link key={pathname} href="#" className="text-base font-medium">
+            <Link
+              key={pathname}
+              href="#"
+              className="text-base font-medium text-center"
+            >
               {pathname}
             </Link>
           ))}
@@ -102,18 +107,64 @@ export function Footer() {
       </div>
       <div className="pt-4 border-t border-border text-muted-foreground">
         <p className="text-xs text-center">
-          © 2010 - 2024 Paul Mbingu and/or Excite! Innovation Company. All
-          rights reserved. All other trademarks, service marks, and company
-          names are the property of their respective owners.{" "}
-          <span className="font-semibold">Excite! Innovation Company</span> is a
+          © 2010 - {getCurrentYear()} Paul Mbingu and/or Excite! Innovation
+          Company. All rights reserved. All other trademarks, service marks, and
+          company names are the property of their respective owners.{" "}
+          <Link
+            href="https://www.linkedin.com/company/exciteinnovation"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Excite! Innovation Company
+          </Link> is a
           Premier Digital Product Innovation Company that specializes in UIUX
           Research, Design & Software Engineering. Boltshift is an intellectual
           property designed & built by{" "}
-          <span className="font-semibold">Paul Mbingu</span> for Excite!
+          <Link
+            href="https://www.linkedin.com/in/paulxmbingu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Paul Mbingu
+          </Link> for Excite!
           Innovation Company. Special thanks to{" "}
-          <span className="font-semibold">
-            Denil Anyonyi, Wonder Adams, Pauline Wanjiru, and Andrew Muatha
-          </span>
+          <Link
+            href="https://www.linkedin.com/in/denil-anyonyi/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Denil Anyonyi
+          </Link>
+          ,{" "}
+          <Link
+            href="https://www.linkedin.com/in/adamswonder/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Wonder Adams
+          </Link>
+          ,{" "}
+          <Link
+            href="https://www.linkedin.com/in/pauline-wanjiku-669500205/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Pauline Wanjiru
+          </Link>
+          , and{" "}
+          <Link
+            href="https://www.linkedin.com/in/andrew-muatha-6a61421b9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:text-foreground"
+          >
+            Andrew Muatha
+          </Link>
           .
         </p>
       </div>

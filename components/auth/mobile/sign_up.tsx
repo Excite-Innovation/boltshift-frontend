@@ -150,7 +150,11 @@ export function SignUpMobile() {
       footer={
         <>
           Already have an account?{" "}
-          <Link href="/sign-in" className="font-semibold text-primary">
+          <Link
+            href="/sign-in"
+            className="font-semibold text-primary"
+            transitionTypes={["cross-fade"]}
+          >
             Sign in
           </Link>
         </>

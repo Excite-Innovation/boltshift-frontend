@@ -76,42 +76,44 @@ export function CartQuantityGroup({
         }
       />
 
-      <div className="flex items-center gap-1 text-sm md:justify-self-start">
-        <span className="text-muted-foreground">{currencyLabel}</span>
-        <span className="font-medium">{EditNum(price)}</span>
+      <div className="flex gap-3">
+        <div className="flex items-center gap-1 text-sm md:justify-self-start">
+          <span className="text-muted-foreground">{currencyLabel}</span>
+          <span className="font-medium">{EditNum(price)}</span>
+        </div>
+
+        <ButtonGroup
+          aria-label="Quantity controls"
+          className="h-10 w-32 overflow-hidden rounded-lg border bg-background md:justify-self-start"
+        >
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={decrementLabel}
+            onClick={onDecrement}
+            disabled={decrementDisabled}
+            className="h-full flex-1 rounded-none text-muted-foreground"
+          >
+            <Minus className="size-4" />
+          </Button>
+
+          <ButtonGroupText className="h-full min-w-8 flex-1 justify-center rounded-none border-0 bg-transparent px-0 text-sm font-semibold shadow-none">
+            {quantity}
+          </ButtonGroupText>
+
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={incrementLabel}
+            onClick={onIncrement}
+            className="h-full flex-1 rounded-none text-muted-foreground"
+          >
+            <Plus className="size-4" />
+          </Button>
+        </ButtonGroup>
       </div>
-
-      <ButtonGroup
-        aria-label="Quantity controls"
-        className="h-10 w-32 overflow-hidden rounded-lg border bg-background md:justify-self-start"
-      >
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          aria-label={decrementLabel}
-          onClick={onDecrement}
-          disabled={decrementDisabled}
-          className="h-full flex-1 rounded-none text-muted-foreground"
-        >
-          <Minus className="size-4" />
-        </Button>
-
-        <ButtonGroupText className="h-full min-w-8 flex-1 justify-center rounded-none border-0 bg-transparent px-0 text-sm font-semibold shadow-none">
-          {quantity}
-        </ButtonGroupText>
-
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          aria-label={incrementLabel}
-          onClick={onIncrement}
-          className="h-full flex-1 rounded-none text-muted-foreground"
-        >
-          <Plus className="size-4" />
-        </Button>
-      </ButtonGroup>
     </div>
   );
 }

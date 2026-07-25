@@ -15,7 +15,7 @@ export function PopularProductsCard() {
     <Tabs defaultValue={defaultValue} className="gap-10">
       <TabsList
         variant="line"
-        className="inline-flex h-8 max-w-full gap-3 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide pl-15 md:pl-0"
+        className="inline-flex h-8 max-w-full gap-3 overflow-x-auto overflow-y-hidden whitespace-nowrap scroll-smooth scrollbar-hide pl-15 md:pl-0"
       >
         {CATEGORIES.map((category) => (
           <TabsTrigger

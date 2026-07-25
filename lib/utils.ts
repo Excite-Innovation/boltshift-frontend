@@ -78,3 +78,10 @@ export function getInitials(name: string) {
     .slice(0, 2)
     .toUpperCase();
 }
+
+/**
+ * Returns the current year.
+ */
+export const getCurrentYear = (): number => {
+  return new Date().getFullYear();
+};

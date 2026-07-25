@@ -146,7 +146,7 @@ export function OrderSummary({
   }, [items, selectedVoucher]);
 
   return (
-    <Card className="max-w-84 p-6 border rounded-xl flex flex-col gap-8">
+    <Card className="w-full max-w-none p-6 border rounded-xl flex flex-col gap-8 md:max-w-84">
       <CardHeader className="py-2 px-0">
         <CardTitle className="flex items-center gap-1 text-2xl font-semibold">
           <img
@@ -158,7 +158,7 @@ export function OrderSummary({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="w-72 p-0 flex flex-col gap-4">
+      <CardContent className="w-full p-0 flex flex-col gap-4 md:w-72">
         {children}
         {children ? <DashedSeparator /> : null}
 

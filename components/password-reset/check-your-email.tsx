@@ -84,7 +84,7 @@ export function CheckYourEmail({
           asChild
           className="justify-center text-sm font-semibold text-muted-foreground hover:bg-transparent hover:text-foreground"
         >
-          <Link href="/sign-in">
+          <Link href="/sign-in" transitionTypes={["cross-fade"]}>
             <ArrowLeft className="size-5" />
             Back to log in
           </Link>

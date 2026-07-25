@@ -112,7 +112,7 @@ export function NavbarSearch() {
             onChange={(event) => setQuery(event.target.value)}
             onFocus={() => setIsHistoryOpen(true)}
             onClick={() => setIsHistoryOpen(true)}
-            className="flex-1 min-w-0 placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base"
+            className="flex-1 min-w-0"
           />
 
           <InputGroupAddon>

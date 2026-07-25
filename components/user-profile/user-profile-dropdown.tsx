@@ -80,6 +80,52 @@ function LogoutConfirmModal({ onLogout }: ProfileDropdownProps) {
   );
 }
 
+function MobileMenuLink({
+  href,
+  icon: Icon,
+  label,
+}: (typeof menuItems)[number]) {
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      className="w-full justify-start gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+      asChild
+    >
+      <Link href={href}>
+        <Icon className="size-6" />
+        <span>{label}</span>
+      </Link>
+    </Button>
+  );
+}
+
+function MobileLogoutConfirmModal({ onLogout }: ProfileDropdownProps) {
+  return (
+    <ConfirmationModal
+      title="Log Out"
+      description="Are you sure you want to log out? You will need to sign in again to access your account."
+      actionLabel="Log Out"
+      notification={{
+        variant: "success",
+        title: "Logged Out Successfully",
+        description: "You have been signed out of your account.",
+      }}
+      onConfirm={() => onLogout?.()}
+      trigger={
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full justify-start gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+        >
+          <LogOut className="size-6" />
+          <span>Log Out</span>
+        </Button>
+      }
+    />
+  );
+}
+
 export function DesktopGuestUser({ onSignIn }: GuestUserProps) {
   return (
     <Button
@@ -200,14 +246,14 @@ export function GuestUserDropdown({ onSignIn }: GuestUserProps) {
     <>
       <MobileGuestUser onSignIn={onSignIn} />
 
-      <div className="hidden p-3 sm:block">
+      <div className="hidden py-3 sm:block">
         <DesktopGuestUser onSignIn={onSignIn} />
       </div>
     </>
   );
 }
 
-function MobileProfileDropdown({ onLogout }: ProfileDropdownProps) {
+export function MobileProfileDropdown({ onLogout }: ProfileDropdownProps) {
   return (
     <div className="flex h-full min-h-0 w-80 flex-col justify-between overflow-y-auto px-3 pt-12 pb-4 sm:hidden">
       <div className="grid gap-2">
@@ -240,27 +286,16 @@ function MobileProfileDropdown({ onLogout }: ProfileDropdownProps) {
 
         <Separator />
 
-        <DropdownMenuGroup className="grid gap-1 py-2">
+        <div className="grid gap-1 py-2">
           {menuItems.map((item) => {
-            const Icon = item.icon;
-
             return (
-              <DropdownMenuItem
-                key={item.label}
-                className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
-                asChild
-              >
-                <Link href={item.href}>
-                  <Icon className="size-6" />
-                  <span>{item.label}</span>
-                </Link>
-              </DropdownMenuItem>
+              <MobileMenuLink key={item.label} {...item} />
             );
           })}
-        </DropdownMenuGroup>
+        </div>
       </div>
 
-      <LogoutConfirmModal onLogout={onLogout} />
+      <MobileLogoutConfirmModal onLogout={onLogout} />
     </div>
   );
 }
@@ -270,7 +305,7 @@ export function ProfileDropdown({ onLogout }: ProfileDropdownProps) {
     <>
       <MobileProfileDropdown onLogout={onLogout} />
 
-      <div className="hidden gap-2 p-3 sm:grid">
+      <div className="hidden gap-2 py-3 sm:grid">
         <div className="flex items-center gap-3 rounded-lg p-2">
           <Image
             src="https://github.com/denilany.png"

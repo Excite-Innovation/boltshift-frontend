@@ -90,7 +90,11 @@ function DesktopAuthPanel() {
     <div className="flex h-full flex-col justify-center px-2 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-90 grid gap-8">
         <div className="flex flex-col items-center text-center">
-          <Link href="/" className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+            transitionTypes={["cross-fade"]}
+          >
             <Logomark className="size-11" aria-hidden="true" />
             <Logotype className="h-6 w-32" aria-hidden="true" />
             <span className="sr-only">Boltshift home</span>
@@ -114,7 +118,11 @@ function DesktopAuthPanel() {
 
         <p className="text-muted-foreground text-center">
           Don&apos;t have an account?{" "}
-          <Link href="/sign-in" className="font-semibold text-primary">
+          <Link
+            href="/sign-in"
+            className="font-semibold text-primary"
+            transitionTypes={["cross-fade"]}
+          >
             Sign in
           </Link>
         </p>
@@ -122,6 +130,7 @@ function DesktopAuthPanel() {
         <Link
           href="/"
           className="inline-flex items-center justify-center text-base font-semibold text-muted-foreground transition-colors hover:text-primary"
+          transitionTypes={["cross-fade"]}
         >
           Continue as Guest
         </Link>
