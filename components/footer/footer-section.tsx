@@ -54,7 +54,7 @@ export function Footer() {
       </div>
 
       <div className="flex flex-col gap-12">
-        <div className="grid grid-cols-4 justify-items-center gap-4 text-muted-foreground sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] sm:gap-8">
+        <div className="grid grid-cols-4 justify-items-start gap-4 text-muted-foreground sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] sm:gap-8">
           {links.map((pathname) => (
             <Link
               key={pathname}
