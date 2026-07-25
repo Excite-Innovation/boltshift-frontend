@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { useState } from "react";
 import { CircleCheck, KeyRound, Mail, UserRoundPlus } from "lucide-react";
 
@@ -58,7 +59,7 @@ function PasswordResetSidebar({ step }: { step: PasswordResetStep }) {
 
   return (
     <aside className="hidden gap-20 bg-muted-foreground/5 pr-4 pl-12 pt-12 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:self-start">
-      <Link href="/" className="inline-flex items-center gap-3">
+      <Link href="/" transitionTypes={["cross-fade"]} className="inline-flex items-center gap-3">
         <Logomark className="size-10" aria-hidden="true" />
         <Logotype className="h-6 w-28" aria-hidden="true" />
         <span className="sr-only">Boltshift home</span>
@@ -131,7 +132,9 @@ function PasswordResetComplete() {
 
         <CardContent className="p-0">
           <Button asChild size="lg" className="w-full">
-            <Link href="/sign-in">Back to log in</Link>
+            <Link href="/sign-in" transitionTypes={["cross-fade"]}>
+              Back to log in
+            </Link>
           </Button>
         </CardContent>
       </Card>
@@ -156,30 +159,38 @@ export function PasswordResetFlow({
         <PasswordResetSidebar step={currentStep} />
 
         <div className="py-10">
-          {currentStep === 1 ? (
-            <ForgotPasswordStep
-              defaultEmail={currentEmail}
-              onSubmit={(submittedEmail) => {
-                setCurrentEmail(submittedEmail);
-                setCurrentStep(2);
-              }}
-            />
-          ) : currentStep === 2 ? (
-            <CheckYourEmail
-              email={currentEmail}
-              onSubmit={() => {
-                setCurrentStep(3);
-              }}
-            />
-          ) : currentStep === 3 ? (
-            <SetNewPassword
-              onSubmit={() => {
-                setCurrentStep(4);
-              }}
-            />
-          ) : (
-            <PasswordResetComplete />
-          )}
+          <ViewTransition
+            key={currentStep}
+            name="password-reset-step"
+            share="auto"
+            enter="auto"
+            default="none"
+          >
+            {currentStep === 1 ? (
+              <ForgotPasswordStep
+                defaultEmail={currentEmail}
+                onSubmit={(submittedEmail) => {
+                  setCurrentEmail(submittedEmail);
+                  setCurrentStep(2);
+                }}
+              />
+            ) : currentStep === 2 ? (
+              <CheckYourEmail
+                email={currentEmail}
+                onSubmit={() => {
+                  setCurrentStep(3);
+                }}
+              />
+            ) : currentStep === 3 ? (
+              <SetNewPassword
+                onSubmit={() => {
+                  setCurrentStep(4);
+                }}
+              />
+            ) : (
+              <PasswordResetComplete />
+            )}
+          </ViewTransition>
         </div>
       </div>
     </main>
