@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import { sendWelcomeEmailAction } from "@/app/sign-up/actions";
 import {
   AuthDivider,
   AuthField,
@@ -86,10 +87,11 @@ function TermsAndPrivacyTrigger({
 
 export function SignUpForm({ onTermsClick }: SignUpFormProps) {
   return (
-    <form className="flex flex-col gap-6">
+    <form className="flex flex-col gap-6" action={sendWelcomeEmailAction}>
       <div className="grid gap-4">
         <AuthField
           id="first-name"
+          name="firstName"
           label="First Name*"
           placeholder=""
           autoComplete="given-name"
@@ -97,6 +99,7 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
         />
         <AuthField
           id="last-name"
+          name="lastName"
           label="Last Name*"
           placeholder=""
           autoComplete="family-name"
@@ -104,6 +107,7 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
         />
         <AuthField
           id="email"
+          name="email"
           label="Email*"
           type="email"
           placeholder=""
@@ -112,16 +116,22 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
         />
         <AuthField
           id="phone-number"
+          name="phoneNumber"
           label="Phone Number*"
           type="tel"
           placeholder=""
           autoComplete="tel"
           required
         />
-        <PasswordField label="Password*" autoComplete="new-password" required />
+        <PasswordField
+          label="Password*"
+          autoComplete="new-password"
+          required
+        />
 
         <CheckedAgreement
           id="terms-agreement"
+          name="termsAgreement"
           checkboxPosition="end"
           defaultChecked={false}
           required
