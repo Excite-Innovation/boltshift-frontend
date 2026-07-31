@@ -134,7 +134,23 @@ function ProductCard({
     : new URL(product.imageSrc, siteUrl).toString();
 
   return (
-    <EmailCard style={{ width: "100%" }}>
+    <EmailCard
+      style={{
+        width: 160,
+        minWidth: 160,
+        maxWidth: 160,
+        height: 288,
+        minHeight: 288,
+        maxHeight: 288,
+        border: "1px solid #e5e7eb",
+        borderRadius: 12,
+        paddingBottom: 12,
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        backgroundColor: "#ffffff",
+      }}
+    >
       <Img
         src={productImageSrc}
         width="164"
@@ -149,7 +165,7 @@ function ProductCard({
           padding: 20,
         }}
       />
-      <Section style={{ padding: 12 }}>
+      <Section style={{ padding: "0 12px 12px" }}>
         <Text
           style={{
             margin: "0 0 4px",
@@ -336,7 +352,17 @@ export function WelcomeEmail({
               </Text>
             </Section>
 
-            <Section style={{ padding: "0", display: "flex", gap: 16 }}>
+            <Section
+              style={{
+                width: 576,
+                maxWidth: 576,
+                paddingLeft: 0,
+                paddingRight: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+              }}
+            >
               <Heading
                 style={{
                   fontSize: 24,
@@ -349,12 +375,22 @@ export function WelcomeEmail({
                 Hot Deal Today
               </Heading>
 
-              <Row style={{ display: "grid", gap: "16px" }}>
-                {products.map((product) => (
-                  <Column key={product.title} style={{ width: "33.333%" }}>
-                    <ProductCard product={product} siteUrl={siteUrl} />
+              <Row style={{ width: "100%" }}>
+                {products[0] && (
+                  <Column style={{ width: 160, paddingRight: 16 }}>
+                    <ProductCard product={products[0]} siteUrl={siteUrl} />
                   </Column>
-                ))}
+                )}
+                {products[1] && (
+                  <Column style={{ width: 160, paddingRight: 16 }}>
+                    <ProductCard product={products[1]} siteUrl={siteUrl} />
+                  </Column>
+                )}
+                {products[2] && (
+                  <Column style={{ width: 160 }}>
+                    <ProductCard product={products[2]} siteUrl={siteUrl} />
+                  </Column>
+                )}
               </Row>
             </Section>
 
