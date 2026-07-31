@@ -245,6 +245,7 @@ export function WelcomeEmail({
                   color: "#101828",
                   fontWeight: 600,
                   textAlign: "left",
+                  
                 }}
               >
                 Welcome to Boltshift - Let&apos;s Get Started!
@@ -283,65 +284,38 @@ export function WelcomeEmail({
                 </Text>
               </EmailCard>
 
-              <Text
-                style={{
-                  margin: "16px 0 18px",
-                  fontSize: 15,
-                  lineHeight: "24px",
-                  color: "#374151",
-                }}
-              >
+              <Text style={{ color: "#344054" }}>
                 Visit{" "}
                 <Link
                   href={absoluteShopUrl}
-                  style={{ color: "#db134d", textDecoration: "underline" }}
+                  style={{ color: "#344054", textDecoration: "underline" }}
                 >
                   boltshift.com
                 </Link>{" "}
                 now and explore!
-              </Text>
-
-              <Text
-                style={{
-                  margin: "18px 0 0",
-                  fontSize: 13,
-                  lineHeight: "20px",
-                  color: "#4b5563",
-                }}
-              >
+                <br />
+                <br />
                 If you have any questions, our support team is here to help at{" "}
                 <Link
                   href={`mailto:${supportEmail}`}
-                  style={{ color: "#db134d", textDecoration: "underline" }}
+                  style={{ color: "#344054", textDecoration: "underline" }}
                 >
                   {supportEmail}
                 </Link>{" "}
-                or {supportPhone}
-              </Text>
-
-              <Text
-                style={{
-                  margin: "12px 0 0",
-                  fontSize: 15,
-                  lineHeight: "24px",
-                  color: "#374151",
-                }}
-              >
+                or{" "}
+                <span style={{ textDecoration: "underline" }}>
+                  {supportPhone}
+                </span>
+                <br />
+                <br />
                 Happy shopping!
+                <br />
                 <br />
                 Best regards,
                 <br />
                 The Boltshift Team
-              </Text>
-
-              <Text
-                style={{
-                  margin: "12px 0 0",
-                  fontSize: 13,
-                  lineHeight: "20px",
-                  color: "#6b7280",
-                }}
-              >
+                <br />
+                <br />
                 P.S. Follow us on for updates and more.
               </Text>
             </Section>
