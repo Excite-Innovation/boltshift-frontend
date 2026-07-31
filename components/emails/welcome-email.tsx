@@ -200,6 +200,11 @@ export function WelcomeEmail({
   const absoluteShopUrl = shopUrl.startsWith("http")
     ? shopUrl
     : `${siteUrl}${shopUrl}`;
+  const wrapTextStyle = {
+    wordBreak: "break-word",
+    overflowWrap: "anywhere",
+    whiteSpace: "normal",
+  } as const;
 
   return (
     <Html lang="en">
@@ -237,7 +242,7 @@ export function WelcomeEmail({
             }}
           >
             <LogoBlock siteUrl={siteUrl} />
-            <Section style={{ padding: "28px 28px 20px" }}>
+            <Section style={{ padding: "0" }}>
               <Heading
                 style={{
                   fontSize: 30,
@@ -245,7 +250,7 @@ export function WelcomeEmail({
                   color: "#101828",
                   fontWeight: 600,
                   textAlign: "left",
-                  
+                  ...wrapTextStyle,
                 }}
               >
                 Welcome to Boltshift - Let&apos;s Get Started!
@@ -256,6 +261,7 @@ export function WelcomeEmail({
                   fontSize: 16,
                   lineHeight: "24px",
                   color: "#101828",
+                  ...wrapTextStyle,
                 }}
               >
                 Welcome to Boltshift, {firstName}. We&apos;re excited to have
@@ -276,6 +282,7 @@ export function WelcomeEmail({
                     fontWeight: 700,
                     fontSize: "16px",
                     lineHeight: "24px",
+                    ...wrapTextStyle,
                   }}
                 >
                   Email: {email}
@@ -284,7 +291,12 @@ export function WelcomeEmail({
                 </Text>
               </EmailCard>
 
-              <Text style={{ color: "#344054" }}>
+              <Text
+                style={{
+                  color: "#344054",
+                  ...wrapTextStyle,
+                }}
+              >
                 Visit{" "}
                 <Link
                   href={absoluteShopUrl}
@@ -320,61 +332,49 @@ export function WelcomeEmail({
               </Text>
             </Section>
 
-            <Section style={{ padding: "0 28px 24px" }}>
-              <Hr
-                style={{
-                  borderColor: "#e5e7eb",
-                  margin: "0 0 20px",
-                }}
-              />
-
+            <Section style={{ padding: "0", display: "flex", gap: 16 }}>
               <Heading
                 style={{
-                  margin: "0 0 16px",
-                  fontSize: 20,
-                  lineHeight: "28px",
+                  fontSize: 24,
+                  fontWeight: 600,
+                  lineHeight: "32px",
                   color: "#111827",
+                  ...wrapTextStyle,
                 }}
               >
                 Hot Deal Today
               </Heading>
 
-              <Row>
+              <Row style={{ display: "grid", gap: "16px" }}>
                 {products.map((product) => (
-                  <Column
-                    key={product.title}
-                    style={{ width: "33.333%", paddingRight: 8 }}
-                  >
+                  <Column key={product.title} style={{ width: "33.333%" }}>
                     <ProductCard product={product} siteUrl={siteUrl} />
                   </Column>
                 ))}
               </Row>
             </Section>
 
-            <Section style={{ padding: "0 28px 28px" }}>
-              <EmailCard
-                style={{
-                  padding: 20,
-                  backgroundColor: "#f9fafb",
-                  borderRadius: 20,
-                }}
-              >
+            <Section
+              style={{ padding: "0 24px", display: "grid", gap: "48px" }}
+            >
+              <EmailCard>
                 <Heading
                   style={{
-                    margin: "0 0 8px",
-                    fontSize: 18,
-                    lineHeight: "26px",
-                    color: "#111827",
+                    fontSize: 16,
+                    fontWeight: 500,
+                    lineHeight: "24px",
+                    color: "#101828",
+                    ...wrapTextStyle,
                   }}
                 >
                   Download the app
                 </Heading>
                 <Text
                   style={{
-                    margin: "0 0 16px",
                     fontSize: 14,
-                    lineHeight: "22px",
-                    color: "#4b5563",
+                    lineHeight: "20px",
+                    color: "#475467",
+                    ...wrapTextStyle,
                   }}
                 >
                   Get the most of Boltshift by installing our free mobile app.
@@ -417,32 +417,19 @@ export function WelcomeEmail({
                   </Column>
                 </Row>
               </EmailCard>
-            </Section>
-
-            <Section style={{ padding: "0 28px 28px" }}>
               <Text
                 style={{
-                  margin: 0,
-                  fontSize: 12,
-                  lineHeight: "18px",
-                  color: "#6b7280",
-                  textAlign: "center",
+                  fontSize: 14,
+                  lineHeight: "20px",
+                  color: "#475467",
+                  ...wrapTextStyle,
                 }}
               >
                 Thank you for using Boltshift. We appreciate your trust in us
                 and are committed to providing you with a secure and reliable
                 experience.
-              </Text>
-              <Text
-                style={{
-                  margin: "10px 0 0",
-                  fontSize: 12,
-                  lineHeight: "18px",
-                  color: "#9ca3af",
-                  textAlign: "center",
-                }}
-              >
-                © 2026 Boltshift. All rights reserved.
+                <br />
+                <br />© 2026 Boltshift. All rights reserved.
               </Text>
             </Section>
           </EmailCard>
