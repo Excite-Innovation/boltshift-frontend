@@ -129,13 +129,17 @@ function ProductCard({
   product: WelcomeProduct;
   siteUrl: string;
 }) {
+  const productImageSrc = product.imageSrc.startsWith("http")
+    ? product.imageSrc
+    : new URL(product.imageSrc, siteUrl).toString();
+
   return (
     <EmailCard style={{ width: "100%" }}>
       <Img
-        src={`${siteUrl}/icons/standard/icon-192x192.png`}
+        src={productImageSrc}
         width="164"
         height="128"
-        alt="Boltshift logo"
+        alt={product.title}
         style={{
           display: "block",
           width: "100%",
