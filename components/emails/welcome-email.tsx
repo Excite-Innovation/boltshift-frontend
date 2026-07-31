@@ -212,23 +212,28 @@ export function WelcomeEmail({
           margin: 0,
           padding: "24px 0",
           backgroundColor: "#f4f6fb",
-          fontFamily:
-            'sans-serif',
+          fontFamily: "sans-serif",
         }}
       >
         <Container
           style={{
+            width: "100%",
             maxWidth: 640,
+            minWidth: 375,
             margin: "0 auto",
-            border: "1px",
-            borderRadius: "24px",
           }}
         >
           <EmailCard
             style={{
+              width: "100%",
+              height: 1555,
+              border: "1px solid #e5e7eb",
+              borderRadius: 24,
               padding: "48px 32px",
               display: "flex",
-              gap: "48px",
+              flexDirection: "column",
+              gap: 48,
+              backgroundColor: "#ffffff",
             }}
           >
             <LogoBlock siteUrl={siteUrl} />
