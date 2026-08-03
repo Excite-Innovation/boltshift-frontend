@@ -16,7 +16,10 @@ import {
   Text,
 } from "react-email";
 
-import { EmailCard } from "./email-card";
+import {MobileAppButtons} from "@/components/footer/footer-section";
+import {AppStoreButton, GooglePlayButton} from "@/components/app-store/app-store-buttons";
+import { EmailCard } from "@/components/emails/email-card";
+import { EditNum } from "@/lib/utils";
 
 type WelcomeProduct = {
   title: string;
@@ -24,6 +27,7 @@ type WelcomeProduct = {
   imageSrc: string;
   rating?: string;
   reviewCount?: string;
+  price?: number;
 };
 
 type WelcomeEmailProps = {
@@ -42,23 +46,29 @@ const defaultProducts: WelcomeProduct[] = [
   {
     title: "Contemporary Accent Lamp",
     category: "Home & Living",
-    imageSrc: "/account/voucher/Laptop.png",
+    imageSrc:
+      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
     rating: "4.8",
     reviewCount: "12.4k reviews",
+    price: 54000,
   },
   {
     title: "Contemporary Accent Watch",
     category: "Accessories",
-    imageSrc: "/account/voucher/Watch.png",
+    imageSrc:
+      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
     rating: "4.9",
     reviewCount: "9.8k reviews",
+    price: 12000,
   },
   {
     title: "Contemporary Accent Denim",
     category: "Everyday Essentials",
-    imageSrc: "/account/voucher/Jeans.png",
+    imageSrc:
+      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
     rating: "4.7",
     reviewCount: "8.2k reviews",
+    price: 45000,
   },
 ];
 
@@ -95,8 +105,8 @@ function LogoBlock({ siteUrl }: { siteUrl: string }) {
                 <td style={{ verticalAlign: "middle", paddingRight: 10 }}>
                   <Img
                     src={`${siteUrl}/icons/standard/icon-192x192.png`}
-                    width="36"
-                    height="36"
+                    width="28"
+                    height="28"
                     alt="Boltshift"
                     style={{
                       display: "block",
@@ -104,7 +114,7 @@ function LogoBlock({ siteUrl }: { siteUrl: string }) {
                     }}
                   />
                 </td>
-                <td style={{ verticalAlign: "middle" }}>
+                {/* <td style={{ verticalAlign: "middle" }}>
                   <Img
                     src={`${siteUrl}/vendor-logos/Boltshift.svg`}
                     width="140"
@@ -112,7 +122,7 @@ function LogoBlock({ siteUrl }: { siteUrl: string }) {
                     alt="Boltshift name"
                     style={{ display: "block" }}
                   />
-                </td>
+                </td> */}
               </tr>
             </tbody>
           </table>
@@ -160,34 +170,42 @@ function ProductCard({
           display: "block",
           width: "100%",
           height: 128,
-          objectFit: "contain",
+          objectFit: "cover",
           backgroundColor: "#ffffff",
-          padding: 20,
         }}
       />
-      <Section style={{ padding: "0 12px 12px" }}>
-        <Text
-          style={{
-            margin: "0 0 4px",
-            fontSize: 13,
-            lineHeight: "18px",
-            fontWeight: 600,
-            color: "#111827",
-          }}
-        >
-          {product.title}
-        </Text>
-        <Text
-          style={{
-            margin: "0 0 8px",
-            fontSize: 12,
-            lineHeight: "16px",
-            color: "#6b7280",
-          }}
-        >
-          {product.category}
-        </Text>
-        <StarRating value={5} />
+      <Section
+        style={{
+          paddingLeft: "12px",
+          paddingRight: "12px",
+          display: "grid",
+          gap: 8,
+        }}
+      >
+        <Section style={{ display: "flex", flexDirection: "column" }}>
+          <Text
+            style={{
+              fontSize: 13,
+              lineHeight: "18px",
+              fontWeight: 600,
+              color: "#111827",
+              lineClamp: 2,
+            }}
+          >
+            {product.title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: 500,
+              lineHeight: "18px",
+              color: "#DA154D",
+            }}
+          >
+            Ksh.{EditNum(Number(product.price))}
+          </Text>
+        </Section>
+        <StarRating value={Number(product.rating) || 0} />
         <Text
           style={{
             margin: "4px 0 0",
@@ -196,7 +214,7 @@ function ProductCard({
             color: "#6b7280",
           }}
         >
-          {product.rating} ({product.reviewCount})
+          ({product.reviewCount})
         </Text>
       </Section>
     </EmailCard>
@@ -421,39 +439,10 @@ export function WelcomeEmail({
                 </Text>
                 <Row>
                   <Column style={{ paddingRight: 10 }}>
-                    <Button
-                      href={absoluteShopUrl}
-                      style={{
-                        backgroundColor: "#111827",
-                        borderRadius: 12,
-                        color: "#ffffff",
-                        fontSize: 13,
-                        fontWeight: 700,
-                        padding: "12px 16px",
-                        textDecoration: "none",
-                        display: "inline-block",
-                      }}
-                    >
-                      App Store
-                    </Button>
+                    <AppStoreButton />
                   </Column>
                   <Column>
-                    <Button
-                      href={absoluteShopUrl}
-                      style={{
-                        backgroundColor: "#ffffff",
-                        border: "1px solid #d1d5db",
-                        borderRadius: 12,
-                        color: "#111827",
-                        fontSize: 13,
-                        fontWeight: 700,
-                        padding: "12px 16px",
-                        textDecoration: "none",
-                        display: "inline-block",
-                      }}
-                    >
-                      Google Play
-                    </Button>
+                    <GooglePlayButton />
                   </Column>
                 </Row>
               </EmailCard>

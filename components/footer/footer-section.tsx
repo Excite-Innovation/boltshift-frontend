@@ -11,12 +11,10 @@ import {
 } from "react-icons/fa6";
 import {
   AppStoreButton,
-  GalaxyStoreButton,
   GooglePlayButton,
 } from "@/components/app-store/app-store-buttons";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useTheme } from "@/components/theme-provider";
 import { getCurrentYear } from "@/lib/utils";
 
 const links = [
@@ -48,7 +46,7 @@ export function Footer() {
   return (
     <div className="w-full pb-12 flex flex-col gap-8">
       {/* Brand + app distribution CTA. */}
-      <div className="pt-4 flex justify-between items-center">
+      <div className="pt-4 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <Logo />
         <MobileAppButtons />
       </div>
@@ -173,17 +171,23 @@ export function Footer() {
 }
 
 export const MobileAppButtons = () => {
-  const { theme } = useTheme();
-
-  const APKUrl = "https://play.google.com/store/apps";
-  const IOSUrl = "https://apps.apple.com/us/app";
-
-  const isDark = theme === "dark";
+  const APP_STORE_URL = "https://apps.apple.com/us/app";
+  const GOOGLE_PLAY_URL = "https://play.google.com/store/apps";
 
   return (
-    <div className="flex flex-col gap-1">
-      <AppStoreButton size="md" className="" />
-      <GooglePlayButton size="md" className="" />
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
+      <AppStoreButton
+        size="md"
+        href={APP_STORE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+      <GooglePlayButton
+        size="md"
+        href={GOOGLE_PLAY_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
     </div>
   );
 };
