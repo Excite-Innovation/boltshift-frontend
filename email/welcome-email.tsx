@@ -16,9 +16,8 @@ import {
   Text,
 } from "react-email";
 
-import {MobileAppButtons} from "@/components/footer/footer-section";
 import {AppStoreButton, GooglePlayButton} from "@/components/app-store/app-store-buttons";
-import { EmailCard } from "@/components/emails/email-card";
+import { EmailCard } from "@/email/email-card";
 import { EditNum } from "@/lib/utils";
 
 type WelcomeProduct = {
@@ -33,7 +32,7 @@ type WelcomeProduct = {
 type WelcomeEmailProps = {
   firstName?: string;
   email: string;
-  temporaryPassword?: string;
+  password?: string;
   supportEmail?: string;
   supportPhone?: string;
   loginUrl?: string;
@@ -91,27 +90,24 @@ function StarRating({ value = 5 }: { value?: number }) {
 
 function LogoBlock({ siteUrl }: { siteUrl: string }) {
   return (
-    <Section style={{ textAlign: "center", paddingBottom: 16 }}>
+    <Section className="pb-4 text-center">
       <Row style={{ width: "100%" }}>
         <Column align="center">
           <table
             role="presentation"
             cellPadding="0"
             cellSpacing="0"
-            style={{ margin: "0 auto" }}
+            className="mx-auto"
           >
             <tbody>
               <tr>
-                <td style={{ verticalAlign: "middle", paddingRight: 10 }}>
+                <td className="align-middle pr-2.5">
                   <Img
                     src={`${siteUrl}/icons/standard/icon-192x192.png`}
                     width="28"
                     height="28"
                     alt="Boltshift"
-                    style={{
-                      display: "block",
-                      borderRadius: 9999,
-                    }}
+                    className="block rounded-full"
                   />
                 </td>
                 {/* <td style={{ verticalAlign: "middle" }}>
@@ -224,7 +220,7 @@ function ProductCard({
 export function WelcomeEmail({
   firstName = "there",
   email,
-  temporaryPassword = "Passwrd2023#",
+  password = "Passwrd2023#",
   supportEmail = "help@boltshift.com",
   supportPhone = "+254 700 111 111",
   loginUrl = "/sign-in",
@@ -325,7 +321,7 @@ export function WelcomeEmail({
                 >
                   Email: {email}
                   <br />
-                  Temporary Password: {temporaryPassword}
+                  Temporary Password: {password}
                 </Text>
               </EmailCard>
 
