@@ -152,6 +152,48 @@ export function PasswordResetFlow({
 }: PasswordResetFlowProps = {}) {
   const [currentStep, setCurrentStep] = useState(step);
   const [currentEmail, setCurrentEmail] = useState(email);
+  const [isSendingResetEmail, setIsSendingResetEmail] = useState(false);
+  const [sendError, setSendError] = useState<string | undefined>();
+
+  const handleForgotPasswordSubmit = async (submittedEmail: string) => {
+    setCurrentEmail(submittedEmail);
+    setSendError(undefined);
+    setIsSendingResetEmail(true);
+
+    try {
+      const resetUrl = `/forgot-password?step=3&email=${encodeURIComponent(submittedEmail)}`;
+      const response = await fetch("/api/email/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: submittedEmail,
+          resetUrl,
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { message?: string }
+          | null;
+
+        throw new Error(
+          payload?.message ?? "We couldn't send the reset email right now.",
+        );
+      }
+
+      setCurrentStep(2);
+    } catch (error) {
+      setSendError(
+        error instanceof Error
+          ? error.message
+          : "We couldn't send the reset email right now.",
+      );
+    } finally {
+      setIsSendingResetEmail(false);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -169,10 +211,9 @@ export function PasswordResetFlow({
             {currentStep === 1 ? (
               <ForgotPasswordStep
                 defaultEmail={currentEmail}
-                onSubmit={(submittedEmail) => {
-                  setCurrentEmail(submittedEmail);
-                  setCurrentStep(2);
-                }}
+                onSubmit={handleForgotPasswordSubmit}
+                isSubmitting={isSendingResetEmail}
+                errorMessage={sendError}
               />
             ) : currentStep === 2 ? (
               <CheckYourEmail

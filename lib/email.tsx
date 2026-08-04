@@ -1,6 +1,7 @@
 import { render } from "@react-email/render"
 import { Resend } from "resend"
 
+import { ResetPasswordEmail } from "@/email/reset-password"
 import { WelcomeEmail } from "@/email/welcome-email"
 
 export type WelcomeEmailInput = {
@@ -9,7 +10,15 @@ export type WelcomeEmailInput = {
   password?: string
 }
 
+export type ResetPasswordEmailInput = {
+  firstName?: string
+  email: string
+  resetUrl?: string
+}
+
 export const WELCOME_EMAIL_SUBJECT = "Welcome to Boltshift - Let's Get Started!"
+export const RESET_PASSWORD_EMAIL_SUBJECT =
+  "Password Reset Instructions - Boltshift"
 
 function getResendClient() {
   const apiKey = process.env.RESEND_API_KEY
@@ -76,6 +85,52 @@ export async function sendWelcomeEmail(input: WelcomeEmailInput) {
 
   if (error) {
     throw new Error(error.message ?? "Failed to send welcome email.")
+  }
+
+  return { data, html, text, siteUrl }
+}
+
+export async function renderPasswordResetEmail(input: ResetPasswordEmailInput) {
+  const siteUrl = getSiteUrl()
+
+  const html = await render(
+    <ResetPasswordEmail
+      firstName={input.firstName}
+      resetUrl={input.resetUrl}
+      siteUrl={siteUrl}
+    />,
+  )
+
+  const text = await render(
+    <ResetPasswordEmail
+      firstName={input.firstName}
+      resetUrl={input.resetUrl}
+      siteUrl={siteUrl}
+    />,
+    {
+      plainText: true,
+    },
+  )
+
+  return { html, text, siteUrl }
+}
+
+export async function sendPasswordResetEmail(input: ResetPasswordEmailInput) {
+  const { html, text, siteUrl } = await renderPasswordResetEmail(input)
+  const resend = getResendClient()
+  const from =
+    process.env.RESEND_FROM_EMAIL ?? "Boltshift <onboarding@resend.dev>"
+
+  const { data, error } = await resend.emails.send({
+    from,
+    to: [input.email],
+    subject: RESET_PASSWORD_EMAIL_SUBJECT,
+    html,
+    text,
+  })
+
+  if (error) {
+    throw new Error(error.message ?? "Failed to send password reset email.")
   }
 
   return { data, html, text, siteUrl }

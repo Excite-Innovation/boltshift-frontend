@@ -7,6 +7,18 @@ export const metadata: Metadata = {
   description: "Request a password reset for your Boltshift account.",
 };
 
-export default function ForgotPasswordPage() {
-  return <PasswordResetFlow />;
+type ForgotPasswordPageProps = {
+  searchParams?: {
+    step?: string;
+    email?: string;
+  };
+};
+
+export default function ForgotPasswordPage({
+  searchParams,
+}: ForgotPasswordPageProps) {
+  const step = Number(searchParams?.step);
+  const email = searchParams?.email ?? "";
+
+  return <PasswordResetFlow step={step === 3 ? 3 : 1} email={email} />;
 }

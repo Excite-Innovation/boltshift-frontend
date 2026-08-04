@@ -17,11 +17,15 @@ import { PasswordResetProgress } from "@/components/password-reset/password-rese
 type ForgotPasswordProps = {
   defaultEmail?: string;
   onSubmit?: (email: string) => void;
+  isSubmitting?: boolean;
+  errorMessage?: string;
 };
 
 export function ForgotPasswordStep({
   defaultEmail = "",
   onSubmit,
+  isSubmitting = false,
+  errorMessage,
 }: ForgotPasswordProps = {}) {
   return (
     <section className="m-auto flex max-w-84 flex-col gap-20 text-foreground sm:w-84">
@@ -68,11 +72,15 @@ export function ForgotPasswordStep({
                 defaultValue={defaultEmail}
                 autoComplete="email"
                 required
+                aria-invalid={Boolean(errorMessage)}
               />
+              {errorMessage ? (
+                <p className="text-xs text-destructive">{errorMessage}</p>
+              ) : null}
             </div>
 
-            <Button type="submit" size="lg" className="w-full">
-              Reset password
+            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Sending..." : "Reset password"}
             </Button>
           </form>
         </CardContent>

@@ -6,7 +6,6 @@ import {
   Container,
   Head,
   Heading,
-  Hr,
   Html,
   Img,
   Link,
@@ -16,6 +15,8 @@ import {
   Text,
 } from "react-email";
 
+import { EmailFooter } from "@/email/email-footer";
+import { EmailLogo } from "@/email/email-logo";
 import { EmailCard } from "@/email/email-card";
 import { EditNum } from "@/lib/utils";
 
@@ -38,6 +39,7 @@ type WelcomeEmailProps = {
   shopUrl?: string;
   siteUrl?: string;
   products?: WelcomeProduct[];
+  companyAddress?: string;
 };
 
 const defaultProducts: WelcomeProduct[] = [
@@ -87,30 +89,6 @@ function StarRating({ value = 5 }: { value?: number }) {
   );
 }
 
-function assetUrl(siteUrl: string, path: string) {
-  return path.startsWith("http") ? path : new URL(path, siteUrl).toString();
-}
-
-function LogoBlock({ siteUrl }: { siteUrl: string }) {
-  const logoSrc = assetUrl(siteUrl, "/email/Brand_Logo.svg");
-
-  return (
-    <Section className="pb-4 text-center">
-      <Row style={{ width: "100%" }}>
-        <Column align="center">
-          <Img
-            src={logoSrc}
-            width="180"
-            height="36"
-            alt="Boltshift"
-            style={{ display: "block", margin: "0 auto" }}
-          />
-        </Column>
-      </Row>
-    </Section>
-  );
-}
-
 function ProductCard({
   product,
   siteUrl,
@@ -118,9 +96,6 @@ function ProductCard({
   product: WelcomeProduct;
   siteUrl: string;
 }) {
-  const productImageSrc = product.imageSrc.startsWith("http")
-    ? product.imageSrc
-    : new URL(product.imageSrc, siteUrl).toString();
   const wrapTextStyle = {
     wordBreak: "break-word",
     overflowWrap: "anywhere",
@@ -138,7 +113,11 @@ function ProductCard({
       }}
     >
       <Img
-        src={productImageSrc}
+        src={
+          product.imageSrc.startsWith("http")
+            ? product.imageSrc
+            : new URL(product.imageSrc, siteUrl).toString()
+        }
         width="160"
         height="128"
         alt={product.title}
@@ -199,7 +178,7 @@ function AppBadge({
 }) {
   return (
     <Img
-      src={assetUrl(siteUrl, src)}
+      src={src.startsWith("http") ? src : new URL(src, siteUrl).toString()}
       alt={alt}
       width="135"
       height="40"
@@ -218,6 +197,7 @@ export function WelcomeEmail({
   shopUrl = "/catalog",
   siteUrl = "http://localhost:3000",
   products = defaultProducts,
+  companyAddress = "Block F Neema Court, Ngong Rd Nairobi"
 }: WelcomeEmailProps) {
   const absoluteLoginUrl = loginUrl.startsWith("http")
     ? loginUrl
@@ -245,13 +225,13 @@ export function WelcomeEmail({
           fontFamily: "sans-serif",
         }}
       >
-      <Container
-        style={{
-          width: "100%",
-          maxWidth: 640,
-          margin: "0 auto",
-        }}
-      >
+        <Container
+          style={{
+            width: "100%",
+            maxWidth: 640,
+            margin: "0 auto",
+          }}
+        >
           <EmailCard
             style={{
               width: "100%",
@@ -261,7 +241,7 @@ export function WelcomeEmail({
               backgroundColor: "#ffffff",
             }}
           >
-            <LogoBlock siteUrl={siteUrl} />
+            <EmailLogo siteUrl={siteUrl} />
             <Section style={{ padding: "0 0 32px" }}>
               <Heading
                 style={{
@@ -433,20 +413,30 @@ export function WelcomeEmail({
                 </Row>
               </EmailCard>
               <Section style={{ paddingTop: "48px" }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  lineHeight: "20px",
-                  color: "#475467",
-                  ...wrapTextStyle,
-                }}
-              >
-                Thank you for using Boltshift. We appreciate your trust in us
-                and are committed to providing you with a secure and reliable
-                experience.
-                <br />
-                <br />© 2026 Boltshift. All rights reserved.
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    lineHeight: "20px",
+                    color: "#475467",
+                    ...wrapTextStyle,
+                  }}
+                >
+                  Thank you for using Boltshift. We appreciate your trust in us
+                  and are committed to providing you with a secure and reliable
+                  experience.
+                </Text>
+                <EmailFooter
+                  siteUrl={siteUrl}
+                  supportEmail={supportEmail}
+                  supportPhone={supportPhone}
+                  companyAddress={companyAddress}
+                  copyrightText="© 2023 Excite! Innovation Company, Block F Neema Court, Ngong Rd Nairobi"
+                  socialLinks={{
+                    twitter: "https://twitter.com/excitecompany",
+                    facebook: "https://www.facebook.com/",
+                    instagram: "https://www.instagram.com/excitecompany",
+                  }}
+                />
               </Section>
             </Section>
           </EmailCard>
