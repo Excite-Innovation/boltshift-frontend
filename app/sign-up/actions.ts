@@ -25,15 +25,16 @@ export async function sendWelcomeEmailAction(
       firstName,
       email,
       password,
-    })
+    });
 
     console.info("Welcome email sent for signup", {
       email,
       messageId: data?.id,
     });
-
-    redirect("/catalog");
   } catch (error) {
     console.error("Failed to send welcome email", { email, error });
+    return;
   }
+
+  redirect("/catalog");
 }
