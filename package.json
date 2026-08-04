@@ -48,6 +48,7 @@
     "@storybook/addon-a11y": "^10.5.5",
     "@storybook/addon-docs": "^10.5.5",
     "@storybook/addon-onboarding": "^10.5.5",
+    "@storybook/addon-vitest": "^10.5.6",
     "@storybook/nextjs": "^10.5.5",
     "@storybook/nextjs-vite": "^10.5.5",
     "@storybook/react": "^10.5.5",
