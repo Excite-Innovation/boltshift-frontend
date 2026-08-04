@@ -121,12 +121,14 @@ export function EmailFooter({
       ) : null}
 
       <Row style={{ width: "100%", verticalAlign: "middle" }}>
-        <Column style={{ width: "50%", verticalAlign: "middle" }}>
+        <Column
+          style={{ width: "50%", verticalAlign: "middle", padding: 0 }}
+        >
           <EmailLogo
             siteUrl={siteUrl}
             href={brandHref}
-            width={124}
-            height={25}
+            width={180}
+            height={36}
             align="left"
           />
         </Column>
@@ -135,6 +137,7 @@ export function EmailFooter({
             width: "50%",
             verticalAlign: "middle",
             textAlign: "right",
+            padding: 0,
           }}
         >
           <Section>

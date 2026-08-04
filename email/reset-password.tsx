@@ -27,7 +27,7 @@ type ResetPasswordEmailProps = {
 };
 
 function getAbsoluteUrl(siteUrl: string, url: string) {
-  return url.startsWith("http") ? url : new URL(url, siteUrl).toString();
+  return /^https?:\/\//i.test(url) ? url : new URL(url, siteUrl).toString();
 }
 
 export function ResetPasswordEmail({

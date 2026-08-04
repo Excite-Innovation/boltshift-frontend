@@ -183,7 +183,7 @@ export function PasswordResetFlow({
         );
       }
 
-      setCurrentStep(2);
+      setCurrentStep(3);
     } catch (error) {
       setSendError(
         error instanceof Error

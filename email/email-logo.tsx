@@ -26,6 +26,10 @@ export function EmailLogo({
   paddingBottom = 0,
 }: EmailLogoProps) {
   const logoSrc = assetUrl(siteUrl, "/email/Brand_Logo.svg");
+  const imageStyle =
+    align === "left"
+      ? { display: "block", margin: "0" }
+      : { display: "block", margin: "0 auto" };
 
   return (
     <Section
@@ -41,7 +45,7 @@ export function EmailLogo({
             width={String(width)}
             height={String(height)}
             alt={alt}
-            style={{ display: "block", margin: "0 auto" }}
+            style={imageStyle}
           />
         </Link>
       ) : (
@@ -50,7 +54,7 @@ export function EmailLogo({
           width={String(width)}
           height={String(height)}
           alt={alt}
-          style={{ display: "block", margin: "0 auto" }}
+          style={imageStyle}
         />
       )}
     </Section>
