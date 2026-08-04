@@ -121,6 +121,11 @@ function ProductCard({
   const productImageSrc = product.imageSrc.startsWith("http")
     ? product.imageSrc
     : new URL(product.imageSrc, siteUrl).toString();
+  const wrapTextStyle = {
+    wordBreak: "break-word",
+    overflowWrap: "anywhere",
+    whiteSpace: "normal",
+  } as const;
 
   return (
     <EmailCard
@@ -151,7 +156,7 @@ function ProductCard({
               lineHeight: "18px",
               fontWeight: 600,
               color: "#111827",
-              lineClamp: 2,
+              ...wrapTextStyle,
             }}
           >
             {product.title}
