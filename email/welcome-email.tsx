@@ -16,7 +16,6 @@ import {
   Text,
 } from "react-email";
 
-import {AppStoreButton, GooglePlayButton} from "@/components/app-store/app-store-buttons";
 import { EmailCard } from "@/email/email-card";
 import { EditNum } from "@/lib/utils";
 
@@ -88,40 +87,24 @@ function StarRating({ value = 5 }: { value?: number }) {
   );
 }
 
+function assetUrl(siteUrl: string, path: string) {
+  return path.startsWith("http") ? path : new URL(path, siteUrl).toString();
+}
+
 function LogoBlock({ siteUrl }: { siteUrl: string }) {
+  const logoSrc = assetUrl(siteUrl, "/email/Brand_Logo.svg");
+
   return (
     <Section className="pb-4 text-center">
       <Row style={{ width: "100%" }}>
         <Column align="center">
-          <table
-            role="presentation"
-            cellPadding="0"
-            cellSpacing="0"
-            className="mx-auto"
-          >
-            <tbody>
-              <tr>
-                <td className="align-middle pr-2.5">
-                  <Img
-                    src={`${siteUrl}/icons/standard/icon-192x192.png`}
-                    width="28"
-                    height="28"
-                    alt="Boltshift"
-                    className="block rounded-full"
-                  />
-                </td>
-                {/* <td style={{ verticalAlign: "middle" }}>
-                  <Img
-                    src={`${siteUrl}/vendor-logos/Boltshift.svg`}
-                    width="140"
-                    height="28"
-                    alt="Boltshift name"
-                    style={{ display: "block" }}
-                  />
-                </td> */}
-              </tr>
-            </tbody>
-          </table>
+          <Img
+            src={logoSrc}
+            width="180"
+            height="36"
+            alt="Boltshift"
+            style={{ display: "block", margin: "0 auto" }}
+          />
         </Column>
       </Row>
     </Section>
@@ -214,6 +197,26 @@ function ProductCard({
         </Text>
       </Section>
     </EmailCard>
+  );
+}
+
+function AppBadge({
+  siteUrl,
+  src,
+  alt,
+}: {
+  siteUrl: string;
+  src: string;
+  alt: string;
+}) {
+  return (
+    <Img
+      src={assetUrl(siteUrl, src)}
+      alt={alt}
+      width="135"
+      height="40"
+      style={{ display: "block" }}
+    />
   );
 }
 
@@ -435,10 +438,18 @@ export function WelcomeEmail({
                 </Text>
                 <Row>
                   <Column style={{ paddingRight: 10 }}>
-                    <AppStoreButton />
+                    <AppBadge
+                      siteUrl={siteUrl}
+                      src="/email/app_store_badge.svg"
+                      alt="Download on the App Store"
+                    />
                   </Column>
                   <Column>
-                    <GooglePlayButton />
+                    <AppBadge
+                      siteUrl={siteUrl}
+                      src="/email/play_store_badge.svg"
+                      alt="Get it on Google Play"
+                    />
                   </Column>
                 </Row>
               </EmailCard>

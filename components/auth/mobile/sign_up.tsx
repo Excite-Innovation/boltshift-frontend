@@ -95,7 +95,6 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
           label="First Name*"
           placeholder=""
           autoComplete="given-name"
-          required
         />
         <AuthField
           id="last-name"
@@ -103,7 +102,6 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
           label="Last Name*"
           placeholder=""
           autoComplete="family-name"
-          required
         />
         <AuthField
           id="email"
@@ -121,20 +119,14 @@ export function SignUpForm({ onTermsClick }: SignUpFormProps) {
           type="tel"
           placeholder=""
           autoComplete="tel"
-          required
         />
-        <PasswordField
-          label="Password*"
-          autoComplete="new-password"
-          required
-        />
+        <PasswordField label="Password*" autoComplete="new-password" />
 
         <CheckedAgreement
           id="terms-agreement"
           name="termsAgreement"
           checkboxPosition="end"
           defaultChecked={false}
-          required
         >
           I have read and agree with{" "}
           <TermsAndPrivacyTrigger onTermsClick={onTermsClick} />
