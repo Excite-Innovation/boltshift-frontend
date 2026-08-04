@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as {
       firstName?: string
       email?: string
-      temporaryPassword?: string
+      password?: string
     }
 
     if (!body.email) {
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const result = await sendWelcomeEmail({
       firstName: body.firstName,
       email: body.email,
-      temporaryPassword: body.temporaryPassword,
+      password: body.password,
     })
 
     return NextResponse.json({

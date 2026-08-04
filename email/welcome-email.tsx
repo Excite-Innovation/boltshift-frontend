@@ -209,9 +209,9 @@ function AppBadge({
 }
 
 export function WelcomeEmail({
-  firstName = "there",
+  firstName = "",
   email,
-  password = "Passwrd2023#",
+  password = "",
   supportEmail = "help@boltshift.com",
   supportPhone = "+254 700 111 111",
   loginUrl = "/sign-in",
