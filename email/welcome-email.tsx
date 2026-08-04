@@ -126,42 +126,25 @@ function ProductCard({
     <EmailCard
       style={{
         width: 160,
-        minWidth: 160,
-        maxWidth: 160,
-        height: 288,
-        minHeight: 288,
-        maxHeight: 288,
         border: "1px solid #e5e7eb",
         borderRadius: 12,
         paddingBottom: 12,
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
         backgroundColor: "#ffffff",
       }}
     >
       <Img
         src={productImageSrc}
-        width="164"
+        width="160"
         height="128"
         alt={product.title}
         style={{
           display: "block",
           width: "100%",
-          height: 128,
-          objectFit: "cover",
           backgroundColor: "#ffffff",
         }}
       />
-      <Section
-        style={{
-          paddingLeft: "12px",
-          paddingRight: "12px",
-          display: "grid",
-          gap: 8,
-        }}
-      >
-        <Section style={{ display: "flex", flexDirection: "column" }}>
+      <Section style={{ padding: "12px 12px 0" }}>
+        <Section>
           <Text
             style={{
               fontSize: 13,
@@ -257,29 +240,24 @@ export function WelcomeEmail({
           fontFamily: "sans-serif",
         }}
       >
-        <Container
-          style={{
-            width: "100%",
-            maxWidth: 640,
-            minWidth: 375,
-            margin: "0 auto",
-          }}
-        >
+      <Container
+        style={{
+          width: "100%",
+          maxWidth: 640,
+          margin: "0 auto",
+        }}
+      >
           <EmailCard
             style={{
               width: "100%",
-              height: 1555,
               border: "1px solid #e5e7eb",
               borderRadius: 24,
               padding: "48px 32px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 48,
               backgroundColor: "#ffffff",
             }}
           >
             <LogoBlock siteUrl={siteUrl} />
-            <Section style={{ padding: "0" }}>
+            <Section style={{ padding: "0 0 32px" }}>
               <Heading
                 style={{
                   fontSize: 30,
@@ -325,6 +303,14 @@ export function WelcomeEmail({
                   Email: {email}
                   <br />
                   Temporary Password: {password}
+                  <br />
+                  Login:{" "}
+                  <Link
+                    href={absoluteLoginUrl}
+                    style={{ color: "#344054", textDecoration: "underline" }}
+                  >
+                    Sign in
+                  </Link>
                 </Text>
               </EmailCard>
 
@@ -369,17 +355,7 @@ export function WelcomeEmail({
               </Text>
             </Section>
 
-            <Section
-              style={{
-                width: 576,
-                maxWidth: 576,
-                paddingLeft: 0,
-                paddingRight: 0,
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-              }}
-            >
+            <Section style={{ padding: "0 0 16px" }}>
               <Heading
                 style={{
                   fontSize: 24,
@@ -411,9 +387,7 @@ export function WelcomeEmail({
               </Row>
             </Section>
 
-            <Section
-              style={{ padding: "0 24px", display: "grid", gap: "48px" }}
-            >
+            <Section style={{ padding: "0 24px" }}>
               <EmailCard>
                 <Heading
                   style={{
@@ -453,6 +427,7 @@ export function WelcomeEmail({
                   </Column>
                 </Row>
               </EmailCard>
+              <Section style={{ paddingTop: "48px" }}>
               <Text
                 style={{
                   fontSize: 14,
@@ -467,6 +442,7 @@ export function WelcomeEmail({
                 <br />
                 <br />© 2026 Boltshift. All rights reserved.
               </Text>
+              </Section>
             </Section>
           </EmailCard>
         </Container>
