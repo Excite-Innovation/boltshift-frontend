@@ -12,9 +12,9 @@ import {
   Text,
 } from "react-email";
 
-import { EmailCard } from "@/email/email-card";
-import { EmailFooter } from "@/email/email-footer";
-import { EmailLogo } from "@/email/email-logo";
+import { EmailCard } from "@/email/components/email-card";
+import { EmailFooter } from "@/email/components/email-footer";
+import { EmailLogo } from "@/email/components/email-logo";
 
 type ResetPasswordEmailProps = {
   firstName?: string;

@@ -15,9 +15,9 @@ import {
   Text,
 } from "react-email";
 
-import { EmailFooter } from "@/email/email-footer";
-import { EmailLogo } from "@/email/email-logo";
-import { EmailCard } from "@/email/email-card";
+import { EmailFooter } from "@/email/components/email-footer";
+import { EmailLogo } from "@/email/components/email-logo";
+import { EmailCard } from "@/email/components/email-card";
 import { EditNum } from "@/lib/utils";
 
 type WelcomeProduct = {
@@ -399,14 +399,14 @@ export function WelcomeEmail({
                   <Column style={{ paddingRight: 10 }}>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="/email/app_store_badge.svg"
+                      src="/email/app_store_badge.png"
                       alt="Download on the App Store"
                     />
                   </Column>
                   <Column>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="/email/play_store_badge.svg"
+                      src="/email/play_storebadge.png"
                       alt="Get it on Google Play"
                     />
                   </Column>

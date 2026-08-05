@@ -3,7 +3,7 @@ import * as React from "react";
 import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { Column, Link, Row, Section, Text } from "react-email";
 
-import { EmailLogo } from "@/email/email-logo";
+import { EmailLogo } from "@/email/components/email-logo";
 
 type SocialLinks = {
   twitter?: string;

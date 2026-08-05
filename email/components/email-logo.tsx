@@ -25,7 +25,7 @@ export function EmailLogo({
   align = "center",
   paddingBottom = 0,
 }: EmailLogoProps) {
-  const logoSrc = assetUrl(siteUrl, "/email/Brand_Logo.svg");
+  const logoSrc = assetUrl(siteUrl, "/email/Brand_Logo.png");
   const imageStyle =
     align === "left"
       ? { display: "block", margin: "0" }
