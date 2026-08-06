@@ -91,13 +91,25 @@ docker compose -f docker-compose.yml up -d
 http://localhost:3000
 ```
 
-4. To see logs from the running container:
+4. Storybook is available at:
+
+```text
+http://localhost:6006
+```
+
+5. The email preview app is available at:
+
+```text
+http://localhost:3001
+```
+
+6. To see logs from the running containers:
 
 ```bash
 docker compose -f docker-compose.yml logs -f
 ```
 
-5. To stop the dev server:
+7. To stop the dev servers:
 
 ```bash
 docker compose -f docker-compose.yml down
@@ -110,6 +122,12 @@ docker compose -f docker-compose.yml down
 > ```bash
 > docker compose -f docker-compose.yml down && docker compose -f docker-compose.yml up -d
 > ```
+
+> The Docker Compose setup now starts three services:
+>
+> - `app` on port `3000`
+> - `storybook` on port `6006`
+> - `email` on port `3001`
 
 # Useful Scripts
 

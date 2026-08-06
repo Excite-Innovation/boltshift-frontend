@@ -127,7 +127,7 @@ function ProductCard({
           backgroundColor: "#ffffff",
         }}
       />
-      <Section style={{ padding: "12px 12px 0" }}>
+      <Section style={{ padding: "0 12px" }}>
         <Section>
           <Text
             style={{
@@ -399,14 +399,14 @@ export function WelcomeEmail({
                   <Column style={{ paddingRight: 10 }}>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="/email/app_store_badge.png"
+                      src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
                       alt="Download on the App Store"
                     />
                   </Column>
                   <Column>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="/email/play_storebadge.png"
+                      src="https://cloud.githubusercontent.com/assets/5692567/10923351/6b688a92-8278-11e5-9973-8ffbf3c5cc52.png"
                       alt="Get it on Google Play"
                     />
                   </Column>

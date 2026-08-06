@@ -1,13 +1,28 @@
+x-node-dev: &node-dev
+  image: node:24.14.0-slim
+  working_dir: /app
+  volumes:
+    - .:/app
+    - /app/node_modules
+    - /app/.next
+  environment:
+    NODE_ENV: development
+
 services:
   app:
-    image: node:24.14.0-slim
-    working_dir: /app
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
+    <<: *node-dev
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
-    command: sh -c "npm install && npx next dev"
+    command: sh -c "npm ci --no-audit --no-fund && npx next dev"
+
+  storybook:
+    <<: *node-dev
+    ports:
+      - "6006:6006"
+    command: sh -c "npm ci --no-audit --no-fund && npm run storybook -- --host 0.0.0.0 --port 6006 --no-open"
+
+  email:
+    <<: *node-dev
+    ports:
+      - "3001:3001"
+    command: sh -c "npm ci --no-audit --no-fund && npm run email:dev -- --port 3001"
