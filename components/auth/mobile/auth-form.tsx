@@ -85,6 +85,7 @@ type AuthFieldProps = {
   placeholder?: string;
   defaultValue?: string;
   autoComplete?: string;
+  name?: string;
   required?: boolean;
 };
 
@@ -95,6 +96,7 @@ export function AuthField({
   placeholder,
   defaultValue,
   autoComplete,
+  name,
   required,
 }: AuthFieldProps) {
   return (
@@ -108,6 +110,7 @@ export function AuthField({
         placeholder={placeholder}
         defaultValue={defaultValue}
         autoComplete={autoComplete}
+        name={name}
         required={required}
       />
     </Field>
@@ -118,6 +121,7 @@ type PasswordFieldProps = {
   id?: string;
   label?: string;
   autoComplete?: string;
+  name?: string;
   required?: boolean;
 };
 
@@ -125,6 +129,7 @@ export function PasswordField({
   id = "password",
   label = "Password",
   autoComplete,
+  name = "password",
   required,
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -139,6 +144,7 @@ export function PasswordField({
           id={id}
           type={showPassword ? "text" : "password"}
           autoComplete={autoComplete}
+          name={name}
           required={required}
         />
         <InputGroupAddon align="inline-end">

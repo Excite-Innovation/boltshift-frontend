@@ -70,7 +70,7 @@ function LogoutConfirmModal({ onLogout }: ProfileDropdownProps) {
       trigger={
         <DropdownMenuItem
           onSelect={(event) => event.preventDefault()}
-          className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+          className="w-full cursor-pointer gap-2 rounded-none p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
         >
           <LogOut className="size-6" />
           <span>Log Out</span>
@@ -133,7 +133,7 @@ export function DesktopGuestUser({ onSignIn }: GuestUserProps) {
       variant="ghost"
       onClick={onSignIn}
       size="lg"
-      className="h-auto w-full justify-start gap-3 rounded-lg p-5 font-semibold text-left"
+      className="h-auto w-full justify-start gap-3 rounded-none p-5 font-semibold text-left"
     >
       <User size={40} />
       <p>Sign In/Create Account</p>
@@ -331,7 +331,7 @@ export function ProfileDropdown({ onLogout }: ProfileDropdownProps) {
             return (
               <DropdownMenuItem
                 key={item.label}
-                className="w-full cursor-pointer gap-2 rounded-lg p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
+                className="w-full cursor-pointer gap-2 rounded-none p-4 text-sm font-normal focus:bg-accent focus:text-accent-foreground"
                 asChild
               >
                 <Link href={item.href}>
