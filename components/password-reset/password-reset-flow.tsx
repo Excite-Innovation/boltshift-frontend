@@ -153,7 +153,9 @@ export function PasswordResetFlow({
   const [currentStep, setCurrentStep] = useState(step);
   const [currentEmail, setCurrentEmail] = useState(email);
   const [isSendingResetEmail, setIsSendingResetEmail] = useState(false);
+  const [isSendingSuccessEmail, setIsSendingSuccessEmail] = useState(false);
   const [sendError, setSendError] = useState<string | undefined>();
+  const [successEmailError, setSuccessEmailError] = useState<string | undefined>();
 
   const handleForgotPasswordSubmit = async (submittedEmail: string) => {
     setCurrentEmail(submittedEmail);
@@ -195,6 +197,43 @@ export function PasswordResetFlow({
     }
   };
 
+  const handlePasswordResetSubmit = async () => {
+    setSuccessEmailError(undefined);
+    setIsSendingSuccessEmail(true);
+
+    try {
+      const response = await fetch("/api/email/password-reset-success", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: currentEmail,
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { message?: string }
+          | null;
+
+        throw new Error(
+          payload?.message ?? "We couldn't send the success email right now.",
+        );
+      }
+
+      setCurrentStep(4);
+    } catch (error) {
+      setSuccessEmailError(
+        error instanceof Error
+          ? error.message
+          : "We couldn't send the success email right now.",
+      );
+    } finally {
+      setIsSendingSuccessEmail(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="grid min-h-[calc(100vh-2rem)] bg-background lg:grid-cols-[30rem_minmax(0,1fr)] lg:items-start">
@@ -224,9 +263,9 @@ export function PasswordResetFlow({
               />
             ) : currentStep === 3 ? (
               <SetNewPassword
-                onSubmit={() => {
-                  setCurrentStep(4);
-                }}
+                onSubmit={handlePasswordResetSubmit}
+                isSubmitting={isSendingSuccessEmail}
+                errorMessage={successEmailError}
               />
             ) : (
               <PasswordResetComplete />

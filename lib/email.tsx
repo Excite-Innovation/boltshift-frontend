@@ -2,6 +2,7 @@ import { render } from "@react-email/render"
 import { Resend } from "resend"
 
 import { ResetPasswordEmail } from "@/email/reset-password"
+import { PasswordResetSuccessEmail } from "@/email/password-reset-success"
 import { WelcomeEmail } from "@/email/welcome-email"
 
 export type WelcomeEmailInput = {
@@ -16,9 +17,16 @@ export type ResetPasswordEmailInput = {
   resetUrl?: string
 }
 
+export type PasswordResetSuccessEmailInput = {
+  firstName?: string
+  email: string
+}
+
 export const WELCOME_EMAIL_SUBJECT = "Welcome to Boltshift - Let's Get Started!"
 export const RESET_PASSWORD_EMAIL_SUBJECT =
   "Password Reset Instructions - Boltshift"
+export const PASSWORD_RESET_SUCCESS_EMAIL_SUBJECT =
+  "Password Successfully Reset - Boltshift"
 
 function getResendClient() {
   const apiKey = process.env.RESEND_API_KEY
@@ -131,6 +139,54 @@ export async function sendPasswordResetEmail(input: ResetPasswordEmailInput) {
 
   if (error) {
     throw new Error(error.message ?? "Failed to send password reset email.")
+  }
+
+  return { data, html, text, siteUrl }
+}
+
+export async function renderPasswordResetSuccessEmail(
+  input: PasswordResetSuccessEmailInput,
+) {
+  const siteUrl = getSiteUrl()
+
+  const html = await render(
+    <PasswordResetSuccessEmail
+      firstName={input.firstName}
+      siteUrl={siteUrl}
+    />,
+  )
+
+  const text = await render(
+    <PasswordResetSuccessEmail
+      firstName={input.firstName}
+      siteUrl={siteUrl}
+    />,
+    {
+      plainText: true,
+    },
+  )
+
+  return { html, text, siteUrl }
+}
+
+export async function sendPasswordResetSuccessEmail(
+  input: PasswordResetSuccessEmailInput,
+) {
+  const { html, text, siteUrl } = await renderPasswordResetSuccessEmail(input)
+  const resend = getResendClient()
+  const from =
+    process.env.RESEND_FROM_EMAIL ?? "Boltshift <onboarding@resend.dev>"
+
+  const { data, error } = await resend.emails.send({
+    from,
+    to: [input.email],
+    subject: PASSWORD_RESET_SUCCESS_EMAIL_SUBJECT,
+    html,
+    text,
+  })
+
+  if (error) {
+    throw new Error(error.message ?? "Failed to send password reset success email.")
   }
 
   return { data, html, text, siteUrl }

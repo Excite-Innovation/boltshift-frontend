@@ -25,7 +25,9 @@ import { PasswordResetFooter } from "@/components/password-reset/password-reset-
 import { PasswordResetProgress } from "@/components/password-reset/password-reset-progress";
 
 type SetNewPasswordProps = {
-  onSubmit?: () => void;
+  onSubmit?: () => void | Promise<void>;
+  isSubmitting?: boolean;
+  errorMessage?: string;
 };
 
 const passwordRequirementDefinitions = [
@@ -47,7 +49,11 @@ const passwordRequirementDefinitions = [
   },
 ] as const;
 
-export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
+export function SetNewPassword({
+  onSubmit,
+  isSubmitting = false,
+  errorMessage,
+}: SetNewPasswordProps = {}) {
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
 
@@ -95,7 +101,7 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
                 return;
               }
 
-              onSubmit?.();
+              void onSubmit?.();
             }}
           >
             <div className="grid gap-1">
@@ -179,10 +185,16 @@ export function SetNewPassword({ onSubmit }: SetNewPasswordProps = {}) {
               type="submit"
               size="lg"
               className="w-full"
-              disabled={!canSubmit}
+              disabled={!canSubmit || isSubmitting}
             >
-              Reset password
+              {isSubmitting ? "Resetting..." : "Reset password"}
             </Button>
+
+            {errorMessage ? (
+              <p className="text-center text-xs text-destructive">
+                {errorMessage}
+              </p>
+            ) : null}
           </form>
         </CardContent>
 
