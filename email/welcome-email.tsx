@@ -292,18 +292,18 @@ export function WelcomeEmail({
                 >
                   Get the most of Boltshift by installing our free mobile app.
                 </Text>
-                <Row>
+                <Row width="auto" style={{ margin: "0 auto" }}>
                   <Column style={{ paddingRight: 10 }}>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                      src="https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/play_storebadge_plrvkk.png"
                       alt="Download on the App Store"
                     />
                   </Column>
                   <Column>
                     <AppBadge
                       siteUrl={siteUrl}
-                      src="https://cloud.githubusercontent.com/assets/5692567/10923351/6b688a92-8278-11e5-9973-8ffbf3c5cc52.png"
+                      src="https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/app_store_badge_dtp5ik.png"
                       alt="Get it on Google Play"
                     />
                   </Column>

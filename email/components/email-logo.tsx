@@ -25,7 +25,7 @@ export function EmailLogo({
   align = "center",
   paddingBottom = 0,
 }: EmailLogoProps) {
-  const logoSrc = assetUrl(siteUrl, "email/Brand_Logo.png");
+  const logoSrc = "https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/Brand_Logo_j44qzf.png";
   const imageStyle =
     align === "left"
       ? { display: "block", margin: "0" }
