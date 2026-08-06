@@ -57,7 +57,7 @@ export function ResetPasswordEmail({
         style={{
           margin: 0,
           padding: "24px 0",
-          backgroundColor: "#f7f8fc",
+          backgroundColor: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >

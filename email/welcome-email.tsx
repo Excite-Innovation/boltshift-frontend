@@ -5,7 +5,6 @@ import {
   Head,
   Heading,
   Html,
-  Img,
   Link,
   Preview,
   Row,
@@ -13,6 +12,7 @@ import {
   Text,
 } from "react-email";
 
+import { AppBadge } from "@/email/components/app-badge";
 import { EmailFooter } from "@/email/components/email-footer";
 import { EmailLogo } from "@/email/components/email-logo";
 import { EmailCard } from "@/email/components/email-card";
@@ -20,6 +20,7 @@ import {
   ProductCard,
   type WelcomeProduct,
 } from "@/email/components/product-card";
+import { EMAIL_ASSETS } from "@/email/components/email-assets";
 
 type WelcomeEmailProps = {
   firstName?: string;
@@ -37,52 +38,26 @@ type WelcomeEmailProps = {
 const defaultProducts: WelcomeProduct[] = [
   {
     title: "Contemporary Accent Lamp",
-    category: "Home & Living",
-    imageSrc:
-      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
+    imageSrc: EMAIL_ASSETS.welcomeProductImage,
     rating: "4.8",
     reviewCount: "12.4k reviews",
     price: 54000,
   },
   {
     title: "Contemporary Accent Watch",
-    category: "Accessories",
-    imageSrc:
-      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
+    imageSrc: EMAIL_ASSETS.welcomeProductImage,
     rating: "4.9",
     reviewCount: "9.8k reviews",
     price: 12000,
   },
   {
     title: "Contemporary Accent Denim",
-    category: "Everyday Essentials",
-    imageSrc:
-      "https://i.pinimg.com/736x/a4/ee/14/a4ee14303302dc2e75637b04e42a9b03.jpg",
+    imageSrc: EMAIL_ASSETS.welcomeProductImage,
     rating: "4.7",
     reviewCount: "8.2k reviews",
     price: 45000,
   },
 ];
-
-function AppBadge({
-  siteUrl,
-  src,
-  alt,
-}: {
-  siteUrl: string;
-  src: string;
-  alt: string;
-}) {
-  return (
-    <Img
-      src={src.startsWith("http") ? src : new URL(src, siteUrl).toString()}
-      alt={alt}
-      width="135"
-      height="40"
-      style={{ display: "block" }}
-    />
-  );
-}
 
 export function WelcomeEmail({
   firstName = "",
@@ -118,7 +93,7 @@ export function WelcomeEmail({
         style={{
           margin: 0,
           padding: "24px 0",
-          backgroundColor: "#f4f6fb",
+          backgroundColor: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >
@@ -294,18 +269,10 @@ export function WelcomeEmail({
                 </Text>
                 <Row width="auto" style={{ margin: "0 auto" }}>
                   <Column style={{ paddingRight: 10 }}>
-                    <AppBadge
-                      siteUrl={siteUrl}
-                      src="https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/play_storebadge_plrvkk.png"
-                      alt="Download on the App Store"
-                    />
+                    <AppBadge variant="appStore" />
                   </Column>
                   <Column>
-                    <AppBadge
-                      siteUrl={siteUrl}
-                      src="https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/app_store_badge_dtp5ik.png"
-                      alt="Get it on Google Play"
-                    />
+                    <AppBadge variant="googlePlay" />
                   </Column>
                 </Row>
               </EmailCard>

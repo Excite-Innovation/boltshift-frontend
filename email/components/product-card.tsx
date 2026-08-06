@@ -1,12 +1,12 @@
 import { Img, Section, Text } from "react-email";
 
 import { EmailCard } from "@/email/components/email-card";
+import { resolveEmailAssetSrc } from "@/email/components/email-assets";
 import { EditNum } from "@/lib/utils";
 import { StarRating } from "@/email/components/star-rating";
 
 export type WelcomeProduct = {
   title: string;
-  category: string;
   imageSrc: string;
   rating?: string;
   reviewCount?: string;
@@ -36,11 +36,7 @@ export function ProductCard({ product, siteUrl }: ProductCardProps) {
       }}
     >
       <Img
-        src={
-          product.imageSrc.startsWith("http")
-            ? product.imageSrc
-            : new URL(product.imageSrc, siteUrl).toString()
-        }
+        src={resolveEmailAssetSrc(product.imageSrc, siteUrl)}
         width="160"
         height="128"
         alt={product.title}

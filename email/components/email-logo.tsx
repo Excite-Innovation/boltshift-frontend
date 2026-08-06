@@ -1,13 +1,13 @@
-import * as React from "react";
-
 import { Img, Link, Section } from "react-email";
 
-function assetUrl(siteUrl: string, path: string) {
-  return path.startsWith("http") ? path : new URL(path, siteUrl).toString();
-}
+import {
+  EMAIL_ASSETS,
+  resolveEmailAssetSrc,
+} from "@/email/components/email-assets";
 
 type EmailLogoProps = {
   siteUrl?: string;
+  src?: string;
   href?: string;
   alt?: string;
   width?: number;
@@ -18,6 +18,7 @@ type EmailLogoProps = {
 
 export function EmailLogo({
   siteUrl = "http://localhost:3000",
+  src = EMAIL_ASSETS.logo,
   href,
   alt = "Boltshift",
   width = 180,
@@ -25,7 +26,7 @@ export function EmailLogo({
   align = "center",
   paddingBottom = 0,
 }: EmailLogoProps) {
-  const logoSrc = "https://res.cloudinary.com/jp2lbxl9/image/upload/v1785999175/Brand_Logo_j44qzf.png";
+  const logoSrc = resolveEmailAssetSrc(src, siteUrl);
   const imageStyle =
     align === "left"
       ? { display: "block", margin: "0" }
