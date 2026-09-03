@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ViewTransition, useDeferredValue, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -59,11 +60,15 @@ export function HeroCard({
             />
           </ViewTransition>
         </Button>
-        <img
-          src={item.image}
-          alt={item.alt}
-          className="aspect-square object-cover md:h-full md:w-full"
-        />
+        <div className="relative aspect-square w-full md:h-full md:aspect-auto">
+          <Image
+            src={item.image}
+            alt={item.alt}
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
 
         <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 md:hidden">
           <PaginationDots

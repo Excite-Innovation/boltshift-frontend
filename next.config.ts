@@ -59,6 +59,14 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "8000",
       },
+      {
+        protocol: "http",
+        hostname: "preface-tasty-target.ngrok-free.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "preface-tasty-target.ngrok-free.dev",
+      },
     ],
   },
   output: "standalone",
