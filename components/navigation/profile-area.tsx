@@ -37,10 +37,11 @@ export function Profile() {
   const transitionScope = useId();
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, signOut } = useAuth();
+  const { isAuthenticated, signOut, user } = useAuth();
   const { wishlistCount, cartCount } = useStoredCollectionCounts();
   const deferredWishlistCount = useDeferredValue(wishlistCount);
   const deferredCartCount = useDeferredValue(cartCount);
+  const avatarSrc = isAuthenticated && user?.avatar?.trim() ? user.avatar : null;
   const profileDropdown = isAuthenticated ? (
     <ProfileDropdown onLogout={() => void signOut()} />
   ) : (
@@ -139,7 +140,7 @@ export function Profile() {
               className="size-8 rounded-full border-2 p-0"
               aria-label="Open profile menu"
             >
-              <AvatarProfile />
+              <AvatarProfile src={avatarSrc} />
             </Button>
           }
           contentClassName="h-(--radix-dropdown-menu-content-available-height) max-h-(--radix-dropdown-menu-content-available-height) w-80 sm:h-auto sm:w-64"
@@ -158,7 +159,7 @@ export function Profile() {
               className="size-8 rounded-full border-2 p-0"
               aria-label="Open profile menu"
             >
-              <AvatarProfile />
+              <AvatarProfile src={avatarSrc} />
             </Button>
           </SheetTrigger>
           <SheetContent

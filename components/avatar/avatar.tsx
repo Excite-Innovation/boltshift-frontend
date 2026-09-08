@@ -1,14 +1,21 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { CircleUserRound } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CircleUserRound } from "lucide-react";
 
-export function AvatarProfile() {
+type AvatarProfileProps = {
+  src?: string | null;
+  alt?: string;
+};
+
+export function AvatarProfile({
+  src,
+  alt = "Profile avatar",
+}: AvatarProfileProps) {
   return (
     <Avatar>
-      <AvatarImage
-        src="https://github.com/denilany.png"
-        alt="Image profile"
-      />
-      <AvatarFallback><CircleUserRound /></AvatarFallback>
+      {src ? <AvatarImage src={src} alt={alt} /> : null}
+      <AvatarFallback>
+        <CircleUserRound className="size-4" aria-hidden="true" />
+      </AvatarFallback>
     </Avatar>
-  )
+  );
 }
