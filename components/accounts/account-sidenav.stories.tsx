@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { AccountSidenav } from "@/components/accounts/account-sidenav";
+import { AuthProvider } from "@/components/auth/auth-provider";
 import PersonalInfo from "@/app/account/profile/page";
 
 const meta = {
@@ -13,6 +14,13 @@ const meta = {
     },
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <AuthProvider>
+        <Story />
+      </AuthProvider>
+    ),
+  ],
 } satisfies Meta<typeof AccountSidenav>;
 
 export default meta;

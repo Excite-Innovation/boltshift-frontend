@@ -157,7 +157,8 @@ function normalizeUser(user: unknown): AuthUser | null {
     firstName: typeof firstName === "string" ? firstName : undefined,
     lastName: typeof lastName === "string" ? lastName : undefined,
     email: typeof email === "string" ? email : undefined,
-    avatar: typeof avatar === "string" ? avatar : undefined,
+    avatar:
+      avatar === null ? null : typeof avatar === "string" ? avatar : undefined,
     phone: typeof phone === "string" ? phone : undefined,
     phoneNumber: typeof phone === "string" ? phone : undefined,
     dateOfBirth: typeof dateOfBirth === "string" ? dateOfBirth : undefined,

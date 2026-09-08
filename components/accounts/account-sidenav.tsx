@@ -10,7 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { GradientSelectorModal } from "@/components/color-picker/color-picker";
-import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/auth/auth-provider";
+import { cn, getInitials } from "@/lib/utils";
 
 const menuItems = [
   {
@@ -39,11 +40,19 @@ const DEFAULT_BACKGROUND = "linear-gradient(135deg, #F74FAC 0%, #FCB24F 100%)";
 
 export function AccountSidenav() {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState<string>(
     DEFAULT_BACKGROUND,
   );
+  const displayName =
+    user?.fullName ||
+    [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+    "Account";
+  const avatarSrc = user?.avatar ?? undefined;
+  const showInitials = user?.avatar === null;
+  const initials = getInitials(displayName);
 
   return (
     <aside className="w-full lg:w-auto">
@@ -70,17 +79,19 @@ export function AccountSidenav() {
             <div className="absolute inset-x-0 top-14 z-20 flex flex-col items-center gap-3 rounded-lg p-2 text-center">
               <Avatar className="size-22 border-2 border-white">
                 <AvatarImage
-                  src="https://github.com/denilany.png"
-                  alt="Profile"
+                  src={avatarSrc}
+                  alt={`${displayName} avatar`}
                   className="object-cover"
                 />
-                <AvatarFallback>DA</AvatarFallback>
+                {showInitials ? (
+                  <AvatarFallback>{initials}</AvatarFallback>
+                ) : null}
               </Avatar>
 
               <div className="min-w-0 max-w-full">
-                <h3 className="text-lg font-semibold">Denil Anyonyi</h3>
+                <h3 className="text-lg font-semibold">{displayName}</h3>
                 <p className="truncate text-sm text-muted-foreground">
-                  denil@excite.company
+                  {user?.email ?? ""}
                 </p>
               </div>
             </div>
