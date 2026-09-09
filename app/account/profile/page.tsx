@@ -18,7 +18,12 @@ export function PersonalInfo() {
       <Password />
 
       <div className="border-t py-6 flex justify-end items-center">
-        <Button size="lg" className="w-full sm:w-auto px-4.5">
+        <Button
+          type="submit"
+          form="basic-details-form"
+          size="lg"
+          className="w-full sm:w-auto px-4.5"
+        >
           <Save />
           Save Changes
         </Button>

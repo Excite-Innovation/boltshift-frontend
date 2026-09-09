@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { AccountSocialButtons } from "@/app/account/profile/account-social-buttons";
+import { showSonnerMessage } from "@/components/alert/alert";
 import { SectionHeadings } from "@/components/accounts/section-headings";
 import { FormInputField } from "@/components/checkout/form-input-field";
 import { DatePickerField } from "@/app/account/profile/date-field";
@@ -136,6 +137,7 @@ export function BasicDetails() {
       </div>
 
       <form
+        id="basic-details-form"
         className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-xs font-medium w-full max-w-248"
         onSubmit={async (event) => {
           event.preventDefault();
@@ -145,6 +147,11 @@ export function BasicDetails() {
           const values = applyValidation();
 
           if (!values) {
+            showSonnerMessage({
+              variant: "delete",
+              title: "Profile Update Failed",
+              description: "Please fix the highlighted fields before saving.",
+            });
             return;
           }
 
@@ -154,6 +161,11 @@ export function BasicDetails() {
             await updateProfile({
               ...values,
               avatar,
+            });
+            showSonnerMessage({
+              variant: "success",
+              title: "Profile Updated Successfully",
+              description: "Your account details have been saved.",
             });
           } catch (error) {
             const normalized = handleAuthError(error);
@@ -173,6 +185,11 @@ export function BasicDetails() {
             }
 
             setSaveError(normalized.message);
+            showSonnerMessage({
+              variant: "delete",
+              title: "Profile Update Failed",
+              description: normalized.message,
+            });
           } finally {
             setIsSaving(false);
           }
