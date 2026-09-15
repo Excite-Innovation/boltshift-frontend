@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
-import { VoucherDropdownMenu } from "@/components/cart-quantity/voucher-dropdown-card";
 import {
   Card,
   CardContent,
@@ -18,7 +17,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Label } from "@/components/ui/label";
-import { vouchers } from "@/lib/voucher";
+import { showSonnerMessage } from "@/components/alert/alert";
+import {
+  CouponApiError,
+  type Coupon,
+  validateCoupon,
+} from "@/lib/coupons/coupon-api";
 import { Product } from "@/types/type";
 
 const TAX_RATE = 0.14;
@@ -60,44 +64,6 @@ function getCheckoutHref(items: OrderSummaryItem[]) {
     : "/checkout";
 }
 
-function getVoucherDiscountRate(title: string) {
-  // Voucher copy currently carries percentage values, for example "10% off".
-  const discountMatch = title.match(/(\d+)%/);
-
-  return discountMatch ? Number(discountMatch[1]) / 100 : 0;
-}
-
-function getVoucherDiscount(
-  voucher: (typeof vouchers)[number] | undefined,
-  subtotal: number,
-  shipping: number,
-) {
-  if (!voucher) {
-    return {
-      productDiscount: 0,
-      shippingDiscount: 0,
-      label: "0%",
-    };
-  }
-
-  if (voucher.title.toLowerCase().includes("free shipping")) {
-    // Free-shipping vouchers only remove delivery cost, not product subtotal.
-    return {
-      productDiscount: 0,
-      shippingDiscount: shipping,
-      label: "Free shipping",
-    };
-  }
-
-  const voucherRate = getVoucherDiscountRate(voucher.title);
-
-  return {
-    productDiscount: subtotal * voucherRate,
-    shippingDiscount: 0,
-    label: formatPercentage(voucherRate * 100),
-  };
-}
-
 export function OrderSummary({
   items = [],
   children,
@@ -107,47 +73,63 @@ export function OrderSummary({
 }: OrderSummaryProps) {
   const pathname = usePathname();
   const [voucherCode, setVoucherCode] = useState("");
-  const [selectedVoucherId, setSelectedVoucherId] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
   const isCheckoutPage = pathname === "/checkout";
   const checkoutButtonLabel =
     isCheckoutPage ? "Order Now" : "Check Out";
-  const selectedVoucher = vouchers.find(
-    (voucher) => voucher.id === selectedVoucherId,
-  );
   const orderTotals = useMemo(() => {
-    // Recalculate totals only when cart items or the selected voucher changes.
     const subtotal = items.reduce(
       (total, item) => total + item.product.price * item.quantity,
       0,
     );
     const shipping = subtotal > 0 ? SHIPPING_FEE : 0;
-    const voucherDiscount = getVoucherDiscount(
-      selectedVoucher,
-      subtotal,
-      shipping,
-    );
-    const discountedSubtotal = Math.max(
-      0,
-      subtotal - voucherDiscount.productDiscount,
-    );
-    const discountedShipping = Math.max(
-      0,
-      shipping - voucherDiscount.shippingDiscount,
-    );
-    const tax = discountedSubtotal * TAX_RATE;
-    const total = discountedSubtotal + discountedShipping + tax;
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + shipping + tax;
 
     return {
       subtotal,
       shipping,
       tax,
       taxRate: TAX_RATE * 100,
-      voucherDiscount:
-        voucherDiscount.productDiscount + voucherDiscount.shippingDiscount,
-      voucherDiscountLabel: voucherDiscount.label,
+      voucherDiscount: 0,
+      voucherDiscountLabel: appliedCoupon?.discount ?? "—",
       total,
     };
-  }, [items, selectedVoucher]);
+  }, [appliedCoupon, items]);
+
+  const applyCoupon = async () => {
+    const code = voucherCode.trim();
+
+    if (!code || isValidatingCoupon) return;
+
+    setIsValidatingCoupon(true);
+
+    try {
+      const coupon = await validateCoupon(code);
+      setAppliedCoupon(coupon);
+      setVoucherCode(coupon.code);
+      onCouponCodeChange?.(coupon.code);
+      showSonnerMessage({
+        variant: "success",
+        title: "Coupon applied",
+        description: `${coupon.code} has been applied to your order.`,
+      });
+    } catch (error) {
+      setAppliedCoupon(null);
+      onCouponCodeChange?.("");
+      showSonnerMessage({
+        variant: "delete",
+        title: "Invalid coupon",
+        description:
+          error instanceof CouponApiError
+            ? error.message
+            : "Please check the code and try again.",
+      });
+    } finally {
+      setIsValidatingCoupon(false);
+    }
+  };
 
   return (
     <Card className="w-full max-w-none p-6 border rounded-xl flex flex-col gap-8 md:max-w-84">
@@ -197,39 +179,30 @@ export function OrderSummary({
           </span>
         </div>
 
-        {/* Voucher */}
         <div className="space-y-2">
           <Label htmlFor="voucher-code" className="text-muted-foreground">
-            Voucher Code
+            Coupon Code
           </Label>
           <ButtonGroup className="h-11 w-full overflow-hidden rounded-lg border hover:ring-1 hover:ring-ring hover:ring-offset-2">
             <Input
               id="voucher-code"
-              placeholder="Add a voucher"
+              placeholder="Add a coupon"
               value={voucherCode}
               onChange={(event) => {
-                const code = event.target.value;
-
-                setVoucherCode(code);
-                onCouponCodeChange?.(code.trim());
-                setSelectedVoucherId(
-                  vouchers.find(
-                    (voucher) =>
-                      voucher.code.toLowerCase() === code.trim().toLowerCase(),
-                  )?.id ?? "",
-                );
+                setVoucherCode(event.target.value);
+                setAppliedCoupon(null);
+                onCouponCodeChange?.("");
               }}
               className="h-full rounded-lg"
             />
-
-            <VoucherDropdownMenu
-              selectedVoucherId={selectedVoucherId}
-              onSelectVoucher={(voucher) => {
-                setSelectedVoucherId(voucher.id);
-                setVoucherCode(voucher.code);
-                onCouponCodeChange?.(voucher.code);
-              }}
-            />
+            <Button
+              type="button"
+              onClick={() => void applyCoupon()}
+              disabled={!voucherCode.trim() || isValidatingCoupon}
+              className="h-full rounded-none"
+            >
+              {isValidatingCoupon ? "Checking..." : "Apply"}
+            </Button>
           </ButtonGroup>
         </div>
 

@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { VoucherActionMenu } from "@/components/accounts/vouchers/voucher-action-menu";
 
 interface VoucherCardProps {
-  id: string;
   imageSrc: string;
   imageAlt?: string;
   code: string;
@@ -15,11 +14,9 @@ interface VoucherCardProps {
   expiryDate: string;
   onCopyCode?: (code: string) => void;
   onShare?: (code: string) => void;
-  onDelete?: (id: string) => void;
 }
 
 export function VoucherCard({
-  id,
   imageSrc,
   imageAlt = "Voucher image",
   code,
@@ -28,7 +25,6 @@ export function VoucherCard({
   expiryDate,
   onCopyCode,
   onShare,
-  onDelete,
 }: VoucherCardProps) {
   return (
     <Card className="w-full flex flex-row overflow-hidden rounded-xl p-0 border sm:w-84">
@@ -60,11 +56,9 @@ export function VoucherCard({
         </div>
 
         <VoucherActionMenu
-          id={id}
           code={code}
           onCopyCode={onCopyCode}
           onShare={onShare}
-          onDelete={onDelete}
         />
       </div>
     </Card>

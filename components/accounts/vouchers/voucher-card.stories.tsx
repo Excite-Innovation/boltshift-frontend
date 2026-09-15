@@ -10,7 +10,6 @@ const meta = {
   },
   tags: ["autodocs"],
   args: {
-    id: "delivery-truck",
     imageSrc: "/account/voucher/Delivery-truck.png",
     imageAlt: "Delivery truck voucher",
     code: "CO-4321-8765",
@@ -47,7 +46,6 @@ export const LongDiscountLabel: Story = {
 
 export const CustomImageAlt: Story = {
   args: {
-    id: "watch",
     imageSrc: "/account/voucher/Watch.png",
     imageAlt: "Luxury watch voucher",
     discount: "5% off Watches",
