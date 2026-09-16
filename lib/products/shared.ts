@@ -120,11 +120,32 @@ function nestedString(value: unknown, key: string) {
   return isRecord(value) ? toStringValue(value[key]) : "";
 }
 
+function imageUrl(value: unknown): string {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (!isRecord(value)) {
+    return "";
+  }
+
+  // Product-detail responses return image records, while product lists can
+  // return URL strings. Accept both forms so the gallery never drops a
+  // product's own images in favour of the generic fallback.
+  return (
+    toStringValue(value.url) ||
+    toStringValue(value.image) ||
+    toStringValue(value.image_url) ||
+    toStringValue(value.imageUrl) ||
+    toStringValue(value.file)
+  );
+}
+
 function normalizeImages(item: ProductApiItem) {
   const images = Array.isArray(item.images)
-    ? item.images.filter((image): image is string => typeof image === "string")
+    ? item.images.map(imageUrl).filter(Boolean)
     : [];
-  const primaryImage = toStringValue(item.primary_image);
+  const primaryImage = imageUrl(item.primary_image);
 
   return images.length > 0
     ? images
