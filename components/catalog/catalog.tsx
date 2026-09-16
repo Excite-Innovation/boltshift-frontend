@@ -10,13 +10,18 @@ interface CatalogCardProps {
   filters?: CatalogFilterParams;
   /** Optional pre-filtered product list. Falls back to all products when omitted. */
   products?: Product[];
+  /** Set when products were already filtered and ordered by the search API. */
+  productsAreFiltered?: boolean;
 }
 
 export function CatalogCard({
   filters = {},
   products: productsProp,
+  productsAreFiltered = false,
 }: CatalogCardProps) {
-  const products = filterCatalogProducts(productsProp ?? GetProductItems(), filters);
+  const products = productsAreFiltered
+    ? (productsProp ?? [])
+    : filterCatalogProducts(productsProp ?? GetProductItems(), filters);
   return (
     <main className="w-full flex flex-col gap-2 md:p-4">
       <ViewTransition

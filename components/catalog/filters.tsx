@@ -21,7 +21,14 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const sortBy = ["Latest", "Oldest", "Popular"];
+const sortBy = [
+  "Latest",
+  "Oldest",
+  "Price: Low to High",
+  "Price: High to Low",
+  "Rating: High to Low",
+  "Rating: Low to High",
+];
 const filterKeys = [
   "sort",
   "minPrice",
@@ -33,6 +40,10 @@ const filterKeys = [
   "shipping",
   "tags",
   "inStock",
+  "brand",
+  "category",
+  "ordering",
+  "rating",
 ];
 
 export function FilterSidebar(props: React.ComponentProps<typeof Sidebar>) {

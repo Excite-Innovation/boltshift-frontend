@@ -12,6 +12,11 @@ export type CatalogFilterParams = {
   shipping?: string;
   tags?: string;
   inStock?: string;
+  /** API-native filters, also supported in shared catalog URLs. */
+  brand?: string;
+  category?: string;
+  ordering?: string;
+  rating?: string;
 };
 
 /**

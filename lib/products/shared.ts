@@ -6,6 +6,7 @@ const PRODUCTS_BASE_URL =
   "";
 
 export const ALL_PRODUCTS_PATH = "/api/v1/products/";
+export const SEARCH_PRODUCTS_PATH = "/api/v1/products/search/";
 export const TRENDING_PRODUCTS_PATH = "/api/v1/products/trending/";
 export const HOT_DEALS_TODAY_PATH = "/api/v1/products/hot-deals-today/";
 export const FEATURED_PRODUCTS_PATH = "/api/v1/products/featured/";

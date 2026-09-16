@@ -2,13 +2,9 @@ import { SectionTitle } from "@/components/section-title";
 import { CatalogCard } from "@/components/catalog/catalog";
 import { FilterSidebar } from "@/components/catalog/filters";
 import { BreadcrumbComponent } from "@/components/breadcrumb/breadcrumb";
-import {
-  filterCatalogProducts,
-  formatCategoryName,
-  type CatalogFilterParams,
-} from "@/lib/catalog";
+import { formatCategoryName, type CatalogFilterParams } from "@/lib/catalog";
 import { SearchResultsHeader } from "@/components/catalog/search-results-header";
-import { fetchAllProducts } from "@/lib/products/all-products";
+import { fetchSearchedProducts } from "@/lib/products/search-products";
 
 export default async function CategoryPage({
   params,
@@ -30,13 +26,13 @@ export default async function CategoryPage({
     { label: formatCategoryName(category) },
   ];
 
-  const products = await fetchAllProducts();
+  const products = await fetchSearchedProducts(filters);
 
-  // Filter by category first, then by search query within that category
+  // Keep the route's category scope after the search API has applied filters.
   const categoryProducts = products.filter(
     (p) => p.category === category,
   );
-  const filteredCount = filterCatalogProducts(categoryProducts, filters).length;
+  const filteredCount = categoryProducts.length;
 
   return (
     <>
@@ -56,7 +52,7 @@ export default async function CategoryPage({
       <div className="flex items-start">
         {/* shared sidebar */}
         <FilterSidebar />
-        <CatalogCard filters={filters} products={categoryProducts} />
+        <CatalogCard products={categoryProducts} productsAreFiltered />
       </div>
     </>
   );
