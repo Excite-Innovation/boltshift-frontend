@@ -7,6 +7,7 @@ const ORDERS_BASE_URL =
   "";
 
 export const CHECKOUT_PATH = "/api/v1/orders/checkout/";
+export const BUY_NOW_PATH = "/api/v1/orders/buy-now/";
 
 export type ShippingAddress = {
   street: string;
@@ -24,6 +25,13 @@ export type CheckoutItem = {
 export type CheckoutRequest = {
   items: CheckoutItem[];
   address: ShippingAddress;
+  coupon_code?: string;
+};
+
+export type BuyNowRequest = {
+  product_id: number | string;
+  quantity?: number;
+  shipping_address: ShippingAddress;
   coupon_code?: string;
 };
 
@@ -80,6 +88,25 @@ function getErrorMessage(payload: unknown, status: number) {
 
 export async function checkoutOrder(request: CheckoutRequest) {
   const response = await fetch(buildOrdersUrl(CHECKOUT_PATH), {
+    method: "POST",
+    headers: getOrdersHeaders(),
+    cache: "no-store",
+    body: JSON.stringify(request),
+  });
+  const payload = await readResponsePayload(response);
+
+  if (!response.ok) {
+    throw new WishlistApiError(
+      getErrorMessage(payload, response.status),
+      response.status,
+    );
+  }
+
+  return payload;
+}
+
+export async function buyNowOrder(request: BuyNowRequest) {
+  const response = await fetch(buildOrdersUrl(BUY_NOW_PATH), {
     method: "POST",
     headers: getOrdersHeaders(),
     cache: "no-store",

@@ -39,6 +39,7 @@ export const metadata: Metadata = {
 type CheckoutPageProps = {
   searchParams?: Promise<{
     items?: string | string[];
+    mode?: string | string[];
   }>;
 };
 
@@ -49,6 +50,7 @@ export default async function CheckoutPage({
   const itemsParam = Array.isArray(params?.items)
     ? params.items[0]
     : params?.items;
+  const isBuyNow = (Array.isArray(params?.mode) ? params.mode[0] : params?.mode) === "buy-now";
 
-  return <CheckoutPageClient itemsParam={itemsParam} />;
+  return <CheckoutPageClient itemsParam={itemsParam} buyNow={isBuyNow} />;
 }

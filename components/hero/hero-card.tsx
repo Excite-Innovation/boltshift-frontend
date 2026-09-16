@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ViewTransition, useDeferredValue, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ export function HeroCard({
 }: HeroCardProps) {
   const [saved, setSaved] = useState(false);
   const deferredSaved = useDeferredValue(saved);
+  const router = useRouter();
 
   return (
     <Card className="bg-card-foreground/10 mx-auto w-full py-0  gap-6 rounded-xl overflow-hidden md:flex md:flex-row-reverse md:max-w-312 md:h-148">
@@ -103,14 +104,18 @@ export function HeroCard({
         </CardHeader>
         <CardFooter className="w-full md:w-72 md:mx-auto md:p-0">
           <Button
-            asChild
             size="lg"
+            type="button"
+            onClick={() => {
+              if (item.id) {
+                router.push(`/checkout?items=${encodeURIComponent(`${item.id}:1`)}&mode=buy-now`);
+              }
+            }}
+            disabled={!item.id}
             className="w-full h-11 rounded-lg border-2 py-2.5 px-4 flex items-center justify-center gap-1.5 hover:cursor-pointer"
           >
-            <Link href={item.href} transitionTypes={["cross-fade"]}>
-              Shop Now
-              <ChevronRight className="size-5" aria-hidden="true" />
-            </Link>
+            Shop Now
+            <ChevronRight className="size-5" aria-hidden="true" />
           </Button>
         </CardFooter>
 

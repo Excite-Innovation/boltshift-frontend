@@ -79,7 +79,7 @@ export function SpecialOfferCard({ product }: SpecialOfferCardProps) {
     }
   }, [selectedColor, selectedVariant, selectedSize]);
 
-  const checkoutHref = `/checkout?items=${encodeURIComponent(`${selectedItem.id}:${quantity}`)}`;
+  const checkoutHref = `/checkout?items=${encodeURIComponent(`${selectedItem.id}:${quantity}`)}&mode=buy-now`;
 
   const Increment = () => {
     setQuantity((prev) => prev + 1);

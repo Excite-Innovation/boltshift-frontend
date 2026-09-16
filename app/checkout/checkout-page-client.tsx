@@ -8,6 +8,7 @@ import { SectionTitle } from "@/components/section-title";
 import { BackButton } from "@/components/back/back";
 import { CheckoutProductCard } from "@/components/checkout/checkout-product-spec";
 import { GetProductItems } from "@/lib/product-items";
+import { fetchProductById } from "@/lib/products/product-details";
 import { cartReducer, getCartItems, type CartEntry } from "@/lib/wishlist/wishlist";
 import { PersonalDetailsCard } from "@/components/checkout/personal-details";
 import { ShippingDetailsCard } from "@/components/checkout/shipping-details";
@@ -28,11 +29,12 @@ import {
   updateCartProduct,
 } from "@/lib/cart/cart-api";
 import { showSonnerMessage } from "@/components/alert/alert";
-import { checkoutOrder } from "@/lib/orders/order-api";
+import { buyNowOrder, checkoutOrder } from "@/lib/orders/order-api";
 import { WishlistApiError } from "@/lib/wishlist/wishlist-api";
 
 type CheckoutPageClientProps = {
   itemsParam?: string | null;
+  buyNow?: boolean;
 };
 
 function parseCheckoutItems(itemsParam: string | null | undefined) {
@@ -57,7 +59,7 @@ function parseCheckoutItems(itemsParam: string | null | undefined) {
     .filter(({ productId }) => productId.length > 0);
 }
 
-export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
+export function CheckoutPageClient({ itemsParam, buyNow = false }: CheckoutPageClientProps) {
   const products = useMemo(() => GetProductItems(), []);
   const initialCheckoutCart = useMemo(
     () => parseCheckoutItems(itemsParam),
@@ -68,7 +70,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     setValue: setCheckoutCart,
     isHydrated,
   } = usePersistentCollection<CartEntry[]>({
-    storageKey: "boltshift:cart",
+    storageKey: buyNow ? "boltshift:buy-now-checkout" : "boltshift:cart",
     fallback: initialCheckoutCart.length > 0 ? initialCheckoutCart : [],
     hydrateFromStorage: !itemsParam,
   });
@@ -76,6 +78,7 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
   const [apiCheckoutItems, setApiCheckoutItems] = useState<
     ApiCartItem[] | null
   >(null);
+  const [directProducts, setDirectProducts] = useState<typeof products>([]);
   const [isOrderSubmitting, setIsOrderSubmitting] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails>({
@@ -92,7 +95,34 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
   };
 
   useEffect(() => {
-    if (!isHydrated) {
+    if (!buyNow || initialCheckoutCart.length === 0) {
+      return;
+    }
+
+    let isActive = true;
+    const productsToFetch = initialCheckoutCart.filter(
+      ({ productId }) => !products.some((product) => String(product.id) === String(productId)),
+    );
+
+    void Promise.all(
+      productsToFetch.map(({ productId }) => fetchProductById(String(productId))),
+    )
+      .then((fetchedProducts) => {
+        if (isActive) {
+          setDirectProducts(fetchedProducts.filter((product): product is NonNullable<typeof product> => product !== null));
+        }
+      })
+      .catch(() => {
+        // Keep the local product fallback when the direct product is unavailable.
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [buyNow, initialCheckoutCart, products]);
+
+  useEffect(() => {
+    if (!isHydrated || buyNow) {
       return;
     }
 
@@ -130,11 +160,15 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     return () => {
       isActive = false;
     };
-  }, [initialCheckoutCart, isHydrated, itemsParam, setCheckoutCart]);
+  }, [buyNow, initialCheckoutCart, isHydrated, itemsParam, setCheckoutCart]);
 
+  const availableProducts = useMemo(
+    () => [...products, ...directProducts],
+    [directProducts, products],
+  );
   const checkoutItems = useMemo(
-    () => apiCheckoutItems ?? getCartItems(checkoutCart, products),
-    [apiCheckoutItems, checkoutCart, products],
+    () => apiCheckoutItems ?? getCartItems(checkoutCart, availableProducts),
+    [apiCheckoutItems, availableProducts, checkoutCart],
   );
 
   async function handleOrderNow() {
@@ -145,25 +179,40 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
     setIsOrderSubmitting(true);
 
     try {
-      await checkoutOrder({
-        items: checkoutItems.map(({ product, quantity }) => ({
+      const shippingAddress = {
+        street: [shippingDetails.office, shippingDetails.street]
+          .filter(Boolean)
+          .join(", "),
+        city: shippingDetails.city,
+        state: "",
+        zip: "",
+        country: shippingDetails.country,
+      };
+
+      if (buyNow && checkoutItems.length === 1) {
+        const [{ product, quantity }] = checkoutItems;
+        await buyNowOrder({
           product_id: product.id,
           quantity,
-        })),
-        address: {
-          street: [shippingDetails.office, shippingDetails.street]
-            .filter(Boolean)
-            .join(", "),
-          city: shippingDetails.city,
-          state: "",
-          zip: "",
-          country: shippingDetails.country,
-        },
-        ...(couponCode ? { coupon_code: couponCode } : {}),
-      });
+          shipping_address: shippingAddress,
+          ...(couponCode ? { coupon_code: couponCode } : {}),
+        });
+      } else {
+        await checkoutOrder({
+          items: checkoutItems.map(({ product, quantity }) => ({
+            product_id: product.id,
+            quantity,
+          })),
+          address: shippingAddress,
+          ...(couponCode ? { coupon_code: couponCode } : {}),
+        });
+
+      }
 
       dispatchCheckoutCart({ type: "clear" });
-      void clearCart().catch(() => {});
+      if (!buyNow) {
+        void clearCart().catch(() => {});
+      }
       setOrderCompleteOpen(true);
     } catch (error) {
       showSonnerMessage({
@@ -245,7 +294,9 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
                                     (item) => item.product.id !== product.id,
                                   ),
                             );
-                            void removeCartProduct(product.id).catch(() => {});
+                            if (!buyNow) {
+                              void removeCartProduct(product.id).catch(() => {});
+                            }
                           })()
                         }
                         onDecrement={() =>
@@ -266,10 +317,12 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
                                       : item,
                                   ),
                             );
-                            void updateCartProduct(
-                              product.id,
-                              Math.max(1, quantity - 1),
-                            ).catch(() => {});
+                            if (!buyNow) {
+                              void updateCartProduct(
+                                product.id,
+                                Math.max(1, quantity - 1),
+                              ).catch(() => {});
+                            }
                           })()
                         }
                         onIncrement={() =>
@@ -290,7 +343,9 @@ export function CheckoutPageClient({ itemsParam }: CheckoutPageClientProps) {
                                       : item,
                                   ),
                             );
-                            void addCartProduct(product.id).catch(() => {});
+                            if (!buyNow) {
+                              void addCartProduct(product.id).catch(() => {});
+                            }
                           })()
                         }
                       />
